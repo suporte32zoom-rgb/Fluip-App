@@ -2,7 +2,7 @@
  * FLUIP - Lógica do Aplicativo Frontend PWA
  * Suporte Completo: Placas Mercosul (ABC1D23) e Antigas (ABC-1234)
  * Múltiplas Formas de Pagamento (PIX, Cartão de Crédito e Débito)
- * Taxa de Conveniência: R$ 1,90
+ * Taxa Fluip Proporcional: 10% sobre o total dos pedágios (mínimo de R$ 0,90)
  */
 
 (function () {
@@ -12,7 +12,8 @@
     placaAtual: '',
     debitos: [],
     debitosSelecionadosIds: new Set(),
-    taxaConvenienciaPadrao: 1.90,
+    percentualTaxa: 0.10,
+    taxaMinima: 0.90,
     formaPagamentoSelecionada: 'pix', // 'pix' | 'credito' | 'debito'
     tipoPlacaDetectada: 'neutro', // 'mercosul' | 'antiga' | 'neutro'
     cobrancaAtiva: null,
@@ -375,11 +376,20 @@
     }
   }
 
+  /**
+   * Cálculo da taxa Fluip dinâmica:
+   * Math.max(0.90, valorTotalPedagios * 0.10)
+   */
+  function calcularTaxaFluip(subtotal) {
+    if (!subtotal || subtotal <= 0) return 0;
+    return Number(Math.max(state.taxaMinima, subtotal * state.percentualTaxa).toFixed(2));
+  }
+
   function calcularTotalAtual() {
     const selecionados = state.debitos.filter((d) => state.debitosSelecionadosIds.has(d.id));
     const subtotal = selecionados.reduce((acc, curr) => acc + Number(curr.valorTarifa || 0), 0);
-    const taxa = selecionados.length > 0 ? state.taxaConvenienciaPadrao : 0;
-    return subtotal + taxa;
+    const taxa = selecionados.length > 0 ? calcularTaxaFluip(subtotal) : 0;
+    return Number((subtotal + taxa).toFixed(2));
   }
 
   async function consultarDebitos(placa) {
@@ -402,7 +412,8 @@
 
       state.placaAtual = data.placa;
       state.debitos = data.debitos || [];
-      state.taxaConvenienciaPadrao = data.resumo?.taxaConveniencia || 1.90;
+      if (data.resumo?.percentualTaxa !== undefined) state.percentualTaxa = Number(data.resumo.percentualTaxa);
+      if (data.resumo?.taxaMinima !== undefined) state.taxaMinima = Number(data.resumo.taxaMinima);
       state.debitosSelecionadosIds = new Set(state.debitos.map((d) => d.id));
 
       exibirResultados();
@@ -505,9 +516,9 @@
     const selecionados = state.debitos.filter((d) => state.debitosSelecionadosIds.has(d.id));
     const qtd = selecionados.length;
     const subtotal = selecionados.reduce((acc, curr) => acc + Number(curr.valorTarifa || 0), 0);
-    // Taxa de R$ 1,90
-    const taxa = qtd > 0 ? state.taxaConvenienciaPadrao : 0;
-    const total = subtotal + taxa;
+    // Taxa Fluip dinâmica: 10% (0.10) sobre o total dos pedágios (mínimo de R$ 0,90)
+    const taxa = qtd > 0 ? calcularTaxaFluip(subtotal) : 0;
+    const total = Number((subtotal + taxa).toFixed(2));
 
     dom.summarySubtotal.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
     dom.summaryTaxa.textContent = `R$ ${taxa.toFixed(2).replace('.', ',')}`;

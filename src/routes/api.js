@@ -4,8 +4,10 @@ import pagamentoService from '../services/pagamentoService.js';
 
 const router = Router();
 
-// Obter taxa de conveniência padrão da variável de ambiente ou fallback de R$ 1,90
-const TAXA_CONVENIENCIA_PADRAO = Number(process.env.TAXA_CONVENIENCIA) || 1.90;
+// Obter parâmetros da taxa de administração/conveniência proporcional
+// Regra: 10% (0.10) sobre o valor total dos pedágios com taxa mínima de R$ 0,90
+const PERCENTUAL_TAXA = Number(process.env.PERCENTUAL_TAXA) || 0.10;
+const TAXA_MINIMA = Number(process.env.TAXA_MINIMA) || 0.90;
 
 /**
  * GET /api/v1/consultar?placa=XXX
@@ -25,10 +27,12 @@ router.get('/consultar', async (req, res) => {
     const debitos = await pedagioService.consultarDebitosPorPlaca(placa);
     const placaFormatada = pedagioService.validarEFormatarPlaca(placa);
 
-    // Calcular resumo financeiro com nova taxa de conveniência de R$ 1,90
+    // Calcular resumo financeiro com regra de taxa dinâmica: Math.max(TAXA_MINIMA, subtotal * PERCENTUAL_TAXA)
     const quantidade = debitos.length;
     const subtotal = debitos.reduce((acc, curr) => acc + Number(curr.valorTarifa || 0), 0);
-    const taxaConveniencia = quantidade > 0 ? TAXA_CONVENIENCIA_PADRAO : 0;
+    const taxaConveniencia = quantidade > 0
+      ? Number(Math.max(TAXA_MINIMA, subtotal * PERCENTUAL_TAXA).toFixed(2))
+      : 0;
     const totalGeral = Number((subtotal + taxaConveniencia).toFixed(2));
 
     return res.status(200).json({
@@ -38,6 +42,8 @@ router.get('/consultar', async (req, res) => {
       resumo: {
         quantidade,
         subtotal: Number(subtotal.toFixed(2)),
+        percentualTaxa: PERCENTUAL_TAXA,
+        taxaMinima: TAXA_MINIMA,
         taxaConveniencia: Number(taxaConveniencia.toFixed(2)),
         totalGeral,
         moeda: 'BRL',
@@ -67,8 +73,8 @@ router.post('/pagar', async (req, res) => {
       });
     }
 
-    const taxaConveniencia = TAXA_CONVENIENCIA_PADRAO;
-    const cobranca = pagamentoService.gerarCobranca(passagensIds, taxaConveniencia, placa, formaDePagamento);
+    // Calcula a cobrança aplicando a regra dinâmica proporcional no serviço de pagamento
+    const cobranca = pagamentoService.gerarCobranca(passagensIds, null, placa, formaDePagamento);
 
     return res.status(201).json({
       success: true,

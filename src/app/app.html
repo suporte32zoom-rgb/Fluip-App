@@ -218,7 +218,7 @@
         </div>
         <div class="flex items-start gap-2">
           <mat-icon class="text-emerald-600 text-sm! w-4! h-4! shrink-0">check_circle</mat-icon>
-          <span><strong>Taxa de Conveniência Reduzida:</strong> Apenas R$ 1,90 por transação unificada.</span>
+          <span><strong>Taxa Fluip Proporcional:</strong> Apenas 10% sobre as tarifas selecionadas (com taxa mínima de R$ 0,90).</span>
         </div>
         <div class="flex items-start gap-2">
           <mat-icon class="text-emerald-600 text-sm! w-4! h-4! shrink-0">check_circle</mat-icon>
@@ -229,13 +229,13 @@
 
   </main>
 
-  <!-- Barra Fixa de Checkout (Sticky Mobile Bottom) com Taxa Fluip R$ 1,90 -->
+  <!-- Barra Fixa de Checkout (Sticky Mobile Bottom) com Taxa Fluip Proporcional (10% min R$ 0,90) -->
   @if (debitos().length > 0) {
     <aside class="fixed bottom-0 inset-x-0 bg-white/98 backdrop-blur-md border-t border-slate-200 p-3.5 z-40 shadow-xl">
       <div class="max-w-md mx-auto">
         <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
           <span>Tarifas: <strong class="text-slate-900">R$ {{ subtotal().toFixed(2) }}</strong></span>
-          <span>Taxa Fluip: <strong class="text-slate-900">R$ {{ taxaCalculada().toFixed(2) }}</strong></span>
+          <span>Taxa Fluip (10%): <strong class="text-slate-900">R$ {{ taxaCalculada().toFixed(2) }}</strong></span>
         </div>
         <div class="flex items-center justify-between gap-3">
           <div>

@@ -29,8 +29,9 @@ export interface CobrancaPix {
 }
 
 declare class PagamentoService {
-  gerarCobranca(passagensIds: string[], taxaConveniencia?: number, placa?: string, formaDePagamento?: 'pix' | 'credito' | 'debito'): CobrancaPix;
-  gerarCobrancaPix(passagensIds: string[], taxaConveniencia?: number, placa?: string): CobrancaPix;
+  calcularTaxa(valorTotalPedagios: number, percentual?: number | null, taxaMinima?: number | null): number;
+  gerarCobranca(passagensIds: string[], taxaConveniencia?: number | null, placa?: string, formaDePagamento?: 'pix' | 'credito' | 'debito'): CobrancaPix;
+  gerarCobrancaPix(passagensIds: string[], taxaConveniencia?: number | null, placa?: string): CobrancaPix;
   consultarStatusPix(txid: string): CobrancaPix | null;
   confirmarPagamento(txid: string, detalhesPagamento?: unknown): CobrancaPix;
 }

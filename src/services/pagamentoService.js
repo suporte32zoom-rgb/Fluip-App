@@ -139,13 +139,30 @@ class PagamentoService {
   }
 
   /**
+   * Calcula a Taxa Fluip dinâmica e proporcional
+   * Regra: 10% (0.10) sobre o total dos pedágios com taxa mínima de R$ 0,90
+   * Fórmula: Math.max(TAXA_MINIMA, valorTotalPedagios * PERCENTUAL_TAXA)
+   */
+  calcularTaxa(valorTotalPedagios, percentual = null, taxaMinima = null) {
+    if (!valorTotalPedagios || valorTotalPedagios <= 0) return 0;
+    const perc = percentual !== null && percentual !== undefined
+      ? Number(percentual)
+      : (Number(process.env.PERCENTUAL_TAXA) || 0.10);
+    const min = taxaMinima !== null && taxaMinima !== undefined
+      ? Number(taxaMinima)
+      : (Number(process.env.TAXA_MINIMA) || 0.90);
+
+    return Number(Math.max(min, valorTotalPedagios * perc).toFixed(2));
+  }
+
+  /**
    * Gera a cobrança no método selecionado ('pix', 'credito', 'debito')
    * @param {string[]} passagensIds
-   * @param {number} taxaConveniencia
+   * @param {number|null} taxaConveniencia (opcional, se omitido calcula dinamicamente pela fórmula)
    * @param {string} placa
    * @param {'pix'|'credito'|'debito'} formaDePagamento
    */
-  gerarCobranca(passagensIds, taxaConveniencia = 1.90, placa = '', formaDePagamento = 'pix') {
+  gerarCobranca(passagensIds, taxaConveniencia = null, placa = '', formaDePagamento = 'pix') {
     if (!passagensIds || !Array.isArray(passagensIds) || passagensIds.length === 0) {
       throw new Error('Nenhuma tarifa de pedágio foi selecionada para pagamento.');
     }
@@ -159,7 +176,11 @@ class PagamentoService {
       ? passagens.reduce((sum, item) => sum + Number(item.valorTarifa || 0), 0)
       : passagensIds.length * 10.50;
 
-    const taxa = Number(taxaConveniencia) || 1.90;
+    // Aplicação da fórmula dinâmica da Taxa Fluip: Math.max(0.90, subtotal * 0.10)
+    const taxa = (taxaConveniencia !== null && taxaConveniencia !== undefined && typeof taxaConveniencia === 'number' && taxaConveniencia >= 0)
+      ? Number(taxaConveniencia.toFixed(2))
+      : this.calcularTaxa(subtotal);
+
     const valorTotal = Number((subtotal + taxa).toFixed(2));
     const txid = `FLUIP${uuidv4().replace(/-/g, '').substring(0, 16).toUpperCase()}`;
 
@@ -221,7 +242,7 @@ class PagamentoService {
   }
 
   // Compatibilidade com a chamada legada
-  gerarCobrancaPix(passagensIds, taxaConveniencia = 1.90, placa = '') {
+  gerarCobrancaPix(passagensIds, taxaConveniencia = null, placa = '') {
     return this.gerarCobranca(passagensIds, taxaConveniencia, placa, 'pix');
   }
 

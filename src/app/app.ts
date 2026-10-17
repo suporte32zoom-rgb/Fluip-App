@@ -81,7 +81,8 @@ export class App {
   placaPesquisada = signal<string>('');
   debitos = signal<DebitoPedagioItem[]>([]);
   selecionadosIds = signal<Set<string>>(new Set());
-  taxaConveniencia = signal<number>(1.90);
+  percentualTaxa = signal<number>(0.10);
+  taxaMinima = signal<number>(0.90);
 
   // Tipo de Placa Detectada: 'mercosul' | 'antiga' | 'neutro'
   tipoPlaca = signal<'mercosul' | 'antiga' | 'neutro'>('neutro');
@@ -119,7 +120,9 @@ export class App {
   });
 
   taxaCalculada = computed(() => {
-    return this.debitosSelecionados().length > 0 ? this.taxaConveniencia() : 0;
+    const sub = this.subtotal();
+    if (this.debitosSelecionados().length === 0 || sub <= 0) return 0;
+    return Math.max(this.taxaMinima(), Number((sub * this.percentualTaxa()).toFixed(2)));
   });
 
   totalGeral = computed(() => {
@@ -225,7 +228,7 @@ export class App {
     this.loading.set(true);
     this.errorMessage.set(null);
 
-    this.http.get<{ success: boolean; placa: string; debitos: DebitoPedagioItem[]; resumo: { taxaConveniencia: number } }>(
+    this.http.get<{ success: boolean; placa: string; debitos: DebitoPedagioItem[]; resumo: { taxaConveniencia: number; percentualTaxa?: number; taxaMinima?: number } }>(
       `/api/v1/consultar?placa=${encodeURIComponent(limpa)}`
     ).subscribe({
       next: (res) => {
@@ -233,7 +236,8 @@ export class App {
         if (res.success) {
           this.placaPesquisada.set(res.placa);
           this.debitos.set(res.debitos);
-          this.taxaConveniencia.set(res.resumo?.taxaConveniencia || 1.90);
+          if (res.resumo?.percentualTaxa !== undefined) this.percentualTaxa.set(res.resumo.percentualTaxa);
+          if (res.resumo?.taxaMinima !== undefined) this.taxaMinima.set(res.resumo.taxaMinima);
           this.selecionadosIds.set(new Set(res.debitos.map((d) => d.id)));
         }
       },
