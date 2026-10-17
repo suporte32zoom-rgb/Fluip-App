@@ -1,8 +1,8 @@
 /**
- * FLUIP - Lógica do Aplicativo Frontend PWA
+ * ESTRADAPAY - Lógica do Aplicativo Frontend PWA
  * Suporte Completo: Placas Mercosul (ABC1D23) e Antigas (ABC-1234)
  * Múltiplas Formas de Pagamento (PIX, Cartão de Crédito e Débito)
- * Taxa Fluip Proporcional: 10% sobre o total dos pedágios (mínimo de R$ 0,90)
+ * Taxa Estradapay Proporcional: 10% sobre o total dos pedágios (mínimo de R$ 0,90)
  */
 
 (function () {
@@ -110,8 +110,8 @@
       window.addEventListener('load', () => {
         navigator.serviceWorker
           .register('/sw.js')
-          .then((reg) => console.log('[Fluip PWA] Service Worker ativo:', reg.scope))
-          .catch((err) => console.warn('[Fluip PWA] Erro ao registrar SW:', err));
+          .then((reg) => console.log('[Estradapay PWA] Service Worker ativo:', reg.scope))
+          .catch((err) => console.warn('[Estradapay PWA] Erro ao registrar SW:', err));
       });
     }
   }
@@ -138,7 +138,7 @@
           const { outcome } = await state.deferredPrompt.userChoice;
           if (outcome === 'accepted') {
             dom.btnInstallPwa.style.display = 'none';
-            showToast('Fluip instalado com sucesso!');
+            showToast('Estradapay instalado com sucesso!');
           }
           state.deferredPrompt = null;
         } else if (isIOS && dom.iosGuideModal) {
@@ -377,18 +377,20 @@
   }
 
   /**
-   * Cálculo da taxa Fluip dinâmica:
-   * Math.max(0.90, valorTotalPedagios * 0.10)
+   * Cálculo da taxa Estradapay dinâmica:
+   * taxaEstradapay = Math.max(0.90, valorTotalPedagios * 0.10)
    */
-  function calcularTaxaFluip(subtotal) {
+  function calcularTaxaEstradapay(subtotal) {
     if (!subtotal || subtotal <= 0) return 0;
     return Number(Math.max(state.taxaMinima, subtotal * state.percentualTaxa).toFixed(2));
   }
+  // Alias de compatibilidade
+  const calcularTaxaFluip = calcularTaxaEstradapay;
 
   function calcularTotalAtual() {
     const selecionados = state.debitos.filter((d) => state.debitosSelecionadosIds.has(d.id));
     const subtotal = selecionados.reduce((acc, curr) => acc + Number(curr.valorTarifa || 0), 0);
-    const taxa = selecionados.length > 0 ? calcularTaxaFluip(subtotal) : 0;
+    const taxa = selecionados.length > 0 ? calcularTaxaEstradapay(subtotal) : 0;
     return Number((subtotal + taxa).toFixed(2));
   }
 
@@ -516,8 +518,8 @@
     const selecionados = state.debitos.filter((d) => state.debitosSelecionadosIds.has(d.id));
     const qtd = selecionados.length;
     const subtotal = selecionados.reduce((acc, curr) => acc + Number(curr.valorTarifa || 0), 0);
-    // Taxa Fluip dinâmica: 10% (0.10) sobre o total dos pedágios (mínimo de R$ 0,90)
-    const taxa = qtd > 0 ? calcularTaxaFluip(subtotal) : 0;
+    // Taxa Estradapay dinâmica: 10% (0.10) sobre o total dos pedágios (mínimo de R$ 0,90)
+    const taxa = qtd > 0 ? calcularTaxaEstradapay(subtotal) : 0;
     const total = Number((subtotal + taxa).toFixed(2));
 
     dom.summarySubtotal.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;

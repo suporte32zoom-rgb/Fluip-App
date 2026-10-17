@@ -1,9 +1,9 @@
 /**
- * Service Worker - Fluip PWA
+ * Service Worker - Estradapay PWA
  * Gerenciamento de cache offline, atualizações e estabilidade de conexão
  */
 
-const CACHE_NAME = 'fluip-v1.0.2';
+const CACHE_NAME = 'estradapay-v2.1.0';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -11,7 +11,12 @@ const STATIC_ASSETS = [
   '/app.js',
   '/manifest.json',
   '/icon.svg',
+  '/logo.jpg',
   '/favicon.ico',
+  '/favicon.png',
+  '/apple-touch-icon.png',
+  '/pwa-192x192.png',
+  '/pwa-512x512.png'
 ];
 
 // Instalação do Service Worker e pré-cacheamento de arquivos essenciais

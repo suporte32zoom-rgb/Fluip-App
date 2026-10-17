@@ -466,7 +466,7 @@ export class App {
         promptEvent.userChoice.then((choice) => {
           if (choice.outcome === 'accepted') {
             this.pwaInstallEvent.set(null);
-            this.mostrarToast('Fluip instalado com sucesso!');
+            this.mostrarToast('Estradapay instalado com sucesso!');
           }
         });
       }

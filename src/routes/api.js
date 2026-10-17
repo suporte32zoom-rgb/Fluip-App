@@ -214,7 +214,7 @@ router.post('/webhook/pix', (req, res) => {
     if (!cobranca) {
       return res.status(404).json({
         success: false,
-        error: `Cobrança com txid ${txid} não foi localizada no sistema Fluip.`,
+        error: `Cobrança com txid ${txid} não foi localizada no sistema Estradapay.`,
       });
     }
 

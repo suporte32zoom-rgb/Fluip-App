@@ -20,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Montar rotas da API Fluip
+// Montar rotas da API Estradapay
 app.use('/api/v1', apiRoutes);
 
 // Servir arquivos estáticos do public (manifest, icons, sw, etc.)

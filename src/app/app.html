@@ -1,16 +1,16 @@
-<!-- FLUIP - Template Principal Angular PWA com Suporte Multi-Pagamento -->
+<!-- ESTRADAPAY - Template Principal Angular PWA com Suporte Multi-Pagamento -->
 <div class="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans antialiased">
   
   <!-- Header / Barra Superior -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-3">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2.5">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-emerald-500 flex items-center justify-center shadow-sm">
-          <img src="/icon.svg" alt="Fluip" class="w-6 h-6" referrerpolicy="no-referrer" />
+        <div class="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center shadow-xs border border-slate-200 bg-white shrink-0" title="Estrada Pay">
+          <img src="/logo.jpg" alt="Logo Estrada Pay" class="w-full h-full object-cover" referrerpolicy="no-referrer">
         </div>
         <div>
-          <h1 class="text-xl font-extrabold tracking-tight text-slate-900 leading-none">Fluip</h1>
-          <span class="text-[10px] font-bold uppercase tracking-wider text-sky-600 block mt-0.5">Free Flow Sem Multas</span>
+          <h1 class="text-xl font-extrabold tracking-tight text-slate-900 leading-none">Estrada<span class="text-blue-600">Pay</span></h1>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600 block mt-0.5">Pedágio Free Flow sem multas</span>
         </div>
       </div>
 
@@ -209,7 +209,7 @@
     <section class="mt-6 bg-white border border-slate-200 rounded-2xl p-4 shadow-xs">
       <h3 class="text-xs font-bold text-slate-900 mb-3 flex items-center gap-1.5">
         <mat-icon class="text-emerald-600 text-base! w-4! h-4!">verified_user</mat-icon>
-        Segurança e Opções de Pagamento Fluip
+        Segurança e Opções de Pagamento Estradapay
       </h3>
       <div class="space-y-2.5 text-xs text-slate-500">
         <div class="flex items-start gap-2">
@@ -218,7 +218,7 @@
         </div>
         <div class="flex items-start gap-2">
           <mat-icon class="text-emerald-600 text-sm! w-4! h-4! shrink-0">check_circle</mat-icon>
-          <span><strong>Taxa Fluip Proporcional:</strong> Apenas 10% sobre as tarifas selecionadas (com taxa mínima de R$ 0,90).</span>
+          <span><strong>Taxa Estradapay Proporcional:</strong> Apenas 10% sobre as tarifas selecionadas (com taxa mínima de R$ 0,90).</span>
         </div>
         <div class="flex items-start gap-2">
           <mat-icon class="text-emerald-600 text-sm! w-4! h-4! shrink-0">check_circle</mat-icon>
@@ -229,13 +229,13 @@
 
   </main>
 
-  <!-- Barra Fixa de Checkout (Sticky Mobile Bottom) com Taxa Fluip Proporcional (10% min R$ 0,90) -->
+  <!-- Barra Fixa de Checkout (Sticky Mobile Bottom) com Taxa Estradapay Proporcional (10% min R$ 0,90) -->
   @if (debitos().length > 0) {
     <aside class="fixed bottom-0 inset-x-0 bg-white/98 backdrop-blur-md border-t border-slate-200 p-3.5 z-40 shadow-xl">
       <div class="max-w-md mx-auto">
         <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
           <span>Tarifas: <strong class="text-slate-900">R$ {{ subtotal().toFixed(2) }}</strong></span>
-          <span>Taxa Fluip (10%): <strong class="text-slate-900">R$ {{ taxaCalculada().toFixed(2) }}</strong></span>
+          <span>Taxa Estradapay (10%): <strong class="text-slate-900">R$ {{ taxaCalculada().toFixed(2) }}</strong></span>
         </div>
         <div class="flex items-center justify-between gap-3">
           <div>

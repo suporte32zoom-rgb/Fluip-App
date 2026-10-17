@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import pedagioService from './pedagioService.js';
 
 /**
- * Serviço de Geração e Gerenciamento de Pagamentos (Pix, Crédito e Débito) - Fluip
+ * Serviço de Geração e Gerenciamento de Pagamentos (Pix, Crédito e Débito) - Estradapay
  */
 class PagamentoService {
   constructor() {
@@ -96,7 +96,7 @@ class PagamentoService {
         }
         seed = (seed * 1103515245 + 12345) & 0x7fffffff;
         if ((seed % 100) > 42) {
-          const fill = (seed % 10) === 0 ? '#0ea5e9' : '#0f172a';
+          const fill = (seed % 10) === 0 ? '#10b981' : '#0f172a';
           svgRects += `<rect x="${(c * cellSize).toFixed(1)}" y="${(r * cellSize).toFixed(1)}" width="${(cellSize * 0.92).toFixed(1)}" height="${(cellSize * 0.92).toFixed(1)}" fill="${fill}" rx="1.5" />`;
         }
       }
@@ -106,7 +106,7 @@ class PagamentoService {
     const centerPos = (size - centerSize) / 2;
     const centerSvg = `
       <rect x="${centerPos}" y="${centerPos}" width="${centerSize}" height="${centerSize}" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" />
-      <path d="M${centerPos + 12} ${centerPos + 16} L${centerPos + 32} ${centerPos + 16} M${centerPos + 12} ${centerPos + 22} L${centerPos + 28} ${centerPos + 22} M${centerPos + 12} ${centerPos + 28} L${centerPos + 22} ${centerPos + 28}" stroke="#0284c7" stroke-width="3" stroke-linecap="round" />
+      <path d="M${centerPos + 12} ${centerPos + 16} L${centerPos + 32} ${centerPos + 16} M${centerPos + 12} ${centerPos + 22} L${centerPos + 28} ${centerPos + 22} M${centerPos + 12} ${centerPos + 28} L${centerPos + 22} ${centerPos + 28}" stroke="#10b981" stroke-width="3" stroke-linecap="round" />
     `;
 
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}"><rect width="${size}" height="${size}" fill="#ffffff" rx="16"/>${svgRects}${centerSvg}</svg>`;
@@ -139,7 +139,7 @@ class PagamentoService {
   }
 
   /**
-   * Calcula a Taxa Fluip dinâmica e proporcional
+   * Calcula a Taxa Estradapay dinâmica e proporcional
    * Regra: 10% (0.10) sobre o total dos pedágios com taxa mínima de R$ 0,90
    * Fórmula: Math.max(TAXA_MINIMA, valorTotalPedagios * PERCENTUAL_TAXA)
    */
@@ -176,13 +176,13 @@ class PagamentoService {
       ? passagens.reduce((sum, item) => sum + Number(item.valorTarifa || 0), 0)
       : passagensIds.length * 10.50;
 
-    // Aplicação da fórmula dinâmica da Taxa Fluip: Math.max(0.90, subtotal * 0.10)
+    // Aplicação da fórmula dinâmica da Taxa Estradapay: Math.max(0.90, subtotal * 0.10)
     const taxa = (taxaConveniencia !== null && taxaConveniencia !== undefined && typeof taxaConveniencia === 'number' && taxaConveniencia >= 0)
       ? Number(taxaConveniencia.toFixed(2))
       : this.calcularTaxa(subtotal);
 
     const valorTotal = Number((subtotal + taxa).toFixed(2));
-    const txid = `FLUIP${uuidv4().replace(/-/g, '').substring(0, 16).toUpperCase()}`;
+    const txid = `ESTRADA${uuidv4().replace(/-/g, '').substring(0, 15).toUpperCase()}`;
 
     const agora = new Date();
     const tempoLimiteSegundos = 900; // 15 minutos
@@ -195,8 +195,8 @@ class PagamentoService {
 
     if (metodo === 'pix') {
       pixCopiaECola = this.montarPixCopiaECola({
-        chavePix: 'financeiro@fluip.com.br',
-        nomeRecebedor: 'FLUIP PAGAMENTOS S.A.',
+        chavePix: 'financeiro@estradapay.com.br',
+        nomeRecebedor: 'ESTRADAPAY PAGAMENTOS S.A.',
         cidade: 'SAO PAULO',
         valor: valorTotal,
         txid,
@@ -284,7 +284,7 @@ class PagamentoService {
     cobranca.protocoloConcessionaria = `PROT-CONC-${Math.floor(100000 + Math.random() * 900000)}`;
     cobranca.comprovante = {
       titulo: 'Comprovante Oficial de Quitação de Pedágio Free Flow',
-      intermediador: 'Fluip Pagamentos S.A. - CNPJ: 45.892.311/0001-92',
+      intermediador: 'Estradapay Pagamentos S.A. - CNPJ: 45.892.311/0001-92',
       placa: cobranca.placa,
       formaDePagamento: metodoFormatado,
       cartaoFinal: cartaoMascarado,

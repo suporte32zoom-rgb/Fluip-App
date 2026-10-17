@@ -30,7 +30,7 @@ app.use('/api/v1', apiRoutes);
 app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'ONLINE',
-    app: 'Fluip - Intermediação Free Flow',
+    app: 'Estradapay - Intermediação Free Flow',
     ambiente: process.env.NODE_ENV || 'production',
     timestamp: new Date().toISOString(),
   });
@@ -44,9 +44,9 @@ app.use((req, res) => {
 // Inicialização do servidor HTTP
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`=================================================`);
-  console.log(`🚀 Fluip - Servidor Free Flow Rodando!`);
+  console.log(`🚀 Estradapay - Servidor Free Flow Rodando!`);
   console.log(`📍 URL Local: http://localhost:${PORT}`);
-  console.log(`💳 Gateway Ativo | Taxa Fluip: 10% (mínimo R$ ${process.env.TAXA_MINIMA || '0.90'})`);
+  console.log(`💳 Gateway Ativo | Taxa Estradapay: 10% (mínimo R$ ${process.env.TAXA_MINIMA || '0.90'})`);
   console.log(`📁 Pasta Pública: ${publicDir}`);
   console.log(`=================================================`);
 });

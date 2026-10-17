@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "Fluip - Pagamento de Pedágio Free Flow",
-  "short_name": "Fluip",
-  "description": "Consulte e pague seus pedágios Free Flow por placa veicular via PIX de forma rápida e sem multas.",
+  "name": "Estradapay - Pedágio Free Flow sem multas",
+  "short_name": "Estradapay",
+  "description": "Consulte e pague seus pedágios Free Flow por placa veicular de forma rápida, segura e sem multas.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

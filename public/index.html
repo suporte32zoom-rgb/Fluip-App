@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Fluip - Pagamento de Pedágio Free Flow por Placa</title>
+  <title>Estradapay - Pedágio Free Flow sem multas</title>
   
-  <meta name="description" content="Consulte e pague seus pedágios automáticos Free Flow por placa (Mercosul e Tradicional) via PIX ou Cartão em segundos. Evite multas de evasão de pedágio em rodovias do Brasil.">
+  <meta name="description" content="Consulte e pague seus pedágios automáticos Free Flow por placa (Mercosul e Tradicional) via Estradapay em segundos. Evite multas de evasão de pedágio em rodovias do Brasil.">
   <meta name="theme-color" content="#0f172a">
   <meta name="robots" content="index, follow">
   
@@ -14,8 +14,10 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Fluip">
+  <meta name="apple-mobile-web-app-title" content="Estradapay">
   
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="/style.css">
@@ -26,12 +28,12 @@
   <header class="app-header">
     <div class="header-content">
       <a href="/" class="brand">
-        <div class="brand-logo-wrap">
-          <img src="/icon.svg" alt="Fluip Logo">
+        <div class="brand-logo-wrap" title="Estrada Pay">
+          <img src="/logo.jpg" alt="Logo Estrada Pay" class="brand-logo-img" referrerpolicy="no-referrer">
         </div>
         <div class="brand-text">
-          <h1>Fluip</h1>
-          <span>Free Flow Sem Multas</span>
+          <h1>Estrada<span class="brand-highlight">Pay</span></h1>
+          <span>Pedágio Free Flow sem multas</span>
         </div>
       </a>
 
@@ -138,7 +140,7 @@
     <!-- Formas de Pagamento e Segurança -->
     <section style="margin-top: 24px; padding: 16px; background: #ffffff; border-radius: 16px; border: 1px solid var(--slate-200); box-shadow: var(--shadow-sm);">
       <h3 style="font-size: 0.875rem; font-weight: 700; color: var(--dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-        <span style="color: var(--secondary);">🛡️</span> Pagamento Seguro & Baixa Imediata
+        <span style="color: var(--secondary);">🛡️</span> Segurança e Opções de Pagamento Estradapay
       </h3>
       <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.8125rem; color: var(--slate-500);">
         <li style="display: flex; align-items: flex-start; gap: 8px;">
@@ -147,7 +149,7 @@
         </li>
         <li style="display: flex; align-items: flex-start; gap: 8px;">
           <span style="color: var(--secondary); font-weight: bold;">✓</span>
-          <span><strong>Taxa Fluip proporcional:</strong> Apenas 10% sobre o total de pedágios (com taxa mínima de R$ 0,90).</span>
+          <span><strong>Taxa Estradapay proporcional:</strong> Apenas 10% sobre o total de pedágios (com taxa mínima de R$ 0,90).</span>
         </li>
         <li style="display: flex; align-items: flex-start; gap: 8px;">
           <span style="color: var(--secondary); font-weight: bold;">✓</span>
@@ -158,12 +160,12 @@
 
   </main>
 
-  <!-- Barra Fixa de Resumo Financeiro (Sticky Mobile Bottom) com Taxa Fluip Proporcional (10% min R$ 0,90) -->
+  <!-- Barra Fixa de Resumo Financeiro (Sticky Mobile Bottom) com Taxa Estradapay Proporcional (10% min R$ 0,90) -->
   <aside id="checkoutBar" class="checkout-bar" style="display: none;">
     <div class="checkout-bar-inner">
       <div class="summary-breakdown">
         <span>Tarifas: <strong id="summarySubtotal">R$ 0,00</strong></span>
-        <span>Taxa Fluip (10%): <strong id="summaryTaxa">R$ 0,90</strong></span>
+        <span>Taxa Estradapay (10%): <strong id="summaryTaxa">R$ 0,90</strong></span>
       </div>
       <div class="checkout-row">
         <div class="total-display">
@@ -229,7 +231,7 @@
           </div>
 
           <div class="qr-code-wrapper">
-            <img id="qrCodeImage" src="" alt="QR Code PIX Fluip" class="qr-code-img">
+            <img id="qrCodeImage" src="" alt="QR Code PIX Estradapay" class="qr-code-img">
             <p class="qr-instructions">Abra o app do seu banco e aponte a câmera para ler o QR Code</p>
           </div>
 
@@ -371,7 +373,7 @@
   <div id="iosGuideModal" class="ios-guide-modal" style="display: none;">
     <div class="ios-guide-card">
       <h3 style="font-size: 1.125rem; font-weight: 800; color: var(--dark); margin-bottom: 8px;">Instalar no iPhone / iPad</h3>
-      <p style="font-size: 0.8125rem; color: var(--slate-500); margin-bottom: 16px;">Adicione o Fluip à sua Tela de Início:</p>
+      <p style="font-size: 0.8125rem; color: var(--slate-500); margin-bottom: 16px;">Adicione o Estradapay à sua Tela de Início:</p>
       <div class="ios-step">
         <div class="ios-step-num">1</div>
         <div>Toque no botão <strong>Compartilhar</strong> na barra do Safari.</div>

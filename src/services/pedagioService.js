@@ -1,5 +1,5 @@
 /**
- * Serviço de Consulta e Gerenciamento de Tarifas de Pedágio Free Flow (Fluip)
+ * Serviço de Consulta e Gerenciamento de Tarifas de Pedágio Free Flow (Estradapay)
  */
 
 class PedagioService {

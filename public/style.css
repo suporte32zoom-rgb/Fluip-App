@@ -74,32 +74,46 @@ body {
 }
 
 .brand-logo-wrap {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, #0284c7 0%, #10b981 100%);
+  width: 44px;
+  height: 44px;
+  background: #ffffff;
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12);
+  border: 1px solid #e2e8f0;
 }
 
-.brand-logo-wrap img {
-  width: 26px;
-  height: 26px;
+.brand-logo-wrap svg,
+.brand-logo-wrap img,
+.brand-logo-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: var(--radius-md);
 }
 
 .brand-text h1 {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-weight: 800;
   letter-spacing: -0.5px;
   color: var(--dark);
+  line-height: 1.1;
+}
+
+.brand-text h1 .brand-highlight {
+  color: #2563eb;
 }
 
 .brand-text span {
-  font-size: 0.68rem;
-  font-weight: 600;
+  font-size: 0.65rem;
+  font-weight: 700;
   text-transform: uppercase;
-  color: var(--primary);
+  color: #2563eb;
+  letter-spacing: 0.4px;
   display: block;
 }
 

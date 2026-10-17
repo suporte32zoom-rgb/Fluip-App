@@ -1,49 +1,80 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
+    <!-- Background Gradient (Deep Authority Navy) -->
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#0f172a" />
-      <stop offset="50%" stop-color="#1e293b" />
-      <stop offset="100%" stop-color="#090d16" />
+      <stop offset="60%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#020617" />
     </linearGradient>
-    <linearGradient id="fluipGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#38bdf8" />
-      <stop offset="50%" stop-color="#0ea5e9" />
-      <stop offset="100%" stop-color="#10b981" />
+
+    <!-- Emerald / Mint Payment Gradient -->
+    <linearGradient id="payEmeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="50%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
     </linearGradient>
-    <linearGradient id="roadGrad" x1="50%" y1="0%" x2="50%" y2="100%">
-      <stop offset="0%" stop-color="#334155" />
-      <stop offset="100%" stop-color="#1e293b" />
+
+    <!-- Cyan to Emerald Speed Glow -->
+    <linearGradient id="speedGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0ea5e9" />
+      <stop offset="60%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#6ee7b7" />
     </linearGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="16" result="blur" />
+
+    <!-- Asphalt Highway Gradient -->
+    <linearGradient id="highwayGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+
+    <!-- Soft Ambient Glow -->
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
   </defs>
 
-  <!-- Background with Safe Padding for Maskable Icon -->
-  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+  <!-- Background Card / App Icon Rounded Superellipse -->
+  <rect width="512" height="512" rx="116" fill="url(#bgGrad)" />
 
-  <!-- Outer Glow Ring -->
-  <circle cx="256" cy="256" r="195" fill="none" stroke="url(#fluipGrad)" stroke-width="4" opacity="0.3" />
+  <!-- Subtle Outer Border Accent -->
+  <rect x="6" y="6" width="500" height="500" rx="110" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4" />
 
-  <!-- Road Perspective -->
-  <path d="M 216 160 L 296 160 L 366 380 L 146 380 Z" fill="url(#roadGrad)" />
-  <!-- Road Dash -->
-  <line x1="256" y1="180" x2="256" y2="230" stroke="#f8fafc" stroke-width="8" stroke-linecap="round" opacity="0.8" />
-  <line x1="256" y1="260" x2="256" y2="330" stroke="#f8fafc" stroke-width="12" stroke-linecap="round" />
+  <!-- Highway Track: Perspective Road Lines -->
+  <!-- Left Lane Edge -->
+  <path d="M 148 400 L 224 168" stroke="#475569" stroke-width="12" stroke-linecap="round" opacity="0.6" />
+  
+  <!-- Center Highway Dashes -->
+  <line x1="256" y1="384" x2="256" y2="330" stroke="#f8fafc" stroke-width="12" stroke-linecap="round" opacity="0.9" />
+  <line x1="256" y1="298" x2="256" y2="256" stroke="#f8fafc" stroke-width="10" stroke-linecap="round" opacity="0.75" />
+  <line x1="256" y1="230" x2="256" y2="202" stroke="#f8fafc" stroke-width="8" stroke-linecap="round" opacity="0.5" />
 
-  <!-- Free Flow Overhead Portal Structure -->
-  <path d="M 120 280 L 120 170 Q 120 140 150 140 L 362 140 Q 392 140 392 170 L 392 280" fill="none" stroke="url(#fluipGrad)" stroke-width="20" stroke-linecap="round" filter="url(#glow)" />
+  <!-- Sensor Waves / Overhead Portal Beam -->
+  <path d="M 136 180 Q 256 120 376 180" fill="none" stroke="#0ea5e9" stroke-width="7" stroke-linecap="round" opacity="0.4" />
+  <path d="M 164 150 Q 256 100 348 150" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" opacity="0.6" />
 
-  <!-- Contactless Sensor Beam Waves -->
-  <path d="M 200 165 Q 256 195 312 165" fill="none" stroke="#38bdf8" stroke-width="8" stroke-linecap="round" opacity="0.9" />
-  <path d="M 220 195 Q 256 220 292 195" fill="none" stroke="#10b981" stroke-width="6" stroke-linecap="round" opacity="0.9" />
+  <!-- HERO ELEMENT: The Right Highway Lane Transforms into a Dynamic Payment Checkmark -->
+  <!-- Check Stem Base (Ascending Highway) -->
+  <path d="M 172 292 L 236 356 C 244 364 256 364 264 354 L 388 186" 
+        fill="none" 
+        stroke="url(#speedGrad)" 
+        stroke-width="36" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        filter="url(#softGlow)" />
 
-  <!-- Fluip Dynamic "F" Fast Forward Speed Badge -->
-  <g transform="translate(256, 386) scale(0.95)">
-    <circle cx="0" cy="0" r="54" fill="#0f172a" stroke="url(#fluipGrad)" stroke-width="8" />
-    <!-- Pix / Speed Rhombus -->
-    <path d="M 0 -24 L 24 0 L 0 24 L -24 0 Z" fill="url(#fluipGrad)" />
-    <path d="M -6 -10 L 6 -10 M -6 0 L 2 0 M -6 10 L -6 -10" stroke="#0f172a" stroke-width="4" stroke-linecap="round" />
-  </g>
+  <!-- Crisp Core of Checkmark -->
+  <path d="M 172 292 L 236 356 C 244 364 256 364 264 354 L 388 186" 
+        fill="none" 
+        stroke="#ffffff" 
+        stroke-width="16" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" />
+
+  <!-- Flash Sparkle Point on Check Peak -->
+  <circle cx="388" cy="186" r="14" fill="#34d399" filter="url(#softGlow)" />
+  <circle cx="388" cy="186" r="8" fill="#ffffff" />
+
+  <!-- Speed/Flow Accent Streak -->
+  <path d="M 288 392 Q 338 382 376 348" fill="none" stroke="#10b981" stroke-width="8" stroke-linecap="round" opacity="0.7" />
 </svg>
