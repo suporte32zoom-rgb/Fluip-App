@@ -5,28 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Fluip - Pagamento de Pedágio Free Flow por Placa</title>
   
-  <!-- SEO & Metadados -->
-  <meta name="description" content="Consulte e pague seus pedágios automáticos Free Flow por placa via PIX em segundos. Evite multas de evasão de pedágio em rodovias do Brasil.">
+  <meta name="description" content="Consulte e pague seus pedágios automáticos Free Flow por placa (Mercosul e Tradicional) via PIX ou Cartão em segundos. Evite multas de evasão de pedágio em rodovias do Brasil.">
   <meta name="theme-color" content="#0f172a">
   <meta name="robots" content="index, follow">
   
-  <!-- Configurações PWA (Mobile-First) -->
+  <!-- PWA Mobile-First -->
   <link rel="manifest" href="/manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Fluip">
   
-  <!-- Ícones -->
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  
-  <!-- Folha de Estilos PWA -->
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-  <!-- Barra Superior / Header -->
+  <!-- Barra Superior -->
   <header class="app-header">
     <div class="header-content">
       <a href="/" class="brand">
@@ -39,8 +35,7 @@
         </div>
       </a>
 
-      <!-- Botão de Instalar App (PWA) -->
-      <button id="btnInstallPwa" class="btn-install" style="display: none;" title="Instalar aplicativo no celular">
+      <button id="btnInstallPwa" class="btn-install" style="display: none;" title="Instalar aplicativo">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
         </svg>
@@ -49,31 +44,31 @@
     </div>
   </header>
 
-  <!-- Container Principal do Usuário -->
+  <!-- Container Mobile Principal -->
   <main class="app-container">
 
-    <!-- Banner Educativo Informativo da Legislação Free Flow -->
+    <!-- Banner Educativo da Legislação -->
     <section class="info-banner">
       <svg fill="currentColor" viewBox="0 0 20 20">
         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
       </svg>
       <p>
-        <strong>Pedágio Eletrônico Free Flow:</strong> Os veículos passam sem cancela e o condutor possui <strong>até 30 dias</strong> para pagar antes de gerar infração grave (Art. 209-A do CTB).
+        <strong>Pedágio Eletrônico Free Flow:</strong> Os veículos passam sem cancela e o condutor tem <strong>até 30 dias</strong> para pagar a tarifa antes da multa de evasão (Art. 209-A do CTB).
       </p>
     </section>
 
-    <!-- Cartão de Busca por Placa Veicular (Mockup Placa Mercosul) -->
+    <!-- Cartão de Busca: Placa Dinâmica (Mercosul e Tradicional) -->
     <section class="search-card">
       <h2 class="search-card-title">Consultar Débitos por Placa</h2>
-      <p class="search-card-subtitle">Digite a placa do seu veículo para buscar passagens em pórticos automáticos:</p>
+      <p class="search-card-subtitle">Aceita placas brasileiras nos padrões Mercosul (ABC1D23) ou Tradicional (ABC-1234):</p>
 
       <form id="formConsulta">
-        <!-- Caixa Estilizada de Placa Mercosul -->
-        <div class="mercosul-plate-box">
+        <!-- Moldura Adaptável de Placa -->
+        <div id="plateBox" class="mercosul-plate-box theme-mercosul">
           <div class="mercosul-header">
-            <span>MERCOSUL</span>
-            <div class="flag-brasil">
-              <span style="font-size: 0.65rem;">BRASIL</span>
+            <span id="plateHeaderTitle">BRASIL / MERCOSUL & ANTIGA</span>
+            <div class="flag-brasil" id="plateHeaderFlag">
+              <span id="plateHeaderSubtitle" style="font-size: 0.65rem;">BRASIL</span>
               <span style="display:inline-block; width:14px; height:10px; background:#009c3b; border-radius:1px; position:relative;">
                 <span style="position:absolute; inset:2px 3px; background:#ffdf00; clip-path:polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);"></span>
               </span>
@@ -84,26 +79,31 @@
               type="text" 
               id="inputPlaca" 
               class="plate-input" 
-              placeholder="ABC1D23" 
+              placeholder="ABC1D23 ou ABC-1234" 
               autocomplete="off" 
               autocapitalize="characters" 
               spellcheck="false" 
-              maxlength="7"
+              maxlength="8"
               required
             >
           </div>
         </div>
 
-        <!-- Chips com Placas de Demonstração Rápida -->
-        <div class="quick-plates">
-          <span class="quick-plates-label">Exemplos:</span>
-          <button type="button" class="chip-plate" data-placa="BRA2E19">BRA2E19</button>
-          <button type="button" class="chip-plate" data-placa="RIO2024">RIO2024</button>
-          <button type="button" class="chip-plate" data-placa="FLX9A88">FLX9A88</button>
-          <button type="button" class="chip-plate" data-placa="ABC1234">ABC1234</button>
+        <!-- Indicador dinâmico de formato detectado -->
+        <div class="plate-format-indicator">
+          <span>Identificação:</span>
+          <span id="plateTypeBadge" class="plate-badge-type badge-neutral">Digite 7 caracteres</span>
         </div>
 
-        <!-- Botão Consultar -->
+        <!-- Chips com Placas de Demonstração (Mercosul e Antiga) -->
+        <div class="quick-plates">
+          <span class="quick-plates-label">Exemplos:</span>
+          <button type="button" class="chip-plate" data-placa="BRA2E19">BRA2E19 (Mercosul)</button>
+          <button type="button" class="chip-plate" data-placa="RIO2024">RIO2024 (Mercosul)</button>
+          <button type="button" class="chip-plate" data-placa="ABC-1234">ABC-1234 (Antiga)</button>
+          <button type="button" class="chip-plate" data-placa="KGT-9821">KGT-9821 (Antiga)</button>
+        </div>
+
         <button type="submit" id="btnConsultar" class="btn-primary">
           <span id="btnText">
             <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:inline; margin-right:4px;">
@@ -116,7 +116,7 @@
       </form>
     </section>
 
-    <!-- Área de Resultados de Débitos -->
+    <!-- Área de Resultados -->
     <section id="resultsSection" style="display: none;">
       <div class="results-header">
         <div>
@@ -125,7 +125,6 @@
         <span id="resultsCount" class="results-counter">0 passagens</span>
       </div>
 
-      <!-- Selecionar Todos -->
       <div id="selectAllContainer" style="display: none; align-items: center; justify-content: flex-end; gap: 8px; margin-bottom: 12px;">
         <label style="font-size: 0.75rem; color: var(--slate-500); cursor: pointer; display: flex; align-items: center; gap: 6px;">
           <input type="checkbox" id="selectAllCheckbox" checked style="accent-color: var(--primary);">
@@ -133,39 +132,38 @@
         </label>
       </div>
 
-      <!-- Lista de Cards de Pedágio -->
       <div id="tollsList"></div>
     </section>
 
-    <!-- Benefícios e Segurança Fluip -->
-    <section style="margin-top: 32px; padding: 16px; background: #ffffff; border-radius: 16px; border: 1px solid var(--slate-200); box-shadow: var(--shadow-sm);">
+    <!-- Formas de Pagamento e Segurança -->
+    <section style="margin-top: 24px; padding: 16px; background: #ffffff; border-radius: 16px; border: 1px solid var(--slate-200); box-shadow: var(--shadow-sm);">
       <h3 style="font-size: 0.875rem; font-weight: 700; color: var(--dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-        <span style="color: var(--secondary);">🛡️</span> Por que pagar seus pedágios no Fluip?
+        <span style="color: var(--secondary);">🛡️</span> Pagamento Seguro & Baixa Imediata
       </h3>
       <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.8125rem; color: var(--slate-500);">
         <li style="display: flex; align-items: flex-start; gap: 8px;">
           <span style="color: var(--secondary); font-weight: bold;">✓</span>
-          <span><strong>Baixa imediata na concessionária:</strong> Quitação confirmada em tempo real via webhook homologado.</span>
+          <span><strong>Múltiplas formas:</strong> Pague via PIX, Cartão de Crédito (em até 12x) ou Cartão de Débito à vista.</span>
         </li>
         <li style="display: flex; align-items: flex-start; gap: 8px;">
           <span style="color: var(--secondary); font-weight: bold;">✓</span>
-          <span><strong>Comprovante com autenticação bancária:</strong> Garantia jurídica completa contra autuações de trânsito.</span>
+          <span><strong>Taxa de conveniência reduzida:</strong> Apenas R$ 1,90 por transação unificada.</span>
         </li>
         <li style="display: flex; align-items: flex-start; gap: 8px;">
           <span style="color: var(--secondary); font-weight: bold;">✓</span>
-          <span><strong>Todas as rodovias em um só lugar:</strong> CCR RioSP, Ecovias, CSG e rodovias federais integradas.</span>
+          <span><strong>Compatibilidade total:</strong> Válido para placas Mercosul e antigas cinza de todo o Brasil.</span>
         </li>
       </ul>
     </section>
 
   </main>
 
-  <!-- Barra Flutuante de Resumo Financeiro (Sticky Mobile Bottom) -->
+  <!-- Barra Fixa de Resumo Financeiro (Sticky Mobile Bottom) com Taxa Fluip R$ 1,90 -->
   <aside id="checkoutBar" class="checkout-bar" style="display: none;">
     <div class="checkout-bar-inner">
       <div class="summary-breakdown">
         <span>Tarifas: <strong id="summarySubtotal">R$ 0,00</strong></span>
-        <span>Taxa Fluip: <strong id="summaryTaxa">R$ 2,50</strong></span>
+        <span>Taxa Fluip: <strong id="summaryTaxa">R$ 1,90</strong></span>
       </div>
       <div class="checkout-row">
         <div class="total-display">
@@ -176,65 +174,148 @@
           <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
-          Pagar via PIX
+          Escolher Pagamento
         </button>
       </div>
     </div>
   </aside>
 
-  <!-- Modal / Bottom Sheet do Checkout PIX -->
+  <!-- Modal Bottom Sheet de Checkout Multi-Métodos -->
   <div id="modalPix" class="modal-overlay">
     <div class="modal-sheet">
       <div class="sheet-handle"></div>
 
-      <!-- Conteúdo do Checkout Ativo -->
       <div id="pixCheckoutContent">
         <div class="modal-header">
-          <h3>Pagamento Instantâneo PIX</h3>
+          <h3>Finalizar Pagamento</h3>
           <button id="btnCloseModal" class="btn-close" title="Fechar">✕</button>
         </div>
 
-        <!-- Timer Regressivo de 15 Minutos -->
-        <div class="pix-timer-box">
-          <span class="pix-timer-label">
-            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10" stroke-width="2"></circle>
-              <polyline points="12 6 12 12 16 14" stroke-width="2"></polyline>
+        <!-- Abas de Seleção de Forma de Pagamento -->
+        <div class="payment-tabs">
+          <button type="button" class="payment-tab-btn active" data-method="pix" id="tabBtnPix">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2L3 9l9 7 9-7-9-7zm0 18l-7-5.4V19l7 5 7-5v-4.4L12 20z"/>
             </svg>
-            Expira em:
-          </span>
-          <span id="pixTimer" class="pix-countdown">15:00</span>
-        </div>
-
-        <!-- Imagem do QR Code -->
-        <div class="qr-code-wrapper">
-          <img id="qrCodeImage" src="" alt="QR Code PIX Fluip" class="qr-code-img">
-          <p class="qr-instructions">Abra o aplicativo do seu banco e aponte a câmera para ler o QR Code</p>
-        </div>
-
-        <!-- Campo Pix Copia e Cola -->
-        <div class="pix-copy-box">
-          <input type="text" id="inputPixCode" class="pix-copy-input" readonly>
-          <button id="btnCopyPix" class="btn-copy">
-            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <rect x="9" y="9" width="13" height="13" rx="2" stroke-width="2"></rect>
-              <path stroke-width="2" d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+            PIX
+          </button>
+          <button type="button" class="payment-tab-btn" data-method="credito" id="tabBtnCredito">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <rect x="2" y="5" width="20" height="14" rx="2" stroke-width="2"/>
+              <line x1="2" y1="10" x2="22" y2="10" stroke-width="2"/>
             </svg>
-            Copiar PIX
+            Crédito
+          </button>
+          <button type="button" class="payment-tab-btn" data-method="debito" id="tabBtnDebito">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <rect x="2" y="5" width="20" height="14" rx="2" stroke-width="2"/>
+              <circle cx="7" cy="15" r="1.5" fill="currentColor"/>
+            </svg>
+            Débito
           </button>
         </div>
 
-        <!-- Botão de Simulação Instantânea (Para Teste do Usuário na Demonstração) -->
-        <button id="btnSimulatePay" class="btn-simulate">
-          ⚡ Simular Pagamento Instantâneo (Demo)
-        </button>
+        <!-- CONTEÚDO 1: PIX -->
+        <div id="tabContentPix">
+          <div class="pix-timer-box">
+            <span class="pix-timer-label">
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke-width="2"></circle>
+                <polyline points="12 6 12 12 16 14" stroke-width="2"></polyline>
+              </svg>
+              Expira em:
+            </span>
+            <span id="pixTimer" class="pix-countdown">15:00</span>
+          </div>
 
-        <p style="font-size: 0.71875rem; color: var(--slate-500); text-align: center;">
-          🔒 O sistema verifica o pagamento a cada 3 segundos automaticamente.
+          <div class="qr-code-wrapper">
+            <img id="qrCodeImage" src="" alt="QR Code PIX Fluip" class="qr-code-img">
+            <p class="qr-instructions">Abra o app do seu banco e aponte a câmera para ler o QR Code</p>
+          </div>
+
+          <div class="pix-copy-box">
+            <input type="text" id="inputPixCode" class="pix-copy-input" readonly>
+            <button id="btnCopyPix" class="btn-copy">
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <rect x="9" y="9" width="13" height="13" rx="2" stroke-width="2"></rect>
+                <path stroke-width="2" d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+              </svg>
+              Copiar PIX
+            </button>
+          </div>
+
+          <button id="btnSimulatePay" class="btn-simulate">
+            ⚡ Simular Pagamento Instantâneo PIX (Demo)
+          </button>
+        </div>
+
+        <!-- CONTEÚDO 2: CARTÃO DE CRÉDITO OU DÉBITO -->
+        <div id="tabContentCard" style="display: none;">
+          <!-- Visual do Cartão Mockup -->
+          <div class="card-preview-box">
+            <div class="card-preview-chip"></div>
+            <div id="cardPreviewNumber" class="card-preview-number">•••• •••• •••• ••••</div>
+            <div class="card-preview-footer">
+              <div>
+                <span>Titular</span>
+                <div id="cardPreviewName" class="card-preview-name">NOME COMPLETO</div>
+              </div>
+              <div>
+                <span>Validade</span>
+                <div id="cardPreviewExpiry">MM/AA</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formulário Simulado de Cartão -->
+          <form id="formCardPayment" class="card-form-grid" onsubmit="event.preventDefault();">
+            <div class="form-field">
+              <label for="cardInputNumber" class="form-label">Número do Cartão</label>
+              <input type="text" id="cardInputNumber" class="form-input" placeholder="0000 0000 0000 0000" maxlength="19" required>
+            </div>
+
+            <div class="form-field">
+              <label for="cardInputName" class="form-label">Nome impresso no cartão</label>
+              <input type="text" id="cardInputName" class="form-input" placeholder="Ex: CARLOS A SILVA" style="text-transform: uppercase;" required>
+            </div>
+
+            <div class="form-row-duo">
+              <div class="form-field">
+                <label for="cardInputExpiry" class="form-label">Validade (MM/AA)</label>
+                <input type="text" id="cardInputExpiry" class="form-input" placeholder="MM/AA" maxlength="5" required>
+              </div>
+              <div class="form-field">
+                <label for="cardInputCvv" class="form-label">CVV</label>
+                <input type="password" id="cardInputCvv" class="form-input" placeholder="123" maxlength="4" required>
+              </div>
+            </div>
+
+            <!-- Opções de Parcelamento (Apenas no Crédito) -->
+            <div id="installmentsWrapper" class="form-field">
+              <label for="cardSelectInstallments" class="form-label">Opções de Parcelamento</label>
+              <select id="cardSelectInstallments" class="form-select"></select>
+            </div>
+
+            <div class="pci-shield-badge">
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <rect x="3" y="11" width="18" height="11" rx="2" stroke-width="2"/>
+                <path d="M7 11V7a5 5 0 0110 0v4" stroke-width="2"/>
+              </svg>
+              Ambiente Seguro • Criptografia TLS 256-bit PCI-DSS
+            </div>
+
+            <button type="button" id="btnSubmitCardPayment" class="btn-card-pay">
+              Confirmar Pagamento com Cartão
+            </button>
+          </form>
+        </div>
+
+        <p style="font-size: 0.71875rem; color: var(--slate-500); text-align: center; margin-top: 12px;">
+          🔒 O sistema verifica o pagamento e efetua a baixa automática na concessionária.
         </p>
       </div>
 
-      <!-- Conteúdo do Comprovante de Sucesso -->
+      <!-- Comprovante Oficial de Quitação -->
       <div id="pixSuccessContent" style="display: none;">
         <div class="receipt-card">
           <div class="receipt-icon">
@@ -249,6 +330,10 @@
             <div class="receipt-row">
               <span>Placa:</span>
               <span id="receiptPlaca">ABC1D23</span>
+            </div>
+            <div class="receipt-row">
+              <span>Forma de Pagamento:</span>
+              <span id="receiptFormaPagamento">PIX Instantâneo</span>
             </div>
             <div class="receipt-row">
               <span>Valor Total Pago:</span>
@@ -277,45 +362,34 @@
     </div>
   </div>
 
-  <!-- Banner de Conectividade Offline -->
   <div id="offlineBanner" class="offline-banner" style="display: none;">
-    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829L21 21M15.536 8.464a5 5 0 010 7.072m0 0l-2.829-2.829m-4.243 4.243a9 9 0 01-12.728 0m0 0l2.829-2.829m-2.829 2.829L3 21m2.828-5.464a5 5 0 010-7.072m0 0l2.829 2.829" />
-    </svg>
     <span>Você está offline. Exibindo dados em cache seguro.</span>
   </div>
 
-  <!-- Toast Flutuante -->
   <div id="toast" class="toast">Mensagem do sistema</div>
 
-  <!-- Guia de Instalação no iOS Safari -->
   <div id="iosGuideModal" class="ios-guide-modal" style="display: none;">
     <div class="ios-guide-card">
       <h3 style="font-size: 1.125rem; font-weight: 800; color: var(--dark); margin-bottom: 8px;">Instalar no iPhone / iPad</h3>
-      <p style="font-size: 0.8125rem; color: var(--slate-500); margin-bottom: 16px;">Adicione o Fluip à sua Tela de Início para ter acesso rápido como um app nativo:</p>
-
+      <p style="font-size: 0.8125rem; color: var(--slate-500); margin-bottom: 16px;">Adicione o Fluip à sua Tela de Início:</p>
       <div class="ios-step">
         <div class="ios-step-num">1</div>
-        <div>Toque no botão <strong>Compartilhar</strong> (ícone com quadrado e seta para cima) na barra inferior do Safari.</div>
+        <div>Toque no botão <strong>Compartilhar</strong> na barra do Safari.</div>
       </div>
-
       <div class="ios-step">
         <div class="ios-step-num">2</div>
-        <div>Role para baixo nas opções e toque em <strong>"Adicionar à Tela de Início"</strong>.</div>
+        <div>Toque em <strong>"Adicionar à Tela de Início"</strong>.</div>
       </div>
-
       <div class="ios-step">
         <div class="ios-step-num">3</div>
-        <div>Toque em <strong>"Adicionar"</strong> no canto superior direito. Pronto!</div>
+        <div>Toque em <strong>"Adicionar"</strong> no topo direito.</div>
       </div>
-
       <button id="btnCloseIosGuide" class="btn-primary" style="margin-top: 20px;">
         Entendi
       </button>
     </div>
   </div>
 
-  <!-- Script da Aplicação PWA -->
   <script src="/app.js"></script>
 </body>
 </html>

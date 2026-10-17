@@ -1,17 +1,20 @@
 /**
  * FLUIP - Lógica do Aplicativo Frontend PWA
- * Consulta de Pedágio Free Flow por Placa e Checkout Pix Instantâneo
+ * Suporte Completo: Placas Mercosul (ABC1D23) e Antigas (ABC-1234)
+ * Múltiplas Formas de Pagamento (PIX, Cartão de Crédito e Débito)
+ * Taxa de Conveniência: R$ 1,90
  */
 
 (function () {
   'use strict';
 
-  // Estado da Aplicação
   const state = {
     placaAtual: '',
     debitos: [],
     debitosSelecionadosIds: new Set(),
-    taxaConvenienciaPadrao: 2.50,
+    taxaConvenienciaPadrao: 1.90,
+    formaPagamentoSelecionada: 'pix', // 'pix' | 'credito' | 'debito'
+    tipoPlacaDetectada: 'neutro', // 'mercosul' | 'antiga' | 'neutro'
     cobrancaAtiva: null,
     timerInterval: null,
     pollInterval: null,
@@ -19,10 +22,13 @@
     deferredPrompt: null,
   };
 
-  // Elementos do DOM
   const dom = {
     formConsulta: document.getElementById('formConsulta'),
     inputPlaca: document.getElementById('inputPlaca'),
+    plateBox: document.getElementById('plateBox'),
+    plateHeaderTitle: document.getElementById('plateHeaderTitle'),
+    plateHeaderSubtitle: document.getElementById('plateHeaderSubtitle'),
+    plateTypeBadge: document.getElementById('plateTypeBadge'),
     btnConsultar: document.getElementById('btnConsultar'),
     btnText: document.getElementById('btnText'),
     btnSpinner: document.getElementById('btnSpinner'),
@@ -33,26 +39,48 @@
     selectAllContainer: document.getElementById('selectAllContainer'),
     selectAllCheckbox: document.getElementById('selectAllCheckbox'),
     
-    // Barra de Checkout
+    // Resumo Fixo Inferior
     checkoutBar: document.getElementById('checkoutBar'),
     summarySubtotal: document.getElementById('summarySubtotal'),
     summaryTaxa: document.getElementById('summaryTaxa'),
     summaryTotal: document.getElementById('summaryTotal'),
     btnPagarPix: document.getElementById('btnPagarPix'),
     
-    // Modal Pix
+    // Modal e Abas de Pagamento
     modalPix: document.getElementById('modalPix'),
     btnCloseModal: document.getElementById('btnCloseModal'),
+    tabBtnPix: document.getElementById('tabBtnPix'),
+    tabBtnCredito: document.getElementById('tabBtnCredito'),
+    tabBtnDebito: document.getElementById('tabBtnDebito'),
+    tabContentPix: document.getElementById('tabContentPix'),
+    tabContentCard: document.getElementById('tabContentCard'),
+    
+    // Elementos Pix
     pixTimer: document.getElementById('pixTimer'),
     qrCodeImage: document.getElementById('qrCodeImage'),
     inputPixCode: document.getElementById('inputPixCode'),
     btnCopyPix: document.getElementById('btnCopyPix'),
     btnSimulatePay: document.getElementById('btnSimulatePay'),
+    
+    // Elementos Cartão
+    cardPreviewNumber: document.getElementById('cardPreviewNumber'),
+    cardPreviewName: document.getElementById('cardPreviewName'),
+    cardPreviewExpiry: document.getElementById('cardPreviewExpiry'),
+    cardInputNumber: document.getElementById('cardInputNumber'),
+    cardInputName: document.getElementById('cardInputName'),
+    cardInputExpiry: document.getElementById('cardInputExpiry'),
+    cardInputCvv: document.getElementById('cardInputCvv'),
+    installmentsWrapper: document.getElementById('installmentsWrapper'),
+    cardSelectInstallments: document.getElementById('cardSelectInstallments'),
+    btnSubmitCardPayment: document.getElementById('btnSubmitCardPayment'),
+    
+    // Telas de Alternância
     pixCheckoutContent: document.getElementById('pixCheckoutContent'),
     pixSuccessContent: document.getElementById('pixSuccessContent'),
     
-    // Dados do Comprovante
+    // Comprovante
     receiptPlaca: document.getElementById('receiptPlaca'),
+    receiptFormaPagamento: document.getElementById('receiptFormaPagamento'),
     receiptValor: document.getElementById('receiptValor'),
     receiptProtocolo: document.getElementById('receiptProtocolo'),
     receiptAutenticacao: document.getElementById('receiptAutenticacao'),
@@ -67,15 +95,13 @@
     btnCloseIosGuide: document.getElementById('btnCloseIosGuide'),
   };
 
-  // ========================================================
-  // 1. INICIALIZAÇÃO & PWA SERVICE WORKER
-  // ========================================================
   function init() {
     registerServiceWorker();
     setupPwaInstall();
     setupNetworkListeners();
     setupEventListeners();
-    setupPlateMask();
+    setupDynamicPlateMask();
+    setupCardFormHandlers();
   }
 
   function registerServiceWorker() {
@@ -83,14 +109,13 @@
       window.addEventListener('load', () => {
         navigator.serviceWorker
           .register('/sw.js')
-          .then((reg) => console.log('[Fluip PWA] Service Worker registrado:', reg.scope))
+          .then((reg) => console.log('[Fluip PWA] Service Worker ativo:', reg.scope))
           .catch((err) => console.warn('[Fluip PWA] Erro ao registrar SW:', err));
       });
     }
   }
 
   function setupPwaInstall() {
-    // Detectar se já está instalado em modo standalone
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
     if (isStandalone && dom.btnInstallPwa) {
       dom.btnInstallPwa.style.display = 'none';
@@ -138,51 +163,140 @@
         if (dom.offlineBanner) dom.offlineBanner.style.display = 'none';
       }
     };
-
     window.addEventListener('online', updateOnlineStatus);
     window.addEventListener('offline', updateOnlineStatus);
     updateOnlineStatus();
   }
 
   // ========================================================
-  // 2. MÁSCARA E FORMATAÇÃO DA PLACA VEICULAR
+  // MÁSCARA DINÂMICA: MERCOSUL (ABC1D23) E ANTIGA (ABC-1234)
   // ========================================================
-  function setupPlateMask() {
+  function setupDynamicPlateMask() {
     dom.inputPlaca.addEventListener('input', (e) => {
-      let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      let raw = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
 
-      // Limitar a 7 caracteres alfanuméricos
-      if (value.length > 7) {
-        value = value.substring(0, 7);
+      // Limitar tamanho bruto a 7 caracteres alfanuméricos
+      if (raw.length > 7) {
+        raw = raw.substring(0, 7);
       }
 
-      e.target.value = value;
+      let formatted = raw;
+      let tipo = 'neutro';
+
+      // Análise do padrão conforme caracteres digitados
+      // 1. As 3 primeiras posições devem ser letras
+      const letrasIniciais = raw.substring(0, 3).replace(/[^A-Z]/g, '');
+      const char4 = raw[3] || '';
+      const char5 = raw[4] || '';
+
+      const isChar4Num = /[0-9]/.test(char4);
+      const isChar5Num = /[0-9]/.test(char5);
+      const isChar5Letter = /[A-Z]/.test(char5);
+
+      if (raw.length >= 5) {
+        if (isChar4Num && isChar5Letter) {
+          // Padrão Mercosul: 3 letras, 1 número, 1 letra, 2 números (ex: ABC1D23)
+          tipo = 'mercosul';
+          formatted = raw; // Mercosul não leva hífen
+        } else if (isChar4Num && isChar5Num) {
+          // Padrão Tradicional/Antigo: 3 letras, 4 números (ex: ABC-1234)
+          tipo = 'antiga';
+          formatted = `${raw.substring(0, 3)}-${raw.substring(3)}`;
+        }
+      } else if (raw.length === 4 && isChar4Num) {
+        tipo = 'neutro';
+      }
+
+      e.target.value = formatted;
+      atualizarTemaVisualPlaca(tipo, raw);
     });
 
-    // Permitir cliques nos chips de placas sugeridas
+    // Chips com exemplos rápidos
     document.querySelectorAll('.chip-plate').forEach((chip) => {
       chip.addEventListener('click', () => {
         const placa = chip.getAttribute('data-placa');
         dom.inputPlaca.value = placa;
+        
+        // Simular evento input para atualizar tema
+        const raw = placa.replace(/[^A-Z0-9]/g, '');
+        const isMercosul = /^[A-Z]{3}[0-9][A-Z][0-9]{2}$/.test(raw);
+        atualizarTemaVisualPlaca(isMercosul ? 'mercosul' : 'antiga', raw);
+
         consultarDebitos(placa);
       });
     });
   }
 
-  // ========================================================
-  // 3. CONSULTA DE DÉBITOS NA API
-  // ========================================================
+  function atualizarTemaVisualPlaca(tipo, raw) {
+    state.tipoPlacaDetectada = tipo;
+
+    if (tipo === 'mercosul') {
+      dom.plateBox.classList.remove('theme-antiga');
+      dom.plateBox.classList.add('theme-mercosul');
+      dom.plateHeaderTitle.textContent = 'MERCOSUL';
+      dom.plateHeaderSubtitle.textContent = 'BRASIL';
+      dom.plateTypeBadge.className = 'plate-badge-type badge-mercosul';
+      dom.plateTypeBadge.innerHTML = '🇧🇷 Padrão Mercosul detectado';
+    } else if (tipo === 'antiga') {
+      dom.plateBox.classList.remove('theme-mercosul');
+      dom.plateBox.classList.add('theme-antiga');
+      dom.plateHeaderTitle.textContent = 'BRASIL • PADRÃO ANTERIOR';
+      dom.plateHeaderSubtitle.textContent = 'BR';
+      dom.plateTypeBadge.className = 'plate-badge-type badge-antiga';
+      dom.plateTypeBadge.innerHTML = '🚗 Padrão Tradicional (Cinza)';
+    } else {
+      dom.plateBox.classList.remove('theme-antiga');
+      dom.plateBox.classList.add('theme-mercosul');
+      dom.plateHeaderTitle.textContent = 'BRASIL / MERCOSUL & ANTIGA';
+      dom.plateHeaderSubtitle.textContent = 'BRASIL';
+      dom.plateTypeBadge.className = 'plate-badge-type badge-neutral';
+      dom.plateTypeBadge.textContent = raw.length === 0 ? 'Digite a placa veicular' : `${raw.length}/7 caracteres digitados`;
+    }
+  }
+
+  function setupCardFormHandlers() {
+    dom.cardInputNumber.addEventListener('input', (e) => {
+      let v = e.target.value.replace(/\D/g, '').substring(0, 16);
+      let formatted = v.replace(/(\d{4})(?=\d)/g, '$1 ');
+      e.target.value = formatted;
+      dom.cardPreviewNumber.textContent = formatted || '•••• •••• •••• ••••';
+    });
+
+    dom.cardInputName.addEventListener('input', (e) => {
+      const v = e.target.value.toUpperCase();
+      e.target.value = v;
+      dom.cardPreviewName.textContent = v || 'NOME COMPLETO';
+    });
+
+    dom.cardInputExpiry.addEventListener('input', (e) => {
+      let v = e.target.value.replace(/\D/g, '').substring(0, 4);
+      if (v.length >= 2) {
+        v = `${v.substring(0, 2)}/${v.substring(2)}`;
+      }
+      e.target.value = v;
+      dom.cardPreviewExpiry.textContent = v || 'MM/AA';
+    });
+
+    dom.cardInputCvv.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').substring(0, 4);
+    });
+
+    dom.cardSelectInstallments.addEventListener('change', () => {
+      atualizarBotaoPagarCartao();
+    });
+
+    dom.btnSubmitCardPayment.addEventListener('click', processarPagamentoCartao);
+  }
+
   function setupEventListeners() {
     dom.formConsulta.addEventListener('submit', (e) => {
       e.preventDefault();
-      const placa = dom.inputPlaca.value.trim();
-      consultarDebitos(placa);
+      consultarDebitos(dom.inputPlaca.value.trim());
     });
 
     if (dom.selectAllCheckbox) {
       dom.selectAllCheckbox.addEventListener('change', (e) => {
-        const checked = e.target.checked;
-        if (checked) {
+        if (e.target.checked) {
           state.debitos.forEach((d) => state.debitosSelecionadosIds.add(d.id));
         } else {
           state.debitosSelecionadosIds.clear();
@@ -192,10 +306,20 @@
       });
     }
 
-    dom.btnPagarPix.addEventListener('click', gerarPagamentoPix);
+    dom.btnPagarPix.addEventListener('click', () => {
+      iniciarCheckout(state.formaPagamentoSelecionada);
+    });
+
     dom.btnCloseModal.addEventListener('click', fecharModalPix);
     dom.modalPix.addEventListener('click', (e) => {
       if (e.target === dom.modalPix) fecharModalPix();
+    });
+
+    [dom.tabBtnPix, dom.tabBtnCredito, dom.tabBtnDebito].forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const metodo = btn.getAttribute('data-method');
+        alternarFormaPagamento(metodo);
+      });
     });
 
     dom.btnCopyPix.addEventListener('click', copiarChavePix);
@@ -205,6 +329,7 @@
       dom.btnNewSearch.addEventListener('click', () => {
         fecharModalPix();
         dom.inputPlaca.value = '';
+        atualizarTemaVisualPlaca('neutro', '');
         dom.resultsSection.style.display = 'none';
         dom.checkoutBar.style.display = 'none';
         dom.inputPlaca.focus();
@@ -212,9 +337,55 @@
     }
   }
 
+  function alternarFormaPagamento(metodo) {
+    state.formaPagamentoSelecionada = metodo;
+
+    dom.tabBtnPix.classList.toggle('active', metodo === 'pix');
+    dom.tabBtnCredito.classList.toggle('active', metodo === 'credito');
+    dom.tabBtnDebito.classList.toggle('active', metodo === 'debito');
+
+    if (metodo === 'pix') {
+      dom.tabContentPix.style.display = 'block';
+      dom.tabContentCard.style.display = 'none';
+    } else {
+      dom.tabContentPix.style.display = 'none';
+      dom.tabContentCard.style.display = 'block';
+
+      if (metodo === 'credito') {
+        dom.installmentsWrapper.style.display = 'block';
+      } else {
+        dom.installmentsWrapper.style.display = 'none';
+      }
+
+      atualizarBotaoPagarCartao();
+    }
+
+    iniciarCheckout(metodo, false);
+  }
+
+  function atualizarBotaoPagarCartao() {
+    const total = state.cobrancaAtiva?.valorTotal || calcularTotalAtual();
+    const metodo = state.formaPagamentoSelecionada;
+
+    if (metodo === 'credito') {
+      const parcelaTexto = dom.cardSelectInstallments.options[dom.cardSelectInstallments.selectedIndex]?.text || '';
+      dom.btnSubmitCardPayment.textContent = `Confirmar Pagamento (${parcelaTexto || 'R$ ' + total.toFixed(2).replace('.', ',')})`;
+    } else {
+      dom.btnSubmitCardPayment.textContent = `Pagar R$ ${total.toFixed(2).replace('.', ',')} no Débito (À vista)`;
+    }
+  }
+
+  function calcularTotalAtual() {
+    const selecionados = state.debitos.filter((d) => state.debitosSelecionadosIds.has(d.id));
+    const subtotal = selecionados.reduce((acc, curr) => acc + Number(curr.valorTarifa || 0), 0);
+    const taxa = selecionados.length > 0 ? state.taxaConvenienciaPadrao : 0;
+    return subtotal + taxa;
+  }
+
   async function consultarDebitos(placa) {
-    if (!placa || placa.length < 7) {
-      showToast('Digite uma placa válida com 7 caracteres.');
+    const limpa = (placa || '').replace(/[^A-Z0-9]/gi, '');
+    if (limpa.length < 7) {
+      showToast('Digite uma placa válida com 7 caracteres (ex: ABC1D23 ou ABC-1234).');
       dom.inputPlaca.focus();
       return;
     }
@@ -222,18 +393,16 @@
     setLoading(true);
 
     try {
-      const response = await fetch(`/api/v1/consultar?placa=${encodeURIComponent(placa)}`);
+      const response = await fetch(`/api/v1/consultar?placa=${encodeURIComponent(limpa)}`);
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        throw new Error(data.error || 'Não foi possível consultar os débitos para esta placa.');
+        throw new Error(data.error || 'Erro na consulta.');
       }
 
       state.placaAtual = data.placa;
       state.debitos = data.debitos || [];
-      state.taxaConvenienciaPadrao = data.resumo?.taxaConveniencia || 2.50;
-
-      // Por padrão, seleciona todos os débitos pendentes
+      state.taxaConvenienciaPadrao = data.resumo?.taxaConveniencia || 1.90;
       state.debitosSelecionadosIds = new Set(state.debitos.map((d) => d.id));
 
       exibirResultados();
@@ -246,18 +415,10 @@
 
   function setLoading(loading) {
     dom.btnConsultar.disabled = loading;
-    if (loading) {
-      dom.btnText.style.display = 'none';
-      dom.btnSpinner.style.display = 'block';
-    } else {
-      dom.btnText.style.display = 'inline';
-      dom.btnSpinner.style.display = 'none';
-    }
+    dom.btnText.style.display = loading ? 'none' : 'inline';
+    dom.btnSpinner.style.display = loading ? 'block' : 'none';
   }
 
-  // ========================================================
-  // 4. RENDERIZAÇÃO DOS CARDS E RESUMO FINANCEIRO
-  // ========================================================
   function exibirResultados() {
     dom.resultsSection.style.display = 'block';
     dom.plateResultBadge.textContent = state.placaAtual;
@@ -268,7 +429,7 @@
         <div style="text-align: center; padding: 32px 16px; background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0;">
           <div style="font-size: 2.5rem; margin-bottom: 8px;">🎉</div>
           <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Nenhum débito encontrado</h3>
-          <p style="font-size: 0.825rem; color: #64748b;">Esta placa está 100% em dia com os pedágios automáticos Free Flow!</p>
+          <p style="font-size: 0.825rem; color: #64748b;">Esta placa está 100% em dia com os pedágios Free Flow!</p>
         </div>
       `;
       dom.checkoutBar.style.display = 'none';
@@ -284,8 +445,6 @@
     renderizarCards();
     atualizarResumoFinanceiro();
     dom.checkoutBar.style.display = 'block';
-
-    // Rolar suavemente até a lista
     dom.resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
@@ -313,16 +472,8 @@
           </div>
           <div class="portico-location">${debito.portico} • ${debito.sentido}</div>
           <div class="toll-meta">
-            <span class="toll-date">
-              <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" stroke-width="2"></circle>
-                <path stroke-width="2" d="M12 6v6l4 2"></path>
-              </svg>
-              ${debito.dataHoraFormatada}
-            </span>
-            <span class="evasion-warning">
-              ⚠️ Quitar até ${debito.dataLimiteFormatada} (${debito.diasRestantes}d)
-            </span>
+            <span class="toll-date">🕒 ${debito.dataHoraFormatada}</span>
+            <span class="evasion-warning">⚠️ Limite: ${debito.dataLimiteFormatada} (${debito.diasRestantes}d)</span>
           </div>
         </div>
       `;
@@ -354,6 +505,7 @@
     const selecionados = state.debitos.filter((d) => state.debitosSelecionadosIds.has(d.id));
     const qtd = selecionados.length;
     const subtotal = selecionados.reduce((acc, curr) => acc + Number(curr.valorTarifa || 0), 0);
+    // Taxa de R$ 1,90
     const taxa = qtd > 0 ? state.taxaConvenienciaPadrao : 0;
     const total = subtotal + taxa;
 
@@ -362,30 +514,17 @@
     dom.summaryTotal.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
 
     dom.btnPagarPix.disabled = qtd === 0;
-    if (qtd === 0) {
-      dom.btnPagarPix.textContent = 'Selecione uma tarifa';
-    } else {
-      dom.btnPagarPix.innerHTML = `
-        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-        </svg>
-        Pagar R$ ${total.toFixed(2).replace('.', ',')} via PIX
-      `;
-    }
+    dom.btnPagarPix.innerHTML = qtd === 0
+      ? 'Selecione uma tarifa'
+      : `Pagar R$ ${total.toFixed(2).replace('.', ',')} • PIX / Cartão`;
   }
 
-  // ========================================================
-  // 5. CHECKOUT PIX & WEBSOCKET/POLLING
-  // ========================================================
-  async function gerarPagamentoPix() {
+  async function iniciarCheckout(formaDePagamento = 'pix', abrirModal = true) {
     const passagensIds = Array.from(state.debitosSelecionadosIds);
     if (passagensIds.length === 0) {
       showToast('Selecione pelo menos um pedágio para pagar.');
       return;
     }
-
-    dom.btnPagarPix.disabled = true;
-    dom.btnPagarPix.textContent = 'Gerando PIX...';
 
     try {
       const response = await fetch('/api/v1/pagar', {
@@ -394,43 +533,47 @@
         body: JSON.stringify({
           placa: state.placaAtual,
           passagensIds,
+          formaDePagamento,
         }),
       });
 
       const data = await response.json();
       if (!response.ok || !data.success) {
-        throw new Error(data.error || 'Erro ao gerar cobrança Pix.');
+        throw new Error(data.error || 'Erro ao preparar cobrança.');
       }
 
       state.cobrancaAtiva = data;
-      abrirModalPix(data);
+
+      if (data.qrCodeBase64) dom.qrCodeImage.src = data.qrCodeBase64;
+      if (data.pixCopiaECola) dom.inputPixCode.value = data.pixCopiaECola;
+
+      if (data.opcoesParcelamento && Array.isArray(data.opcoesParcelamento)) {
+        dom.cardSelectInstallments.innerHTML = '';
+        data.opcoesParcelamento.forEach((op) => {
+          const option = document.createElement('option');
+          option.value = op.numero;
+          option.textContent = op.descricao;
+          dom.cardSelectInstallments.appendChild(option);
+        });
+      }
+
+      atualizarBotaoPagarCartao();
+
+      if (abrirModal) {
+        abrirModalCheckout(data);
+      }
     } catch (err) {
       showToast(err.message);
-    } finally {
-      dom.btnPagarPix.disabled = false;
-      atualizarResumoFinanceiro();
     }
   }
 
-  function abrirModalPix(cobranca) {
+  function abrirModalCheckout(cobranca) {
     dom.pixCheckoutContent.style.display = 'block';
     dom.pixSuccessContent.style.display = 'none';
 
-    // Inserir QR Code e Chave Pix
-    dom.qrCodeImage.src = cobranca.qrCodeBase64;
-    dom.inputPixCode.value = cobranca.pixCopiaECola;
-
-    // Resetar botão de cópia
     dom.btnCopyPix.classList.remove('copied');
-    dom.btnCopyPix.innerHTML = `
-      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <rect x="9" y="9" width="13" height="13" rx="2" stroke-width="2"></rect>
-        <path stroke-width="2" d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
-      </svg>
-      Copiar PIX
-    `;
+    dom.btnCopyPix.innerHTML = 'Copiar PIX';
 
-    // Iniciar timer regressivo de 15 minutos (900s)
     state.segundosRestantes = cobranca.tempoLimiteSegundos || 900;
     atualizarDisplayTimer();
     clearInterval(state.timerInterval);
@@ -444,10 +587,7 @@
       }
     }, 1000);
 
-    // Iniciar polling automático para detectar pagamento
     iniciarPollingStatus(cobranca.txid);
-
-    // Abrir Modal
     dom.modalPix.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -474,17 +614,11 @@
         dom.inputPixCode.select();
         document.execCommand('copy');
       }
-
       dom.btnCopyPix.classList.add('copied');
-      dom.btnCopyPix.innerHTML = `
-        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-        </svg>
-        Copiado!
-      `;
+      dom.btnCopyPix.innerHTML = '✓ Copiado!';
       showToast('Código PIX Copia e Cola copiado com sucesso!');
     } catch {
-      showToast('Falha ao copiar automaticamente. Selecione e copie o código.');
+      showToast('Falha ao copiar automaticamente.');
     }
   }
 
@@ -500,7 +634,7 @@
           exibirSucessoPagamento(data);
         }
       } catch (e) {
-        console.warn('Erro na checagem de status:', e);
+        console.warn('Checagem de status:', e);
       }
     }, 3000);
   }
@@ -523,12 +657,79 @@
       clearInterval(state.pollInterval);
       clearInterval(state.timerInterval);
       exibirSucessoPagamento(data.cobranca);
-      showToast('Pagamento confirmado com sucesso!');
+      showToast('Pagamento Pix confirmado!');
     } catch (e) {
       showToast(e.message);
     } finally {
       dom.btnSimulatePay.disabled = false;
-      dom.btnSimulatePay.textContent = '⚡ Simular Pagamento Instantâneo (Demo)';
+      dom.btnSimulatePay.textContent = '⚡ Simular Pagamento Instantâneo PIX (Demo)';
+    }
+  }
+
+  async function processarPagamentoCartao() {
+    if (!state.cobrancaAtiva?.txid) return;
+
+    const num = dom.cardInputNumber.value.trim();
+    const nome = dom.cardInputName.value.trim();
+    const exp = dom.cardInputExpiry.value.trim();
+    const cvv = dom.cardInputCvv.value.trim();
+    const parcelas = Number(dom.cardSelectInstallments.value) || 1;
+
+    if (!num || num.length < 15) {
+      showToast('Por favor, informe um número de cartão válido.');
+      dom.cardInputNumber.focus();
+      return;
+    }
+
+    if (!nome) {
+      showToast('Por favor, informe o nome impresso no cartão.');
+      dom.cardInputName.focus();
+      return;
+    }
+
+    if (!exp || exp.length < 5) {
+      showToast('Informe a validade no formato MM/AA.');
+      dom.cardInputExpiry.focus();
+      return;
+    }
+
+    if (!cvv || cvv.length < 3) {
+      showToast('Informe o código de segurança (CVV).');
+      dom.cardInputCvv.focus();
+      return;
+    }
+
+    dom.btnSubmitCardPayment.disabled = true;
+    dom.btnSubmitCardPayment.textContent = 'Processando com a adquirente...';
+
+    try {
+      const response = await fetch('/api/v1/pagar-cartao', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          txid: state.cobrancaAtiva.txid,
+          numeroCartao: num,
+          nomeTitular: nome,
+          validade: exp,
+          cvv,
+          parcelas: state.formaPagamentoSelecionada === 'credito' ? parcelas : 1,
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || 'Transação com cartão não autorizada.');
+      }
+
+      clearInterval(state.pollInterval);
+      clearInterval(state.timerInterval);
+      exibirSucessoPagamento(data.cobranca);
+      showToast('Pagamento com cartão aprovado com sucesso!');
+    } catch (e) {
+      showToast(e.message);
+    } finally {
+      dom.btnSubmitCardPayment.disabled = false;
+      atualizarBotaoPagarCartao();
     }
   }
 
@@ -537,12 +738,15 @@
     dom.pixSuccessContent.style.display = 'block';
 
     dom.receiptPlaca.textContent = cobranca.placa || state.placaAtual;
+    dom.receiptFormaPagamento.textContent = cobranca.comprovante?.formaDePagamento || (
+      state.formaPagamentoSelecionada === 'credito' ? 'Cartão de Crédito' :
+      state.formaPagamentoSelecionada === 'debito' ? 'Cartão de Débito' : 'PIX Instantâneo'
+    );
     dom.receiptValor.textContent = `R$ ${Number(cobranca.valorTotal || state.cobrancaAtiva.valorTotal).toFixed(2).replace('.', ',')}`;
     dom.receiptProtocolo.textContent = cobranca.protocoloConcessionaria || `PROT-${Math.floor(100000 + Math.random() * 900000)}`;
     dom.receiptAutenticacao.textContent = cobranca.autenticacaoBancaria || `AUT-${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
     dom.receiptData.textContent = new Date().toLocaleString('pt-BR');
 
-    // Remove débitos pagos da lista atual
     const pagosIds = new Set(state.cobrancaAtiva.passagensIds || []);
     state.debitos = state.debitos.filter((d) => !pagosIds.has(d.id));
     state.debitosSelecionadosIds.clear();
@@ -550,21 +754,15 @@
     exibirResultados();
   }
 
-  // ========================================================
-  // 6. UTILITÁRIOS
-  // ========================================================
   let toastTimeout;
   function showToast(mensagem) {
     if (!dom.toast) return;
     dom.toast.textContent = mensagem;
     dom.toast.classList.add('show');
     clearTimeout(toastTimeout);
-    toastTimeout = setTimeout(() => {
-      dom.toast.classList.remove('show');
-    }, 3500);
+    toastTimeout = setTimeout(() => dom.toast.classList.remove('show'), 3500);
   }
 
-  // Auto-iniciar quando DOM estiver pronto
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

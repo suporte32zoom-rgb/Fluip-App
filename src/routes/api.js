@@ -4,8 +4,8 @@ import pagamentoService from '../services/pagamentoService.js';
 
 const router = Router();
 
-// Obter taxa de conveniência padrão da variável de ambiente ou fallback de R$ 2,50
-const TAXA_CONVENIENCIA_PADRAO = Number(process.env.TAXA_CONVENIENCIA) || 2.50;
+// Obter taxa de conveniência padrão da variável de ambiente ou fallback de R$ 1,90
+const TAXA_CONVENIENCIA_PADRAO = Number(process.env.TAXA_CONVENIENCIA) || 1.90;
 
 /**
  * GET /api/v1/consultar?placa=XXX
@@ -25,7 +25,7 @@ router.get('/consultar', async (req, res) => {
     const debitos = await pedagioService.consultarDebitosPorPlaca(placa);
     const placaFormatada = pedagioService.validarEFormatarPlaca(placa);
 
-    // Calcular resumo financeiro
+    // Calcular resumo financeiro com nova taxa de conveniência de R$ 1,90
     const quantidade = debitos.length;
     const subtotal = debitos.reduce((acc, curr) => acc + Number(curr.valorTarifa || 0), 0);
     const taxaConveniencia = quantidade > 0 ? TAXA_CONVENIENCIA_PADRAO : 0;
@@ -53,12 +53,12 @@ router.get('/consultar', async (req, res) => {
 
 /**
  * POST /api/v1/pagar
- * Recebe a lista de IDs de tarifas selecionadas e retorna a cobrança Pix
- * Body: { placa: string, passagensIds: string[], taxaConveniencia?: number }
+ * Recebe a lista de IDs de tarifas e a forma de pagamento ('pix' | 'credito' | 'debito')
+ * Body: { placa: string, passagensIds: string[], formaDePagamento?: string }
  */
 router.post('/pagar', async (req, res) => {
   try {
-    const { placa, passagensIds } = req.body;
+    const { placa, passagensIds, formaDePagamento = 'pix' } = req.body;
 
     if (!passagensIds || !Array.isArray(passagensIds) || passagensIds.length === 0) {
       return res.status(400).json({
@@ -68,15 +68,21 @@ router.post('/pagar', async (req, res) => {
     }
 
     const taxaConveniencia = TAXA_CONVENIENCIA_PADRAO;
-    const cobranca = pagamentoService.gerarCobrancaPix(passagensIds, taxaConveniencia, placa);
+    const cobranca = pagamentoService.gerarCobranca(passagensIds, taxaConveniencia, placa, formaDePagamento);
 
     return res.status(201).json({
       success: true,
-      mensagem: 'Cobrança PIX gerada com sucesso. Efetue o pagamento em até 15 minutos.',
+      mensagem: cobranca.formaDePagamento === 'pix'
+        ? 'Cobrança PIX gerada com sucesso. Efetue o pagamento em até 15 minutos.'
+        : `Checkout com ${cobranca.formaDePagamento === 'credito' ? 'Cartão de Crédito' : 'Cartão de Débito'} preparado com sucesso.`,
       txid: cobranca.txid,
       placa: cobranca.placa,
+      formaDePagamento: cobranca.formaDePagamento,
+      passagensIds: cobranca.passagensIds,
       pixCopiaECola: cobranca.pixCopiaECola,
       qrCodeBase64: cobranca.qrCodeBase64,
+      opcoesParcelamento: cobranca.opcoesParcelamento,
+      formularioCartao: cobranca.formularioCartao,
       valorTotal: cobranca.valorTotal,
       resumo: {
         passagensQuantidade: cobranca.passagensIds.length,
@@ -91,14 +97,50 @@ router.post('/pagar', async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      error: error.message || 'Erro ao gerar cobrança PIX.',
+      error: error.message || 'Erro ao gerar cobrança.',
+    });
+  }
+});
+
+/**
+ * POST /api/v1/pagar-cartao
+ * Processa a liquidação simulada via Cartão de Crédito ou Débito
+ * Body: { txid: string, numeroCartao: string, nomeTitular: string, validade: string, cvv: string, parcelas?: number }
+ */
+router.post('/pagar-cartao', async (req, res) => {
+  try {
+    const { txid, numeroCartao, nomeTitular, validade, cvv, parcelas = 1 } = req.body;
+
+    if (!txid) {
+      return res.status(400).json({ success: false, error: 'O código txid da transação é obrigatório.' });
+    }
+
+    if (!numeroCartao || !nomeTitular || !validade || !cvv) {
+      return res.status(400).json({ success: false, error: 'Todos os campos do cartão são obrigatórios.' });
+    }
+
+    const cobrancaAtualizada = pagamentoService.confirmarPagamento(txid, {
+      numeroCartao,
+      nomeTitular,
+      validade,
+      parcelas: Number(parcelas) || 1,
+    });
+
+    return res.status(200).json({
+      success: true,
+      mensagem: 'Pagamento com cartão autorizado pela emissora e débitos baixados na concessionária!',
+      cobranca: cobrancaAtualizada,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      error: error.message || 'Falha ao processar pagamento com cartão.',
     });
   }
 });
 
 /**
  * GET /api/v1/status/:txid
- * Retorna o status atual de uma cobrança PIX gerada
  */
 router.get('/status/:txid', (req, res) => {
   const { txid } = req.params;
@@ -114,6 +156,7 @@ router.get('/status/:txid', (req, res) => {
   return res.status(200).json({
     success: true,
     txid: cobranca.txid,
+    formaDePagamento: cobranca.formaDePagamento,
     status: cobranca.status,
     pagoEm: cobranca.pagoEm || null,
     autenticacaoBancaria: cobranca.autenticacaoBancaria || null,
@@ -124,12 +167,15 @@ router.get('/status/:txid', (req, res) => {
 
 /**
  * POST /api/v1/simular-pagamento/:txid
- * Endpoint auxiliar para testes imediatos: simula a aprovação bancária do Pix
  */
 router.post('/simular-pagamento/:txid', (req, res) => {
   try {
     const { txid } = req.params;
-    const cobrancaAtualizada = pagamentoService.confirmarPagamento(txid);
+    const { parcelas, numeroCartao } = req.body || {};
+    const cobrancaAtualizada = pagamentoService.confirmarPagamento(txid, {
+      parcelas: parcelas || 1,
+      numeroCartao: numeroCartao || '4532 1100 8899 4321',
+    });
 
     return res.status(200).json({
       success: true,
@@ -146,12 +192,10 @@ router.post('/simular-pagamento/:txid', (req, res) => {
 
 /**
  * POST /api/v1/webhook/pix
- * Endpoint mock que recebe a notificação instantânea do Banco Central/Gateway Pix
- * e processa a baixa imediata na concessionária de rodovias
  */
 router.post('/webhook/pix', (req, res) => {
   try {
-    const { txid, endToEndId, status, valor } = req.body;
+    const { txid, endToEndId } = req.body;
 
     if (!txid) {
       return res.status(400).json({

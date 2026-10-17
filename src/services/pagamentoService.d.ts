@@ -1,13 +1,23 @@
+export interface OpcaoParcela {
+  numero: number;
+  valorParcela: number;
+  valorTotalComJuros: number;
+  descricao: string;
+}
+
 export interface CobrancaPix {
   txid: string;
   placa: string;
+  formaDePagamento?: 'pix' | 'credito' | 'debito';
   passagensIds: string[];
   passagensDetalhadas: unknown[];
   subtotal: number;
   taxaConveniencia: number;
   valorTotal: number;
-  pixCopiaECola: string;
-  qrCodeBase64: string;
+  pixCopiaECola?: string | null;
+  qrCodeBase64?: string | null;
+  opcoesParcelamento?: OpcaoParcela[] | null;
+  formularioCartao?: unknown;
   createdAt: string;
   expiresAt: string;
   tempoLimiteSegundos: number;
@@ -19,9 +29,10 @@ export interface CobrancaPix {
 }
 
 declare class PagamentoService {
+  gerarCobranca(passagensIds: string[], taxaConveniencia?: number, placa?: string, formaDePagamento?: 'pix' | 'credito' | 'debito'): CobrancaPix;
   gerarCobrancaPix(passagensIds: string[], taxaConveniencia?: number, placa?: string): CobrancaPix;
   consultarStatusPix(txid: string): CobrancaPix | null;
-  confirmarPagamento(txid: string): CobrancaPix;
+  confirmarPagamento(txid: string, detalhesPagamento?: unknown): CobrancaPix;
 }
 
 declare const pagamentoService: PagamentoService;

@@ -1,8 +1,3 @@
-/* =========================================================
-   FLUIP - Estilos Modernos Mobile-First (Design System PWA)
-   Cores: Azul Profundo (#0f172a, #0284c7) e Verde Esmeralda (#10b981)
-   ========================================================= */
-
 :root {
   --primary: #0284c7;
   --primary-hover: #0369a1;
@@ -17,9 +12,6 @@
   --slate-100: #f1f5f9;
   --bg: #f8fafc;
   --card-bg: #ffffff;
-  --danger: #ef4444;
-  --danger-light: #fee2e2;
-  --warning: #f59e0b;
   --warning-light: #fef3c7;
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --plate-font: "Courier New", Courier, monospace;
@@ -28,7 +20,6 @@
   --radius-sm: 8px;
   --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
   --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 12px 28px rgba(15, 23, 42, 0.12);
   --shadow-float: 0 20px 40px -10px rgba(15, 23, 42, 0.25);
   --safe-bottom: env(safe-area-inset-bottom, 16px);
 }
@@ -47,28 +38,21 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
-/* Container Mobile Centrado */
 .app-container {
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
   padding: 0 16px 120px 16px;
-  display: flex;
-  flex-direction: column;
 }
 
-/* Header & Barra Superior */
 .app-header {
   position: sticky;
   top: 0;
   z-index: 40;
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--slate-200);
   padding: 12px 16px;
   margin-bottom: 16px;
@@ -97,7 +81,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
 }
 
 .brand-logo-wrap img {
@@ -110,19 +93,16 @@ body {
   font-weight: 800;
   letter-spacing: -0.5px;
   color: var(--dark);
-  line-height: 1.1;
 }
 
 .brand-text span {
   font-size: 0.68rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
   color: var(--primary);
   display: block;
 }
 
-/* Botão de Instalar PWA */
 .btn-install {
   display: inline-flex;
   align-items: center;
@@ -135,20 +115,8 @@ body {
   font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
 }
 
-.btn-install:active {
-  transform: scale(0.96);
-  background: var(--dark-surface);
-}
-
-.btn-install svg {
-  width: 14px;
-  height: 14px;
-}
-
-/* Banner de Aviso Oficial Free Flow */
 .info-banner {
   background: linear-gradient(135deg, #eff6ff 0%, #ecfdf5 100%);
   border: 1px solid #bfdbfe;
@@ -165,7 +133,6 @@ body {
   height: 22px;
   color: var(--primary);
   flex-shrink: 0;
-  margin-top: 2px;
 }
 
 .info-banner p {
@@ -174,11 +141,6 @@ body {
   line-height: 1.4;
 }
 
-.info-banner strong {
-  color: #0f172a;
-}
-
-/* Cartão da Placa Veicular (Mercosul Style) */
 .search-card {
   background: var(--card-bg);
   border-radius: var(--radius-lg);
@@ -191,7 +153,6 @@ body {
 .search-card-title {
   font-size: 0.9375rem;
   font-weight: 700;
-  color: var(--dark);
   margin-bottom: 4px;
 }
 
@@ -201,43 +162,64 @@ body {
   margin-bottom: 16px;
 }
 
-/* Mockup da Placa Mercosul Interativa */
+/* ========================================================
+   COMPONENTE DE PLACA DINÂMICA (MERCOSUL E ANTIGA)
+   ======================================================== */
 .mercosul-plate-box {
   background: #ffffff;
   border: 3px solid #000000;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-  margin-bottom: 16px;
-  transition: border-color 0.2s;
+  margin-bottom: 10px;
+  transition: all 0.25s ease;
 }
 
-.mercosul-plate-box:focus-within {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px var(--primary-light);
+/* Estilo Mercosul (Azul) */
+.mercosul-plate-box.theme-mercosul .mercosul-header {
+  background: #003399;
+  color: #ffffff;
+}
+
+/* Estilo Placa Antiga (Cinza Tradicional) */
+.mercosul-plate-box.theme-antiga {
+  border-color: #475569;
+  background: #f1f5f9;
+}
+
+.mercosul-plate-box.theme-antiga .mercosul-header {
+  background: #64748b;
+  color: #f8fafc;
+  letter-spacing: 1px;
+}
+
+.mercosul-plate-box.theme-antiga .mercosul-body {
+  background: #e2e8f0;
 }
 
 .mercosul-header {
   background: #003399;
   color: #ffffff;
-  padding: 4px 10px;
+  padding: 5px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-weight: 700;
   font-size: 0.75rem;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
+  transition: background 0.25s ease;
 }
 
 .mercosul-header .flag-brasil {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .mercosul-body {
-  padding: 6px 12px;
+  padding: 8px 12px;
   background: #fdfdfd;
+  transition: background 0.25s ease;
 }
 
 .plate-input {
@@ -248,23 +230,50 @@ body {
   font-family: var(--plate-font);
   font-size: 2.1rem;
   font-weight: 800;
-  letter-spacing: 6px;
+  letter-spacing: 5px;
   text-align: center;
   text-transform: uppercase;
-  color: #111827;
 }
 
-.plate-input::placeholder {
-  color: #94a3b8;
-  letter-spacing: 4px;
-  font-size: 1.8rem;
+/* Indicador dinâmico de formato detectado */
+.plate-format-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-size: 0.71875rem;
+  color: var(--slate-500);
 }
 
-/* Placas Sugeridas de Demonstração */
+.plate-badge-type {
+  font-weight: 700;
+  font-size: 0.6875rem;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.plate-badge-type.badge-mercosul {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.plate-badge-type.badge-antiga {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.plate-badge-type.badge-neutral {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
 .quick-plates {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
   margin-bottom: 16px;
 }
@@ -272,30 +281,20 @@ body {
 .quick-plates-label {
   font-size: 0.75rem;
   color: var(--slate-500);
-  font-weight: 600;
 }
 
 .chip-plate {
   background: var(--slate-100);
   border: 1px solid var(--slate-200);
   color: var(--dark);
-  padding: 4px 10px;
+  padding: 4px 8px;
   border-radius: var(--radius-sm);
-  font-size: 0.75rem;
+  font-size: 0.71875rem;
   font-family: var(--plate-font);
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s;
 }
 
-.chip-plate:active,
-.chip-plate:hover {
-  background: var(--primary-light);
-  border-color: var(--primary);
-  color: var(--primary-hover);
-}
-
-/* Botão Principal */
 .btn-primary {
   width: 100%;
   background: linear-gradient(135deg, var(--primary) 0%, #0369a1 100%);
@@ -310,36 +309,8 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
-  transition: all 0.2s ease;
 }
 
-.btn-primary:active {
-  transform: scale(0.98);
-  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.2);
-}
-
-.btn-primary:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-/* Loader Spinner */
-.spinner {
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #ffffff;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Seção de Resultados */
 .results-header {
   display: flex;
   align-items: center;
@@ -347,44 +318,29 @@ body {
   margin-bottom: 12px;
 }
 
-.results-header h2 {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--dark);
-}
-
 .results-counter {
   font-size: 0.75rem;
-  font-weight: 600;
   background: var(--slate-100);
   color: var(--slate-500);
   padding: 2px 8px;
   border-radius: 9999px;
+  font-weight: 600;
 }
 
-/* Card de Débito de Pedágio */
 .toll-card {
   background: var(--card-bg);
   border-radius: var(--radius-md);
   padding: 16px;
   margin-bottom: 12px;
   border: 1.5px solid var(--slate-200);
-  box-shadow: var(--shadow-sm);
   display: flex;
   gap: 12px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  position: relative;
 }
 
 .toll-card.selected {
   border-color: var(--primary);
   background: #f0f9ff;
-  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.12);
-}
-
-.toll-card-checkbox {
-  margin-top: 4px;
 }
 
 .custom-checkbox {
@@ -395,7 +351,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
   background: #ffffff;
 }
 
@@ -429,13 +384,11 @@ body {
 .concessionaire-name {
   font-size: 0.8125rem;
   font-weight: 700;
-  color: var(--dark);
 }
 
 .toll-amount {
   font-size: 1.05rem;
   font-weight: 800;
-  color: var(--dark);
 }
 
 .portico-location {
@@ -448,16 +401,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
-  flex-wrap: wrap;
   font-size: 0.71875rem;
-}
-
-.toll-date {
-  color: var(--slate-500);
-  display: flex;
-  align-items: center;
-  gap: 4px;
 }
 
 .evasion-warning {
@@ -466,13 +410,8 @@ body {
   padding: 2px 8px;
   border-radius: 9999px;
   font-weight: 700;
-  font-size: 0.6875rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
 }
 
-/* Barra Flutuante de Resumo Financeiro (Sticky Bottom) */
 .checkout-bar {
   position: fixed;
   bottom: 0;
@@ -480,9 +419,7 @@ body {
   right: 0;
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid var(--slate-200);
-  box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.08);
   padding: 12px 16px calc(12px + var(--safe-bottom)) 16px;
   z-index: 50;
 }
@@ -501,10 +438,6 @@ body {
   color: var(--slate-500);
 }
 
-.summary-breakdown span strong {
-  color: var(--dark);
-}
-
 .checkout-row {
   display: flex;
   align-items: center;
@@ -512,24 +445,9 @@ body {
   gap: 16px;
 }
 
-.total-display {
-  display: flex;
-  flex-direction: column;
-}
-
-.total-label {
-  font-size: 0.6875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--slate-500);
-  letter-spacing: 0.5px;
-}
-
 .total-value {
   font-size: 1.35rem;
   font-weight: 800;
-  color: var(--dark);
-  line-height: 1.1;
 }
 
 .btn-checkout {
@@ -546,27 +464,175 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+/* ========================================================
+   ABAS DE FORMA DE PAGAMENTO (Pix, Crédito, Débito)
+   ======================================================== */
+.payment-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  background: var(--slate-100);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
+  border: 1px solid var(--slate-200);
+}
+
+.payment-tab-btn {
+  background: transparent;
+  border: none;
+  padding: 10px 4px;
+  border-radius: var(--radius-sm);
+  font-size: 0.78125rem;
+  font-weight: 700;
+  color: var(--slate-500);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.payment-tab-btn.active {
+  background: #ffffff;
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.payment-tab-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ========================================================
+   FORMULÁRIO DE CARTÃO SIMULADO
+   ======================================================== */
+.card-preview-box {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #334155;
+}
+
+.card-preview-chip {
+  width: 32px;
+  height: 24px;
+  background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.card-preview-number {
+  font-family: var(--plate-font);
+  font-size: 1.05rem;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.card-preview-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.card-preview-name {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.card-form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.form-input, .form-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  color: var(--dark);
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-input:focus, .form-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.form-row-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.pci-shield-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.6875rem;
+  color: #059669;
+  background: #ecfdf5;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+}
+
+.btn-card-pay {
+  width: 100%;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 14px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   transition: all 0.2s;
 }
 
-.btn-checkout:active {
-  transform: scale(0.97);
+.btn-card-pay:active {
+  transform: scale(0.98);
 }
 
-.btn-checkout:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-/* Modal de Checkout Pix */
+/* Modal e Telas de Status */
 .modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(15, 23, 42, 0.65);
   backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   z-index: 100;
   display: flex;
   align-items: flex-end;
@@ -613,26 +679,15 @@ body {
   margin-bottom: 16px;
 }
 
-.modal-header h3 {
-  font-size: 1.125rem;
-  font-weight: 800;
-  color: var(--dark);
-}
-
 .btn-close {
   background: var(--slate-100);
   border: none;
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--slate-500);
   cursor: pointer;
 }
 
-/* Timer Regressivo do Pix */
 .pix-timer-box {
   background: var(--slate-100);
   border-radius: var(--radius-md);
@@ -643,14 +698,6 @@ body {
   margin-bottom: 16px;
 }
 
-.pix-timer-label {
-  font-size: 0.78125rem;
-  color: var(--slate-500);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
 .pix-countdown {
   font-family: var(--plate-font);
   font-weight: 800;
@@ -658,7 +705,6 @@ body {
   color: var(--primary);
 }
 
-/* Área do QR Code */
 .qr-code-wrapper {
   background: #f8fafc;
   border: 1px dashed #cbd5e1;
@@ -667,9 +713,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   margin-bottom: 16px;
-  text-align: center;
 }
 
 .qr-code-img {
@@ -678,7 +722,6 @@ body {
   background: #ffffff;
   padding: 8px;
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
   margin-bottom: 10px;
 }
 
@@ -687,7 +730,6 @@ body {
   color: var(--slate-500);
 }
 
-/* Caixa PIX Copia e Cola */
 .pix-copy-box {
   background: var(--slate-100);
   border: 1px solid var(--slate-200);
@@ -706,9 +748,7 @@ body {
   font-size: 0.75rem;
   font-family: monospace;
   color: var(--slate-500);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  outline: none;
 }
 
 .btn-copy {
@@ -720,22 +760,12 @@ body {
   font-size: 0.75rem;
   font-weight: 700;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-
-.btn-copy:active {
-  transform: scale(0.96);
 }
 
 .btn-copy.copied {
   background: var(--secondary);
 }
 
-/* Botão de Simulação de Pagamento Bancário */
 .btn-simulate {
   width: 100%;
   background: #ffffff;
@@ -746,19 +776,9 @@ body {
   font-size: 0.8125rem;
   font-weight: 600;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
   margin-bottom: 12px;
-  transition: all 0.2s;
 }
 
-.btn-simulate:hover {
-  background: var(--slate-100);
-}
-
-/* Tela de Comprovante de Sucesso */
 .receipt-card {
   text-align: center;
   padding: 10px 0;
@@ -776,24 +796,6 @@ body {
   margin: 0 auto 12px auto;
 }
 
-.receipt-icon svg {
-  width: 32px;
-  height: 32px;
-}
-
-.receipt-card h4 {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: var(--dark);
-  margin-bottom: 4px;
-}
-
-.receipt-card p {
-  font-size: 0.8125rem;
-  color: var(--slate-500);
-  margin-bottom: 16px;
-}
-
 .receipt-details {
   background: var(--slate-100);
   border-radius: var(--radius-md);
@@ -809,22 +811,28 @@ body {
   margin-bottom: 8px;
 }
 
-.receipt-row:last-child {
-  margin-bottom: 0;
-  border-top: 1px dashed #cbd5e1;
-  padding-top: 8px;
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: var(--dark);
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 200;
 }
 
-.receipt-row span:first-child {
-  color: var(--slate-500);
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
 }
 
-.receipt-row span:last-child {
-  font-weight: 700;
-  color: var(--dark);
-}
-
-/* Indicador Offline */
 .offline-banner {
   position: fixed;
   bottom: 80px;
@@ -838,44 +846,9 @@ body {
   border-radius: var(--radius-md);
   font-size: 0.8125rem;
   font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: var(--shadow-lg);
   z-index: 60;
-  animation: slideUp 0.3s ease;
 }
 
-@keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-/* Toast de Notificação */
-.toast {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-20px);
-  background: var(--dark);
-  color: #ffffff;
-  padding: 10px 18px;
-  border-radius: 9999px;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  box-shadow: var(--shadow-lg);
-  z-index: 200;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.25s ease;
-}
-
-.toast.show {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-}
-
-/* Guia de Instalação iOS */
 .ios-guide-modal {
   position: fixed;
   inset: 0;
@@ -893,7 +866,6 @@ body {
   max-width: 360px;
   border-radius: var(--radius-lg);
   padding: 24px;
-  box-shadow: var(--shadow-lg);
   text-align: center;
 }
 
@@ -904,7 +876,6 @@ body {
   margin-top: 14px;
   text-align: left;
   font-size: 0.875rem;
-  color: #334155;
 }
 
 .ios-step-num {

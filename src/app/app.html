@@ -1,4 +1,4 @@
-<!-- FLUIP - Template Principal Angular PWA -->
+<!-- FLUIP - Template Principal Angular PWA com Suporte Multi-Pagamento -->
 <div class="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans antialiased">
   
   <!-- Header / Barra Superior -->
@@ -44,36 +44,63 @@
       <p class="text-xs text-slate-500 mb-4">Digite a placa veicular para checar passagens em pórticos automáticos:</p>
 
       <form (submit)="$event.preventDefault(); consultarDebitos()">
-        <!-- Moldura Mercosul -->
-        <div class="bg-white border-3 border-black rounded-xl overflow-hidden shadow-sm mb-3.5 focus-within:border-sky-600 focus-within:ring-3 focus-within:ring-sky-100 transition">
-          <div class="bg-[#003399] text-white px-3 py-1 flex items-center justify-between text-[11px] font-bold tracking-widest">
-            <span>MERCOSUL</span>
+        <!-- Moldura Adaptável Mercosul / Antiga -->
+        <div 
+          [class.border-black]="tipoPlaca() !== 'antiga'"
+          [class.border-slate-600]="tipoPlaca() === 'antiga'"
+          class="border-3 rounded-xl overflow-hidden shadow-sm mb-2 focus-within:ring-3 focus-within:ring-sky-100 transition">
+          <div 
+            [class.bg-[#003399]]="tipoPlaca() !== 'antiga'"
+            [class.bg-slate-600]="tipoPlaca() === 'antiga'"
+            class="text-white px-3 py-1 flex items-center justify-between text-[11px] font-bold tracking-widest transition">
+            <span>{{ tipoPlaca() === 'antiga' ? 'BRASIL • PADRÃO ANTERIOR' : tipoPlaca() === 'mercosul' ? 'MERCOSUL' : 'BRASIL / MERCOSUL & ANTIGA' }}</span>
             <div class="flex items-center gap-1">
-              <span class="text-[9px]">BRASIL</span>
+              <span class="text-[9px]">{{ tipoPlaca() === 'antiga' ? 'BR' : 'BRASIL' }}</span>
               <div class="w-3.5 h-2.5 bg-[#009c3b] relative rounded-xs">
                 <div class="absolute inset-[1.5px_2px] bg-[#ffdf00]" style="clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);"></div>
               </div>
             </div>
           </div>
-          <div class="p-2 bg-slate-50/50">
+          <div 
+            [class.bg-slate-50/50]="tipoPlaca() !== 'antiga'"
+            [class.bg-slate-200]="tipoPlaca() === 'antiga'"
+            class="p-2 transition">
             <input 
-              type="text"
+              type="text" 
               [formControl]="placaControl"
               (input)="formatarPlacaInput($event)"
-              placeholder="ABC1D23"
-              class="w-full text-center text-3xl font-extrabold font-mono tracking-widest uppercase outline-none bg-transparent text-slate-900 placeholder:text-slate-300"
-              maxlength="7"
+              placeholder="ABC1D23 ou ABC-1234"
+              class="w-full text-center text-3xl font-extrabold font-mono tracking-widest uppercase outline-none bg-transparent text-slate-900 placeholder:text-slate-400 placeholder:text-xl"
+              maxlength="8"
             />
           </div>
+        </div>
+
+        <!-- Indicador de formato detectado -->
+        <div class="flex items-center justify-between text-[11px] text-slate-500 mb-3 px-1">
+          <span>Padrão identificado:</span>
+          @if (tipoPlaca() === 'mercosul') {
+            <span class="bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded-full text-[10px]">
+              🇧🇷 Padrão Mercosul
+            </span>
+          } @else if (tipoPlaca() === 'antiga') {
+            <span class="bg-slate-200 text-slate-800 font-bold px-2 py-0.5 rounded-full text-[10px]">
+              🚗 Padrão Tradicional (Cinza)
+            </span>
+          } @else {
+            <span class="bg-slate-100 text-slate-500 font-medium px-2 py-0.5 rounded-full text-[10px]">
+              Digite a placa
+            </span>
+          }
         </div>
 
         <!-- Chips de placas de teste -->
         <div class="flex items-center gap-2 flex-wrap mb-4">
           <span class="text-[11px] font-semibold text-slate-400">Exemplos:</span>
-          <button type="button" (click)="usarPlacaExemplo('BRA2E19')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">BRA2E19</button>
-          <button type="button" (click)="usarPlacaExemplo('RIO2024')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">RIO2024</button>
-          <button type="button" (click)="usarPlacaExemplo('FLX9A88')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">FLX9A88</button>
-          <button type="button" (click)="usarPlacaExemplo('ABC1234')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">ABC1234</button>
+          <button type="button" (click)="usarPlacaExemplo('BRA2E19')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">BRA2E19 (Mercosul)</button>
+          <button type="button" (click)="usarPlacaExemplo('RIO2024')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">RIO2024 (Mercosul)</button>
+          <button type="button" (click)="usarPlacaExemplo('ABC-1234')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">ABC-1234 (Antiga)</button>
+          <button type="button" (click)="usarPlacaExemplo('KGT-9821')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">KGT-9821 (Antiga)</button>
         </div>
 
         <!-- Botão Consultar -->
@@ -182,27 +209,27 @@
     <section class="mt-6 bg-white border border-slate-200 rounded-2xl p-4 shadow-xs">
       <h3 class="text-xs font-bold text-slate-900 mb-3 flex items-center gap-1.5">
         <mat-icon class="text-emerald-600 text-base! w-4! h-4!">verified_user</mat-icon>
-        Segurança e Conformidade Fluip
+        Segurança e Opções de Pagamento Fluip
       </h3>
       <div class="space-y-2.5 text-xs text-slate-500">
         <div class="flex items-start gap-2">
           <mat-icon class="text-emerald-600 text-sm! w-4! h-4! shrink-0">check_circle</mat-icon>
+          <span><strong>PIX ou Cartão em até 12x:</strong> Pague de forma imediata ou parcele com segurança total.</span>
+        </div>
+        <div class="flex items-start gap-2">
+          <mat-icon class="text-emerald-600 text-sm! w-4! h-4! shrink-0">check_circle</mat-icon>
+          <span><strong>Taxa de Conveniência Reduzida:</strong> Apenas R$ 1,90 por transação unificada.</span>
+        </div>
+        <div class="flex items-start gap-2">
+          <mat-icon class="text-emerald-600 text-sm! w-4! h-4! shrink-0">check_circle</mat-icon>
           <span><strong>Baixa Automática Homologada:</strong> Quitação confirmada em tempo real diretamente com os sistemas das concessionárias.</span>
-        </div>
-        <div class="flex items-start gap-2">
-          <mat-icon class="text-emerald-600 text-sm! w-4! h-4! shrink-0">check_circle</mat-icon>
-          <span><strong>Comprovante com Autenticação:</strong> Válido juridicamente contra infrações de trânsito.</span>
-        </div>
-        <div class="flex items-start gap-2">
-          <mat-icon class="text-emerald-600 text-sm! w-4! h-4! shrink-0">check_circle</mat-icon>
-          <span><strong>Concessionárias Integradas:</strong> CCR RioSP (Rio-Santos), Ecovias do Litoral, CSG e rodovias federais.</span>
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- Barra Fixa de Checkout (Sticky Mobile Bottom) -->
+  <!-- Barra Fixa de Checkout (Sticky Mobile Bottom) com Taxa Fluip R$ 1,90 -->
   @if (debitos().length > 0) {
     <aside class="fixed bottom-0 inset-x-0 bg-white/98 backdrop-blur-md border-t border-slate-200 p-3.5 z-40 shadow-xl">
       <div class="max-w-md mx-auto">
@@ -212,83 +239,241 @@
         </div>
         <div class="flex items-center justify-between gap-3">
           <div>
-            <span class="text-[10px] font-bold uppercase text-slate-400 block tracking-wider">Total Geral</span>
+            <span class="text-[10px] font-bold uppercase text-slate-400 block tracking-wider">Total a pagar</span>
             <span class="text-xl font-extrabold text-slate-900 leading-tight">R$ {{ totalGeral().toFixed(2) }}</span>
           </div>
 
           <button 
             type="button" 
-            (click)="gerarPagamentoPix()"
+            (click)="iniciarCheckout(formaPagamento())"
             [disabled]="debitosSelecionados().length === 0 || loading()"
             class="flex-1 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white rounded-xl py-3 px-4 text-sm font-bold shadow-md hover:shadow-lg transition flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer active:scale-98">
-            <mat-icon class="text-lg! w-5! h-5!">bolt</mat-icon>
-            Pagar R$ {{ totalGeral().toFixed(2) }} via PIX
+            <mat-icon class="text-lg! w-5! h-5!">payment</mat-icon>
+            Pagar R$ {{ totalGeral().toFixed(2) }} • PIX / Cartão
           </button>
         </div>
       </div>
     </aside>
   }
 
-  <!-- Modal / Bottom Sheet do Pix -->
+  <!-- Modal / Bottom Sheet do Checkout Multi-Método -->
   @if (modalPixAberto()) {
     <div class="fixed inset-0 z-50 bg-slate-950/65 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4 animate-in fade-in duration-200">
       <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 shadow-2xl max-h-[92vh] overflow-y-auto">
         <div class="w-10 h-1 bg-slate-200 rounded-full mx-auto mb-4 sm:hidden"></div>
 
         @if (!pagamentoConcluido()) {
-          <!-- Checkout Pix Ativo -->
+          <!-- Header do Modal -->
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-              <mat-icon class="text-emerald-600 text-xl! w-5! h-5!">qr_code_2</mat-icon>
-              Pagamento Instantâneo PIX
+              <mat-icon class="text-sky-600 text-xl! w-5! h-5!">lock</mat-icon>
+              Finalizar Pagamento Seguro
             </h3>
             <button type="button" (click)="fecharModalPix()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center cursor-pointer">
               <mat-icon class="text-base! w-4! h-4!">close</mat-icon>
             </button>
           </div>
 
-          <!-- Timer de Expiração -->
-          <div class="bg-slate-100 rounded-xl p-2.5 flex items-center justify-between mb-4">
-            <span class="text-xs text-slate-500 flex items-center gap-1.5">
-              <mat-icon class="text-sm! w-4! h-4! text-sky-600">timer</mat-icon>
-              Expira em:
-            </span>
-            <span class="font-mono font-extrabold text-sm text-sky-600">{{ tempoFormatado() }}</span>
+          <!-- Abas de Seleção de Pagamento -->
+          <div class="grid grid-cols-3 gap-1.5 bg-slate-100 p-1 rounded-xl mb-4 border border-slate-200">
+            <button 
+              type="button" 
+              (click)="selecionarMetodoPagamento('pix')"
+              [class.bg-white]="formaPagamento() === 'pix'"
+              [class.text-sky-600]="formaPagamento() === 'pix'"
+              [class.shadow-xs]="formaPagamento() === 'pix'"
+              [class.text-slate-500]="formaPagamento() !== 'pix'"
+              class="py-2 px-1 text-xs font-bold rounded-lg transition flex flex-col items-center justify-center gap-1 cursor-pointer">
+              <mat-icon class="text-base! w-4! h-4!">qr_code_2</mat-icon>
+              PIX
+            </button>
+            <button 
+              type="button" 
+              (click)="selecionarMetodoPagamento('credito')"
+              [class.bg-white]="formaPagamento() === 'credito'"
+              [class.text-sky-600]="formaPagamento() === 'credito'"
+              [class.shadow-xs]="formaPagamento() === 'credito'"
+              [class.text-slate-500]="formaPagamento() !== 'credito'"
+              class="py-2 px-1 text-xs font-bold rounded-lg transition flex flex-col items-center justify-center gap-1 cursor-pointer">
+              <mat-icon class="text-base! w-4! h-4!">credit_card</mat-icon>
+              Crédito
+            </button>
+            <button 
+              type="button" 
+              (click)="selecionarMetodoPagamento('debito')"
+              [class.bg-white]="formaPagamento() === 'debito'"
+              [class.text-sky-600]="formaPagamento() === 'debito'"
+              [class.shadow-xs]="formaPagamento() === 'debito'"
+              [class.text-slate-500]="formaPagamento() !== 'debito'"
+              class="py-2 px-1 text-xs font-bold rounded-lg transition flex flex-col items-center justify-center gap-1 cursor-pointer">
+              <mat-icon class="text-base! w-4! h-4!">account_balance_wallet</mat-icon>
+              Débito
+            </button>
           </div>
 
-          <!-- QR Code -->
-          @if (cobrancaAtiva(); as cobranca) {
-            <div class="bg-slate-50 border border-dashed border-slate-300 rounded-2xl p-4 text-center mb-4 flex flex-col items-center">
-              <img [src]="cobranca.qrCodeBase64" alt="QR Code PIX" class="w-48 h-48 bg-white p-2 rounded-xl shadow-xs mb-2" referrerpolicy="no-referrer" />
-              <p class="text-xs text-slate-500">Abra o app do seu banco e aponte a câmera para ler</p>
+          <!-- ABA 1: PIX -->
+          @if (formaPagamento() === 'pix') {
+            <!-- Timer de Expiração -->
+            <div class="bg-slate-100 rounded-xl p-2.5 flex items-center justify-between mb-4">
+              <span class="text-xs text-slate-500 flex items-center gap-1.5">
+                <mat-icon class="text-sm! w-4! h-4! text-sky-600">timer</mat-icon>
+                Expira em:
+              </span>
+              <span class="font-mono font-extrabold text-sm text-sky-600">{{ tempoFormatado() }}</span>
             </div>
 
-            <!-- Código Copia e Cola -->
-            <div class="bg-slate-100 border border-slate-200 rounded-xl p-2.5 flex items-center gap-2 mb-4">
-              <input type="text" [value]="cobranca.pixCopiaECola" readonly class="flex-1 bg-transparent border-none text-xs font-mono text-slate-600 truncate outline-none" />
-              <button 
-                type="button" 
-                (click)="copiarChavePix()"
-                [class.bg-emerald-600]="pixCopiado()"
-                [class.bg-sky-600]="!pixCopiado()"
-                class="text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 shrink-0 transition cursor-pointer active:scale-95">
-                <mat-icon class="text-sm! w-4! h-4!">{{ pixCopiado() ? 'check' : 'content_copy' }}</mat-icon>
-                {{ pixCopiado() ? 'Copiado!' : 'Copiar' }}
-              </button>
+            @if (cobrancaAtiva(); as cobranca) {
+              @if (cobranca.qrCodeBase64) {
+                <div class="bg-slate-50 border border-dashed border-slate-300 rounded-2xl p-4 text-center mb-4 flex flex-col items-center">
+                  <img [src]="cobranca.qrCodeBase64" alt="QR Code PIX" class="w-48 h-48 bg-white p-2 rounded-xl shadow-xs mb-2" referrerpolicy="no-referrer" />
+                  <p class="text-xs text-slate-500">Aponte a câmera do seu banco para ler o QR Code</p>
+                </div>
+              }
+
+              @if (cobranca.pixCopiaECola) {
+                <div class="bg-slate-100 border border-slate-200 rounded-xl p-2.5 flex items-center gap-2 mb-4">
+                  <input type="text" [value]="cobranca.pixCopiaECola" readonly class="flex-1 bg-transparent border-none text-xs font-mono text-slate-600 truncate outline-none" />
+                  <button 
+                    type="button" 
+                    (click)="copiarChavePix()"
+                    [class.bg-emerald-600]="pixCopiado()"
+                    [class.bg-sky-600]="!pixCopiado()"
+                    class="text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 shrink-0 transition cursor-pointer active:scale-95">
+                    <mat-icon class="text-sm! w-4! h-4!">{{ pixCopiado() ? 'check' : 'content_copy' }}</mat-icon>
+                    {{ pixCopiado() ? 'Copiado!' : 'Copiar' }}
+                  </button>
+                </div>
+              }
+            }
+
+            <button 
+              type="button" 
+              (click)="simularPagamentoInstantaneo()" 
+              class="w-full bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 mb-3 transition cursor-pointer">
+              <mat-icon class="text-amber-500 text-base! w-4! h-4!">flash_on</mat-icon>
+              ⚡ Simular Pagamento Instantâneo PIX (Demonstração)
+            </button>
+          } @else {
+            <!-- ABA 2 & 3: CARTÃO DE CRÉDITO OU DÉBITO -->
+            <div class="space-y-3.5">
+              <!-- Visual Mockup do Cartão -->
+              <div class="bg-gradient-to-tr from-slate-900 to-slate-800 text-white p-4 rounded-xl shadow-sm border border-slate-700">
+                <div class="w-8 h-6 bg-gradient-to-r from-amber-400 to-amber-600 rounded-sm mb-3"></div>
+                <div class="font-mono text-sm tracking-wider mb-3">
+                  {{ cartaoNumeroControl.value || '•••• •••• •••• ••••' }}
+                </div>
+                <div class="flex justify-between items-end text-[10px] text-slate-400 uppercase">
+                  <div>
+                    <span class="block text-[8px]">Titular</span>
+                    <span class="text-white font-bold">{{ cartaoNomeControl.value || 'NOME COMPLETO' }}</span>
+                  </div>
+                  <div>
+                    <span class="block text-[8px]">Validade</span>
+                    <span class="text-white font-bold">{{ cartaoValidadeControl.value || 'MM/AA' }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Formulário -->
+              <div class="space-y-2.5">
+                <div>
+                  <label for="inputNumeroCartao" class="block text-[11px] font-bold text-slate-700 mb-1">Número do Cartão</label>
+                  <input 
+                    id="inputNumeroCartao"
+                    type="text" 
+                    [formControl]="cartaoNumeroControl"
+                    (input)="formatarCartaoInput($event)"
+                    placeholder="0000 0000 0000 0000"
+                    class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-mono outline-none focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
+                    maxlength="19"
+                  />
+                </div>
+
+                <div>
+                  <label for="inputNomeCartao" class="block text-[11px] font-bold text-slate-700 mb-1">Nome no Cartão</label>
+                  <input 
+                    id="inputNomeCartao"
+                    type="text" 
+                    [formControl]="cartaoNomeControl"
+                    placeholder="Ex: CARLOS A SILVA"
+                    class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs uppercase outline-none focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
+                  />
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label for="inputValidadeCartao" class="block text-[11px] font-bold text-slate-700 mb-1">Validade (MM/AA)</label>
+                    <input 
+                      id="inputValidadeCartao"
+                      type="text" 
+                      [formControl]="cartaoValidadeControl"
+                      (input)="formatarValidadeInput($event)"
+                      placeholder="MM/AA"
+                      class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
+                      maxlength="5"
+                    />
+                  </div>
+                  <div>
+                    <label for="inputCvvCartao" class="block text-[11px] font-bold text-slate-700 mb-1">CVV</label>
+                    <input 
+                      id="inputCvvCartao"
+                      type="password" 
+                      [formControl]="cartaoCvvControl"
+                      (input)="formatarCvvInput($event)"
+                      placeholder="123"
+                      class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
+                      maxlength="4"
+                    />
+                  </div>
+                </div>
+
+                <!-- Parcelas (Apenas no Crédito) -->
+                @if (formaPagamento() === 'credito') {
+                  <div>
+                    <label for="selectParcelasCartao" class="block text-[11px] font-bold text-slate-700 mb-1">Parcelamento (Até 12x)</label>
+                    <select 
+                      id="selectParcelasCartao"
+                      [formControl]="cartaoParcelaControl"
+                      class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none focus:border-sky-600 focus:ring-2 focus:ring-sky-100 bg-white">
+                      @if (cobrancaAtiva()?.opcoesParcelamento; as opcoes) {
+                        @for (op of opcoes; track op.numero) {
+                          <option [value]="op.numero">{{ op.descricao }}</option>
+                        }
+                      } @else {
+                        <option [value]="1">1x de R$ {{ totalGeral().toFixed(2) }} sem juros</option>
+                        <option [value]="2">2x de R$ {{ (totalGeral() / 2).toFixed(2) }} sem juros</option>
+                        <option [value]="3">3x de R$ {{ (totalGeral() / 3).toFixed(2) }} sem juros</option>
+                        <option [value]="6">6x de R$ {{ ((totalGeral() * 1.04) / 6).toFixed(2) }}</option>
+                        <option [value]="12">12x de R$ {{ ((totalGeral() * 1.12) / 12).toFixed(2) }}</option>
+                      }
+                    </select>
+                  </div>
+                }
+
+                <div class="bg-emerald-50 text-emerald-800 text-[10px] p-2 rounded-lg flex items-center gap-1.5 font-medium">
+                  <mat-icon class="text-xs! w-3.5! h-3.5!">shield</mat-icon>
+                  <span>Ambiente Criptografado TLS 256-bit com certificação PCI-DSS.</span>
+                </div>
+
+                <button 
+                  type="button" 
+                  (click)="processarPagamentoCartao()"
+                  [disabled]="loading()"
+                  class="w-full bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl py-3 px-4 font-bold text-xs shadow-md transition flex items-center justify-center gap-2 cursor-pointer active:scale-98">
+                  @if (loading()) {
+                    <div class="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <span>Processando cartão...</span>
+                  } @else {
+                    <mat-icon class="text-sm! w-4! h-4!">payment</mat-icon>
+                    <span>Confirmar Pagamento com Cartão</span>
+                  }
+                </button>
+              </div>
             </div>
           }
 
-          <!-- Botão Simular Pagamento -->
-          <button 
-            type="button" 
-            (click)="simularPagamentoInstantaneo()" 
-            class="w-full bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 mb-3 transition cursor-pointer">
-            <mat-icon class="text-amber-500 text-base! w-4! h-4!">flash_on</mat-icon>
-            ⚡ Simular Pagamento Instantâneo (Demonstração)
-          </button>
-
-          <p class="text-[11px] text-slate-400 text-center">
-            Verificando confirmação do Banco Central a cada 3 segundos...
+          <p class="text-[11px] text-slate-400 text-center mt-3">
+            O sistema faz a baixa automática em tempo real na concessionária de rodovias.
           </p>
         } @else {
           <!-- Comprovante de Pagamento Confirmado -->
@@ -304,6 +489,10 @@
                 <div class="flex justify-between">
                   <span class="text-slate-500">Placa Veicular:</span>
                   <span class="font-bold text-slate-900">{{ comp.placa }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-500">Forma de Pagamento:</span>
+                  <span class="font-bold text-slate-900">{{ comp.formaPagamento }}</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="text-slate-500">Valor Total Pago:</span>

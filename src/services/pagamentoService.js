@@ -2,18 +2,15 @@ import { v4 as uuidv4 } from 'uuid';
 import pedagioService from './pedagioService.js';
 
 /**
- * Serviço de Geração e Gerenciamento de Pagamentos PIX (Fluip)
+ * Serviço de Geração e Gerenciamento de Pagamentos (Pix, Crédito e Débito) - Fluip
  */
 class PagamentoService {
   constructor() {
-    // Armazenamento em memória das cobranças geradas
     this.cobrancas = new Map();
   }
 
   /**
    * Calcula CRC16 (CCITT-FALSE) para o payload do PIX
-   * @param {string} payload
-   * @returns {string} Hexadecimal com 4 caracteres
    */
   calcularCRC16(payload) {
     let crc = 0xffff;
@@ -35,7 +32,7 @@ class PagamentoService {
   }
 
   /**
-   * Formata tags TLV (Type-Length-Value) do padrão EMVCo do Banco Central do Brasil
+   * Formata tags TLV do padrão EMVCo do Banco Central do Brasil
    */
   formatarTLV(id, valor) {
     const len = valor.length.toString().padStart(2, '0');
@@ -48,28 +45,18 @@ class PagamentoService {
   montarPixCopiaECola({ chavePix, nomeRecebedor, cidade, valor, txid }) {
     const valorFormatado = valor.toFixed(2);
     
-    // Tag 26: Merchant Account Information
     const gui = this.formatarTLV('00', 'br.gov.bcb.pix');
     const chave = this.formatarTLV('01', chavePix);
     const merchantInfo = this.formatarTLV('26', `${gui}${chave}`);
-
-    // Tag 52: Merchant Category Code (0000 = Geral)
     const mcc = this.formatarTLV('52', '0000');
-    // Tag 53: Moeda BRL (986)
     const moeda = this.formatarTLV('53', '986');
-    // Tag 54: Valor da transação
     const tagValor = this.formatarTLV('54', valorFormatado);
-    // Tag 58: País (BR)
     const pais = this.formatarTLV('58', 'BR');
-    // Tag 59: Nome do recebedor (max 25 chars)
     const nome = this.formatarTLV('59', nomeRecebedor.substring(0, 25));
-    // Tag 60: Cidade do recebedor (max 15 chars)
     const cidadeFormatada = this.formatarTLV('60', cidade.substring(0, 15));
-    // Tag 62: Additional Data Field Template (TxID)
     const campoTxid = this.formatarTLV('05', txid.replace(/[^a-zA-Z0-9]/g, '').substring(0, 25));
     const dadosAdicionais = this.formatarTLV('62', campoTxid);
 
-    // Payload sem CRC
     const payloadBase = `000201${merchantInfo}${mcc}${moeda}${tagValor}${pais}${nome}${cidadeFormatada}${dadosAdicionais}6304`;
     const crc = this.calcularCRC16(payloadBase);
 
@@ -77,24 +64,16 @@ class PagamentoService {
   }
 
   /**
-   * Gera um SVG limpo para visualização do QR Code sem dependências externas
-   * @param {string} payload
-   * @returns {string} SVG Data URL
+   * Gera SVG estilizado do QR Code PIX
    */
   gerarQrCodeDataUrl(payload) {
-    // Gerador de grade visual estilizada baseada no hash do payload PIX
-    // Representa o QR code de forma nítida e estilizada
     const size = 256;
     const modules = 29;
     const cellSize = size / modules;
-
-    // Matriz pseudo-aleatória determinística baseada no payload
     let svgRects = '';
 
-    // Marcadores de canto (Position Detection Patterns)
     const desenharMarcadorCanto = (startX, startY) => {
       let rects = '';
-      // Moldura externa 7x7
       rects += `<rect x="${startX * cellSize}" y="${startY * cellSize}" width="${7 * cellSize}" height="${7 * cellSize}" fill="#0f172a" rx="${cellSize * 0.8}" />`;
       rects += `<rect x="${(startX + 1) * cellSize}" y="${(startY + 1) * cellSize}" width="${5 * cellSize}" height="${5 * cellSize}" fill="#ffffff" rx="${cellSize * 0.5}" />`;
       rects += `<rect x="${(startX + 2) * cellSize}" y="${(startY + 2) * cellSize}" width="${3 * cellSize}" height="${3 * cellSize}" fill="#0284c7" rx="${cellSize * 0.4}" />`;
@@ -105,7 +84,6 @@ class PagamentoService {
     svgRects += desenharMarcadorCanto(modules - 8, 1);
     svgRects += desenharMarcadorCanto(1, modules - 8);
 
-    // Gerar módulos internos com base no payload
     let seed = 0;
     for (let i = 0; i < payload.length; i++) {
       seed = (seed * 31 + payload.charCodeAt(i)) % 1000000007;
@@ -113,23 +91,17 @@ class PagamentoService {
 
     for (let r = 0; r < modules; r++) {
       for (let c = 0; c < modules; c++) {
-        // Pular áreas dos marcadores de canto
         if ((r < 9 && c < 9) || (r < 9 && c > modules - 10) || (r > modules - 10 && c < 9)) {
           continue;
         }
-
         seed = (seed * 1103515245 + 12345) & 0x7fffffff;
-        const preenchido = (seed % 100) > 42;
-
-        if (preenchido) {
-          const isAccent = (seed % 10) === 0;
-          const fill = isAccent ? '#0ea5e9' : '#0f172a';
+        if ((seed % 100) > 42) {
+          const fill = (seed % 10) === 0 ? '#0ea5e9' : '#0f172a';
           svgRects += `<rect x="${(c * cellSize).toFixed(1)}" y="${(r * cellSize).toFixed(1)}" width="${(cellSize * 0.92).toFixed(1)}" height="${(cellSize * 0.92).toFixed(1)}" fill="${fill}" rx="1.5" />`;
         }
       }
     }
 
-    // Logo central sutil Fluip
     const centerSize = 44;
     const centerPos = (size - centerSize) / 2;
     const centerSvg = `
@@ -137,52 +109,96 @@ class PagamentoService {
       <path d="M${centerPos + 12} ${centerPos + 16} L${centerPos + 32} ${centerPos + 16} M${centerPos + 12} ${centerPos + 22} L${centerPos + 28} ${centerPos + 22} M${centerPos + 12} ${centerPos + 28} L${centerPos + 22} ${centerPos + 28}" stroke="#0284c7" stroke-width="3" stroke-linecap="round" />
     `;
 
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" shape-rendering="geometricPrecision"><rect width="${size}" height="${size}" fill="#ffffff" rx="16"/>${svgRects}${centerSvg}</svg>`;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}"><rect width="${size}" height="${size}" fill="#ffffff" rx="16"/>${svgRects}${centerSvg}</svg>`;
 
     return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
   }
 
   /**
-   * Gera uma cobrança Pix para as passagens selecionadas
+   * Gera a grade de parcelas para Cartão de Crédito em até 12x
+   */
+  calcularOpcoesParcelamento(valorTotal) {
+    const parcelas = [];
+    for (let n = 1; n <= 12; n++) {
+      // Simulação sem juros até 3x, acréscimo sutil após 4x
+      const taxaJuros = n > 3 ? (n - 3) * 0.015 : 0;
+      const valorComJuros = valorTotal * (1 + taxaJuros);
+      const valorParcela = valorComJuros / n;
+      parcelas.push({
+        numero: n,
+        valorParcela: Number(valorParcela.toFixed(2)),
+        valorTotalComJuros: Number(valorComJuros.toFixed(2)),
+        descricao: n === 1
+          ? `1x de R$ ${valorTotal.toFixed(2).replace('.', ',')} (à vista sem juros)`
+          : n <= 3
+            ? `${n}x de R$ ${valorParcela.toFixed(2).replace('.', ',')} sem juros`
+            : `${n}x de R$ ${valorParcela.toFixed(2).replace('.', ',')} (total R$ ${valorComJuros.toFixed(2).replace('.', ',')})`,
+      });
+    }
+    return parcelas;
+  }
+
+  /**
+   * Gera a cobrança no método selecionado ('pix', 'credito', 'debito')
    * @param {string[]} passagensIds
    * @param {number} taxaConveniencia
    * @param {string} placa
-   * @returns {Object} Dados completos da cobrança gerada
+   * @param {'pix'|'credito'|'debito'} formaDePagamento
    */
-  gerarCobrancaPix(passagensIds, taxaConveniencia = 2.50, placa = '') {
+  gerarCobranca(passagensIds, taxaConveniencia = 1.90, placa = '', formaDePagamento = 'pix') {
     if (!passagensIds || !Array.isArray(passagensIds) || passagensIds.length === 0) {
       throw new Error('Nenhuma tarifa de pedágio foi selecionada para pagamento.');
     }
 
-    // Obter detalhes das passagens
-    const passagens = pedagioService.buscarPorIds(passagensIds);
+    const metodo = ['pix', 'credito', 'debito'].includes(formaDePagamento)
+      ? formaDePagamento
+      : 'pix';
 
-    // Se por acaso os IDs foram gerados em outra instância, calcular tarifa média segura
+    const passagens = pedagioService.buscarPorIds(passagensIds);
     const subtotal = passagens.length > 0
       ? passagens.reduce((sum, item) => sum + Number(item.valorTarifa || 0), 0)
       : passagensIds.length * 10.50;
 
-    const taxa = Number(taxaConveniencia) || 2.50;
+    const taxa = Number(taxaConveniencia) || 1.90;
     const valorTotal = Number((subtotal + taxa).toFixed(2));
     const txid = `FLUIP${uuidv4().replace(/-/g, '').substring(0, 16).toUpperCase()}`;
 
-    // Montar código PIX Copia e Cola
-    const pixCopiaECola = this.montarPixCopiaECola({
-      chavePix: 'financeiro@fluip.com.br',
-      nomeRecebedor: 'FLUIP PAGAMENTOS S.A.',
-      cidade: 'SAO PAULO',
-      valor: valorTotal,
-      txid,
-    });
-
-    const qrCodeBase64 = this.gerarQrCodeDataUrl(pixCopiaECola);
     const agora = new Date();
     const tempoLimiteSegundos = 900; // 15 minutos
     const expiresAt = new Date(agora.getTime() + tempoLimiteSegundos * 1000).toISOString();
 
+    let pixCopiaECola = null;
+    let qrCodeBase64 = null;
+    let opcoesParcelamento = null;
+    let formularioCartao = null;
+
+    if (metodo === 'pix') {
+      pixCopiaECola = this.montarPixCopiaECola({
+        chavePix: 'financeiro@fluip.com.br',
+        nomeRecebedor: 'FLUIP PAGAMENTOS S.A.',
+        cidade: 'SAO PAULO',
+        valor: valorTotal,
+        txid,
+      });
+      qrCodeBase64 = this.gerarQrCodeDataUrl(pixCopiaECola);
+    } else {
+      // Cartão de Crédito ou Débito
+      if (metodo === 'credito') {
+        opcoesParcelamento = this.calcularOpcoesParcelamento(valorTotal);
+      }
+      formularioCartao = {
+        camposObrigatorios: ['numeroCartao', 'nomeTitular', 'validade', 'cvv'],
+        aceitaParcelamento: metodo === 'credito',
+        maxParcelas: metodo === 'credito' ? 12 : 1,
+        bandeirasSuportadas: ['Visa', 'Mastercard', 'Elo', 'Hipercard', 'Amex'],
+        mensagemSeguranca: 'Ambiente criptografado TLS 256-bit com certificação PCI-DSS Nível 1.',
+      };
+    }
+
     const cobranca = {
       txid,
       placa: placa || (passagens[0] ? passagens[0].placa : 'VEICULO'),
+      formaDePagamento: metodo,
       passagensIds,
       passagensDetalhadas: passagens,
       subtotal: Number(subtotal.toFixed(2)),
@@ -190,10 +206,12 @@ class PagamentoService {
       valorTotal,
       pixCopiaECola,
       qrCodeBase64,
+      opcoesParcelamento,
+      formularioCartao,
       createdAt: agora.toISOString(),
       expiresAt,
       tempoLimiteSegundos,
-      status: 'PENDENTE', // PENDENTE | PAGO | EXPIRADO
+      status: 'PENDENTE',
       autenticacaoBancaria: null,
       comprovante: null,
     };
@@ -202,22 +220,22 @@ class PagamentoService {
     return cobranca;
   }
 
-  /**
-   * Consulta o status de uma cobrança por txid
-   * @param {string} txid
-   * @returns {Object|null}
-   */
+  // Compatibilidade com a chamada legada
+  gerarCobrancaPix(passagensIds, taxaConveniencia = 1.90, placa = '') {
+    return this.gerarCobranca(passagensIds, taxaConveniencia, placa, 'pix');
+  }
+
   consultarStatusPix(txid) {
     if (!txid) return null;
     return this.cobrancas.get(txid) || null;
   }
 
   /**
-   * Confirma pagamento e simula baixa na concessionária
+   * Confirma pagamento (Pix, Cartão de Crédito ou Débito)
    * @param {string} txid
-   * @returns {Object} Cobrança atualizada
+   * @param {Object} detalhesPagamento (dados simulados do cartão, parcelas, etc.)
    */
-  confirmarPagamento(txid) {
+  confirmarPagamento(txid, detalhesPagamento = {}) {
     const cobranca = this.cobrancas.get(txid);
     if (!cobranca) {
       throw new Error(`Cobrança com txid ${txid} não encontrada.`);
@@ -229,6 +247,15 @@ class PagamentoService {
 
     const agora = new Date();
     const autenticacao = `AUT-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${Date.now()}`;
+    const metodoFormatado = cobranca.formaDePagamento === 'credito'
+      ? `Cartão de Crédito (${detalhesPagamento.parcelas || 1}x)`
+      : cobranca.formaDePagamento === 'debito'
+        ? 'Cartão de Débito (À vista)'
+        : 'PIX Instantâneo';
+
+    const cartaoMascarado = detalhesPagamento.numeroCartao
+      ? `•••• •••• •••• ${detalhesPagamento.numeroCartao.replace(/\s/g, '').slice(-4)}`
+      : null;
 
     cobranca.status = 'PAGO';
     cobranca.pagoEm = agora.toISOString();
@@ -238,16 +265,16 @@ class PagamentoService {
       titulo: 'Comprovante Oficial de Quitação de Pedágio Free Flow',
       intermediador: 'Fluip Pagamentos S.A. - CNPJ: 45.892.311/0001-92',
       placa: cobranca.placa,
+      formaDePagamento: metodoFormatado,
+      cartaoFinal: cartaoMascarado,
       valorTotal: cobranca.valorTotal,
       dataHoraPagamento: agora.toLocaleString('pt-BR'),
       autenticacaoBancaria: autenticacao,
       protocoloBaixa: cobranca.protocoloConcessionaria,
-      statusBaixa: 'QUITADO - BAIXA EFETUADA NO SISTEMA CONTRATUAL DA CONCESSIONÁRIA',
+      statusBaixa: 'QUITADO - BAIXA EFETUADA NO SISTEMA DA CONCESSIONÁRIA',
     };
 
-    // Baixa as passagens no serviço de pedágio
     pedagioService.baixarPassagens(cobranca.passagensIds);
-
     this.cobrancas.set(txid, cobranca);
     return cobranca;
   }
