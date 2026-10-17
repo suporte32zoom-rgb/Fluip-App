@@ -1,0 +1,374 @@
+<!-- FLUIP - Template Principal Angular PWA -->
+<div class="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans antialiased">
+  
+  <!-- Header / Barra Superior -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-3">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-emerald-500 flex items-center justify-center shadow-sm">
+          <img src="/icon.svg" alt="Fluip" class="w-6 h-6" referrerpolicy="no-referrer" />
+        </div>
+        <div>
+          <h1 class="text-xl font-extrabold tracking-tight text-slate-900 leading-none">Fluip</h1>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-sky-600 block mt-0.5">Free Flow Sem Multas</span>
+        </div>
+      </div>
+
+      <button 
+        type="button" 
+        (click)="instalarPwa()"
+        class="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-full px-3 py-1.5 text-xs font-semibold shadow-sm transition active:scale-95 cursor-pointer">
+        <mat-icon class="text-sm! w-4! h-4! leading-none!">download</mat-icon>
+        Instalar App
+      </button>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="w-full max-w-md mx-auto px-4 py-4 pb-32 flex-1 flex flex-col">
+    
+    <!-- Banner Informativo da Lei do Free Flow -->
+    <div class="bg-gradient-to-r from-sky-50 to-emerald-50 border border-sky-200 rounded-2xl p-3.5 mb-5 flex items-start gap-3 shadow-xs">
+      <mat-icon class="text-sky-600 text-xl! w-5! h-5! shrink-0 mt-0.5">info</mat-icon>
+      <p class="text-xs text-sky-950 leading-relaxed">
+        <strong>Pedágio Eletrônico Free Flow:</strong> Os veículos passam sem cancela e o motorista tem <strong>até 30 dias</strong> para pagar a tarifa antes de autuação por evasão (Art. 209-A do CTB).
+      </p>
+    </div>
+
+    <!-- Card de Consulta de Placa Mercosul -->
+    <section class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm mb-5">
+      <h2 class="text-sm font-bold text-slate-900 mb-1 flex items-center gap-2">
+        <mat-icon class="text-sky-600 text-base! w-4! h-4!">directions_car</mat-icon>
+        Consultar Débitos por Placa
+      </h2>
+      <p class="text-xs text-slate-500 mb-4">Digite a placa veicular para checar passagens em pórticos automáticos:</p>
+
+      <form (submit)="$event.preventDefault(); consultarDebitos()">
+        <!-- Moldura Mercosul -->
+        <div class="bg-white border-3 border-black rounded-xl overflow-hidden shadow-sm mb-3.5 focus-within:border-sky-600 focus-within:ring-3 focus-within:ring-sky-100 transition">
+          <div class="bg-[#003399] text-white px-3 py-1 flex items-center justify-between text-[11px] font-bold tracking-widest">
+            <span>MERCOSUL</span>
+            <div class="flex items-center gap-1">
+              <span class="text-[9px]">BRASIL</span>
+              <div class="w-3.5 h-2.5 bg-[#009c3b] relative rounded-xs">
+                <div class="absolute inset-[1.5px_2px] bg-[#ffdf00]" style="clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);"></div>
+              </div>
+            </div>
+          </div>
+          <div class="p-2 bg-slate-50/50">
+            <input 
+              type="text"
+              [formControl]="placaControl"
+              (input)="formatarPlacaInput($event)"
+              placeholder="ABC1D23"
+              class="w-full text-center text-3xl font-extrabold font-mono tracking-widest uppercase outline-none bg-transparent text-slate-900 placeholder:text-slate-300"
+              maxlength="7"
+            />
+          </div>
+        </div>
+
+        <!-- Chips de placas de teste -->
+        <div class="flex items-center gap-2 flex-wrap mb-4">
+          <span class="text-[11px] font-semibold text-slate-400">Exemplos:</span>
+          <button type="button" (click)="usarPlacaExemplo('BRA2E19')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">BRA2E19</button>
+          <button type="button" (click)="usarPlacaExemplo('RIO2024')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">RIO2024</button>
+          <button type="button" (click)="usarPlacaExemplo('FLX9A88')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">FLX9A88</button>
+          <button type="button" (click)="usarPlacaExemplo('ABC1234')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">ABC1234</button>
+        </div>
+
+        <!-- Botão Consultar -->
+        <button 
+          type="button" 
+          (click)="consultarDebitos()"
+          [disabled]="loading()"
+          class="w-full bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl py-3.5 px-4 font-bold text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer active:scale-[0.99]">
+          @if (loading()) {
+            <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+            <span>Consultando concessionárias...</span>
+          } @else {
+            <mat-icon class="text-lg! w-5! h-5!">search</mat-icon>
+            <span>Buscar Tarifas Pendentes</span>
+          }
+        </button>
+      </form>
+    </section>
+
+    <!-- Seção de Resultados -->
+    @if (placaPesquisada()) {
+      <section class="space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <h2 class="text-sm font-bold text-slate-900">Placa:</h2>
+            <span class="px-2 py-0.5 rounded-md bg-sky-100 text-sky-800 font-mono font-bold text-xs">{{ placaPesquisada() }}</span>
+          </div>
+
+          @if (debitos().length > 0) {
+            <button 
+              type="button" 
+              (click)="toggleSelecionarTodos()" 
+              class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 cursor-pointer">
+              <mat-icon class="text-sm! w-4! h-4!">
+                {{ todosSelecionados() ? 'check_box' : 'check_box_outline_blank' }}
+              </mat-icon>
+              {{ todosSelecionados() ? 'Desmarcar todos' : 'Selecionar todos' }}
+            </button>
+          }
+        </div>
+
+        @if (debitos().length === 0) {
+          <div class="bg-white border border-slate-200 rounded-2xl p-8 text-center shadow-xs">
+            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3">
+              <mat-icon class="text-2xl!">check_circle</mat-icon>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 mb-1">Nenhum débito pendente!</h3>
+            <p class="text-xs text-slate-500">Todas as passagens para esta placa foram quitadas junto às concessionárias.</p>
+          </div>
+        } @else {
+          <!-- Lista de Pedágios Pendentes -->
+          @for (item of debitos(); track item.id) {
+            <div 
+              role="button"
+              tabindex="0"
+              (click)="toggleSelecao(item.id)"
+              (keydown.enter)="toggleSelecao(item.id)"
+              (keydown.space)="toggleSelecao(item.id); $event.preventDefault()"
+              [attr.aria-pressed]="selecionadosIds().has(item.id)"
+              [class.border-sky-500]="selecionadosIds().has(item.id)"
+              [class.bg-sky-50/40]="selecionadosIds().has(item.id)"
+              [class.border-slate-200]="!selecionadosIds().has(item.id)"
+              [class.bg-white]="!selecionadosIds().has(item.id)"
+              class="border-1.5 rounded-xl p-4 shadow-xs transition cursor-pointer flex gap-3 relative focus:outline-hidden focus:ring-2 focus:ring-sky-500">
+              
+              <!-- Checkbox Customizado -->
+              <div class="mt-0.5">
+                <div 
+                  [class.bg-sky-600]="selecionadosIds().has(item.id)"
+                  [class.border-sky-600]="selecionadosIds().has(item.id)"
+                  [class.border-slate-400]="!selecionadosIds().has(item.id)"
+                  class="w-5 h-5 rounded-md border-2 flex items-center justify-center transition bg-white">
+                  @if (selecionadosIds().has(item.id)) {
+                    <mat-icon class="text-white text-sm! w-3.5! h-3.5! leading-none!">check</mat-icon>
+                  }
+                </div>
+              </div>
+
+              <!-- Detalhes do Débito -->
+              <div class="flex-1 min-w-0">
+                <div class="flex items-start justify-between gap-2 mb-1">
+                  <span class="text-xs font-bold text-slate-900 truncate">{{ item.concessionaria }}</span>
+                  <span class="text-sm font-extrabold text-slate-900 whitespace-nowrap">R$ {{ item.valorTarifa.toFixed(2) }}</span>
+                </div>
+                <div class="text-[11px] text-slate-500 mb-2">
+                  {{ item.portico }} • {{ item.sentido }}
+                </div>
+                <div class="flex items-center justify-between gap-2 flex-wrap text-[10px]">
+                  <span class="text-slate-400 flex items-center gap-1">
+                    <mat-icon class="text-xs! w-3! h-3!">schedule</mat-icon>
+                    {{ item.dataHoraFormatada }}
+                  </span>
+                  <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold inline-flex items-center gap-1">
+                    <mat-icon class="text-xs! w-3! h-3!">warning</mat-icon>
+                    Limite: {{ item.dataLimiteFormatada }} ({{ item.diasRestantes }}d)
+                  </span>
+                </div>
+              </div>
+            </div>
+          }
+        }
+      </section>
+    }
+
+    <!-- Seção Institucional de Segurança -->
+    <section class="mt-6 bg-white border border-slate-200 rounded-2xl p-4 shadow-xs">
+      <h3 class="text-xs font-bold text-slate-900 mb-3 flex items-center gap-1.5">
+        <mat-icon class="text-emerald-600 text-base! w-4! h-4!">verified_user</mat-icon>
+        Segurança e Conformidade Fluip
+      </h3>
+      <div class="space-y-2.5 text-xs text-slate-500">
+        <div class="flex items-start gap-2">
+          <mat-icon class="text-emerald-600 text-sm! w-4! h-4! shrink-0">check_circle</mat-icon>
+          <span><strong>Baixa Automática Homologada:</strong> Quitação confirmada em tempo real diretamente com os sistemas das concessionárias.</span>
+        </div>
+        <div class="flex items-start gap-2">
+          <mat-icon class="text-emerald-600 text-sm! w-4! h-4! shrink-0">check_circle</mat-icon>
+          <span><strong>Comprovante com Autenticação:</strong> Válido juridicamente contra infrações de trânsito.</span>
+        </div>
+        <div class="flex items-start gap-2">
+          <mat-icon class="text-emerald-600 text-sm! w-4! h-4! shrink-0">check_circle</mat-icon>
+          <span><strong>Concessionárias Integradas:</strong> CCR RioSP (Rio-Santos), Ecovias do Litoral, CSG e rodovias federais.</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Barra Fixa de Checkout (Sticky Mobile Bottom) -->
+  @if (debitos().length > 0) {
+    <aside class="fixed bottom-0 inset-x-0 bg-white/98 backdrop-blur-md border-t border-slate-200 p-3.5 z-40 shadow-xl">
+      <div class="max-w-md mx-auto">
+        <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+          <span>Tarifas: <strong class="text-slate-900">R$ {{ subtotal().toFixed(2) }}</strong></span>
+          <span>Taxa Fluip: <strong class="text-slate-900">R$ {{ taxaCalculada().toFixed(2) }}</strong></span>
+        </div>
+        <div class="flex items-center justify-between gap-3">
+          <div>
+            <span class="text-[10px] font-bold uppercase text-slate-400 block tracking-wider">Total Geral</span>
+            <span class="text-xl font-extrabold text-slate-900 leading-tight">R$ {{ totalGeral().toFixed(2) }}</span>
+          </div>
+
+          <button 
+            type="button" 
+            (click)="gerarPagamentoPix()"
+            [disabled]="debitosSelecionados().length === 0 || loading()"
+            class="flex-1 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white rounded-xl py-3 px-4 text-sm font-bold shadow-md hover:shadow-lg transition flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer active:scale-98">
+            <mat-icon class="text-lg! w-5! h-5!">bolt</mat-icon>
+            Pagar R$ {{ totalGeral().toFixed(2) }} via PIX
+          </button>
+        </div>
+      </div>
+    </aside>
+  }
+
+  <!-- Modal / Bottom Sheet do Pix -->
+  @if (modalPixAberto()) {
+    <div class="fixed inset-0 z-50 bg-slate-950/65 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4 animate-in fade-in duration-200">
+      <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 shadow-2xl max-h-[92vh] overflow-y-auto">
+        <div class="w-10 h-1 bg-slate-200 rounded-full mx-auto mb-4 sm:hidden"></div>
+
+        @if (!pagamentoConcluido()) {
+          <!-- Checkout Pix Ativo -->
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <mat-icon class="text-emerald-600 text-xl! w-5! h-5!">qr_code_2</mat-icon>
+              Pagamento Instantâneo PIX
+            </h3>
+            <button type="button" (click)="fecharModalPix()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center cursor-pointer">
+              <mat-icon class="text-base! w-4! h-4!">close</mat-icon>
+            </button>
+          </div>
+
+          <!-- Timer de Expiração -->
+          <div class="bg-slate-100 rounded-xl p-2.5 flex items-center justify-between mb-4">
+            <span class="text-xs text-slate-500 flex items-center gap-1.5">
+              <mat-icon class="text-sm! w-4! h-4! text-sky-600">timer</mat-icon>
+              Expira em:
+            </span>
+            <span class="font-mono font-extrabold text-sm text-sky-600">{{ tempoFormatado() }}</span>
+          </div>
+
+          <!-- QR Code -->
+          @if (cobrancaAtiva(); as cobranca) {
+            <div class="bg-slate-50 border border-dashed border-slate-300 rounded-2xl p-4 text-center mb-4 flex flex-col items-center">
+              <img [src]="cobranca.qrCodeBase64" alt="QR Code PIX" class="w-48 h-48 bg-white p-2 rounded-xl shadow-xs mb-2" referrerpolicy="no-referrer" />
+              <p class="text-xs text-slate-500">Abra o app do seu banco e aponte a câmera para ler</p>
+            </div>
+
+            <!-- Código Copia e Cola -->
+            <div class="bg-slate-100 border border-slate-200 rounded-xl p-2.5 flex items-center gap-2 mb-4">
+              <input type="text" [value]="cobranca.pixCopiaECola" readonly class="flex-1 bg-transparent border-none text-xs font-mono text-slate-600 truncate outline-none" />
+              <button 
+                type="button" 
+                (click)="copiarChavePix()"
+                [class.bg-emerald-600]="pixCopiado()"
+                [class.bg-sky-600]="!pixCopiado()"
+                class="text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 shrink-0 transition cursor-pointer active:scale-95">
+                <mat-icon class="text-sm! w-4! h-4!">{{ pixCopiado() ? 'check' : 'content_copy' }}</mat-icon>
+                {{ pixCopiado() ? 'Copiado!' : 'Copiar' }}
+              </button>
+            </div>
+          }
+
+          <!-- Botão Simular Pagamento -->
+          <button 
+            type="button" 
+            (click)="simularPagamentoInstantaneo()" 
+            class="w-full bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 mb-3 transition cursor-pointer">
+            <mat-icon class="text-amber-500 text-base! w-4! h-4!">flash_on</mat-icon>
+            ⚡ Simular Pagamento Instantâneo (Demonstração)
+          </button>
+
+          <p class="text-[11px] text-slate-400 text-center">
+            Verificando confirmação do Banco Central a cada 3 segundos...
+          </p>
+        } @else {
+          <!-- Comprovante de Pagamento Confirmado -->
+          @if (dadosComprovante(); as comp) {
+            <div class="text-center py-2">
+              <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                <mat-icon class="text-3xl!">verified</mat-icon>
+              </div>
+              <h4 class="text-lg font-extrabold text-slate-900 mb-1">Pedágio Quitado com Sucesso!</h4>
+              <p class="text-xs text-slate-500 mb-4">A baixa imediata foi efetuada no sistema da concessionária.</p>
+
+              <div class="bg-slate-100 rounded-xl p-3.5 text-left text-xs space-y-2 mb-4">
+                <div class="flex justify-between">
+                  <span class="text-slate-500">Placa Veicular:</span>
+                  <span class="font-bold text-slate-900">{{ comp.placa }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-500">Valor Total Pago:</span>
+                  <span class="font-bold text-slate-900">R$ {{ comp.valorTotal.toFixed(2) }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-500">Data e Horário:</span>
+                  <span class="font-bold text-slate-900">{{ comp.dataHora }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-500">Protocolo da Rodovia:</span>
+                  <span class="font-bold text-slate-900 font-mono">{{ comp.protocolo }}</span>
+                </div>
+                <div class="flex justify-between border-t border-slate-200 pt-2">
+                  <span class="text-slate-500">Autenticação Bancária:</span>
+                  <span class="font-bold text-slate-900 font-mono text-[10px]">{{ comp.autenticacao }}</span>
+                </div>
+              </div>
+
+              <button 
+                type="button" 
+                (click)="novaConsulta()" 
+                class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-4 rounded-xl text-sm transition cursor-pointer flex items-center justify-center gap-1.5">
+                <mat-icon class="text-base! w-4! h-4!">refresh</mat-icon>
+                Fazer Nova Consulta
+              </button>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Modal Guia iOS -->
+  @if (showIosGuide()) {
+    <div class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
+      <div class="bg-white max-w-xs w-full rounded-2xl p-5 text-center shadow-xl">
+        <h3 class="text-base font-bold text-slate-900 mb-2">Instalar no iPhone / iPad</h3>
+        <p class="text-xs text-slate-500 mb-4">Adicione à Tela de Início para ter acesso instantâneo:</p>
+        <div class="space-y-2 text-left text-xs text-slate-700 mb-5">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-sky-100 text-sky-700 font-bold flex items-center justify-center text-xs shrink-0">1</span>
+            <span>Toque em <strong>Compartilhar</strong> na barra do Safari.</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-sky-100 text-sky-700 font-bold flex items-center justify-center text-xs shrink-0">2</span>
+            <span>Toque em <strong>Adicionar à Tela de Início</strong>.</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-sky-100 text-sky-700 font-bold flex items-center justify-center text-xs shrink-0">3</span>
+            <span>Toque em <strong>Adicionar</strong> no topo direito.</span>
+          </div>
+        </div>
+        <button type="button" (click)="showIosGuide.set(false)" class="w-full bg-slate-900 text-white font-bold text-xs py-2.5 rounded-xl cursor-pointer">
+          Entendi
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- Toast Notificação -->
+  @if (successToast(); as toast) {
+    <div class="fixed top-4 inset-x-4 max-w-sm mx-auto z-50 bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-lg flex items-center justify-center text-center animate-in fade-in slide-in-from-top-4 duration-200">
+      {{ toast }}
+    </div>
+  }
+
+</div>

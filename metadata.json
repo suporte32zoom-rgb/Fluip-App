@@ -1,0 +1,6 @@
+{
+  "name": "Fluip - Pagamento de Pedágio Free Flow",
+  "description": "Aplicativo PWA moderno e seguro para consulta e pagamento imediato de pedágios automáticos Free Flow por placa via PIX.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
