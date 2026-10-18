@@ -66,13 +66,6 @@ export class App {
     Validators.maxLength(8),
   ]);
 
-  // Form Controls para o Cartão
-  cartaoNumeroControl = new FormControl('', [Validators.required]);
-  cartaoNomeControl = new FormControl('', [Validators.required]);
-  cartaoValidadeControl = new FormControl('', [Validators.required]);
-  cartaoCvvControl = new FormControl('', [Validators.required]);
-  cartaoParcelaControl = new FormControl(1);
-
   // Sinais de Estado
   loading = signal(false);
   errorMessage = signal<string | null>(null);
@@ -81,8 +74,7 @@ export class App {
   placaPesquisada = signal<string>('');
   debitos = signal<DebitoPedagioItem[]>([]);
   selecionadosIds = signal<Set<string>>(new Set());
-  percentualTaxa = signal<number>(0.10);
-  taxaMinima = signal<number>(0.90);
+  taxaFixa = signal<number>(1.00);
 
   // Tipo de Placa Detectada: 'mercosul' | 'antiga' | 'estrangeira' | 'neutro'
   tipoPlaca = signal<'mercosul' | 'antiga' | 'estrangeira' | 'neutro'>('neutro');
@@ -95,8 +87,8 @@ export class App {
   modalPrivacidadeAberto = signal<boolean>(false);
   faqAberto = signal<number | null>(null);
 
-  // Forma de pagamento ativa no checkout
-  formaPagamento = signal<'pix' | 'credito' | 'debito'>('pix');
+  // Forma de pagamento exclusiva via PIX
+  formaPagamento = signal<'pix'>('pix');
 
   // Modal e Cobrança
   modalPixAberto = signal(false);
@@ -133,11 +125,11 @@ export class App {
   taxaCalculada = computed(() => {
     const sub = this.subtotal();
     if (this.debitosSelecionados().length === 0 || sub <= 0) return 0;
-    return Math.max(this.taxaMinima(), Number((sub * this.percentualTaxa()).toFixed(2)));
+    return this.taxaFixa();
   });
 
   totalGeral = computed(() => {
-    return this.subtotal() + this.taxaCalculada();
+    return Number((this.subtotal() + this.taxaCalculada()).toFixed(2));
   });
 
   todosSelecionados = computed(() => {
@@ -197,29 +189,6 @@ export class App {
     this.tipoPlaca.set(tipo);
     this.placaControl.setValue(formatted, { emitEvent: false });
   }
-
-  formatarCartaoInput(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const limpo = input.value.replace(/\D/g, '').substring(0, 16);
-    const formatado = limpo.replace(/(\d{4})(?=\d)/g, '$1 ');
-    this.cartaoNumeroControl.setValue(formatado, { emitEvent: false });
-  }
-
-  formatarValidadeInput(event: Event) {
-    const input = event.target as HTMLInputElement;
-    let v = input.value.replace(/\D/g, '').substring(0, 4);
-    if (v.length >= 2) {
-      v = `${v.substring(0, 2)}/${v.substring(2)}`;
-    }
-    this.cartaoValidadeControl.setValue(v, { emitEvent: false });
-  }
-
-  formatarCvvInput(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const v = input.value.replace(/\D/g, '').substring(0, 4);
-    this.cartaoCvvControl.setValue(v, { emitEvent: false });
-  }
-
   togglePlacaEstrangeira(event: Event) {
     const input = event.target as HTMLInputElement;
     const ativo = input.checked;
@@ -273,7 +242,7 @@ export class App {
     this.loading.set(true);
     this.errorMessage.set(null);
 
-    this.http.get<{ success: boolean; placa: string; debitos: DebitoPedagioItem[]; resumo: { taxaConveniencia: number; percentualTaxa?: number; taxaMinima?: number } }>(
+    this.http.get<{ success: boolean; placa: string; debitos: DebitoPedagioItem[]; resumo: { taxaConveniencia: number } }>(
       `/api/v1/consultar?placa=${encodeURIComponent(limpa)}&estrangeira=${this.placaEstrangeira()}`
     ).subscribe({
       next: (res) => {
@@ -281,8 +250,9 @@ export class App {
         if (res.success) {
           this.placaPesquisada.set(res.placa);
           this.debitos.set(res.debitos);
-          if (res.resumo?.percentualTaxa !== undefined) this.percentualTaxa.set(res.resumo.percentualTaxa);
-          if (res.resumo?.taxaMinima !== undefined) this.taxaMinima.set(res.resumo.taxaMinima);
+          if (res.resumo?.taxaConveniencia !== undefined) {
+            this.taxaFixa.set(res.resumo.taxaConveniencia || 1.00);
+          }
           this.selecionadosIds.set(new Set(res.debitos.map((d) => d.id)));
         }
       },
@@ -313,12 +283,7 @@ export class App {
     }
   }
 
-  selecionarMetodoPagamento(metodo: 'pix' | 'credito' | 'debito') {
-    this.formaPagamento.set(metodo);
-    this.iniciarCheckout(metodo);
-  }
-
-  iniciarCheckout(metodo: 'pix' | 'credito' | 'debito' = this.formaPagamento()) {
+  iniciarCheckout() {
     const ids = Array.from(this.selecionadosIds());
     if (ids.length === 0) {
       this.mostrarToast('Selecione ao menos um pedágio para efetuar o pagamento.');
@@ -330,7 +295,7 @@ export class App {
     this.http.post<CobrancaPixResposta>('/api/v1/pagar', {
       placa: this.placaPesquisada(),
       passagensIds: ids,
-      formaDePagamento: metodo,
+      formaDePagamento: 'pix',
     }).subscribe({
       next: (res) => {
         this.loading.set(false);
@@ -341,7 +306,7 @@ export class App {
       },
       error: (err) => {
         this.loading.set(false);
-        const msg = err.error?.error || 'Erro ao preparar cobrança.';
+        const msg = err.error?.error || 'Erro ao preparar cobrança PIX.';
         this.mostrarToast(msg);
       },
     });
@@ -414,70 +379,14 @@ export class App {
     });
   }
 
-  processarPagamentoCartao() {
-    const cobranca = this.cobrancaAtiva();
-    if (!cobranca) return;
-
-    const num = (this.cartaoNumeroControl.value || '').trim();
-    const nome = (this.cartaoNomeControl.value || '').trim();
-    const val = (this.cartaoValidadeControl.value || '').trim();
-    const cvv = (this.cartaoCvvControl.value || '').trim();
-    const parcelas = Number(this.cartaoParcelaControl.value) || 1;
-
-    if (!num || num.length < 15) {
-      this.mostrarToast('Informe um número de cartão válido.');
-      return;
-    }
-    if (!nome) {
-      this.mostrarToast('Informe o nome impresso no cartão.');
-      return;
-    }
-    if (!val || val.length < 5) {
-      this.mostrarToast('Informe a validade no formato MM/AA.');
-      return;
-    }
-    if (!cvv || cvv.length < 3) {
-      this.mostrarToast('Informe o código de segurança (CVV).');
-      return;
-    }
-
-    this.loading.set(true);
-    this.http.post<{ success: boolean; cobranca: { protocoloConcessionaria: string; autenticacaoBancaria: string; comprovante?: { formaDePagamento?: string } } }>(
-      '/api/v1/pagar-cartao',
-      {
-        txid: cobranca.txid,
-        numeroCartao: num,
-        nomeTitular: nome,
-        validade: val,
-        cvv,
-        parcelas: this.formaPagamento() === 'credito' ? parcelas : 1,
-      }
-    ).subscribe({
-      next: (res) => {
-        this.loading.set(false);
-        if (res.success) {
-          const desc = this.formaPagamento() === 'credito'
-            ? `Cartão de Crédito (${parcelas}x)`
-            : 'Cartão de Débito (À vista)';
-          this.confirmarSucesso(res.cobranca.protocoloConcessionaria, res.cobranca.autenticacaoBancaria, desc);
-          this.mostrarToast('Pagamento com cartão autorizado e débitos quitados!');
-        }
-      },
-      error: (err) => {
-        this.loading.set(false);
-        this.mostrarToast(err.error?.error || 'Erro ao processar cartão.');
-      },
-    });
-  }
-
-  private confirmarSucesso(protocolo?: string, autenticacao?: string, forma?: string) {
+  private confirmarSucesso(protocolo?: string, autenticacao?: string) {
     if (this.timerInterval) clearInterval(this.timerInterval);
     if (this.pollInterval) clearInterval(this.pollInterval);
 
     const cobranca = this.cobrancaAtiva();
     this.dadosComprovante.set({
       placa: cobranca?.placa || this.placaPesquisada(),
-      formaPagamento: forma || (this.formaPagamento() === 'credito' ? 'Cartão de Crédito' : this.formaPagamento() === 'debito' ? 'Cartão de Débito' : 'PIX Instantâneo'),
+      formaPagamento: 'PIX Instantâneo',
       valorTotal: cobranca?.valorTotal || this.totalGeral(),
       protocolo: protocolo || `PROT-${Math.floor(100000 + Math.random() * 900000)}`,
       autenticacao: autenticacao || `AUT-${Math.random().toString(36).substring(2, 9).toUpperCase()}`,

@@ -292,11 +292,11 @@
       <div class="space-y-2.5 text-xs text-slate-500">
         <div class="flex items-start gap-2">
           <mat-icon class="text-emerald-600 text-sm! w-4! h-4! shrink-0">check_circle</mat-icon>
-          <span><strong>PIX ou Cartão em até 12x:</strong> Pague de forma imediata ou parcele com segurança total.</span>
+          <span><strong>Múltiplas formas:</strong> Pague com praticidade via PIX Instantâneo (QR Code e Copia e Cola).</span>
         </div>
         <div class="flex items-start gap-2">
           <mat-icon class="text-emerald-600 text-sm! w-4! h-4! shrink-0">check_circle</mat-icon>
-          <span><strong>Taxa Estradapay Proporcional:</strong> Apenas 10% sobre as tarifas selecionadas (com taxa mínima de R$ 0,90).</span>
+          <span><strong>Taxa Estradapay fixa:</strong> Apenas R$ 1,00 por transação unificada (independente da quantidade de tarifas).</span>
         </div>
         <div class="flex items-start gap-2">
           <mat-icon class="text-emerald-600 text-sm! w-4! h-4! shrink-0">check_circle</mat-icon>
@@ -343,7 +343,7 @@
           </button>
           @if (faqAberto() === 3) {
             <div class="p-3 bg-white text-xs text-slate-600 border-t border-slate-200">
-              O Estradapay atua como intermediador e facilitador de pagamento tecnológico. Assim que o pagamento via Pix ou Cartão é aprovado, a baixa é registrada junto à concessionária de rodovias conveniada.
+              O Estradapay atua como intermediador e facilitador de pagamento tecnológico. Assim que o pagamento via Pix é aprovado, a baixa é registrada junto à concessionária de rodovias conveniada.
             </div>
           }
         </div>
@@ -356,6 +356,18 @@
           @if (faqAberto() === 4) {
             <div class="p-3 bg-white text-xs text-slate-600 border-t border-slate-200">
               Após 30 dias sem pagamento, incide infração grave por evasão de pedágio (Art. 209-A do CTB), gerando multa de R$ 195,23 e 5 pontos na CNH.
+            </div>
+          }
+        </div>
+
+        <div class="border border-slate-200 rounded-xl overflow-hidden">
+          <button type="button" (click)="toggleFaq(5)" class="w-full text-left p-3 text-xs font-bold text-slate-900 flex justify-between items-center bg-slate-50 hover:bg-slate-100 cursor-pointer">
+            <span>Quais são as formas de pagamento e taxas?</span>
+            <mat-icon class="text-slate-400 text-sm! transition-transform" [class.rotate-180]="faqAberto() === 5">expand_more</mat-icon>
+          </button>
+          @if (faqAberto() === 5) {
+            <div class="p-3 bg-white text-xs text-slate-600 border-t border-slate-200">
+              Aceitamos Pix Instantâneo. A Taxa Estradapay é transparente: apenas R$ 1,00 por transação unificada.
             </div>
           }
         </div>
@@ -379,7 +391,7 @@
       <div class="max-w-md mx-auto">
         <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
           <span>Tarifas: <strong class="text-slate-900">R$ {{ subtotal().toFixed(2) }}</strong></span>
-          <span>Taxa Estradapay (10%): <strong class="text-slate-900">R$ {{ taxaCalculada().toFixed(2) }}</strong></span>
+          <span>Taxa Estradapay: <strong class="text-slate-900">R$ 1,00</strong></span>
         </div>
         <div class="flex items-center justify-between gap-3">
           <div>
@@ -389,11 +401,11 @@
 
           <button 
             type="button" 
-            (click)="iniciarCheckout(formaPagamento())"
+            (click)="iniciarCheckout()"
             [disabled]="debitosSelecionados().length === 0 || loading()"
             class="flex-1 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white rounded-xl py-3 px-4 text-sm font-bold shadow-md hover:shadow-lg transition flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer active:scale-98">
             <mat-icon class="text-lg! w-5! h-5!">payment</mat-icon>
-            Pagar R$ {{ totalGeral().toFixed(2) }} • PIX / Cartão
+            Pagar com PIX • R$ {{ totalGeral().toFixed(2) }}
           </button>
         </div>
       </div>
@@ -418,203 +430,46 @@
             </button>
           </div>
 
-          <!-- Abas de Seleção de Pagamento -->
-          <div class="grid grid-cols-3 gap-1.5 bg-slate-100 p-1 rounded-xl mb-4 border border-slate-200">
-            <button 
-              type="button" 
-              (click)="selecionarMetodoPagamento('pix')"
-              [class.bg-white]="formaPagamento() === 'pix'"
-              [class.text-sky-600]="formaPagamento() === 'pix'"
-              [class.shadow-xs]="formaPagamento() === 'pix'"
-              [class.text-slate-500]="formaPagamento() !== 'pix'"
-              class="py-2 px-1 text-xs font-bold rounded-lg transition flex flex-col items-center justify-center gap-1 cursor-pointer">
-              <mat-icon class="text-base! w-4! h-4!">qr_code_2</mat-icon>
-              PIX
-            </button>
-            <button 
-              type="button" 
-              (click)="selecionarMetodoPagamento('credito')"
-              [class.bg-white]="formaPagamento() === 'credito'"
-              [class.text-sky-600]="formaPagamento() === 'credito'"
-              [class.shadow-xs]="formaPagamento() === 'credito'"
-              [class.text-slate-500]="formaPagamento() !== 'credito'"
-              class="py-2 px-1 text-xs font-bold rounded-lg transition flex flex-col items-center justify-center gap-1 cursor-pointer">
-              <mat-icon class="text-base! w-4! h-4!">credit_card</mat-icon>
-              Crédito
-            </button>
-            <button 
-              type="button" 
-              (click)="selecionarMetodoPagamento('debito')"
-              [class.bg-white]="formaPagamento() === 'debito'"
-              [class.text-sky-600]="formaPagamento() === 'debito'"
-              [class.shadow-xs]="formaPagamento() === 'debito'"
-              [class.text-slate-500]="formaPagamento() !== 'debito'"
-              class="py-2 px-1 text-xs font-bold rounded-lg transition flex flex-col items-center justify-center gap-1 cursor-pointer">
-              <mat-icon class="text-base! w-4! h-4!">account_balance_wallet</mat-icon>
-              Débito
-            </button>
+          <!-- Conteúdo Exclusivo PIX -->
+          <div class="bg-slate-100 rounded-xl p-2.5 flex items-center justify-between mb-4">
+            <span class="text-xs text-slate-500 flex items-center gap-1.5">
+              <mat-icon class="text-sm! w-4! h-4! text-sky-600">timer</mat-icon>
+              Expira em:
+            </span>
+            <span class="font-mono font-extrabold text-sm text-sky-600">{{ tempoFormatado() }}</span>
           </div>
 
-          <!-- ABA 1: PIX -->
-          @if (formaPagamento() === 'pix') {
-            <!-- Timer de Expiração -->
-            <div class="bg-slate-100 rounded-xl p-2.5 flex items-center justify-between mb-4">
-              <span class="text-xs text-slate-500 flex items-center gap-1.5">
-                <mat-icon class="text-sm! w-4! h-4! text-sky-600">timer</mat-icon>
-                Expira em:
-              </span>
-              <span class="font-mono font-extrabold text-sm text-sky-600">{{ tempoFormatado() }}</span>
-            </div>
-
-            @if (cobrancaAtiva(); as cobranca) {
-              @if (cobranca.qrCodeBase64) {
-                <div class="bg-slate-50 border border-dashed border-slate-300 rounded-2xl p-4 text-center mb-4 flex flex-col items-center">
-                  <img [src]="cobranca.qrCodeBase64" alt="QR Code PIX" class="w-48 h-48 bg-white p-2 rounded-xl shadow-xs mb-2" referrerpolicy="no-referrer" />
-                  <p class="text-xs text-slate-500">Aponte a câmera do seu banco para ler o QR Code</p>
-                </div>
-              }
-
-              @if (cobranca.pixCopiaECola) {
-                <div class="bg-slate-100 border border-slate-200 rounded-xl p-2.5 flex items-center gap-2 mb-4">
-                  <input type="text" [value]="cobranca.pixCopiaECola" readonly class="flex-1 bg-transparent border-none text-xs font-mono text-slate-600 truncate outline-none" />
-                  <button 
-                    type="button" 
-                    (click)="copiarChavePix()"
-                    [class.bg-emerald-600]="pixCopiado()"
-                    [class.bg-sky-600]="!pixCopiado()"
-                    class="text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 shrink-0 transition cursor-pointer active:scale-95">
-                    <mat-icon class="text-sm! w-4! h-4!">{{ pixCopiado() ? 'check' : 'content_copy' }}</mat-icon>
-                    {{ pixCopiado() ? 'Copiado!' : 'Copiar' }}
-                  </button>
-                </div>
-              }
+          @if (cobrancaAtiva(); as cobranca) {
+            @if (cobranca.qrCodeBase64) {
+              <div class="bg-slate-50 border border-dashed border-slate-300 rounded-2xl p-4 text-center mb-4 flex flex-col items-center">
+                <img [src]="cobranca.qrCodeBase64" alt="QR Code PIX" class="w-48 h-48 bg-white p-2 rounded-xl shadow-xs mb-2" referrerpolicy="no-referrer" />
+                <p class="text-xs text-slate-500">Aponte a câmera do seu banco para ler o QR Code</p>
+              </div>
             }
 
-            <button 
-              type="button" 
-              (click)="simularPagamentoInstantaneo()" 
-              class="w-full bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 mb-3 transition cursor-pointer">
-              <mat-icon class="text-amber-500 text-base! w-4! h-4!">flash_on</mat-icon>
-              ⚡ Simular Pagamento Instantâneo PIX (Demonstração)
-            </button>
-          } @else {
-            <!-- ABA 2 & 3: CARTÃO DE CRÉDITO OU DÉBITO -->
-            <div class="space-y-3.5">
-              <!-- Visual Mockup do Cartão -->
-              <div class="bg-gradient-to-tr from-slate-900 to-slate-800 text-white p-4 rounded-xl shadow-sm border border-slate-700">
-                <div class="w-8 h-6 bg-gradient-to-r from-amber-400 to-amber-600 rounded-sm mb-3"></div>
-                <div class="font-mono text-sm tracking-wider mb-3">
-                  {{ cartaoNumeroControl.value || '•••• •••• •••• ••••' }}
-                </div>
-                <div class="flex justify-between items-end text-[10px] text-slate-400 uppercase">
-                  <div>
-                    <span class="block text-[8px]">Titular</span>
-                    <span class="text-white font-bold">{{ cartaoNomeControl.value || 'NOME COMPLETO' }}</span>
-                  </div>
-                  <div>
-                    <span class="block text-[8px]">Validade</span>
-                    <span class="text-white font-bold">{{ cartaoValidadeControl.value || 'MM/AA' }}</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Formulário -->
-              <div class="space-y-2.5">
-                <div>
-                  <label for="inputNumeroCartao" class="block text-[11px] font-bold text-slate-700 mb-1">Número do Cartão</label>
-                  <input 
-                    id="inputNumeroCartao"
-                    type="text" 
-                    [formControl]="cartaoNumeroControl"
-                    (input)="formatarCartaoInput($event)"
-                    placeholder="0000 0000 0000 0000"
-                    class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-mono outline-none focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
-                    maxlength="19"
-                  />
-                </div>
-
-                <div>
-                  <label for="inputNomeCartao" class="block text-[11px] font-bold text-slate-700 mb-1">Nome no Cartão</label>
-                  <input 
-                    id="inputNomeCartao"
-                    type="text" 
-                    [formControl]="cartaoNomeControl"
-                    placeholder="Ex: CARLOS A SILVA"
-                    class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs uppercase outline-none focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
-                  />
-                </div>
-
-                <div class="grid grid-cols-2 gap-2">
-                  <div>
-                    <label for="inputValidadeCartao" class="block text-[11px] font-bold text-slate-700 mb-1">Validade (MM/AA)</label>
-                    <input 
-                      id="inputValidadeCartao"
-                      type="text" 
-                      [formControl]="cartaoValidadeControl"
-                      (input)="formatarValidadeInput($event)"
-                      placeholder="MM/AA"
-                      class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
-                      maxlength="5"
-                    />
-                  </div>
-                  <div>
-                    <label for="inputCvvCartao" class="block text-[11px] font-bold text-slate-700 mb-1">CVV</label>
-                    <input 
-                      id="inputCvvCartao"
-                      type="password" 
-                      [formControl]="cartaoCvvControl"
-                      (input)="formatarCvvInput($event)"
-                      placeholder="123"
-                      class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
-                      maxlength="4"
-                    />
-                  </div>
-                </div>
-
-                <!-- Parcelas (Apenas no Crédito) -->
-                @if (formaPagamento() === 'credito') {
-                  <div>
-                    <label for="selectParcelasCartao" class="block text-[11px] font-bold text-slate-700 mb-1">Parcelamento (Até 12x)</label>
-                    <select 
-                      id="selectParcelasCartao"
-                      [formControl]="cartaoParcelaControl"
-                      class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none focus:border-sky-600 focus:ring-2 focus:ring-sky-100 bg-white">
-                      @if (cobrancaAtiva()?.opcoesParcelamento; as opcoes) {
-                        @for (op of opcoes; track op.numero) {
-                          <option [value]="op.numero">{{ op.descricao }}</option>
-                        }
-                      } @else {
-                        <option [value]="1">1x de R$ {{ totalGeral().toFixed(2) }} sem juros</option>
-                        <option [value]="2">2x de R$ {{ (totalGeral() / 2).toFixed(2) }} sem juros</option>
-                        <option [value]="3">3x de R$ {{ (totalGeral() / 3).toFixed(2) }} sem juros</option>
-                        <option [value]="6">6x de R$ {{ ((totalGeral() * 1.04) / 6).toFixed(2) }}</option>
-                        <option [value]="12">12x de R$ {{ ((totalGeral() * 1.12) / 12).toFixed(2) }}</option>
-                      }
-                    </select>
-                  </div>
-                }
-
-                <div class="bg-emerald-50 text-emerald-800 text-[10px] p-2 rounded-lg flex items-center gap-1.5 font-medium">
-                  <mat-icon class="text-xs! w-3.5! h-3.5!">shield</mat-icon>
-                  <span>Ambiente Criptografado TLS 256-bit com certificação PCI-DSS.</span>
-                </div>
-
+            @if (cobranca.pixCopiaECola) {
+              <div class="bg-slate-100 border border-slate-200 rounded-xl p-2.5 flex items-center gap-2 mb-4">
+                <input type="text" [value]="cobranca.pixCopiaECola" readonly class="flex-1 bg-transparent border-none text-xs font-mono text-slate-600 truncate outline-none" />
                 <button 
                   type="button" 
-                  (click)="processarPagamentoCartao()"
-                  [disabled]="loading()"
-                  class="w-full bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl py-3 px-4 font-bold text-xs shadow-md transition flex items-center justify-center gap-2 cursor-pointer active:scale-98">
-                  @if (loading()) {
-                    <div class="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    <span>Processando cartão...</span>
-                  } @else {
-                    <mat-icon class="text-sm! w-4! h-4!">payment</mat-icon>
-                    <span>Confirmar Pagamento com Cartão</span>
-                  }
+                  (click)="copiarChavePix()"
+                  [class.bg-emerald-600]="pixCopiado()"
+                  [class.bg-sky-600]="!pixCopiado()"
+                  class="text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 shrink-0 transition cursor-pointer active:scale-95">
+                  <mat-icon class="text-sm! w-4! h-4!">{{ pixCopiado() ? 'check' : 'content_copy' }}</mat-icon>
+                  {{ pixCopiado() ? 'Copiado!' : 'Copiar' }}
                 </button>
               </div>
-            </div>
+            }
           }
+
+          <button 
+            type="button" 
+            (click)="simularPagamentoInstantaneo()" 
+            class="w-full bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 mb-3 transition cursor-pointer">
+            <mat-icon class="text-amber-500 text-base! w-4! h-4!">flash_on</mat-icon>
+            ⚡ Simular Pagamento Instantâneo PIX (Demonstração)
+          </button>
 
           <p class="text-[11px] text-slate-400 text-center mt-3">
             O sistema faz a baixa automática em tempo real na concessionária de rodovias.

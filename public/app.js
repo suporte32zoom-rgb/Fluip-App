@@ -15,9 +15,8 @@
     placaAtual: '',
     debitos: [],
     debitosSelecionadosIds: new Set(),
-    percentualTaxa: 0.10,
-    taxaMinima: 0.90,
-    formaPagamentoSelecionada: 'pix', // 'pix' | 'credito' | 'debito'
+    taxaFixa: 1.00,
+    formaPagamentoSelecionada: 'pix',
     tipoPlacaDetectada: 'neutro', // 'mercosul' | 'antiga' | 'estrangeira' | 'neutro'
     isPlacaEstrangeira: false,
     cobrancaAtiva: null,
@@ -78,14 +77,10 @@
     summaryTotal: document.getElementById('summaryTotal'),
     btnPagarPix: document.getElementById('btnPagarPix'),
 
-    // Modal e Abas de Pagamento
+    // Modal e Elementos de Pagamento PIX
     modalPix: document.getElementById('modalPix'),
     btnCloseModal: document.getElementById('btnCloseModal'),
-    tabBtnPix: document.getElementById('tabBtnPix'),
-    tabBtnCredito: document.getElementById('tabBtnCredito'),
-    tabBtnDebito: document.getElementById('tabBtnDebito'),
     tabContentPix: document.getElementById('tabContentPix'),
-    tabContentCard: document.getElementById('tabContentCard'),
 
     // Elementos Pix
     pixTimer: document.getElementById('pixTimer'),
@@ -93,18 +88,6 @@
     inputPixCode: document.getElementById('inputPixCode'),
     btnCopyPix: document.getElementById('btnCopyPix'),
     btnSimulatePay: document.getElementById('btnSimulatePay'),
-
-    // Elementos Cartão
-    cardPreviewNumber: document.getElementById('cardPreviewNumber'),
-    cardPreviewName: document.getElementById('cardPreviewName'),
-    cardPreviewExpiry: document.getElementById('cardPreviewExpiry'),
-    cardInputNumber: document.getElementById('cardInputNumber'),
-    cardInputName: document.getElementById('cardInputName'),
-    cardInputExpiry: document.getElementById('cardInputExpiry'),
-    cardInputCvv: document.getElementById('cardInputCvv'),
-    installmentsWrapper: document.getElementById('installmentsWrapper'),
-    cardSelectInstallments: document.getElementById('cardSelectInstallments'),
-    btnSubmitCardPayment: document.getElementById('btnSubmitCardPayment'),
 
     // Telas de Alternância
     pixCheckoutContent: document.getElementById('pixCheckoutContent'),
@@ -133,7 +116,6 @@
     setupNetworkListeners();
     setupEventListeners();
     setupDynamicPlateMask();
-    setupCardFormHandlers();
     setupForeignPlateToggle();
     setupConsentHandlers();
     setupLegalModals();
@@ -495,40 +477,6 @@
     });
   }
 
-  function setupCardFormHandlers() {
-    dom.cardInputNumber.addEventListener('input', (e) => {
-      let v = e.target.value.replace(/\D/g, '').substring(0, 16);
-      let formatted = v.replace(/(\d{4})(?=\d)/g, '$1 ');
-      e.target.value = formatted;
-      dom.cardPreviewNumber.textContent = formatted || '•••• •••• •••• ••••';
-    });
-
-    dom.cardInputName.addEventListener('input', (e) => {
-      const v = e.target.value.toUpperCase();
-      e.target.value = v;
-      dom.cardPreviewName.textContent = v || 'NOME COMPLETO';
-    });
-
-    dom.cardInputExpiry.addEventListener('input', (e) => {
-      let v = e.target.value.replace(/\D/g, '').substring(0, 4);
-      if (v.length >= 2) {
-        v = `${v.substring(0, 2)}/${v.substring(2)}`;
-      }
-      e.target.value = v;
-      dom.cardPreviewExpiry.textContent = v || 'MM/AA';
-    });
-
-    dom.cardInputCvv.addEventListener('input', (e) => {
-      e.target.value = e.target.value.replace(/\D/g, '').substring(0, 4);
-    });
-
-    dom.cardSelectInstallments.addEventListener('change', () => {
-      atualizarBotaoPagarCartao();
-    });
-
-    dom.btnSubmitCardPayment.addEventListener('click', processarPagamentoCartao);
-  }
-
   function setupEventListeners() {
     dom.formConsulta.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -548,19 +496,12 @@
     }
 
     dom.btnPagarPix.addEventListener('click', () => {
-      iniciarCheckout(state.formaPagamentoSelecionada);
+      iniciarCheckout('pix');
     });
 
     dom.btnCloseModal.addEventListener('click', fecharModalPix);
     dom.modalPix.addEventListener('click', (e) => {
       if (e.target === dom.modalPix) fecharModalPix();
-    });
-
-    [dom.tabBtnPix, dom.tabBtnCredito, dom.tabBtnDebito].forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const metodo = btn.getAttribute('data-method');
-        alternarFormaPagamento(metodo);
-      });
     });
 
     dom.btnCopyPix.addEventListener('click', copiarChavePix);
@@ -578,51 +519,13 @@
     }
   }
 
-  function alternarFormaPagamento(metodo) {
-    state.formaPagamentoSelecionada = metodo;
-
-    dom.tabBtnPix.classList.toggle('active', metodo === 'pix');
-    dom.tabBtnCredito.classList.toggle('active', metodo === 'credito');
-    dom.tabBtnDebito.classList.toggle('active', metodo === 'debito');
-
-    if (metodo === 'pix') {
-      dom.tabContentPix.style.display = 'block';
-      dom.tabContentCard.style.display = 'none';
-    } else {
-      dom.tabContentPix.style.display = 'none';
-      dom.tabContentCard.style.display = 'block';
-
-      if (metodo === 'credito') {
-        dom.installmentsWrapper.style.display = 'block';
-      } else {
-        dom.installmentsWrapper.style.display = 'none';
-      }
-
-      atualizarBotaoPagarCartao();
-    }
-
-    iniciarCheckout(metodo, false);
-  }
-
-  function atualizarBotaoPagarCartao() {
-    const total = state.cobrancaAtiva?.valorTotal || calcularTotalAtual();
-    const metodo = state.formaPagamentoSelecionada;
-
-    if (metodo === 'credito') {
-      const parcelaTexto = dom.cardSelectInstallments.options[dom.cardSelectInstallments.selectedIndex]?.text || '';
-      dom.btnSubmitCardPayment.textContent = `Confirmar Pagamento (${parcelaTexto || 'R$ ' + total.toFixed(2).replace('.', ',')})`;
-    } else {
-      dom.btnSubmitCardPayment.textContent = `Pagar R$ ${total.toFixed(2).replace('.', ',')} no Débito (À vista)`;
-    }
-  }
-
   /**
-   * Cálculo da taxa Estradapay dinâmica:
-   * taxaEstradapay = Math.max(0.90, valorTotalPedagios * 0.10)
+   * Taxa Estradapay fixa: R$ 1,00 por transação unificada
+   * Fórmula: Total = Valor_Total_Pedagios + 1.00
    */
   function calcularTaxaEstradapay(subtotal) {
     if (!subtotal || subtotal <= 0) return 0;
-    return Number(Math.max(state.taxaMinima, subtotal * state.percentualTaxa).toFixed(2));
+    return Number(state.taxaFixa.toFixed(2));
   }
 
   function calcularTotalAtual() {
@@ -824,7 +727,7 @@
         <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
         </svg>
-        Pagar ${qtd} Pedágio(s) • R$ ${total.toFixed(2).replace('.', ',')}
+        Pagar ${qtd} Pedágio(s) via PIX • R$ ${total.toFixed(2).replace('.', ',')}
       `;
     } else {
       dom.checkoutBar.style.display = 'block';
@@ -847,31 +750,19 @@
         body: JSON.stringify({
           placa: state.placaAtual,
           passagensIds,
-          formaDePagamento,
+          formaDePagamento: 'pix',
         }),
       });
 
       const data = await response.json();
       if (!response.ok || !data.success) {
-        throw new Error(data.error || 'Erro ao preparar cobrança.');
+        throw new Error(data.error || 'Erro ao preparar cobrança PIX.');
       }
 
       state.cobrancaAtiva = data;
 
       if (data.qrCodeBase64) dom.qrCodeImage.src = data.qrCodeBase64;
       if (data.pixCopiaECola) dom.inputPixCode.value = data.pixCopiaECola;
-
-      if (data.opcoesParcelamento && Array.isArray(data.opcoesParcelamento)) {
-        dom.cardSelectInstallments.innerHTML = '';
-        data.opcoesParcelamento.forEach((op) => {
-          const option = document.createElement('option');
-          option.value = op.numero;
-          option.textContent = op.descricao;
-          dom.cardSelectInstallments.appendChild(option);
-        });
-      }
-
-      atualizarBotaoPagarCartao();
 
       if (abrirModal) {
         abrirModalCheckout(data);
@@ -988,81 +879,13 @@
     }
   }
 
-  async function processarPagamentoCartao() {
-    if (dom.checkCheckoutConsent && !dom.checkCheckoutConsent.checked) {
-      showToast('Por favor, marque a confirmação dos termos para finalizar.');
-      return;
-    }
-
-    const numero = dom.cardInputNumber.value.replace(/\s/g, '');
-    const nome = dom.cardInputName.value.trim();
-    const validade = dom.cardInputExpiry.value.trim();
-    const cvv = dom.cardInputCvv.value.trim();
-
-    if (numero.length < 13) {
-      showToast('Informe um número de cartão válido.');
-      dom.cardInputNumber.focus();
-      return;
-    }
-    if (nome.length < 3) {
-      showToast('Informe o nome completo impresso no cartão.');
-      dom.cardInputName.focus();
-      return;
-    }
-    if (validade.length < 5) {
-      showToast('Informe a validade do cartão no formato MM/AA.');
-      dom.cardInputExpiry.focus();
-      return;
-    }
-    if (cvv.length < 3) {
-      showToast('Informe o código de segurança CVV.');
-      dom.cardInputCvv.focus();
-      return;
-    }
-
-    dom.btnSubmitCardPayment.disabled = true;
-    dom.btnSubmitCardPayment.textContent = 'Processando Operadora & Anti-fraude...';
-
-    try {
-      const response = await fetch(`/api/v1/webhook/simular-pagamento/${state.cobrancaAtiva?.txid || 'card_' + Date.now()}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          formaDePagamento: state.formaPagamentoSelecionada,
-          parcelas: dom.cardSelectInstallments.value || 1,
-        }),
-      });
-      const data = await response.json();
-
-      if (!response.ok || !data.success) {
-        throw new Error(data.error || 'Transação com cartão não autorizada.');
-      }
-
-      showToast('Pagamento com cartão aprovado com sucesso!');
-      clearInterval(state.pollInterval);
-      clearInterval(state.timerInterval);
-      exibirSucessoPagamento(data);
-    } catch (e) {
-      showToast(e.message);
-    } finally {
-      dom.btnSubmitCardPayment.disabled = false;
-      atualizarBotaoPagarCartao();
-    }
-  }
-
   function exibirSucessoPagamento(data) {
     dom.pixCheckoutContent.style.display = 'none';
     dom.pixSuccessContent.style.display = 'block';
 
     const cobranca = state.cobrancaAtiva || {};
     dom.receiptPlaca.textContent = cobranca.placa || state.placaAtual;
-
-    const labelsPagamento = {
-      pix: 'PIX Instantâneo (Banco Central)',
-      credito: `Cartão de Crédito (${dom.cardSelectInstallments.options[dom.cardSelectInstallments.selectedIndex]?.text || 'À vista'})`,
-      debito: 'Cartão de Débito (À vista)',
-    };
-    dom.receiptFormaPagamento.textContent = labelsPagamento[state.formaPagamentoSelecionada] || 'PIX Instantâneo';
+    dom.receiptFormaPagamento.textContent = 'PIX Instantâneo (Banco Central)';
 
     dom.receiptValor.textContent = `R$ ${Number(cobranca.valorTotal || data.valorTotal || 0).toFixed(2).replace('.', ',')}`;
     dom.receiptProtocolo.textContent = data.protocoloBaixa || `PROT-${Math.floor(100000 + Math.random() * 900000)}`;

@@ -480,6 +480,18 @@ body {
   gap: 8px;
 }
 
+.pix-badge-chip {
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ========================================================
    ABAS DE FORMA DE PAGAMENTO (Pix, Crédito, Débito)
    ======================================================== */

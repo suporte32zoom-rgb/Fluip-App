@@ -46,7 +46,7 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`=================================================`);
   console.log(`🚀 Estradapay - Servidor Free Flow Rodando!`);
   console.log(`📍 URL Local: http://localhost:${PORT}`);
-  console.log(`💳 Gateway Ativo | Taxa Estradapay: 10% (mínimo R$ ${process.env.TAXA_MINIMA || '0.90'})`);
+  console.log(`💳 Gateway Ativo | Pagamento Exclusivo PIX | Taxa Estradapay: R$ 1,00 fixa`);
   console.log(`📁 Pasta Pública: ${publicDir}`);
   console.log(`=================================================`);
 });

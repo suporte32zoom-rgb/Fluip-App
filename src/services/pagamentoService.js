@@ -139,48 +139,37 @@ class PagamentoService {
   }
 
   /**
-   * Calcula a Taxa Estradapay dinâmica e proporcional
-   * Regra: 10% (0.10) sobre o total dos pedágios com taxa mínima de R$ 0,90
-   * Fórmula: Math.max(TAXA_MINIMA, valorTotalPedagios * PERCENTUAL_TAXA)
+   * Calcula a Taxa Estradapay fixa por transação unificada
+   * Regra: Taxa fixa de R$ 1,00 por transação unificada
+   * Fórmula: Total = Valor_Total_Pedagios + 1.00
    */
-  calcularTaxa(valorTotalPedagios, percentual = null, taxaMinima = null) {
+  calcularTaxa(valorTotalPedagios) {
     if (!valorTotalPedagios || valorTotalPedagios <= 0) return 0;
-    const perc = percentual !== null && percentual !== undefined
-      ? Number(percentual)
-      : (Number(process.env.PERCENTUAL_TAXA) || 0.10);
-    const min = taxaMinima !== null && taxaMinima !== undefined
-      ? Number(taxaMinima)
-      : (Number(process.env.TAXA_MINIMA) || 0.90);
-
-    return Number(Math.max(min, valorTotalPedagios * perc).toFixed(2));
+    return Number(Number(process.env.TAXA_CONVENIENCIA_FIXA || 1.00).toFixed(2));
   }
 
   /**
-   * Gera a cobrança no método selecionado ('pix', 'credito', 'debito')
+   * Gera a cobrança exclusivamente via PIX Instantâneo com taxa fixa de R$ 1,00
    * @param {string[]} passagensIds
-   * @param {number|null} taxaConveniencia (opcional, se omitido calcula dinamicamente pela fórmula)
+   * @param {number|null} taxaConveniencia (opcional, padrão R$ 1,00)
    * @param {string} placa
-   * @param {'pix'|'credito'|'debito'} formaDePagamento
    */
   gerarCobranca(passagensIds, taxaConveniencia = null, placa = '', formaDePagamento = 'pix') {
     if (!passagensIds || !Array.isArray(passagensIds) || passagensIds.length === 0) {
       throw new Error('Nenhuma tarifa de pedágio foi selecionada para pagamento.');
     }
 
-    const metodo = ['pix', 'credito', 'debito'].includes(formaDePagamento)
-      ? formaDePagamento
-      : 'pix';
-
     const passagens = pedagioService.buscarPorIds(passagensIds);
     const subtotal = passagens.length > 0
       ? passagens.reduce((sum, item) => sum + Number(item.valorTarifa || 0), 0)
       : passagensIds.length * 10.50;
 
-    // Aplicação da fórmula dinâmica da Taxa Estradapay: Math.max(0.90, subtotal * 0.10)
+    // Taxa Estradapay fixa de R$ 1,00 por transação unificada
     const taxa = (taxaConveniencia !== null && taxaConveniencia !== undefined && typeof taxaConveniencia === 'number' && taxaConveniencia >= 0)
       ? Number(taxaConveniencia.toFixed(2))
       : this.calcularTaxa(subtotal);
 
+    // Fórmula: Total = Valor_Total_Pedagios + 1.00
     const valorTotal = Number((subtotal + taxa).toFixed(2));
     const txid = `ESTRADA${uuidv4().replace(/-/g, '').substring(0, 15).toUpperCase()}`;
 
@@ -188,38 +177,19 @@ class PagamentoService {
     const tempoLimiteSegundos = 900; // 15 minutos
     const expiresAt = new Date(agora.getTime() + tempoLimiteSegundos * 1000).toISOString();
 
-    let pixCopiaECola = null;
-    let qrCodeBase64 = null;
-    let opcoesParcelamento = null;
-    let formularioCartao = null;
-
-    if (metodo === 'pix') {
-      pixCopiaECola = this.montarPixCopiaECola({
-        chavePix: 'financeiro@estradapay.com.br',
-        nomeRecebedor: 'ESTRADAPAY PAGAMENTOS S.A.',
-        cidade: 'SAO PAULO',
-        valor: valorTotal,
-        txid,
-      });
-      qrCodeBase64 = this.gerarQrCodeDataUrl(pixCopiaECola);
-    } else {
-      // Cartão de Crédito ou Débito
-      if (metodo === 'credito') {
-        opcoesParcelamento = this.calcularOpcoesParcelamento(valorTotal);
-      }
-      formularioCartao = {
-        camposObrigatorios: ['numeroCartao', 'nomeTitular', 'validade', 'cvv'],
-        aceitaParcelamento: metodo === 'credito',
-        maxParcelas: metodo === 'credito' ? 12 : 1,
-        bandeirasSuportadas: ['Visa', 'Mastercard', 'Elo', 'Hipercard', 'Amex'],
-        mensagemSeguranca: 'Ambiente criptografado TLS 256-bit com certificação PCI-DSS Nível 1.',
-      };
-    }
+    const pixCopiaECola = this.montarPixCopiaECola({
+      chavePix: 'financeiro@estradapay.com.br',
+      nomeRecebedor: 'ESTRADAPAY PAGAMENTOS S.A.',
+      cidade: 'SAO PAULO',
+      valor: valorTotal,
+      txid,
+    });
+    const qrCodeBase64 = this.gerarQrCodeDataUrl(pixCopiaECola);
 
     const cobranca = {
       txid,
       placa: placa || (passagens[0] ? passagens[0].placa : 'VEICULO'),
-      formaDePagamento: metodo,
+      formaDePagamento: 'pix',
       passagensIds,
       passagensDetalhadas: passagens,
       subtotal: Number(subtotal.toFixed(2)),
@@ -227,8 +197,6 @@ class PagamentoService {
       valorTotal,
       pixCopiaECola,
       qrCodeBase64,
-      opcoesParcelamento,
-      formularioCartao,
       createdAt: agora.toISOString(),
       expiresAt,
       tempoLimiteSegundos,

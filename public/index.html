@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#ffffff">
   <title>Estradapay - Pedágio Free Flow sem multas</title>
-  <meta name="description" content="Consulte e pague seus pedágios Free Flow por placa veicular de forma rápida, segura e sem multas. Suporte a Pix, Cartão de Crédito e Débito.">
+  <meta name="description" content="Consulte e pague seus pedágios Free Flow por placa veicular de forma rápida, segura e sem multas exclusivamente via PIX Instantâneo.">
   
   <link rel="manifest" href="/manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
@@ -266,11 +266,11 @@
       <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.8125rem; color: var(--slate-500);">
         <li style="display: flex; align-items: flex-start; gap: 8px;">
           <span style="color: var(--secondary); font-weight: bold;">✓</span>
-          <span><strong>Múltiplas formas:</strong> Pague via PIX, Cartão de Crédito (em até 12x) ou Cartão de Débito à vista.</span>
+          <span><strong>Múltiplas formas:</strong> Pague com praticidade via PIX Instantâneo (QR Code e Copia e Cola).</span>
         </li>
         <li style="display: flex; align-items: flex-start; gap: 8px;">
           <span style="color: var(--secondary); font-weight: bold;">✓</span>
-          <span><strong>Taxa Estradapay proporcional:</strong> Apenas 10% sobre o total de pedágios (com taxa mínima de R$ 0,90).</span>
+          <span><strong>Taxa Estradapay fixa:</strong> Apenas R$ 1,00 por transação unificada (independente do total de tarifas).</span>
         </li>
         <li style="display: flex; align-items: flex-start; gap: 8px;">
           <span style="color: var(--secondary); font-weight: bold;">✓</span>
@@ -324,7 +324,7 @@
             </svg>
           </button>
           <div class="accordion-content">
-            <p>O Estradapay atua como intermediador e facilitador de pagamento tecnológico. Assim que o pagamento via Pix ou Cartão é aprovado, nosso sistema envia a conciliação automática para as concessionárias conveniadas (CCR RioSP, Ecovias, CSG, Tamoios, etc.), gerando protocolo e comprovante oficial de quitação imediata.</p>
+            <p>O Estradapay atua como intermediador e facilitador de pagamento tecnológico. Assim que o pagamento via Pix é aprovado, nosso sistema envia a conciliação automática para as concessionárias conveniadas (CCR RioSP, Ecovias, CSG, Tamoios, etc.), gerando protocolo e comprovante oficial de quitação imediata.</p>
           </div>
         </div>
 
@@ -363,7 +363,7 @@
             </svg>
           </button>
           <div class="accordion-content">
-            <p>Aceitamos Pix Instantâneo (QR Code e Copia e Cola), Cartão de Débito à vista e Cartão de Crédito com parcelamento em até 12 vezes. A Taxa Estradapay é transparente: 10% sobre o total de tarifas com valor mínimo de R$ 0,90 por transação unificada.</p>
+            <p>Aceitamos Pix Instantâneo. A Taxa Estradapay é transparente: apenas R$ 1,00 por transação unificada.</p>
           </div>
         </div>
       </div>
@@ -390,7 +390,7 @@
     <div class="checkout-bar-inner">
       <div class="summary-breakdown">
         <span>Tarifas: <strong id="summarySubtotal">R$ 0,00</strong></span>
-        <span>Taxa Estradapay (10%): <strong id="summaryTaxa">R$ 0,90</strong></span>
+        <span>Taxa Estradapay: <strong id="summaryTaxa">R$ 1,00</strong></span>
       </div>
       <div class="checkout-row">
         <div class="total-display">
@@ -401,7 +401,7 @@
           <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
-          Escolher Pagamento
+          Pagar com PIX
         </button>
       </div>
     </div>
@@ -414,32 +414,11 @@
 
       <div id="pixCheckoutContent">
         <div class="modal-header">
-          <h3>Finalizar Pagamento</h3>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="pix-badge-chip">⚡ PIX</span>
+            <h3>Pagar com PIX Instantâneo</h3>
+          </div>
           <button id="btnCloseModal" class="btn-close" title="Fechar">✕</button>
-        </div>
-
-        <!-- Abas de Seleção de Forma de Pagamento -->
-        <div class="payment-tabs">
-          <button type="button" class="payment-tab-btn active" data-method="pix" id="tabBtnPix">
-            <svg fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2L3 9l9 7 9-7-9-7zm0 18l-7-5.4V19l7 5 7-5v-4.4L12 20z"/>
-            </svg>
-            PIX
-          </button>
-          <button type="button" class="payment-tab-btn" data-method="credito" id="tabBtnCredito">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <rect x="2" y="5" width="20" height="14" rx="2" stroke-width="2"/>
-              <line x1="2" y1="10" x2="22" y2="10" stroke-width="2"/>
-            </svg>
-            Crédito
-          </button>
-          <button type="button" class="payment-tab-btn" data-method="debito" id="tabBtnDebito">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <rect x="2" y="5" width="20" height="14" rx="2" stroke-width="2"/>
-              <circle cx="7" cy="15" r="1.5" fill="currentColor"/>
-            </svg>
-            Débito
-          </button>
         </div>
 
         <!-- Checkbox de Aceite Legal Obrigatório no Checkout -->
@@ -452,7 +431,7 @@
           </label>
         </div>
 
-        <!-- CONTEÚDO 1: PIX -->
+        <!-- CONTEÚDO EXCLUSIVO: PIX INSTANTÂNEO -->
         <div id="tabContentPix">
           <div class="pix-timer-box">
             <span class="pix-timer-label">
@@ -486,69 +465,8 @@
           </button>
         </div>
 
-        <!-- CONTEÚDO 2: CARTÃO DE CRÉDITO OU DÉBITO -->
-        <div id="tabContentCard" style="display: none;">
-          <!-- Visual do Cartão Mockup -->
-          <div class="card-preview-box">
-            <div class="card-preview-chip"></div>
-            <div id="cardPreviewNumber" class="card-preview-number">•••• •••• •••• ••••</div>
-            <div class="card-preview-footer">
-              <div>
-                <span>Titular</span>
-                <div id="cardPreviewName" class="card-preview-name">NOME COMPLETO</div>
-              </div>
-              <div>
-                <span>Validade</span>
-                <div id="cardPreviewExpiry">MM/AA</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Formulário Simulado de Cartão -->
-          <form id="formCardPayment" class="card-form-grid" onsubmit="event.preventDefault();">
-            <div class="form-field">
-              <label for="cardInputNumber" class="form-label">Número do Cartão</label>
-              <input type="text" id="cardInputNumber" class="form-input" placeholder="0000 0000 0000 0000" maxlength="19" required>
-            </div>
-
-            <div class="form-field">
-              <label for="cardInputName" class="form-label">Nome impresso no cartão</label>
-              <input type="text" id="cardInputName" class="form-input" placeholder="Ex: CARLOS A SILVA" style="text-transform: uppercase;" required>
-            </div>
-
-            <div class="form-row-duo">
-              <div class="form-field">
-                <label for="cardInputExpiry" class="form-label">Validade (MM/AA)</label>
-                <input type="text" id="cardInputExpiry" class="form-input" placeholder="MM/AA" maxlength="5" required>
-              </div>
-              <div class="form-field">
-                <label for="cardInputCvv" class="form-label">CVV</label>
-                <input type="password" id="cardInputCvv" class="form-input" placeholder="123" maxlength="4" required>
-              </div>
-            </div>
-
-            <!-- Opções de Parcelamento (Apenas no Crédito) -->
-            <div id="installmentsWrapper" class="form-field">
-              <label for="cardSelectInstallments" class="form-label">Opções de Parcelamento</label>
-              <select id="cardSelectInstallments" class="form-select"></select>
-            </div>
-
-            <div class="pci-shield-badge">
-              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <rect x="3" y="11" width="18" height="11" rx="2" stroke-width="2"/>
-                <path d="M7 11V7a5 5 0 0110 0v4" stroke-width="2"/>
-              </svg>
-              Ambiente Seguro • Criptografia TLS 256-bit PCI-DSS
-            </div>
-
-            <button type="button" id="btnSubmitCardPayment" class="btn-card-pay">
-              Confirmar Pagamento com Cartão
-            </button>
-          </form>
-        </div>
-
         <p style="font-size: 0.71875rem; color: var(--slate-500); text-align: center; margin-top: 12px;">
-          🔒 O sistema verifica o pagamento e efetua a baixa automática na concessionária.
+          🔒 O sistema verifica o pagamento via Pix e efetua a baixa automática na concessionária.
         </p>
       </div>
 
@@ -608,7 +526,7 @@
       </div>
       <div class="legal-modal-body">
         <p><strong>1. Intermediação de Serviços:</strong> O Estradapay é uma plataforma de facilitação e conciliação tecnológica para consulta e liquidação de tarifas de pedágio Free Flow registradas por concessionárias de rodovias do Brasil (CCR RioSP, Ecovias, CSG, Tamoios, etc.).</p>
-        <p><strong>2. Taxa de Conveniência:</strong> Para a prestação do serviço unificado, é cobrada taxa proporcional de 10% (dez por cento) sobre o valor total dos pedágios selecionados, respeitada a taxa mínima de R$ 0,90 por transação.</p>
+        <p><strong>2. Taxa de Conveniência Fixa:</strong> Para a prestação do serviço unificado, é cobrada uma taxa fixa transparente de R$ 1,00 (um real) por transação unificada, independente da quantidade ou do valor total das tarifas selecionadas.</p>
         <p><strong>3. Responsabilidade do Usuário:</strong> O usuário responde pela veracidade da placa consultada (Mercosul, tradicional ou estrangeira). Quitações de placas digitadas de forma incorreta não são passiveis de estorno após o repasse à concessionária.</p>
         <p><strong>4. Prazos Legais:</strong> O condutor tem até 30 dias após a passagem para realizar a quitação (Art. 209-A do CTB), evitando a penalidade de infração grave de trânsito.</p>
       </div>
@@ -629,7 +547,7 @@
       <div class="legal-modal-body">
         <p><strong>1. Conformidade com a Lei 13.709/2018:</strong> O Estradapay trata dados veiculares estritamente para a finalidade de identificação e quitação de pedágios abertos.</p>
         <p><strong>2. Dados Coletados:</strong> Coletamos apenas a placa veicular fornecida e os dados essenciais para confirmação da transação financeira.</p>
-        <p><strong>3. Não Armazenamento de Dados de Cartão:</strong> Não retemos números de cartão de crédito nem códigos de segurança CVV em nossos servidores.</p>
+        <p><strong>3. Pagamentos 100% via PIX Instantâneo:</strong> A liquidação é realizada diretamente via Banco Central com chave e QR Code dinâmico, sem necessidade de dados de cartão ou armazenamento bancário sensível.</p>
         <p><strong>4. Criptografia Ponta a Ponta:</strong> Toda a navegação e transação são protegidas por criptografia SSL/TLS de 256 bits.</p>
         <p><strong>5. Direitos do Titular:</strong> Você tem o direito de requerer confirmação de tratamento, acesso e exclusão dos dados através de nosso DPO em <code>privacidade@estradapay.com.br</code>.</p>
       </div>

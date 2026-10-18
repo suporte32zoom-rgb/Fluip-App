@@ -5,9 +5,8 @@ import pagamentoService from '../services/pagamentoService.js';
 const router = Router();
 
 // Obter parâmetros da taxa de administração/conveniência proporcional
-// Regra: 10% (0.10) sobre o valor total dos pedágios com taxa mínima de R$ 0,90
-const PERCENTUAL_TAXA = Number(process.env.PERCENTUAL_TAXA) || 0.10;
-const TAXA_MINIMA = Number(process.env.TAXA_MINIMA) || 0.90;
+// Taxa Estradapay fixa: R$ 1,00 por transação unificada (independente do valor ou quantidade)
+const TAXA_CONVENIENCIA_FIXA = Number(process.env.TAXA_CONVENIENCIA_FIXA) || 1.00;
 
 /**
  * GET /api/v1/consultar?placa=XXX
@@ -28,12 +27,10 @@ router.get('/consultar', async (req, res) => {
     const debitos = await pedagioService.consultarDebitosPorPlaca(placa, isEstrangeira);
     const placaFormatada = pedagioService.validarEFormatarPlaca(placa, isEstrangeira);
 
-    // Calcular resumo financeiro com regra de taxa dinâmica: Math.max(TAXA_MINIMA, subtotal * PERCENTUAL_TAXA)
+    // Calcular resumo financeiro com regra de taxa fixa: Total = subtotal + 1.00
     const quantidade = debitos.length;
     const subtotal = debitos.reduce((acc, curr) => acc + Number(curr.valorTarifa || 0), 0);
-    const taxaConveniencia = quantidade > 0
-      ? Number(Math.max(TAXA_MINIMA, subtotal * PERCENTUAL_TAXA).toFixed(2))
-      : 0;
+    const taxaConveniencia = quantidade > 0 ? TAXA_CONVENIENCIA_FIXA : 0;
     const totalGeral = Number((subtotal + taxaConveniencia).toFixed(2));
 
     return res.status(200).json({
@@ -43,8 +40,6 @@ router.get('/consultar', async (req, res) => {
       resumo: {
         quantidade,
         subtotal: Number(subtotal.toFixed(2)),
-        percentualTaxa: PERCENTUAL_TAXA,
-        taxaMinima: TAXA_MINIMA,
         taxaConveniencia: Number(taxaConveniencia.toFixed(2)),
         totalGeral,
         moeda: 'BRL',
@@ -60,12 +55,12 @@ router.get('/consultar', async (req, res) => {
 
 /**
  * POST /api/v1/pagar
- * Recebe a lista de IDs de tarifas e a forma de pagamento ('pix' | 'credito' | 'debito')
- * Body: { placa: string, passagensIds: string[], formaDePagamento?: string }
+ * Recebe a lista de IDs de tarifas e gera cobrança exclusivamente via PIX Instantâneo
+ * Body: { placa: string, passagensIds: string[] }
  */
 router.post('/pagar', async (req, res) => {
   try {
-    const { placa, passagensIds, formaDePagamento = 'pix' } = req.body;
+    const { placa, passagensIds } = req.body;
 
     if (!passagensIds || !Array.isArray(passagensIds) || passagensIds.length === 0) {
       return res.status(400).json({
@@ -74,22 +69,18 @@ router.post('/pagar', async (req, res) => {
       });
     }
 
-    // Calcula a cobrança aplicando a regra dinâmica proporcional no serviço de pagamento
-    const cobranca = pagamentoService.gerarCobranca(passagensIds, null, placa, formaDePagamento);
+    // Calcula a cobrança aplicando a taxa fixa de R$ 1,00 via PIX
+    const cobranca = pagamentoService.gerarCobranca(passagensIds, null, placa, 'pix');
 
     return res.status(201).json({
       success: true,
-      mensagem: cobranca.formaDePagamento === 'pix'
-        ? 'Cobrança PIX gerada com sucesso. Efetue o pagamento em até 15 minutos.'
-        : `Checkout com ${cobranca.formaDePagamento === 'credito' ? 'Cartão de Crédito' : 'Cartão de Débito'} preparado com sucesso.`,
+      mensagem: 'Cobrança PIX gerada com sucesso. Efetue o pagamento em até 15 minutos.',
       txid: cobranca.txid,
       placa: cobranca.placa,
-      formaDePagamento: cobranca.formaDePagamento,
+      formaDePagamento: 'pix',
       passagensIds: cobranca.passagensIds,
       pixCopiaECola: cobranca.pixCopiaECola,
       qrCodeBase64: cobranca.qrCodeBase64,
-      opcoesParcelamento: cobranca.opcoesParcelamento,
-      formularioCartao: cobranca.formularioCartao,
       valorTotal: cobranca.valorTotal,
       resumo: {
         passagensQuantidade: cobranca.passagensIds.length,
