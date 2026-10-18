@@ -15,7 +15,8 @@ const TAXA_MINIMA = Number(process.env.TAXA_MINIMA) || 0.90;
  */
 router.get('/consultar', async (req, res) => {
   try {
-    const { placa } = req.query;
+    const { placa, estrangeira, placaEstrangeira } = req.query;
+    const isEstrangeira = estrangeira === 'true' || placaEstrangeira === 'true';
 
     if (!placa) {
       return res.status(400).json({
@@ -24,8 +25,8 @@ router.get('/consultar', async (req, res) => {
       });
     }
 
-    const debitos = await pedagioService.consultarDebitosPorPlaca(placa);
-    const placaFormatada = pedagioService.validarEFormatarPlaca(placa);
+    const debitos = await pedagioService.consultarDebitosPorPlaca(placa, isEstrangeira);
+    const placaFormatada = pedagioService.validarEFormatarPlaca(placa, isEstrangeira);
 
     // Calcular resumo financeiro com regra de taxa dinâmica: Math.max(TAXA_MINIMA, subtotal * PERCENTUAL_TAXA)
     const quantidade = debitos.length;

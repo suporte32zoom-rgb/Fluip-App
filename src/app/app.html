@@ -37,6 +37,35 @@
 
     <!-- Card de Consulta de Placa Mercosul -->
     <section class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm mb-5">
+      <!-- Componente Visual do Veículo com Placa Dinâmica em Tempo Real -->
+      <div class="bg-gradient-to-b from-sky-50 to-slate-100 border border-slate-300 rounded-2xl p-3 mb-4 shadow-xs">
+        <div class="w-full max-w-xs mx-auto h-36 flex items-center justify-center">
+          <svg viewBox="0 0 460 220" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+            <ellipse cx="230" cy="208" rx="195" ry="12" fill="#0f172a" opacity="0.22" />
+            <rect x="52" y="156" width="36" height="42" rx="10" fill="#0f172a" />
+            <rect x="372" y="156" width="36" height="42" rx="10" fill="#0f172a" />
+            <path d="M 92 110 C 110 52 145 40 230 40 C 315 40 350 52 368 110 L 400 138 C 412 150 406 178 386 182 L 74 182 C 54 178 48 150 60 138 Z" fill="#2563eb" />
+            <path d="M 124 102 C 140 58 165 48 230 48 C 295 48 320 58 336 102 Z" fill="#0f172a" opacity="0.9" />
+            <path d="M 140 98 L 190 56 L 205 56 L 155 98 Z" fill="#ffffff" opacity="0.18" />
+            <rect x="156" y="148" width="148" height="22" rx="5" fill="#0f172a" />
+            <!-- Moldura da Placa -->
+            <rect x="146" y="162" width="168" height="42" rx="4" fill="#0f172a" stroke="#94a3b8" stroke-width="1.5" />
+            <rect x="147" y="163" width="166" height="11" rx="2" [attr.fill]="placaEstrangeira() ? '#0284c7' : tipoPlaca() === 'antiga' ? '#475569' : '#003399'" />
+            <text x="230" y="171.5" font-size="7.5" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1.2">
+              {{ placaEstrangeira() ? 'MERCOSUL EXT' : 'BRASIL' }}
+            </text>
+            <rect x="147" y="174" width="166" height="29" fill="#ffffff" />
+            <text x="230" y="196" font-family="'Courier New', monospace" font-size="20" font-weight="900" fill="#0f172a" text-anchor="middle" letter-spacing="3">
+              {{ placaControl.value ? placaControl.value.toUpperCase() : 'DIGITE A PLACA' }}
+            </text>
+          </svg>
+        </div>
+        <div class="flex items-center justify-center gap-1.5 text-[11px] font-semibold text-slate-500 mt-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Pré-visualização do veículo em tempo real</span>
+        </div>
+      </div>
+
       <h2 class="text-sm font-bold text-slate-900 mb-1 flex items-center gap-2">
         <mat-icon class="text-sky-600 text-base! w-4! h-4!">directions_car</mat-icon>
         Consultar Débitos por Placa
@@ -53,9 +82,9 @@
             [class.bg-[#003399]]="tipoPlaca() !== 'antiga'"
             [class.bg-slate-600]="tipoPlaca() === 'antiga'"
             class="text-white px-3 py-1 flex items-center justify-between text-[11px] font-bold tracking-widest transition">
-            <span>{{ tipoPlaca() === 'antiga' ? 'BRASIL • PADRÃO ANTERIOR' : tipoPlaca() === 'mercosul' ? 'MERCOSUL' : 'BRASIL / MERCOSUL & ANTIGA' }}</span>
+            <span>{{ placaEstrangeira() ? 'INTERNACIONAL / MERCOSUL' : tipoPlaca() === 'antiga' ? 'BRASIL • PADRÃO ANTERIOR' : tipoPlaca() === 'mercosul' ? 'MERCOSUL' : 'BRASIL / MERCOSUL & ANTIGA' }}</span>
             <div class="flex items-center gap-1">
-              <span class="text-[9px]">{{ tipoPlaca() === 'antiga' ? 'BR' : 'BRASIL' }}</span>
+              <span class="text-[9px]">{{ placaEstrangeira() ? 'EXT' : tipoPlaca() === 'antiga' ? 'BR' : 'BRASIL' }}</span>
               <div class="w-3.5 h-2.5 bg-[#009c3b] relative rounded-xs">
                 <div class="absolute inset-[1.5px_2px] bg-[#ffdf00]" style="clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);"></div>
               </div>
@@ -69,9 +98,9 @@
               type="text" 
               [formControl]="placaControl"
               (input)="formatarPlacaInput($event)"
-              placeholder="ABC1D23 ou ABC-1234"
+              [placeholder]="placaEstrangeira() ? 'Ex: AF123CD ou ARG456' : 'ABC1D23 ou ABC-1234'"
               class="w-full text-center text-3xl font-extrabold font-mono tracking-widest uppercase outline-none bg-transparent text-slate-900 placeholder:text-slate-400 placeholder:text-xl"
-              maxlength="8"
+              [maxlength]="placaEstrangeira() ? 10 : 8"
             />
           </div>
         </div>
@@ -79,7 +108,11 @@
         <!-- Indicador de formato detectado -->
         <div class="flex items-center justify-between text-[11px] text-slate-500 mb-3 px-1">
           <span>Padrão identificado:</span>
-          @if (tipoPlaca() === 'mercosul') {
+          @if (placaEstrangeira()) {
+            <span class="bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded-full text-[10px]">
+              🌐 Placa Estrangeira
+            </span>
+          } @else if (tipoPlaca() === 'mercosul') {
             <span class="bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded-full text-[10px]">
               🇧🇷 Padrão Mercosul
             </span>
@@ -94,21 +127,61 @@
           }
         </div>
 
+        <!-- Switch Placa Estrangeira -->
+        <div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-xl mb-3">
+          <div class="flex flex-col">
+            <span class="text-xs font-bold text-slate-800">Minha placa é estrangeira</span>
+            <span class="text-[10px] text-slate-500">Argentina, Uruguai, Paraguai ou outros países</span>
+          </div>
+          <input 
+            type="checkbox" 
+            [checked]="placaEstrangeira()"
+            (change)="togglePlacaEstrangeira($event)"
+            class="w-5 h-5 accent-blue-600 rounded cursor-pointer"
+          />
+        </div>
+
         <!-- Chips de placas de teste -->
         <div class="flex items-center gap-2 flex-wrap mb-4">
           <span class="text-[11px] font-semibold text-slate-400">Exemplos:</span>
           <button type="button" (click)="usarPlacaExemplo('BRA2E19')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">BRA2E19 (Mercosul)</button>
           <button type="button" (click)="usarPlacaExemplo('RIO2024')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">RIO2024 (Mercosul)</button>
           <button type="button" (click)="usarPlacaExemplo('ABC-1234')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">ABC-1234 (Antiga)</button>
-          <button type="button" (click)="usarPlacaExemplo('KGT-9821')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">KGT-9821 (Antiga)</button>
+          <button type="button" (click)="usarPlacaExemplo('AF123CD')" class="px-2.5 py-1 text-xs font-mono font-bold bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 border border-slate-200 rounded-lg text-slate-700 transition cursor-pointer">AF123CD (Estrangeira)</button>
+        </div>
+
+        <!-- Aceite Legal e LGPD Obrigatório -->
+        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl mb-3 flex flex-col gap-2">
+          <div class="flex items-center gap-1.5 text-[11px] font-bold text-blue-900 uppercase tracking-wider">
+            <mat-icon class="text-xs! w-3.5! h-3.5!">verified_user</mat-icon>
+            Conformidade Legal & LGPD (Obrigatório)
+          </div>
+          <label class="flex items-start gap-2 text-xs text-slate-700 cursor-pointer">
+            <input 
+              type="checkbox" 
+              [checked]="consentimentoTermos()"
+              (change)="consentimentoTermos.set($any($event.target).checked)"
+              class="mt-0.5 w-4 h-4 accent-blue-600 rounded cursor-pointer" 
+            />
+            <span>Li e concordo com os <a href="/termos.html" target="_blank" class="text-blue-600 underline font-semibold">Termos e Condições de Uso</a>.</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-slate-700 cursor-pointer">
+            <input 
+              type="checkbox" 
+              [checked]="consentimentoPrivacidade()"
+              (change)="consentimentoPrivacidade.set($any($event.target).checked)"
+              class="mt-0.5 w-4 h-4 accent-blue-600 rounded cursor-pointer" 
+            />
+            <span>Li e concordo com a <a href="/privacidade.html" target="_blank" class="text-blue-600 underline font-semibold">Política de Privacidade (LGPD)</a>.</span>
+          </label>
         </div>
 
         <!-- Botão Consultar -->
         <button 
           type="button" 
           (click)="consultarDebitos()"
-          [disabled]="loading()"
-          class="w-full bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl py-3.5 px-4 font-bold text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer active:scale-[0.99]">
+          [disabled]="loading() || !podeConsultar()"
+          class="w-full bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl py-3.5 px-4 font-bold text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]">
           @if (loading()) {
             <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
             <span>Consultando concessionárias...</span>
@@ -117,6 +190,11 @@
             <span>Buscar Tarifas Pendentes</span>
           }
         </button>
+        @if (!podeConsultar()) {
+          <p class="text-[11px] text-rose-500 font-medium text-center mt-2">
+            * Marque os termos de uso e privacidade para habilitar a consulta.
+          </p>
+        }
       </form>
     </section>
 
@@ -227,6 +305,72 @@
       </div>
     </section>
 
+    <!-- Seção de FAQ (Perguntas Frequentes) Acordeão -->
+    <section class="mt-6 bg-white border border-slate-200 rounded-2xl p-4 shadow-xs">
+      <div class="flex items-center gap-2 text-blue-900 font-extrabold mb-3">
+        <mat-icon class="text-blue-600">help_outline</mat-icon>
+        <h3 class="text-sm font-bold text-slate-900">Perguntas Frequentes (FAQ)</h3>
+      </div>
+      <div class="flex flex-col gap-2">
+        <div class="border border-slate-200 rounded-xl overflow-hidden">
+          <button type="button" (click)="toggleFaq(1)" class="w-full text-left p-3 text-xs font-bold text-slate-900 flex justify-between items-center bg-slate-50 hover:bg-slate-100 cursor-pointer">
+            <span>O que é o Pedágio Free Flow?</span>
+            <mat-icon class="text-slate-400 text-sm! transition-transform" [class.rotate-180]="faqAberto() === 1">expand_more</mat-icon>
+          </button>
+          @if (faqAberto() === 1) {
+            <div class="p-3 bg-white text-xs text-slate-600 border-t border-slate-200">
+              O Free Flow é o sistema 100% eletrônico e sem cancelas previsto na Lei Federal nº 14.157/2021. Os veículos passam na velocidade da via e pórticos registram a placa automaticamente.
+            </div>
+          }
+        </div>
+
+        <div class="border border-slate-200 rounded-xl overflow-hidden">
+          <button type="button" (click)="toggleFaq(2)" class="w-full text-left p-3 text-xs font-bold text-slate-900 flex justify-between items-center bg-slate-50 hover:bg-slate-100 cursor-pointer">
+            <span>Qual é o prazo para pagamento sem multa?</span>
+            <mat-icon class="text-slate-400 text-sm! transition-transform" [class.rotate-180]="faqAberto() === 2">expand_more</mat-icon>
+          </button>
+          @if (faqAberto() === 2) {
+            <div class="p-3 bg-white text-xs text-slate-600 border-t border-slate-200">
+              Conforme o Art. 209-A do CTB e Resolução CONTRAN nº 989/2022, o condutor possui até 30 dias corridos da passagem para quitar a tarifa.
+            </div>
+          }
+        </div>
+
+        <div class="border border-slate-200 rounded-xl overflow-hidden">
+          <button type="button" (click)="toggleFaq(3)" class="w-full text-left p-3 text-xs font-bold text-slate-900 flex justify-between items-center bg-slate-50 hover:bg-slate-100 cursor-pointer">
+            <span>Como o Estradapay dá baixa no meu pedágio?</span>
+            <mat-icon class="text-slate-400 text-sm! transition-transform" [class.rotate-180]="faqAberto() === 3">expand_more</mat-icon>
+          </button>
+          @if (faqAberto() === 3) {
+            <div class="p-3 bg-white text-xs text-slate-600 border-t border-slate-200">
+              O Estradapay atua como intermediador e facilitador de pagamento tecnológico. Assim que o pagamento via Pix ou Cartão é aprovado, a baixa é registrada junto à concessionária de rodovias conveniada.
+            </div>
+          }
+        </div>
+
+        <div class="border border-slate-200 rounded-xl overflow-hidden">
+          <button type="button" (click)="toggleFaq(4)" class="w-full text-left p-3 text-xs font-bold text-slate-900 flex justify-between items-center bg-slate-50 hover:bg-slate-100 cursor-pointer">
+            <span>O que acontece se eu não pagar no prazo?</span>
+            <mat-icon class="text-slate-400 text-sm! transition-transform" [class.rotate-180]="faqAberto() === 4">expand_more</mat-icon>
+          </button>
+          @if (faqAberto() === 4) {
+            <div class="p-3 bg-white text-xs text-slate-600 border-t border-slate-200">
+              Após 30 dias sem pagamento, incide infração grave por evasão de pedágio (Art. 209-A do CTB), gerando multa de R$ 195,23 e 5 pontos na CNH.
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Rodapé Institucional -->
+    <footer class="mt-8 text-center text-xs text-slate-500 py-4 border-t border-slate-200">
+      <div class="flex items-center justify-center gap-2 font-semibold mb-2">
+        <a href="/termos.html" target="_blank" class="text-blue-600 hover:underline">Termos de Uso</a>
+        <span>•</span>
+        <a href="/privacidade.html" target="_blank" class="text-blue-600 hover:underline">Política de Privacidade (LGPD)</a>
+      </div>
+      <p class="text-[10px] text-slate-400">© 2026 Estradapay. Todos os direitos reservados. Conformidade Art. 209-A do CTB e LGPD.</p>
+    </footer>
   </main>
 
   <!-- Barra Fixa de Checkout (Sticky Mobile Bottom) com Taxa Estradapay Proporcional (10% min R$ 0,90) -->

@@ -84,8 +84,16 @@ export class App {
   percentualTaxa = signal<number>(0.10);
   taxaMinima = signal<number>(0.90);
 
-  // Tipo de Placa Detectada: 'mercosul' | 'antiga' | 'neutro'
-  tipoPlaca = signal<'mercosul' | 'antiga' | 'neutro'>('neutro');
+  // Tipo de Placa Detectada: 'mercosul' | 'antiga' | 'estrangeira' | 'neutro'
+  tipoPlaca = signal<'mercosul' | 'antiga' | 'estrangeira' | 'neutro'>('neutro');
+  placaEstrangeira = signal<boolean>(false);
+
+  // Aceite Legal e LGPD
+  consentimentoTermos = signal<boolean>(false);
+  consentimentoPrivacidade = signal<boolean>(false);
+  modalTermosAberto = signal<boolean>(false);
+  modalPrivacidadeAberto = signal<boolean>(false);
+  faqAberto = signal<number | null>(null);
 
   // Forma de pagamento ativa no checkout
   formaPagamento = signal<'pix' | 'credito' | 'debito'>('pix');
@@ -108,6 +116,9 @@ export class App {
   // PWA Install prompt
   pwaInstallEvent = signal<Event | null>(null);
   showIosGuide = signal(false);
+
+  // Estado Computado de Validação de Busca
+  podeConsultar = computed(() => this.consentimentoTermos() && this.consentimentoPrivacidade());
 
   // Estado Computado do Resumo Financeiro
   debitosSelecionados = computed(() => {
@@ -209,19 +220,53 @@ export class App {
     this.cartaoCvvControl.setValue(v, { emitEvent: false });
   }
 
+  togglePlacaEstrangeira(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const ativo = input.checked;
+    this.placaEstrangeira.set(ativo);
+    if (ativo) {
+      this.tipoPlaca.set('estrangeira');
+      this.mostrarToast('Modo de Placa Estrangeira ativado.');
+    } else {
+      this.tipoPlaca.set('neutro');
+    }
+  }
+
+  toggleFaq(index: number) {
+    this.faqAberto.update((curr) => (curr === index ? null : index));
+  }
+
   usarPlacaExemplo(placa: string) {
     this.placaControl.setValue(placa);
-    const raw = placa.replace(/[^A-Z0-9]/gi, '');
-    const isMercosul = /^[A-Z]{3}[0-9][A-Z][0-9]{2}$/.test(raw);
-    this.tipoPlaca.set(isMercosul ? 'mercosul' : 'antiga');
+    if (placa === 'AF123CD') {
+      this.placaEstrangeira.set(true);
+      this.tipoPlaca.set('estrangeira');
+    } else {
+      this.placaEstrangeira.set(false);
+      const raw = placa.replace(/[^A-Z0-9]/gi, '');
+      const isMercosul = /^[A-Z]{3}[0-9][A-Z][0-9]{2}$/.test(raw);
+      this.tipoPlaca.set(isMercosul ? 'mercosul' : 'antiga');
+    }
+    this.consentimentoTermos.set(true);
+    this.consentimentoPrivacidade.set(true);
     this.consultarDebitos();
   }
 
   consultarDebitos() {
+    if (!this.podeConsultar()) {
+      this.mostrarToast('Por favor, aceite os Termos de Uso e a Política de Privacidade (LGPD).');
+      return;
+    }
+
     const valorBruto = (this.placaControl.value || '').trim().toUpperCase();
     const limpa = valorBruto.replace(/[^A-Z0-9]/gi, '');
-    if (limpa.length < 7) {
-      this.mostrarToast('Digite uma placa válida com 7 caracteres (ex: ABC1D23 ou ABC-1234).');
+    const minCarac = this.placaEstrangeira() ? 4 : 7;
+
+    if (limpa.length < minCarac) {
+      this.mostrarToast(this.placaEstrangeira()
+        ? 'Digite ao menos 4 caracteres para a placa estrangeira.'
+        : 'Digite uma placa válida com 7 caracteres (ex: ABC1D23 ou ABC-1234).'
+      );
       return;
     }
 
@@ -229,7 +274,7 @@ export class App {
     this.errorMessage.set(null);
 
     this.http.get<{ success: boolean; placa: string; debitos: DebitoPedagioItem[]; resumo: { taxaConveniencia: number; percentualTaxa?: number; taxaMinima?: number } }>(
-      `/api/v1/consultar?placa=${encodeURIComponent(limpa)}`
+      `/api/v1/consultar?placa=${encodeURIComponent(limpa)}&estrangeira=${this.placaEstrangeira()}`
     ).subscribe({
       next: (res) => {
         this.loading.set(false);

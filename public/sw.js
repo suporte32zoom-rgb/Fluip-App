@@ -3,10 +3,12 @@
  * Gerenciamento de cache offline, atualizações e estabilidade de conexão
  */
 
-const CACHE_NAME = 'estradapay-v2.1.0';
+const CACHE_NAME = 'estradapay-v2.2.0';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
+  '/termos.html',
+  '/privacidade.html',
   '/style.css',
   '/app.js',
   '/manifest.json',

@@ -2,14 +2,11 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#ffffff">
   <title>Estradapay - Pedágio Free Flow sem multas</title>
+  <meta name="description" content="Consulte e pague seus pedágios Free Flow por placa veicular de forma rápida, segura e sem multas. Suporte a Pix, Cartão de Crédito e Débito.">
   
-  <meta name="description" content="Consulte e pague seus pedágios automáticos Free Flow por placa (Mercosul e Tradicional) via Estradapay em segundos. Evite multas de evasão de pedágio em rodovias do Brasil.">
-  <meta name="theme-color" content="#0f172a">
-  <meta name="robots" content="index, follow">
-  
-  <!-- PWA Mobile-First -->
   <link rel="manifest" href="/manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -59,10 +56,95 @@
       </p>
     </section>
 
-    <!-- Cartão de Busca: Placa Dinâmica (Mercosul e Tradicional) -->
+    <!-- Cartão de Busca: Ilustração do Veículo com Placa Dinâmica e Filtros -->
     <section class="search-card">
+      
+      <!-- Componente Visual do Veículo com Placa Dinâmica em Tempo Real -->
+      <div class="vehicle-hero-card">
+        <div class="vehicle-svg-wrapper">
+          <svg viewBox="0 0 460 220" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="carBodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#1e3a8a" />
+                <stop offset="45%" stop-color="#2563eb" />
+                <stop offset="100%" stop-color="#0f172a" />
+              </linearGradient>
+              <linearGradient id="windshieldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#0f172a" />
+                <stop offset="60%" stop-color="#1e293b" />
+                <stop offset="100%" stop-color="#38bdf8" />
+              </linearGradient>
+              <linearGradient id="headlightGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="50%" stop-color="#e0f2fe" />
+                <stop offset="100%" stop-color="#38bdf8" />
+              </linearGradient>
+              <filter id="carGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            <!-- Sombra do Veículo no Asfalto -->
+            <ellipse cx="230" cy="208" rx="195" ry="12" fill="#0f172a" opacity="0.22" />
+
+            <!-- Chassi / Rodas Frontais Base -->
+            <rect x="52" y="156" width="36" height="42" rx="10" fill="#0f172a" />
+            <rect x="372" y="156" width="36" height="42" rx="10" fill="#0f172a" />
+
+            <!-- Carroceria Principal Frontal -->
+            <path d="M 92 110 C 110 52 145 40 230 40 C 315 40 350 52 368 110 L 400 138 C 412 150 406 178 386 182 L 74 182 C 54 178 48 150 60 138 Z" fill="url(#carBodyGrad)" />
+
+            <!-- Para-brisa e Reflexo -->
+            <path d="M 124 102 C 140 58 165 48 230 48 C 295 48 320 58 336 102 Z" fill="url(#windshieldGrad)" opacity="0.95" />
+            <path d="M 140 98 L 190 56 L 205 56 L 155 98 Z" fill="#ffffff" opacity="0.18" />
+
+            <!-- Retrovisor Interno -->
+            <rect x="222" y="54" width="16" height="7" rx="2" fill="#0f172a" opacity="0.8" />
+
+            <!-- Retrovisores Laterais -->
+            <path d="M 88 106 L 56 104 C 48 104 46 114 54 116 L 86 118 Z" fill="#1e3a8a" />
+            <path d="M 372 106 L 404 104 C 412 104 414 114 406 116 L 374 118 Z" fill="#1e3a8a" />
+
+            <!-- Capô / Linhas Aerodinâmicas -->
+            <path d="M 134 112 C 158 126 195 132 230 132 C 265 132 302 126 326 112" stroke="#60a5fa" stroke-width="2.5" fill="none" opacity="0.5" />
+            
+            <!-- Faróis Dianteiros LED -->
+            <!-- Esquerdo -->
+            <path d="M 76 138 C 96 138 124 142 128 152 C 112 154 84 152 70 148 C 66 142 70 138 76 138 Z" fill="url(#headlightGlow)" filter="url(#carGlow)" />
+            <!-- Direito -->
+            <path d="M 384 138 C 364 138 336 142 332 152 C 348 154 376 152 390 148 C 394 142 390 138 384 138 Z" fill="url(#headlightGlow)" filter="url(#carGlow)" />
+
+            <!-- Grade Dianteira Central -->
+            <rect x="156" y="148" width="148" height="22" rx="5" fill="#0f172a" />
+            <line x1="166" y1="155" x2="294" y2="155" stroke="#334155" stroke-width="2" />
+            <line x1="166" y1="162" x2="294" y2="162" stroke="#334155" stroke-width="2" />
+
+            <!-- SUPORTE DA PLACA DINÂMICA NO PARA-CHOQUE -->
+            <!-- Borda da Placa -->
+            <rect x="146" y="162" width="168" height="42" rx="4" fill="#0f172a" stroke="#94a3b8" stroke-width="1.5" />
+            
+            <!-- Faixa Azul da Placa (Mercosul / Oficial) -->
+            <rect id="carPlateStripe" x="147" y="163" width="166" height="11" rx="2" fill="#003399" />
+            
+            <!-- Título do Topo da Placa -->
+            <text id="carPlateHeaderSvg" x="230" y="171.5" font-family="-apple-system, system-ui, sans-serif" font-size="7.5" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1.2">BRASIL</text>
+            
+            <!-- Fundo Branco / Metálico da Placa -->
+            <rect id="carPlateBackSvg" x="147" y="174" width="166" height="29" fill="#ffffff" />
+            
+            <!-- TEXTO DA PLACA DINÂMICA EM TEMPO REAL -->
+            <text id="carPlateTextSvg" x="230" y="196" font-family="'Courier New', Courier, monospace, sans-serif" font-size="20" font-weight="900" fill="#0f172a" text-anchor="middle" letter-spacing="3.5">DIGITE A PLACA</text>
+          </svg>
+        </div>
+        <div class="vehicle-status-caption">
+          <span class="live-dot"></span>
+          <span id="vehicleLiveStatus">Pré-visualização do veículo em tempo real</span>
+        </div>
+      </div>
+
       <h2 class="search-card-title">Consultar Débitos por Placa</h2>
-      <p class="search-card-subtitle">Aceita placas brasileiras nos padrões Mercosul (ABC1D23) ou Tradicional (ABC-1234):</p>
+      <p class="search-card-subtitle">Localize tarifas automáticas pendentes em qualquer rodovia Free Flow do Brasil:</p>
 
       <form id="formConsulta">
         <!-- Moldura Adaptável de Placa -->
@@ -71,7 +153,7 @@
             <span id="plateHeaderTitle">BRASIL / MERCOSUL & ANTIGA</span>
             <div class="flag-brasil" id="plateHeaderFlag">
               <span id="plateHeaderSubtitle" style="font-size: 0.65rem;">BRASIL</span>
-              <span style="display:inline-block; width:14px; height:10px; background:#009c3b; border-radius:1px; position:relative;">
+              <span id="plateFlagGraphic" style="display:inline-block; width:14px; height:10px; background:#009c3b; border-radius:1px; position:relative;">
                 <span style="position:absolute; inset:2px 3px; background:#ffdf00; clip-path:polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);"></span>
               </span>
             </div>
@@ -94,19 +176,55 @@
         <!-- Indicador dinâmico de formato detectado -->
         <div class="plate-format-indicator">
           <span>Identificação:</span>
-          <span id="plateTypeBadge" class="plate-badge-type badge-neutral">Digite 7 caracteres</span>
+          <span id="plateTypeBadge" class="plate-badge-type badge-neutral">Digite a placa veicular</span>
         </div>
 
-        <!-- Chips com Placas de Demonstração (Mercosul e Antiga) -->
+        <!-- Seletor / Switch: Minha Placa é Estrangeira -->
+        <div class="foreign-toggle-wrapper">
+          <label class="switch-control" for="checkPlacaEstrangeira">
+            <input type="checkbox" id="checkPlacaEstrangeira">
+            <span class="switch-slider"></span>
+          </label>
+          <div class="foreign-toggle-info">
+            <label for="checkPlacaEstrangeira" class="foreign-toggle-title">Minha placa é estrangeira</label>
+            <span class="foreign-toggle-desc">Argentina, Uruguai, Paraguai, Chile ou outros países</span>
+          </div>
+        </div>
+
+        <!-- Chips com Placas de Demonstração -->
         <div class="quick-plates">
           <span class="quick-plates-label">Exemplos:</span>
           <button type="button" class="chip-plate" data-placa="BRA2E19">BRA2E19 (Mercosul)</button>
           <button type="button" class="chip-plate" data-placa="RIO2024">RIO2024 (Mercosul)</button>
           <button type="button" class="chip-plate" data-placa="ABC-1234">ABC-1234 (Antiga)</button>
-          <button type="button" class="chip-plate" data-placa="KGT-9821">KGT-9821 (Antiga)</button>
+          <button type="button" class="chip-plate" data-placa="AF123CD">AF123CD (Estrangeira)</button>
         </div>
 
-        <button type="submit" id="btnConsultar" class="btn-primary">
+        <!-- Aceite Legal e Conformidade LGPD Obrigatórios na Busca -->
+        <div class="legal-consent-card">
+          <div class="legal-consent-header">
+            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+            <span>Conformidade Legal & LGPD (Obrigatório)</span>
+          </div>
+          
+          <label class="consent-checkbox-row">
+            <input type="checkbox" id="checkLegalTermos" class="consent-checkbox">
+            <span class="consent-label-text">
+              Li e concordo com os <a href="/termos.html" class="link-legal" id="linkOpenTermosModal">Termos e Condições de Uso</a>.
+            </span>
+          </label>
+
+          <label class="consent-checkbox-row">
+            <input type="checkbox" id="checkLegalPrivacidade" class="consent-checkbox">
+            <span class="consent-label-text">
+              Li e concordo com a <a href="/privacidade.html" class="link-legal" id="linkOpenPrivacidadeModal">Política de Privacidade (LGPD)</a>.
+            </span>
+          </label>
+        </div>
+
+        <button type="submit" id="btnConsultar" class="btn-primary" disabled>
           <span id="btnText">
             <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:inline; margin-right:4px;">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -115,6 +233,9 @@
           </span>
           <div id="btnSpinner" class="spinner" style="display: none;"></div>
         </button>
+        <p id="consentNoticeText" class="consent-notice-helper">
+          * Marque os termos de uso e privacidade acima para habilitar a consulta.
+        </p>
       </form>
     </section>
 
@@ -153,10 +274,114 @@
         </li>
         <li style="display: flex; align-items: flex-start; gap: 8px;">
           <span style="color: var(--secondary); font-weight: bold;">✓</span>
-          <span><strong>Compatibilidade total:</strong> Válido para placas Mercosul e antigas cinza de todo o Brasil.</span>
+          <span><strong>Compatibilidade total:</strong> Válido para placas Mercosul, tradicionais cinza e estrangeiras.</span>
         </li>
       </ul>
     </section>
+
+    <!-- SEÇÃO DE FAQ (PERGUNTAS FREQUENTES) ESTILO ACORDEÃO -->
+    <section class="faq-section">
+      <div class="faq-header">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h3>Perguntas Frequentes (FAQ)</h3>
+      </div>
+
+      <div class="accordion-list">
+        <!-- Item 1 -->
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger">
+            <span>O que é o Pedágio Free Flow?</span>
+            <svg class="accordion-arrow" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="accordion-content">
+            <p>O Free Flow é o sistema de pedágio 100% eletrônico e sem cancelas previsto na Lei Federal nº 14.157/2021. Os veículos passam na velocidade regulamentar da via e os pórticos com câmeras de alta precisão registram a placa ou tag veicular automaticamente.</p>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger">
+            <span>Qual é o prazo para pagamento sem multa?</span>
+            <svg class="accordion-arrow" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="accordion-content">
+            <p>Conforme o Art. 209-A do Código de Trânsito Brasileiro (CTB) e Resolução CONTRAN nº 989/2022, o condutor possui <strong>até 30 (trinta) dias corridos</strong> a partir da passagem para quitar o valor da tarifa de pedágio.</p>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger">
+            <span>Como o Estradapay dá baixa no meu pedágio?</span>
+            <svg class="accordion-arrow" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="accordion-content">
+            <p>O Estradapay atua como intermediador e facilitador de pagamento tecnológico. Assim que o pagamento via Pix ou Cartão é aprovado, nosso sistema envia a conciliação automática para as concessionárias conveniadas (CCR RioSP, Ecovias, CSG, Tamoios, etc.), gerando protocolo e comprovante oficial de quitação imediata.</p>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger">
+            <span>O que acontece se eu não pagar no prazo de 30 dias?</span>
+            <svg class="accordion-arrow" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="accordion-content">
+            <p>Após 30 dias da passagem sem quitação, o não pagamento é enquadrado como <strong>evasão de pedágio</strong> (Art. 209-A do CTB), caracterizado como infração grave com multa no valor de R$ 195,23 e 5 pontos na CNH do condutor, além da cobrança da tarifa original.</p>
+          </div>
+        </div>
+
+        <!-- Item 5 -->
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger">
+            <span>Veículos com placa estrangeira também precisam pagar?</span>
+            <svg class="accordion-arrow" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="accordion-content">
+            <p>Sim! Veículos de países vizinhos como Argentina, Uruguai, Paraguai ou Chile trafegando em rodovias brasileiras com pedágio Free Flow devem quitar suas passagens em até 30 dias. O não pagamento pode impedir a saída do veículo nas aduanas e fronteiras com a Polícia Rodoviária Federal.</p>
+          </div>
+        </div>
+
+        <!-- Item 6 -->
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger">
+            <span>Quais são as formas de pagamento e taxas?</span>
+            <svg class="accordion-arrow" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="accordion-content">
+            <p>Aceitamos Pix Instantâneo (QR Code e Copia e Cola), Cartão de Débito à vista e Cartão de Crédito com parcelamento em até 12 vezes. A Taxa Estradapay é transparente: 10% sobre o total de tarifas com valor mínimo de R$ 0,90 por transação unificada.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rodapé Institucional com Links de Conformidade Legal -->
+    <footer class="app-footer">
+      <div class="footer-links">
+        <a href="/termos.html" id="footerLinkTermos">Termos de Uso</a>
+        <span>•</span>
+        <a href="/privacidade.html" id="footerLinkPrivacidade">Política de Privacidade (LGPD)</a>
+        <span>•</span>
+        <a href="mailto:contato@estradapay.com.br">Suporte</a>
+      </div>
+      <p class="footer-copy">
+        © 2026 Estradapay. Todos os direitos reservados. Intermediação de pagamentos em conformidade com o Art. 209-A do CTB e Lei Geral de Proteção de Dados (LGPD).
+      </p>
+    </footer>
 
   </main>
 
@@ -215,6 +440,16 @@
             </svg>
             Débito
           </button>
+        </div>
+
+        <!-- Checkbox de Aceite Legal Obrigatório no Checkout -->
+        <div class="checkout-consent-box">
+          <label class="consent-checkbox-row">
+            <input type="checkbox" id="checkCheckoutConsent" class="consent-checkbox" checked>
+            <span class="consent-label-text">
+              Confirmo a quitação das passagens para a placa selecionada conforme os <a href="/termos.html" target="_blank" class="link-legal">Termos de Uso</a>.
+            </span>
+          </label>
         </div>
 
         <!-- CONTEÚDO 1: PIX -->
@@ -361,6 +596,47 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- MODAL INTERATIVO: TERMOS DE USO -->
+  <div id="modalTermos" class="legal-modal-overlay" style="display: none;">
+    <div class="legal-modal-card">
+      <div class="legal-modal-header">
+        <h4>Termos e Condições de Uso</h4>
+        <button type="button" class="btn-close-legal" id="btnCloseTermosModal">✕</button>
+      </div>
+      <div class="legal-modal-body">
+        <p><strong>1. Intermediação de Serviços:</strong> O Estradapay é uma plataforma de facilitação e conciliação tecnológica para consulta e liquidação de tarifas de pedágio Free Flow registradas por concessionárias de rodovias do Brasil (CCR RioSP, Ecovias, CSG, Tamoios, etc.).</p>
+        <p><strong>2. Taxa de Conveniência:</strong> Para a prestação do serviço unificado, é cobrada taxa proporcional de 10% (dez por cento) sobre o valor total dos pedágios selecionados, respeitada a taxa mínima de R$ 0,90 por transação.</p>
+        <p><strong>3. Responsabilidade do Usuário:</strong> O usuário responde pela veracidade da placa consultada (Mercosul, tradicional ou estrangeira). Quitações de placas digitadas de forma incorreta não são passiveis de estorno após o repasse à concessionária.</p>
+        <p><strong>4. Prazos Legais:</strong> O condutor tem até 30 dias após a passagem para realizar a quitação (Art. 209-A do CTB), evitando a penalidade de infração grave de trânsito.</p>
+      </div>
+      <div class="legal-modal-footer">
+        <a href="/termos.html" target="_blank" class="btn-link-external">Abrir Termos Completos em Nova Aba ↗</a>
+        <button type="button" class="btn-primary" id="btnAcceptTermosModal" style="padding: 10px 16px; font-size: 0.85rem;">Entendi e Concordo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL INTERATIVO: POLÍTICA DE PRIVACIDADE (LGPD) -->
+  <div id="modalPrivacidade" class="legal-modal-overlay" style="display: none;">
+    <div class="legal-modal-card">
+      <div class="legal-modal-header">
+        <h4>Política de Privacidade (LGPD)</h4>
+        <button type="button" class="btn-close-legal" id="btnClosePrivacidadeModal">✕</button>
+      </div>
+      <div class="legal-modal-body">
+        <p><strong>1. Conformidade com a Lei 13.709/2018:</strong> O Estradapay trata dados veiculares estritamente para a finalidade de identificação e quitação de pedágios abertos.</p>
+        <p><strong>2. Dados Coletados:</strong> Coletamos apenas a placa veicular fornecida e os dados essenciais para confirmação da transação financeira.</p>
+        <p><strong>3. Não Armazenamento de Dados de Cartão:</strong> Não retemos números de cartão de crédito nem códigos de segurança CVV em nossos servidores.</p>
+        <p><strong>4. Criptografia Ponta a Ponta:</strong> Toda a navegação e transação são protegidas por criptografia SSL/TLS de 256 bits.</p>
+        <p><strong>5. Direitos do Titular:</strong> Você tem o direito de requerer confirmação de tratamento, acesso e exclusão dos dados através de nosso DPO em <code>privacidade@estradapay.com.br</code>.</p>
+      </div>
+      <div class="legal-modal-footer">
+        <a href="/privacidade.html" target="_blank" class="btn-link-external">Abrir Política Completa em Nova Aba ↗</a>
+        <button type="button" class="btn-primary" id="btnAcceptPrivacidadeModal" style="padding: 10px 16px; font-size: 0.85rem;">Entendi e Concordo</button>
+      </div>
     </div>
   </div>
 

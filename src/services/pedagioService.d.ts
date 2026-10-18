@@ -1,6 +1,7 @@
 export interface DebitoPedagio {
   id: string;
   placa: string;
+  placaEstrangeira?: boolean;
   concessionaria: string;
   rodovia: string;
   portico: string;
@@ -10,14 +11,16 @@ export interface DebitoPedagio {
   dataHoraFormatada: string;
   valorTarifa: number;
   dataLimiteInfracao: string;
+  limiteInfracao?: string;
   dataLimiteFormatada: string;
   diasRestantes: number;
   status: 'PENDENTE' | 'PAGO';
+  origemFonte?: string;
 }
 
 declare class PedagioService {
-  validarEFormatarPlaca(placa: string): string;
-  consultarDebitosPorPlaca(placaBruta: string): Promise<DebitoPedagio[]>;
+  validarEFormatarPlaca(placa: string, placaEstrangeira?: boolean): string;
+  consultarDebitosPorPlaca(placaBruta: string, placaEstrangeira?: boolean): Promise<DebitoPedagio[]>;
   buscarPorIds(ids: string[]): DebitoPedagio[];
   baixarPassagens(ids: string[]): void;
 }
