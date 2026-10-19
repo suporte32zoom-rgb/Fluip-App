@@ -24,6 +24,13 @@
     pollInterval: null,
     segundosRestantes: 900,
     deferredPrompt: null,
+
+    // Autenticação Opcional & Perfil
+    authToken: localStorage.getItem('estradapay_token') || null,
+    currentUser: null,
+    garagem: [],
+    historico: [],
+    alertas: { whatsapp: '', email: '', ativo: true, avisarComDias: 5 },
   };
 
   const dom = {
@@ -43,6 +50,80 @@
     carPlateStripe: document.getElementById('carPlateStripe'),
     carPlateBackSvg: document.getElementById('carPlateBackSvg'),
     vehicleLiveStatus: document.getElementById('vehicleLiveStatus'),
+
+    // Header & Menu Hambúrguer
+    btnOpenMenu: document.getElementById('btnOpenMenu'),
+    btnHeaderAuth: document.getElementById('btnHeaderAuth'),
+    headerUserAvatar: document.getElementById('headerUserAvatar'),
+    headerUserName: document.getElementById('headerUserName'),
+
+    // Drawer Lateral
+    drawerOverlay: document.getElementById('drawerOverlay'),
+    drawerMenu: document.getElementById('drawerMenu'),
+    btnCloseMenu: document.getElementById('btnCloseMenu'),
+    drawerUserName: document.getElementById('drawerUserName'),
+    drawerUserStatus: document.getElementById('drawerUserStatus'),
+    drawerUserAvatar: document.getElementById('drawerUserAvatar'),
+    drawerAuthBanner: document.getElementById('drawerAuthBanner'),
+    btnDrawerAuth: document.getElementById('btnDrawerAuth'),
+    btnDrawerAuthText: document.getElementById('btnDrawerAuthText'),
+    btnDrawerLogout: document.getElementById('btnDrawerLogout'),
+    drawerGaragemCount: document.getElementById('drawerGaragemCount'),
+
+    // Itens de Navegação do Drawer
+    navItemConsulta: document.getElementById('navItemConsulta'),
+    navItemGaragem: document.getElementById('navItemGaragem'),
+    navItemHistorico: document.getElementById('navItemHistorico'),
+    navItemAlertas: document.getElementById('navItemAlertas'),
+    navItemFreeFlow: document.getElementById('navItemFreeFlow'),
+    navItemAuth: document.getElementById('navItemAuth'),
+    navItemAuthTitle: document.getElementById('navItemAuthTitle'),
+    navItemTermos: document.getElementById('navItemTermos'),
+    navItemSuporte: document.getElementById('navItemSuporte'),
+
+    // Modal 1: Autenticação
+    modalAuth: document.getElementById('modalAuth'),
+    btnCloseAuthModal: document.getElementById('btnCloseAuthModal'),
+    btnTabLogin: document.getElementById('btnTabLogin'),
+    btnTabRegister: document.getElementById('btnTabRegister'),
+    formLogin: document.getElementById('formLogin'),
+    loginEmail: document.getElementById('loginEmail'),
+    loginPassword: document.getElementById('loginPassword'),
+    btnSubmitLogin: document.getElementById('btnSubmitLogin'),
+    btnDemoLogin: document.getElementById('btnDemoLogin'),
+    formRegister: document.getElementById('formRegister'),
+    regName: document.getElementById('regName'),
+    regEmail: document.getElementById('regEmail'),
+    regPassword: document.getElementById('regPassword'),
+    regTelefone: document.getElementById('regTelefone'),
+    btnSubmitRegister: document.getElementById('btnSubmitRegister'),
+
+    // Modal 2: Minha Garagem
+    modalGaragem: document.getElementById('modalGaragem'),
+    btnCloseGaragemModal: document.getElementById('btnCloseGaragemModal'),
+    garageList: document.getElementById('garageList'),
+    formAddVehicle: document.getElementById('formAddVehicle'),
+    inputGaragemPlaca: document.getElementById('inputGaragemPlaca'),
+    inputGaragemApelido: document.getElementById('inputGaragemApelido'),
+    inputGaragemModelo: document.getElementById('inputGaragemModelo'),
+
+    // Modal 3: Histórico de Comprovantes
+    modalHistorico: document.getElementById('modalHistorico'),
+    btnCloseHistoricoModal: document.getElementById('btnCloseHistoricoModal'),
+    historyList: document.getElementById('historyList'),
+
+    // Modal 4: Alertas de Pedágio
+    modalAlertas: document.getElementById('modalAlertas'),
+    btnCloseAlertasModal: document.getElementById('btnCloseAlertasModal'),
+    formAlertas: document.getElementById('formAlertas'),
+    alertWhatsapp: document.getElementById('alertWhatsapp'),
+    alertEmail: document.getElementById('alertEmail'),
+    alertDias: document.getElementById('alertDias'),
+
+    // Modal 5: Onde tem Free Flow?
+    modalFreeFlow: document.getElementById('modalFreeFlow'),
+    btnCloseFreeFlowModal: document.getElementById('btnCloseFreeFlowModal'),
+    btnFreeFlowConsultar: document.getElementById('btnFreeFlowConsultar'),
 
     // Aceite Legal e LGPD
     checkLegalTermos: document.getElementById('checkLegalTermos'),
@@ -120,6 +201,13 @@
     setupConsentHandlers();
     setupLegalModals();
     setupFaqAccordion();
+    setupDrawerMenu();
+    setupAuthHandlers();
+    setupGarageHandlers();
+    setupHistoryHandlers();
+    setupAlertasHandlers();
+    setupFreeFlowModal();
+    checkAuthSession();
     atualizarConsentimento();
   }
 
@@ -902,6 +990,706 @@
     } else {
       renderizarCards();
       atualizarResumoFinanceiro();
+    }
+
+    // Registrar o comprovante no histórico (conta ou local)
+    registrarComprovanteNoHistorico({
+      txid: cobranca.txid || `TXID-${Date.now()}`,
+      placa: cobranca.placa || state.placaAtual,
+      valorTotal: Number(cobranca.valorTotal || data.valorTotal || 0),
+      subtotal: Number(cobranca.resumo?.subtotal || (Number(cobranca.valorTotal || data.valorTotal || 1) - 1.00)),
+      taxa: 1.00,
+      protocolo: data.protocoloBaixa || `PROT-${Math.floor(100000 + Math.random() * 900000)}`,
+      autenticacao: data.autenticacaoBancaria || `AUT-${Math.random().toString(36).substring(2, 10).toUpperCase()}`,
+      concessionaria: state.debitos[0]?.concessionaria || 'Rede Free Flow Nacional',
+      formaDePagamento: 'PIX Instantâneo',
+      dataHora: new Date().toLocaleString('pt-BR'),
+    });
+  }
+
+  /* ========================================================
+     MENU HAMBÚRGUER E DRAWER LATERAL
+     ======================================================== */
+  function setupDrawerMenu() {
+    if (dom.btnOpenMenu) {
+      dom.btnOpenMenu.addEventListener('click', openDrawer);
+    }
+    if (dom.btnCloseMenu) {
+      dom.btnCloseMenu.addEventListener('click', closeDrawer);
+    }
+    if (dom.drawerOverlay) {
+      dom.drawerOverlay.addEventListener('click', closeDrawer);
+    }
+
+    // Itens de navegação da gaveta
+    if (dom.navItemConsulta) {
+      dom.navItemConsulta.addEventListener('click', () => {
+        closeDrawer();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (dom.inputPlaca) dom.inputPlaca.focus();
+      });
+    }
+
+    if (dom.navItemGaragem) {
+      dom.navItemGaragem.addEventListener('click', () => {
+        closeDrawer();
+        openModal(dom.modalGaragem);
+        renderGaragem();
+      });
+    }
+
+    if (dom.navItemHistorico) {
+      dom.navItemHistorico.addEventListener('click', () => {
+        closeDrawer();
+        openModal(dom.modalHistorico);
+        renderHistorico();
+      });
+    }
+
+    if (dom.navItemAlertas) {
+      dom.navItemAlertas.addEventListener('click', () => {
+        closeDrawer();
+        openModal(dom.modalAlertas);
+        carregarCamposAlertas();
+      });
+    }
+
+    if (dom.navItemFreeFlow) {
+      dom.navItemFreeFlow.addEventListener('click', () => {
+        closeDrawer();
+        openModal(dom.modalFreeFlow);
+      });
+    }
+
+    if (dom.navItemAuth) {
+      dom.navItemAuth.addEventListener('click', () => {
+        closeDrawer();
+        if (state.currentUser) {
+          openModal(dom.modalGaragem);
+          renderGaragem();
+        } else {
+          openModal(dom.modalAuth);
+        }
+      });
+    }
+
+    if (dom.btnHeaderAuth) {
+      dom.btnHeaderAuth.addEventListener('click', () => {
+        if (state.currentUser) {
+          openDrawer();
+        } else {
+          openModal(dom.modalAuth);
+        }
+      });
+    }
+
+    if (dom.btnDrawerAuth) {
+      dom.btnDrawerAuth.addEventListener('click', () => {
+        closeDrawer();
+        openModal(dom.modalAuth);
+      });
+    }
+
+    if (dom.btnDrawerLogout) {
+      dom.btnDrawerLogout.addEventListener('click', logoutUser);
+    }
+
+    if (dom.navItemTermos) {
+      dom.navItemTermos.addEventListener('click', () => {
+        closeDrawer();
+        if (dom.modalTermos) dom.modalTermos.style.display = 'flex';
+      });
+    }
+
+    // Botões de fechar modais específicos
+    if (dom.btnCloseAuthModal) dom.btnCloseAuthModal.addEventListener('click', () => closeModal(dom.modalAuth));
+    if (dom.btnCloseGaragemModal) dom.btnCloseGaragemModal.addEventListener('click', () => closeModal(dom.modalGaragem));
+    if (dom.btnCloseHistoricoModal) dom.btnCloseHistoricoModal.addEventListener('click', () => closeModal(dom.modalHistorico));
+    if (dom.btnCloseAlertasModal) dom.btnCloseAlertasModal.addEventListener('click', () => closeModal(dom.modalAlertas));
+    if (dom.btnCloseFreeFlowModal) dom.btnCloseFreeFlowModal.addEventListener('click', () => closeModal(dom.modalFreeFlow));
+
+    // Fechar ao clicar no backdrop dos modais de recursos
+    [dom.modalAuth, dom.modalGaragem, dom.modalHistorico, dom.modalAlertas, dom.modalFreeFlow].forEach((modal) => {
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModal(modal);
+        });
+      }
+    });
+  }
+
+  function openDrawer() {
+    if (dom.drawerMenu && dom.drawerOverlay) {
+      dom.drawerOverlay.classList.add('open');
+      dom.drawerMenu.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeDrawer() {
+    if (dom.drawerMenu && dom.drawerOverlay) {
+      dom.drawerOverlay.classList.remove('open');
+      dom.drawerMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function openModal(modal) {
+    if (modal) {
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeModal(modal) {
+    if (modal) {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+
+  /* ========================================================
+     SISTEMA DE AUTENTICAÇÃO OPCIONAL (JWT)
+     ======================================================== */
+  function setupAuthHandlers() {
+    if (dom.btnTabLogin && dom.btnTabRegister) {
+      dom.btnTabLogin.addEventListener('click', () => {
+        dom.btnTabLogin.classList.add('active');
+        dom.btnTabRegister.classList.remove('active');
+        dom.formLogin.style.display = 'flex';
+        dom.formRegister.style.display = 'none';
+      });
+
+      dom.btnTabRegister.addEventListener('click', () => {
+        dom.btnTabRegister.classList.add('active');
+        dom.btnTabLogin.classList.remove('active');
+        dom.formRegister.style.display = 'flex';
+        dom.formLogin.style.display = 'none';
+      });
+    }
+
+    if (dom.formLogin) {
+      dom.formLogin.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = dom.loginEmail.value.trim();
+        const password = dom.loginPassword.value;
+
+        if (!email || !password) {
+          showToast('Preencha e-mail e senha.');
+          return;
+        }
+
+        try {
+          dom.btnSubmitLogin.disabled = true;
+          dom.btnSubmitLogin.textContent = 'Entrando...';
+
+          const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+          });
+
+          const data = await res.json();
+          if (!res.ok || !data.success) {
+            throw new Error(data.error || 'Falha ao autenticar.');
+          }
+
+          setSessionData(data.token, data.user);
+          showToast(`Bem-vindo, ${data.user.name}!`);
+          closeModal(dom.modalAuth);
+        } catch (err) {
+          showToast(err.message);
+        } finally {
+          dom.btnSubmitLogin.disabled = false;
+          dom.btnSubmitLogin.textContent = 'Entrar na Minha Conta';
+        }
+      });
+    }
+
+    if (dom.btnDemoLogin) {
+      dom.btnDemoLogin.addEventListener('click', () => {
+        dom.loginEmail.value = 'demo@estradapay.com.br';
+        dom.loginPassword.value = 'demo123';
+        dom.formLogin.dispatchEvent(new Event('submit'));
+      });
+    }
+
+    if (dom.formRegister) {
+      dom.formRegister.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = dom.regName.value.trim();
+        const email = dom.regEmail.value.trim();
+        const password = dom.regPassword.value;
+        const telefone = dom.regTelefone.value.trim();
+
+        if (!name || !email || !password) {
+          showToast('Preencha todos os campos obrigatórios.');
+          return;
+        }
+
+        if (password.length < 6) {
+          showToast('A senha deve ter no mínimo 6 caracteres.');
+          return;
+        }
+
+        try {
+          dom.btnSubmitRegister.disabled = true;
+          dom.btnSubmitRegister.textContent = 'Criando conta...';
+
+          const res = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password, telefone }),
+          });
+
+          const data = await res.json();
+          if (!res.ok || !data.success) {
+            throw new Error(data.error || 'Falha ao criar conta.');
+          }
+
+          setSessionData(data.token, data.user);
+          showToast(`Conta criada com sucesso! Olá, ${data.user.name}.`);
+          closeModal(dom.modalAuth);
+        } catch (err) {
+          showToast(err.message);
+        } finally {
+          dom.btnSubmitRegister.disabled = false;
+          dom.btnSubmitRegister.textContent = 'Criar Minha Conta Grátis';
+        }
+      });
+    }
+  }
+
+  function setSessionData(token, user) {
+    state.authToken = token;
+    state.currentUser = user;
+    state.garagem = user.garagem || [];
+    state.historico = user.historico || [];
+    state.alertas = user.alertas || state.alertas;
+
+    localStorage.setItem('estradapay_token', token);
+    localStorage.setItem('estradapay_user', JSON.stringify(user));
+
+    updateUserInterface();
+  }
+
+  async function checkAuthSession() {
+    const savedToken = localStorage.getItem('estradapay_token');
+    if (!savedToken) {
+      carregarDadosLocaisGuest();
+      updateUserInterface();
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/auth/me', {
+        headers: { Authorization: `Bearer ${savedToken}` },
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        state.authToken = savedToken;
+        state.currentUser = data.user;
+        state.garagem = data.user.garagem || [];
+        state.historico = data.user.historico || [];
+        state.alertas = data.user.alertas || state.alertas;
+      } else {
+        localStorage.removeItem('estradapay_token');
+        localStorage.removeItem('estradapay_user');
+        carregarDadosLocaisGuest();
+      }
+    } catch {
+      carregarDadosLocaisGuest();
+    }
+
+    updateUserInterface();
+  }
+
+  function carregarDadosLocaisGuest() {
+    try {
+      const guestGaragem = JSON.parse(localStorage.getItem('estradapay_guest_garage') || '[]');
+      const guestHistorico = JSON.parse(localStorage.getItem('estradapay_guest_history') || '[]');
+      const guestAlertas = JSON.parse(localStorage.getItem('estradapay_guest_alerts') || 'null');
+
+      state.garagem = guestGaragem.length > 0 ? guestGaragem : [
+        { id: 'guest_g1', placa: 'ABC1D23', apelido: 'Meu Carro', modelo: 'Passeio', tipo: 'mercosul', adicionadoEm: new Date().toISOString() }
+      ];
+      state.historico = guestHistorico;
+      if (guestAlertas) state.alertas = guestAlertas;
+    } catch {
+      state.garagem = [];
+      state.historico = [];
+    }
+  }
+
+  function logoutUser() {
+    state.authToken = null;
+    state.currentUser = null;
+    localStorage.removeItem('estradapay_token');
+    localStorage.removeItem('estradapay_user');
+
+    carregarDadosLocaisGuest();
+    updateUserInterface();
+    closeDrawer();
+    showToast('Você saiu da sua conta.');
+  }
+
+  function updateUserInterface() {
+    if (state.currentUser) {
+      const primeiroNome = state.currentUser.name.split(' ')[0];
+      const inicial = (state.currentUser.name[0] || 'U').toUpperCase();
+
+      if (dom.headerUserName) dom.headerUserName.textContent = primeiroNome;
+      if (dom.headerUserAvatar) dom.headerUserAvatar.textContent = inicial;
+
+      if (dom.drawerUserName) dom.drawerUserName.textContent = state.currentUser.name;
+      if (dom.drawerUserStatus) dom.drawerUserStatus.textContent = state.currentUser.email;
+      if (dom.drawerUserAvatar) dom.drawerUserAvatar.textContent = inicial;
+
+      if (dom.btnDrawerAuth) dom.btnDrawerAuth.style.display = 'none';
+      if (dom.btnDrawerLogout) dom.btnDrawerLogout.style.display = 'flex';
+      if (dom.navItemAuthTitle) dom.navItemAuthTitle.textContent = `Minha Conta (${primeiroNome})`;
+    } else {
+      if (dom.headerUserName) dom.headerUserName.textContent = 'Entrar';
+      if (dom.headerUserAvatar) {
+        dom.headerUserAvatar.innerHTML = `
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        `;
+      }
+
+      if (dom.drawerUserName) dom.drawerUserName.textContent = 'Modo Visitante';
+      if (dom.drawerUserStatus) dom.drawerUserStatus.textContent = 'Consulta & Pix liberados sem login';
+      if (dom.drawerUserAvatar) {
+        dom.drawerUserAvatar.innerHTML = `
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        `;
+      }
+
+      if (dom.btnDrawerAuth) dom.btnDrawerAuth.style.display = 'flex';
+      if (dom.btnDrawerLogout) dom.btnDrawerLogout.style.display = 'none';
+      if (dom.navItemAuthTitle) dom.navItemAuthTitle.textContent = 'Entrar / Criar Conta';
+    }
+
+    if (dom.drawerGaragemCount) {
+      dom.drawerGaragemCount.textContent = String(state.garagem.length);
+    }
+  }
+
+  /* ========================================================
+     MINHA GARAGEM (VEÍCULOS SALVOS)
+     ======================================================== */
+  function setupGarageHandlers() {
+    if (dom.formAddVehicle) {
+      dom.formAddVehicle.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const placa = dom.inputGaragemPlaca.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+        const apelido = dom.inputGaragemApelido.value.trim();
+        const modelo = dom.inputGaragemModelo.value.trim();
+
+        if (placa.length < 4 || placa.length > 8) {
+          showToast('Digite uma placa válida.');
+          return;
+        }
+
+        if (state.garagem.some((v) => v.placa === placa)) {
+          showToast(`A placa ${placa} já está salva na sua garagem.`);
+          return;
+        }
+
+        if (state.authToken) {
+          try {
+            const res = await fetch('/api/auth/garagem', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${state.authToken}`,
+              },
+              body: JSON.stringify({ placa, apelido, modelo }),
+            });
+            const data = await res.json();
+            if (!res.ok || !data.success) throw new Error(data.error || 'Erro ao salvar.');
+
+            state.garagem = data.garagem;
+            showToast(`Veículo ${placa} adicionado à sua Garagem!`);
+          } catch (err) {
+            showToast(err.message);
+            return;
+          }
+        } else {
+          // Salva no armazenamento local do visitante
+          const novo = {
+            id: `guest_gar_${Date.now()}`,
+            placa,
+            apelido: apelido || `Veículo ${placa}`,
+            modelo: modelo || 'Automóvel Passeio',
+            tipo: /^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/.test(placa) ? 'mercosul' : 'antiga',
+            adicionadoEm: new Date().toISOString(),
+          };
+          state.garagem.push(novo);
+          localStorage.setItem('estradapay_guest_garage', JSON.stringify(state.garagem));
+          showToast(`Veículo ${placa} salvo na Garagem!`);
+        }
+
+        dom.inputGaragemPlaca.value = '';
+        dom.inputGaragemApelido.value = '';
+        dom.inputGaragemModelo.value = '';
+        renderGaragem();
+        updateUserInterface();
+      });
+    }
+  }
+
+  function renderGaragem() {
+    if (!dom.garageList) return;
+
+    if (state.garagem.length === 0) {
+      dom.garageList.innerHTML = `
+        <div class="empty-state">
+          <span class="empty-state-icon">🚘</span>
+          <strong style="color: var(--dark); font-size: 0.875rem;">Nenhum veículo salvo</strong>
+          <small>Adicione sua placa abaixo para consultar débitos com 1 clique.</small>
+        </div>
+      `;
+      return;
+    }
+
+    dom.garageList.innerHTML = state.garagem.map((veiculo) => {
+      const isMercosul = veiculo.tipo === 'mercosul' || /^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/.test(veiculo.placa);
+      const placaFormatada = isMercosul && veiculo.placa.length === 7
+        ? `${veiculo.placa.substring(0, 3)}${veiculo.placa[3]}${veiculo.placa[4]}${veiculo.placa.substring(5)}`
+        : veiculo.placa;
+
+      return `
+        <div class="garage-card" data-placa="${veiculo.placa}" data-id="${veiculo.id}">
+          <div class="garage-plate-badge">
+            <span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:${isMercosul ? '#2563eb' : '#64748b'};"></span>
+            ${placaFormatada}
+          </div>
+          <div class="garage-card-info">
+            <span class="garage-card-apelido">${veiculo.apelido || 'Veículo ' + veiculo.placa}</span>
+            <span class="garage-card-modelo">${veiculo.modelo || 'Automóvel Passeio'}</span>
+          </div>
+          <div class="garage-card-actions">
+            <button type="button" class="btn-garage-search" data-action="consultar" data-placa="${veiculo.placa}" title="Consultar débitos">
+              🔍 Consultar
+            </button>
+            <button type="button" class="btn-garage-remove" data-action="remover" data-placa="${veiculo.placa}" data-id="${veiculo.id}" title="Remover da garagem">
+              ✕
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Adiciona ouvintes para os botões da lista
+    dom.garageList.querySelectorAll('button[data-action="consultar"]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const placa = btn.getAttribute('data-placa');
+        closeModal(dom.modalGaragem);
+        if (dom.inputPlaca) {
+          dom.inputPlaca.value = placa;
+          atualizarTemaVisualPlaca(
+            /^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/.test(placa) ? 'mercosul' : 'antiga',
+            placa
+          );
+          consultarDebitos(placa);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    });
+
+    dom.garageList.querySelectorAll('button[data-action="remover"]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const placa = btn.getAttribute('data-placa');
+        const id = btn.getAttribute('data-id');
+
+        if (state.authToken) {
+          try {
+            const res = await fetch(`/api/auth/garagem/${id || placa}`, {
+              method: 'DELETE',
+              headers: { Authorization: `Bearer ${state.authToken}` },
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+              state.garagem = data.garagem;
+            }
+          } catch {
+            state.garagem = state.garagem.filter((v) => v.placa !== placa && v.id !== id);
+          }
+        } else {
+          state.garagem = state.garagem.filter((v) => v.placa !== placa && v.id !== id);
+          localStorage.setItem('estradapay_guest_garage', JSON.stringify(state.garagem));
+        }
+
+        renderGaragem();
+        updateUserInterface();
+        showToast(`Veículo ${placa} removido da garagem.`);
+      });
+    });
+  }
+
+  /* ========================================================
+     HISTÓRICO DE COMPROVANTES
+     ======================================================== */
+  function setupHistoryHandlers() {
+    // Inicialização da lista
+  }
+
+  function renderHistorico() {
+    if (!dom.historyList) return;
+
+    if (state.historico.length === 0) {
+      dom.historyList.innerHTML = `
+        <div class="empty-state">
+          <span class="empty-state-icon">📄</span>
+          <strong style="color: var(--dark); font-size: 0.875rem;">Nenhum comprovante emitido</strong>
+          <small>Assim que você pagar um pedágio via Pix, seu recibo oficial ficará registrado aqui.</small>
+        </div>
+      `;
+      return;
+    }
+
+    dom.historyList.innerHTML = state.historico.map((comp) => {
+      return `
+        <div class="history-card">
+          <div class="history-card-header">
+            <div>
+              <span class="garage-plate-badge" style="font-size: 0.8rem; padding: 2px 6px;">${comp.placa}</span>
+              <span class="history-fee-pill" style="margin-left: 6px;">Taxa: R$ 1,00</span>
+            </div>
+            <span class="history-card-status">✓ PAGO (PIX)</span>
+          </div>
+
+          <div class="history-row">
+            <span>Concessionária:</span>
+            <strong>${comp.concessionaria || 'Rede Free Flow'}</strong>
+          </div>
+
+          <div class="history-row">
+            <span>Data e Horário:</span>
+            <span>${comp.dataHora}</span>
+          </div>
+
+          <div class="history-row">
+            <span>Total Pago (Tarifas + Taxa):</span>
+            <strong style="color: #059669; font-size: 0.9rem;">R$ ${Number(comp.valorTotal).toFixed(2).replace('.', ',')}</strong>
+          </div>
+
+          <div class="history-row">
+            <span>Protocolo Concessionária:</span>
+            <code style="font-family: monospace; font-size: 0.75rem;">${comp.protocolo}</code>
+          </div>
+
+          <div class="history-row" style="border-top: 1px dashed var(--slate-200); padding-top: 6px;">
+            <span>Autenticação Bancária:</span>
+            <code style="font-family: monospace; font-size: 0.7rem; color: #64748b;">${comp.autenticacao}</code>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  async function registrarComprovanteNoHistorico(comp) {
+    state.historico.unshift(comp);
+
+    if (state.authToken) {
+      try {
+        await fetch('/api/auth/historico', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${state.authToken}`,
+          },
+          body: JSON.stringify(comp),
+        });
+      } catch (err) {
+        console.warn('Erro ao sincronizar comprovante na nuvem:', err);
+      }
+    } else {
+      localStorage.setItem('estradapay_guest_history', JSON.stringify(state.historico));
+    }
+  }
+
+  /* ========================================================
+     ALERTAS DE PEDÁGIO
+     ======================================================== */
+  function setupAlertasHandlers() {
+    if (dom.formAlertas) {
+      dom.formAlertas.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const whatsapp = dom.alertWhatsapp.value.trim();
+        const email = dom.alertEmail.value.trim();
+        const dias = Number(dom.alertDias.value) || 5;
+
+        if (!whatsapp && !email) {
+          showToast('Preencha ao menos WhatsApp ou E-mail para receber alertas.');
+          return;
+        }
+
+        state.alertas = {
+          whatsapp,
+          email,
+          ativo: true,
+          avisarComDias: dias,
+        };
+
+        if (state.authToken) {
+          try {
+            const res = await fetch('/api/auth/alertas', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${state.authToken}`,
+              },
+              body: JSON.stringify(state.alertas),
+            });
+            const data = await res.json();
+            if (!res.ok || !data.success) throw new Error(data.error);
+          } catch (err) {
+            console.warn('Erro ao salvar alertas na nuvem:', err);
+          }
+        } else {
+          localStorage.setItem('estradapay_guest_alerts', JSON.stringify(state.alertas));
+        }
+
+        showToast('Alertas ativados com sucesso! Você receberá lembretes automáticos no WhatsApp.');
+        closeModal(dom.modalAlertas);
+      });
+    }
+  }
+
+  function carregarCamposAlertas() {
+    if (dom.alertWhatsapp && state.alertas?.whatsapp) {
+      dom.alertWhatsapp.value = state.alertas.whatsapp;
+    } else if (dom.alertWhatsapp && state.currentUser?.telefone) {
+      dom.alertWhatsapp.value = state.currentUser.telefone;
+    }
+
+    if (dom.alertEmail && state.alertas?.email) {
+      dom.alertEmail.value = state.alertas.email;
+    } else if (dom.alertEmail && state.currentUser?.email) {
+      dom.alertEmail.value = state.currentUser.email;
+    }
+
+    if (dom.alertDias && state.alertas?.avisarComDias) {
+      dom.alertDias.value = String(state.alertas.avisarComDias);
+    }
+  }
+
+  /* ========================================================
+     ONDE TEM FREE FLOW?
+     ======================================================== */
+  function setupFreeFlowModal() {
+    if (dom.btnFreeFlowConsultar) {
+      dom.btnFreeFlowConsultar.addEventListener('click', () => {
+        closeModal(dom.modalFreeFlow);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (dom.inputPlaca) dom.inputPlaca.focus();
+      });
     }
   }
 

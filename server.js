@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import apiRoutes from './src/routes/api.js';
+import authRoutes from './src/routes/auth.js';
 
 // Carregar variáveis de ambiente
 dotenv.config();
@@ -23,8 +24,10 @@ app.use(express.urlencoded({ extended: true }));
 const publicDir = path.join(__dirname, 'public');
 app.use(express.static(publicDir));
 
-// Rotas da API RESTful (v1)
+// Rotas da API RESTful (v1) e Autenticação Opcional
 app.use('/api/v1', apiRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/v1/auth', authRoutes);
 
 // Endpoint de verificação de integridade (Health Check)
 app.get('/health', (req, res) => {

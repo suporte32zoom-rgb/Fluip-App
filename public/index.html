@@ -34,12 +34,29 @@
         </div>
       </a>
 
-      <button id="btnInstallPwa" class="btn-install" style="display: none;" title="Instalar aplicativo">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-        </svg>
-        Instalar App
-      </button>
+      <div class="header-actions">
+        <button id="btnHeaderAuth" class="btn-header-auth" title="Acessar Minha Conta (Opcional)">
+          <span id="headerUserAvatar" class="header-user-avatar">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </span>
+          <span id="headerUserName">Entrar</span>
+        </button>
+
+        <button id="btnInstallPwa" class="btn-install" style="display: none;" title="Instalar aplicativo">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+          </svg>
+          Instalar
+        </button>
+
+        <button id="btnOpenMenu" class="btn-hamburger" aria-label="Abrir menu de navegação" title="Menu principal">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -554,6 +571,414 @@
       <div class="legal-modal-footer">
         <a href="/privacidade.html" target="_blank" class="btn-link-external">Abrir Política Completa em Nova Aba ↗</a>
         <button type="button" class="btn-primary" id="btnAcceptPrivacidadeModal" style="padding: 10px 16px; font-size: 0.85rem;">Entendi e Concordo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       DRAWER LATERAL (MENU HAMBÚRGUER)
+       ======================================================== -->
+  <div id="drawerOverlay" class="drawer-overlay"></div>
+  <aside id="drawerMenu" class="drawer-menu" aria-label="Menu Principal de Navegação">
+    <div class="drawer-header">
+      <div class="drawer-user-card" id="drawerUserCard">
+        <div class="drawer-avatar" id="drawerUserAvatar">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        </div>
+        <div class="drawer-user-info">
+          <div class="drawer-user-name" id="drawerUserName">Modo Visitante</div>
+          <div class="drawer-user-status" id="drawerUserStatus">Consulta & Pix liberados sem login</div>
+        </div>
+      </div>
+      <button id="btnCloseMenu" class="btn-drawer-close" aria-label="Fechar menu">✕</button>
+    </div>
+
+    <!-- Banner de Acesso Opcional -->
+    <div class="drawer-auth-banner" id="drawerAuthBanner">
+      <button id="btnDrawerAuth" class="btn-drawer-auth">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+        </svg>
+        <span id="btnDrawerAuthText">Entrar ou Criar Conta Grátis</span>
+      </button>
+      <button id="btnDrawerLogout" class="btn-drawer-logout" style="display: none;">
+        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+        Sair da Conta
+      </button>
+    </div>
+
+    <nav class="drawer-nav">
+      <ul class="drawer-menu-list">
+        <li>
+          <button class="drawer-item" id="navItemConsulta">
+            <span class="drawer-icon">🚗</span>
+            <div class="drawer-item-text">
+              <strong>Consultar Placa</strong>
+              <small>Tela principal de busca e quitação</small>
+            </div>
+            <span class="drawer-chevron">›</span>
+          </button>
+        </li>
+        <li>
+          <button class="drawer-item" id="navItemGaragem">
+            <span class="drawer-icon">🚘</span>
+            <div class="drawer-item-text">
+              <strong>Minha Garagem</strong>
+              <small>Placas salvas e consulta com 1 toque</small>
+            </div>
+            <span class="drawer-badge" id="drawerGaragemCount">0</span>
+          </button>
+        </li>
+        <li>
+          <button class="drawer-item" id="navItemHistorico">
+            <span class="drawer-icon">📜</span>
+            <div class="drawer-item-text">
+              <strong>Histórico de Comprovantes</strong>
+              <small>Quitações anteriores e recibos oficiais</small>
+            </div>
+            <span class="drawer-chevron">›</span>
+          </button>
+        </li>
+        <li>
+          <button class="drawer-item" id="navItemAlertas">
+            <span class="drawer-icon">🔔</span>
+            <div class="drawer-item-text">
+              <strong>Alertas de Pedágio</strong>
+              <small>Avisos no WhatsApp / E-mail sem multas</small>
+            </div>
+            <span class="drawer-chevron">›</span>
+          </button>
+        </li>
+        <li>
+          <button class="drawer-item" id="navItemFreeFlow">
+            <span class="drawer-icon">🗺️</span>
+            <div class="drawer-item-text">
+              <strong>Onde tem Free Flow?</strong>
+              <small>Lista de rodovias e pórticos no Brasil</small>
+            </div>
+            <span class="drawer-chevron">›</span>
+          </button>
+        </li>
+        <li>
+          <button class="drawer-item" id="navItemAuth">
+            <span class="drawer-icon">🔑</span>
+            <div class="drawer-item-text">
+              <strong id="navItemAuthTitle">Entrar / Criar Conta</strong>
+              <small>Sincronize sua garagem e histórico</small>
+            </div>
+            <span class="drawer-chevron">›</span>
+          </button>
+        </li>
+        <li class="drawer-divider"></li>
+        <li>
+          <button class="drawer-item" id="navItemTermos">
+            <span class="drawer-icon">📄</span>
+            <div class="drawer-item-text">
+              <strong>Termos de Uso e LGPD</strong>
+              <small>Regras operacionais e Art. 209-A CTB</small>
+            </div>
+            <span class="drawer-chevron">›</span>
+          </button>
+        </li>
+        <li>
+          <a href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20tirar%20uma%20d%C3%BAvida%20sobre%20ped%C3%A1gio%20no%20Estradapay." target="_blank" rel="noopener" class="drawer-item" id="navItemSuporte">
+            <span class="drawer-icon">💬</span>
+            <div class="drawer-item-text">
+              <strong>Suporte WhatsApp</strong>
+              <small>Atendimento ao motorista em tempo real</small>
+            </div>
+            <span class="drawer-chevron">↗</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="drawer-footer">
+      <div class="drawer-rules-pill">
+        ⚡ 100% PIX Instantâneo • Taxa Fixa: R$ 1,00
+      </div>
+      <p class="drawer-copy">Estradapay • Intermediação Tecnológica em Rodovias</p>
+    </div>
+  </aside>
+
+  <!-- ========================================================
+       MODAL 1: AUTENTICAÇÃO OPCIONAL (LOGIN / CADASTRO)
+       ======================================================== -->
+  <div id="modalAuth" class="feature-modal-overlay">
+    <div class="feature-modal-card">
+      <div class="feature-modal-header">
+        <h3>
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #2563eb;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+          Conta Estradapay
+        </h3>
+        <button type="button" class="btn-drawer-close" id="btnCloseAuthModal">✕</button>
+      </div>
+      <div class="feature-modal-body">
+        
+        <div class="auth-notice-chip">
+          <span>💡 <strong>100% Opcional:</strong> A consulta e o pagamento via Pix continuam liberados sem necessidade de login. Crie sua conta se quiser salvar veículos na Garagem!</span>
+        </div>
+
+        <div class="auth-tabs">
+          <button type="button" class="auth-tab-btn active" id="btnTabLogin">Entrar</button>
+          <button type="button" class="auth-tab-btn" id="btnTabRegister">Criar Conta</button>
+        </div>
+
+        <!-- Formulário de Login -->
+        <form id="formLogin" class="auth-form">
+          <div class="auth-field">
+            <label class="auth-label" for="loginEmail">E-mail</label>
+            <input type="email" id="loginEmail" class="auth-input" placeholder="seuemail@exemplo.com" required autocomplete="email">
+          </div>
+          <div class="auth-field">
+            <label class="auth-label" for="loginPassword">Senha</label>
+            <input type="password" id="loginPassword" class="auth-input" placeholder="••••••••" required autocomplete="current-password">
+          </div>
+          <button type="submit" class="btn-auth-submit" id="btnSubmitLogin">
+            Entrar na Minha Conta
+          </button>
+          
+          <button type="button" class="btn-auth-demo" id="btnDemoLogin">
+            ⚡ Entrar como Demonstração (1 Clique)
+          </button>
+        </form>
+
+        <!-- Formulário de Cadastro -->
+        <form id="formRegister" class="auth-form" style="display: none;">
+          <div class="auth-field">
+            <label class="auth-label" for="regName">Nome Completo</label>
+            <input type="text" id="regName" class="auth-input" placeholder="Ex: Carlos Silva" autocomplete="name">
+          </div>
+          <div class="auth-field">
+            <label class="auth-label" for="regEmail">E-mail</label>
+            <input type="email" id="regEmail" class="auth-input" placeholder="seuemail@exemplo.com" autocomplete="email">
+          </div>
+          <div class="auth-field">
+            <label class="auth-label" for="regPassword">Senha (mínimo 6 caracteres)</label>
+            <input type="password" id="regPassword" class="auth-input" placeholder="••••••••" autocomplete="new-password">
+          </div>
+          <div class="auth-field">
+            <label class="auth-label" for="regTelefone">WhatsApp / Telefone (Opcional)</label>
+            <input type="tel" id="regTelefone" class="auth-input" placeholder="(11) 98765-4321" autocomplete="tel">
+          </div>
+          <button type="submit" class="btn-auth-submit" id="btnSubmitRegister">
+            Criar Minha Conta Grátis
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 2: MINHA GARAGEM (VEÍCULOS SALVOS)
+       ======================================================== -->
+  <div id="modalGaragem" class="feature-modal-overlay">
+    <div class="feature-modal-card">
+      <div class="feature-modal-header">
+        <h3>
+          <span>🚘</span> Minha Garagem
+        </h3>
+        <button type="button" class="btn-drawer-close" id="btnCloseGaragemModal">✕</button>
+      </div>
+      <div class="feature-modal-body">
+        
+        <p style="font-size: 0.78125rem; color: #475569; margin: 0;">
+          Acesse suas placas salvas com agilidade para verificar cobranças e quitar pedágios com 1 clique.
+        </p>
+
+        <!-- Lista de Veículos Salvos -->
+        <div id="garageList" class="garage-list">
+          <div class="empty-state">
+            <span class="empty-state-icon">🚗</span>
+            <strong style="color: var(--dark); font-size: 0.875rem;">Nenhum veículo salvo ainda</strong>
+            <small>Adicione sua placa abaixo para consultar débitos com 1 clique.</small>
+          </div>
+        </div>
+
+        <!-- Formulário para Adicionar Veículo -->
+        <div class="add-vehicle-panel">
+          <h4 style="font-size: 0.8125rem; font-weight: 800; color: #1e293b; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+            <span>➕</span> Adicionar Veículo à Garagem
+          </h4>
+          <form id="formAddVehicle" style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div>
+                <label class="auth-label" for="inputGaragemPlaca">Placa</label>
+                <input type="text" id="inputGaragemPlaca" class="auth-input" placeholder="ABC1D23" maxlength="8" style="text-transform: uppercase; font-weight: 700;">
+              </div>
+              <div>
+                <label class="auth-label" for="inputGaragemApelido">Apelido (ex: SUV)</label>
+                <input type="text" id="inputGaragemApelido" class="auth-input" placeholder="Carro Viagem">
+              </div>
+            </div>
+            <div>
+              <label class="auth-label" for="inputGaragemModelo">Modelo (Opcional)</label>
+              <input type="text" id="inputGaragemModelo" class="auth-input" placeholder="Ex: Jeep Compass, Corolla...">
+            </div>
+            <button type="submit" class="btn-primary" style="padding: 10px; font-size: 0.8125rem; margin-top: 4px;">
+              Salvar Veículo na Garagem
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 3: HISTÓRICO DE COMPROVANTES
+       ======================================================== -->
+  <div id="modalHistorico" class="feature-modal-overlay">
+    <div class="feature-modal-card">
+      <div class="feature-modal-header">
+        <h3>
+          <span>📜</span> Histórico de Comprovantes
+        </h3>
+        <button type="button" class="btn-drawer-close" id="btnCloseHistoricoModal">✕</button>
+      </div>
+      <div class="feature-modal-body">
+        
+        <p style="font-size: 0.78125rem; color: #475569; margin: 0;">
+          Comprovantes oficiais de quitação de pedágios Free Flow emitidos pelo Estradapay.
+        </p>
+
+        <div id="historyList" class="history-list">
+          <div class="empty-state">
+            <span class="empty-state-icon">📄</span>
+            <strong style="color: var(--dark); font-size: 0.875rem;">Nenhum comprovante emitido ainda</strong>
+            <small>Assim que você pagar um pedágio via Pix, seu recibo oficial ficará registrado aqui.</small>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 4: ALERTAS DE PEDÁGIO (WHATSAPP / EMAIL)
+       ======================================================== -->
+  <div id="modalAlertas" class="feature-modal-overlay">
+    <div class="feature-modal-card">
+      <div class="feature-modal-header">
+        <h3>
+          <span>🔔</span> Alertas de Pedágio
+        </h3>
+        <button type="button" class="btn-drawer-close" id="btnCloseAlertasModal">✕</button>
+      </div>
+      <div class="feature-modal-body">
+        
+        <div class="alert-box">
+          <p class="alert-intro">
+            Evite a multa de <strong>R$ 195,23</strong> e <strong>5 pontos na CNH</strong> (Art. 209-A do CTB). Cadastre seu WhatsApp e receba lembretes automáticos antes do prazo legal de 30 dias expirar!
+          </p>
+
+          <form id="formAlertas" style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="auth-field">
+              <label class="auth-label" for="alertWhatsapp">WhatsApp para Notificações</label>
+              <input type="tel" id="alertWhatsapp" class="auth-input" placeholder="(11) 98765-4321">
+            </div>
+            <div class="auth-field">
+              <label class="auth-label" for="alertEmail">E-mail para Aviso</label>
+              <input type="email" id="alertEmail" class="auth-input" placeholder="seuemail@exemplo.com">
+            </div>
+            <div class="auth-field">
+              <label class="auth-label" for="alertDias">Avisar com antecedência de:</label>
+              <select id="alertDias" class="auth-input">
+                <option value="5" selected>5 dias antes do prazo de 30 dias</option>
+                <option value="10">10 dias antes do vencimento</option>
+                <option value="3">3 dias antes (Urgente)</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-primary" style="padding: 11px; font-size: 0.85rem; margin-top: 6px;">
+              Salvar Preferências de Alertas
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 5: ONDE TEM FREE FLOW? (MAPA E RODOVIAS)
+       ======================================================== -->
+  <div id="modalFreeFlow" class="feature-modal-overlay">
+    <div class="feature-modal-card">
+      <div class="feature-modal-header">
+        <h3>
+          <span>🗺️</span> Onde tem Free Flow no Brasil?
+        </h3>
+        <button type="button" class="btn-drawer-close" id="btnCloseFreeFlowModal">✕</button>
+      </div>
+      <div class="feature-modal-body">
+        
+        <p style="font-size: 0.78125rem; color: #475569; margin: 0;">
+          O pedágio sem cancela já opera em importantes rodovias brasileiras. Conheça os locais e consulte sua placa:
+        </p>
+
+        <div class="freeflow-list">
+          
+          <!-- Rodovia 1 -->
+          <div class="freeflow-card">
+            <div class="freeflow-header">
+              <span class="freeflow-road">BR-101 (Rio-Santos)</span>
+              <span class="freeflow-state-badge">RJ / SP</span>
+            </div>
+            <span class="freeflow-concessionaria">Concessionária CCR RioSP</span>
+            <div class="freeflow-locations">
+              📍 Pórticos em operação: <strong>Paraty (Km 538)</strong>, <strong>Mangaratiba (Km 447)</strong> e <strong>Itaguaí (Km 414)</strong>.
+            </div>
+          </div>
+
+          <!-- Rodovia 2 -->
+          <div class="freeflow-card">
+            <div class="freeflow-header">
+              <span class="freeflow-road">SP-055 / Cônego Domênico Rangoni</span>
+              <span class="freeflow-state-badge">SP</span>
+            </div>
+            <span class="freeflow-concessionaria">Ecovias do Litoral Paulista</span>
+            <div class="freeflow-locations">
+              📍 Pórticos em operação no litoral paulista: <strong>Cubatão (Km 262)</strong>, <strong>Praia Grande</strong> e <strong>São Vicente</strong>.
+            </div>
+          </div>
+
+          <!-- Rodovia 3 -->
+          <div class="freeflow-card">
+            <div class="freeflow-header">
+              <span class="freeflow-road">ERS-122, ERS-240 e ERS-446</span>
+              <span class="freeflow-state-badge">RS</span>
+            </div>
+            <span class="freeflow-concessionaria">CSG (Caminhos da Serra Gaúcha)</span>
+            <div class="freeflow-locations">
+              📍 Pórticos em operação: <strong>Portão (Km 22)</strong>, <strong>Flores da Cunha (Km 99)</strong>, <strong>Antônio Prado</strong>, <strong>Ipê</strong> e <strong>Carlos Barbosa</strong>.
+            </div>
+          </div>
+
+          <!-- Rodovia 4 -->
+          <div class="freeflow-card">
+            <div class="freeflow-header">
+              <span class="freeflow-road">SP-310 (Rodovia Washington Luís)</span>
+              <span class="freeflow-state-badge">SP</span>
+            </div>
+            <span class="freeflow-concessionaria">EcoNoroeste</span>
+            <div class="freeflow-locations">
+              📍 Pórticos em operação no interior de SP: <strong>Itápolis</strong> e <strong>Jaboticabal</strong>.
+            </div>
+          </div>
+
+        </div>
+
+        <button type="button" class="btn-primary" id="btnFreeFlowConsultar" style="padding: 12px; font-size: 0.875rem;">
+          🔍 Consultar Minha Placa Agora
+        </button>
+
       </div>
     </div>
   </div>

@@ -9,6 +9,7 @@ import {join} from 'node:path';
 
 import cors from 'cors';
 import apiRoutes from './routes/api.js';
+import authRoutes from './routes/auth.js';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 const publicFolder = join(process.cwd(), 'public');
@@ -20,8 +21,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Montar rotas da API Estradapay
+// Montar rotas da API Estradapay e Autenticação
 app.use('/api/v1', apiRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/v1/auth', authRoutes);
 
 // Servir arquivos estáticos do public (manifest, icons, sw, etc.)
 app.use(express.static(publicFolder));
