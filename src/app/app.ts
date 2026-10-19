@@ -21,22 +21,14 @@ export interface DebitoPedagioItem {
   status: 'PENDENTE' | 'PAGO';
 }
 
-export interface OpcaoParcelaItem {
-  numero: number;
-  valorParcela: number;
-  valorTotalComJuros: number;
-  descricao: string;
-}
-
 export interface CobrancaPixResposta {
   success: boolean;
   txid: string;
   placa: string;
-  formaDePagamento?: 'pix' | 'credito' | 'debito';
+  formaDePagamento?: 'pix';
   passagensIds?: string[];
   pixCopiaECola?: string | null;
   qrCodeBase64?: string | null;
-  opcoesParcelamento?: OpcaoParcelaItem[] | null;
   valorTotal: number;
   resumo: {
     passagensQuantidade: number;
@@ -379,14 +371,14 @@ export class App {
     });
   }
 
-  private confirmarSucesso(protocolo?: string, autenticacao?: string) {
+  private confirmarSucesso(protocolo?: string, autenticacao?: string, forma?: string) {
     if (this.timerInterval) clearInterval(this.timerInterval);
     if (this.pollInterval) clearInterval(this.pollInterval);
 
     const cobranca = this.cobrancaAtiva();
     this.dadosComprovante.set({
       placa: cobranca?.placa || this.placaPesquisada(),
-      formaPagamento: 'PIX Instantâneo',
+      formaPagamento: forma || 'PIX Instantâneo',
       valorTotal: cobranca?.valorTotal || this.totalGeral(),
       protocolo: protocolo || `PROT-${Math.floor(100000 + Math.random() * 900000)}`,
       autenticacao: autenticacao || `AUT-${Math.random().toString(36).substring(2, 9).toUpperCase()}`,

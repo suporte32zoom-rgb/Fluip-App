@@ -4,8 +4,8 @@
  * Ilustração Dinâmica do Veículo em Tempo Real
  * Aceite Legal e Conformidade LGPD
  * Seção de FAQ Acordeão e Modais Institucionais
- * Múltiplas Formas de Pagamento (PIX, Cartão de Crédito e Débito)
- * Taxa Estradapay Proporcional: 10% sobre o total dos pedágios (mínimo de R$ 0,90)
+ * Pagamento Exclusivo via PIX Instantâneo (QR Code e Copia e Cola)
+ * Taxa Estradapay Fixa: R$ 1,00 por transação unificada
  */
 
 (function () {
