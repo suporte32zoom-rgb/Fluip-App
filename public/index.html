@@ -930,64 +930,52 @@
       <div class="feature-modal-body">
         
         <p style="font-size: 0.78125rem; color: #475569; margin: 0;">
-          O pedágio sem cancela já opera em importantes rodovias brasileiras. Conheça os locais e consulte sua placa:
+          O pedágio 100% automático sem cancelas (Lei nº 14.157/2021) já opera em rodovias federais e estaduais. Filtre por Estado ou pesquise pela rodovia:
         </p>
 
-        <div class="freeflow-list">
-          
-          <!-- Rodovia 1 -->
-          <div class="freeflow-card">
-            <div class="freeflow-header">
-              <span class="freeflow-road">BR-101 (Rio-Santos)</span>
-              <span class="freeflow-state-badge">RJ / SP</span>
-            </div>
-            <span class="freeflow-concessionaria">Concessionária CCR RioSP</span>
-            <div class="freeflow-locations">
-              📍 Pórticos em operação: <strong>Paraty (Km 538)</strong>, <strong>Mangaratiba (Km 447)</strong> e <strong>Itaguaí (Km 414)</strong>.
-            </div>
+        <!-- Filtros do Portal Free Flow -->
+        <div class="freeflow-filter-section">
+          <div class="freeflow-search-wrapper">
+            <span class="freeflow-search-icon">🔍</span>
+            <input
+              type="text"
+              id="freeflowSearchInput"
+              class="freeflow-search-input"
+              placeholder="Buscar por rodovia, município ou concessionária..."
+              autocomplete="off"
+            />
           </div>
 
-          <!-- Rodovia 2 -->
-          <div class="freeflow-card">
-            <div class="freeflow-header">
-              <span class="freeflow-road">SP-055 / Cônego Domênico Rangoni</span>
-              <span class="freeflow-state-badge">SP</span>
-            </div>
-            <span class="freeflow-concessionaria">Ecovias do Litoral Paulista</span>
-            <div class="freeflow-locations">
-              📍 Pórticos em operação no litoral paulista: <strong>Cubatão (Km 262)</strong>, <strong>Praia Grande</strong> e <strong>São Vicente</strong>.
-            </div>
+          <div class="freeflow-chips-row" id="freeflowChipsRow">
+            <button type="button" class="freeflow-chip active" data-uf="TODOS">🌐 Todos os Estados</button>
+            <button type="button" class="freeflow-chip" data-uf="SP">SP (São Paulo)</button>
+            <button type="button" class="freeflow-chip" data-uf="RJ">RJ (Rio de Janeiro)</button>
+            <button type="button" class="freeflow-chip" data-uf="RS">RS (Rio Grande do Sul)</button>
+            <button type="button" class="freeflow-chip" data-uf="MG">MG (Minas Gerais)</button>
           </div>
 
-          <!-- Rodovia 3 -->
-          <div class="freeflow-card">
-            <div class="freeflow-header">
-              <span class="freeflow-road">ERS-122, ERS-240 e ERS-446</span>
-              <span class="freeflow-state-badge">RS</span>
-            </div>
-            <span class="freeflow-concessionaria">CSG (Caminhos da Serra Gaúcha)</span>
-            <div class="freeflow-locations">
-              📍 Pórticos em operação: <strong>Portão (Km 22)</strong>, <strong>Flores da Cunha (Km 99)</strong>, <strong>Antônio Prado</strong>, <strong>Ipê</strong> e <strong>Carlos Barbosa</strong>.
-            </div>
+          <div class="freeflow-count-notice">
+            <span id="freeflowCountNotice">Carregando pórticos em operação...</span>
+            <span style="font-size: 0.6875rem; color: #059669; font-weight: 700;">🟢 Prazos oficiais</span>
           </div>
-
-          <!-- Rodovia 4 -->
-          <div class="freeflow-card">
-            <div class="freeflow-header">
-              <span class="freeflow-road">SP-310 (Rodovia Washington Luís)</span>
-              <span class="freeflow-state-badge">SP</span>
-            </div>
-            <span class="freeflow-concessionaria">EcoNoroeste</span>
-            <div class="freeflow-locations">
-              📍 Pórticos em operação no interior de SP: <strong>Itápolis</strong> e <strong>Jaboticabal</strong>.
-            </div>
-          </div>
-
         </div>
 
-        <button type="button" class="btn-primary" id="btnFreeFlowConsultar" style="padding: 12px; font-size: 0.875rem;">
-          🔍 Consultar Minha Placa Agora
+        <!-- Lista dinâmica de pórticos -->
+        <div id="freeflowContainer" class="freeflow-list" aria-live="polite">
+          <div class="empty-state">
+            <div class="spinner" style="width: 24px; height: 24px; border-width: 2px;"></div>
+            <span>Consultando base oficial de pórticos...</span>
+          </div>
+        </div>
+
+        <button type="button" class="btn-primary" id="btnFreeFlowConsultar" style="padding: 12px; font-size: 0.875rem; margin-top: 4px;">
+          🚗 Consultar Minha Placa Agora
         </button>
+
+        <!-- Nota de Rodapé Oficial Sem Parar / CC BY 4.0 Obrigatória -->
+        <div class="freeflow-modal-footer-note">
+          ℹ️ Fonte dos dados geográficos de pórticos: Base Aberta Sem Parar / CC BY 4.0
+        </div>
 
       </div>
     </div>

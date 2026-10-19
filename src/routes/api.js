@@ -1,8 +1,58 @@
 import { Router } from 'express';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import pedagioService from '../services/pedagioService.js';
 import pagamentoService from '../services/pagamentoService.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const porticosFilePath = path.join(__dirname, '../data/freeflowPorticos.json');
+
 const router = Router();
+
+/**
+ * GET /api/v1/porticos
+ * Retorna os pórticos e rodovias Free Flow cadastrados (Base Aberta Sem Parar / CC BY 4.0)
+ * Suporta filtros por estado (?uf=RJ) e busca por texto (?q=...)
+ */
+router.get('/porticos', (req, res) => {
+  try {
+    const rawData = fs.readFileSync(porticosFilePath, 'utf-8');
+    const data = JSON.parse(rawData);
+
+    const { uf, q } = req.query;
+    let filtrados = data.porticos || [];
+
+    if (uf && uf !== 'TODOS') {
+      const ufUpper = String(uf).toUpperCase().trim();
+      filtrados = filtrados.filter((p) => p.uf.toUpperCase() === ufUpper);
+    }
+
+    if (q) {
+      const qLower = String(q).toLowerCase().trim();
+      filtrados = filtrados.filter((p) =>
+        p.rodovia.toLowerCase().includes(qLower) ||
+        p.concessionaria.toLowerCase().includes(qLower) ||
+        p.municipio.toLowerCase().includes(qLower) ||
+        p.km.toLowerCase().includes(qLower)
+      );
+    }
+
+    return res.status(200).json({
+      success: true,
+      metadados: data.metadados,
+      total: filtrados.length,
+      porticos: filtrados,
+    });
+  } catch (error) {
+    console.error('[API /porticos] Erro ao carregar dados:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Erro ao carregar base de pórticos Free Flow.',
+    });
+  }
+});
 
 // Obter parâmetros da taxa de administração/conveniência proporcional
 // Taxa Estradapay fixa: R$ 1,00 por transação unificada (independente do valor ou quantidade)

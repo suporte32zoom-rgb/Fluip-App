@@ -31,6 +31,12 @@
     garagem: [],
     historico: [],
     alertas: { whatsapp: '', email: '', ativo: true, avisarComDias: 5 },
+
+    // Módulo Base Aberta Free Flow (Sem Parar / CC BY 4.0)
+    porticosFreeFlow: [],
+    porticosUfFiltro: 'TODOS',
+    porticosBusca: '',
+    porticosCarregados: false,
   };
 
   const dom = {
@@ -121,10 +127,14 @@
     alertEmail: document.getElementById('alertEmail'),
     alertDias: document.getElementById('alertDias'),
 
-    // Modal 5: Onde tem Free Flow?
+    // Modal 5: Onde tem Free Flow? (Base Aberta Sem Parar / CC BY 4.0)
     modalFreeFlow: document.getElementById('modalFreeFlow'),
     btnCloseFreeFlowModal: document.getElementById('btnCloseFreeFlowModal'),
     btnFreeFlowConsultar: document.getElementById('btnFreeFlowConsultar'),
+    freeflowSearchInput: document.getElementById('freeflowSearchInput'),
+    freeflowChipsRow: document.getElementById('freeflowChipsRow'),
+    freeflowCountNotice: document.getElementById('freeflowCountNotice'),
+    freeflowContainer: document.getElementById('freeflowContainer'),
 
     // Aceite Legal e LGPD
     checkLegalTermos: document.getElementById('checkLegalTermos'),
