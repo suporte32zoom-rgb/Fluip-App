@@ -26,6 +26,21 @@ app.use('/api/v1', apiRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/v1/auth', authRoutes);
 
+// Servir Service Worker e Manifest sem cache HTTP no navegador (essencial para deploys instantâneos)
+app.get('/sw.js', (req, res) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  res.setHeader('Content-Type', 'application/javascript');
+  res.sendFile(join(publicFolder, 'sw.js'));
+});
+
+app.get('/manifest.json', (req, res) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+  res.setHeader('Content-Type', 'application/manifest+json');
+  res.sendFile(join(publicFolder, 'manifest.json'));
+});
+
 // Servir arquivos estáticos do public (manifest, icons, sw, etc.)
 app.use(express.static(publicFolder));
 

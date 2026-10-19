@@ -145,6 +145,18 @@ export class App {
         e.preventDefault();
         this.pwaInstallEvent.set(e);
       });
+
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').then((reg) => {
+            reg.update().catch((err) => {
+              console.warn('SW update check:', err);
+            });
+          }).catch((err) => {
+            console.warn('SW register check:', err);
+          });
+        });
+      }
     }
   }
 

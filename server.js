@@ -20,6 +20,21 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Servir Service Worker e Manifest sem cache HTTP no navegador (essencial para deploys instantâneos)
+app.get('/sw.js', (req, res) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  res.setHeader('Content-Type', 'application/javascript');
+  res.sendFile(path.join(publicDir, 'sw.js'));
+});
+
+app.get('/manifest.json', (req, res) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+  res.setHeader('Content-Type', 'application/manifest+json');
+  res.sendFile(path.join(publicDir, 'manifest.json'));
+});
+
 // Servidor de arquivos estáticos da pasta /public (Frontend PWA)
 const publicDir = path.join(__dirname, 'public');
 app.use(express.static(publicDir));

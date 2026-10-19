@@ -79,6 +79,7 @@
     navItemAuth: document.getElementById('navItemAuth'),
     navItemAuthTitle: document.getElementById('navItemAuthTitle'),
     navItemTermos: document.getElementById('navItemTermos'),
+    navItemUpdateApp: document.getElementById('navItemUpdateApp'),
     navItemSuporte: document.getElementById('navItemSuporte'),
 
     // Modal 1: Autenticação
@@ -211,15 +212,101 @@
     atualizarConsentimento();
   }
 
+  /**
+   * Registro do Service Worker com Rotina de Auto-Update Instantâneo
+   * Detecta novos deploys via GitHub/Hostinger e atualiza sem prender caches antigos
+   */
   function registerServiceWorker() {
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker
-          .register('/sw.js')
-          .then((reg) => console.log('[Estradapay PWA] Service Worker ativo:', reg.scope))
-          .catch((err) => console.warn('[Estradapay PWA] Erro ao registrar SW:', err));
-      });
-    }
+    if (!('serviceWorker' in navigator)) return;
+
+    let refreshing = false;
+
+    // Quando um novo Service Worker assume o controle (após skipWaiting),
+    // recarrega a página automaticamente para o usuário ver os novos assets imediatamente!
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (refreshing) return;
+      refreshing = true;
+      console.log('[Estradapay PWA] Nova versão assumiu o controle. Recarregando aplicativo...');
+      showToast('🚀 Nova versão detectada! Atualizando aplicativo...');
+      setTimeout(() => {
+        window.location.reload();
+      }, 700);
+    });
+
+    // Ouvir mensagens enviadas pelo Service Worker (ex: SW_ACTIVATED)
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'SW_ACTIVATED') {
+        console.log('[Estradapay PWA] Service Worker ativado na versão:', event.data.version);
+        if (!refreshing && event.data.version) {
+          // Se for nova ativação e a página não foi recarregada
+          const lastVersion = localStorage.getItem('estradapay_sw_version');
+          if (lastVersion && lastVersion !== event.data.version) {
+            refreshing = true;
+            localStorage.setItem('estradapay_sw_version', event.data.version);
+            showToast('Aplicativo atualizado com sucesso!');
+            setTimeout(() => window.location.reload(), 500);
+          } else {
+            localStorage.setItem('estradapay_sw_version', event.data.version);
+          }
+        }
+      }
+    });
+
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then((registration) => {
+          console.log('[Estradapay PWA] Service Worker registrado com sucesso:', registration.scope);
+
+          // Armazenar a referência no estado para uso posterior
+          state.swRegistration = registration;
+
+          // Forçar verificação de nova versão imediatamente após o carregamento
+          registration.update().catch(() => {});
+
+          // Se já houver um worker em espera (waiting), força ativação imediata
+          if (registration.waiting) {
+            console.log('[Estradapay PWA] Worker em espera encontrado. Enviando SKIP_WAITING...');
+            registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+          }
+
+          // Monitorar quando um novo Service Worker for detectado pelo navegador
+          registration.addEventListener('updatefound', () => {
+            const installingWorker = registration.installing;
+            if (!installingWorker) return;
+
+            console.log('[Estradapay PWA] Novo Service Worker sendo baixado...');
+
+            installingWorker.addEventListener('statechange', () => {
+              if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                console.log('[Estradapay PWA] Nova versão instalada. Acionando ativação...');
+                installingWorker.postMessage({ type: 'SKIP_WAITING' });
+              }
+            });
+          });
+
+          // Rotina periódica: checar se há novo deploy a cada 45 segundos
+          setInterval(() => {
+            if (navigator.onLine) {
+              registration.update().catch(() => {});
+            }
+          }, 45000);
+
+          // Checar também assim que o usuário retornar ao app / aba
+          document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible' && navigator.onLine) {
+              registration.update().catch(() => {});
+            }
+          });
+
+          window.addEventListener('focus', () => {
+            if (navigator.onLine) {
+              registration.update().catch(() => {});
+            }
+          });
+        })
+        .catch((err) => console.warn('[Estradapay PWA] Erro ao registrar SW:', err));
+    });
   }
 
   function setupPwaInstall() {
@@ -1101,6 +1188,13 @@
       });
     }
 
+    if (dom.navItemUpdateApp) {
+      dom.navItemUpdateApp.addEventListener('click', () => {
+        closeDrawer();
+        forcarAtualizacaoPwa();
+      });
+    }
+
     // Botões de fechar modais específicos
     if (dom.btnCloseAuthModal) dom.btnCloseAuthModal.addEventListener('click', () => closeModal(dom.modalAuth));
     if (dom.btnCloseGaragemModal) dom.btnCloseGaragemModal.addEventListener('click', () => closeModal(dom.modalGaragem));
@@ -1692,6 +1786,43 @@
       });
     }
   }
+
+  /* ========================================================
+     ROTINA MANUAL / AUTOMÁTICA DE ATUALIZAÇÃO E LIMPEZA
+     ======================================================== */
+  async function forcarAtualizacaoPwa() {
+    showToast('Buscando atualizações e limpando caches...');
+    try {
+      // 1. Limpar caches do navegador
+      if ('caches' in window) {
+        const cacheKeys = await caches.keys();
+        await Promise.all(cacheKeys.map((k) => caches.delete(k)));
+        console.log('[Estradapay PWA] Todos os caches locais foram limpos.');
+      }
+
+      // 2. Avisar o Service Worker para expirar e buscar novo bundle
+      if (navigator.serviceWorker) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        for (const reg of regs) {
+          if (reg.active) {
+            reg.active.postMessage({ type: 'CLEAR_ALL_CACHES' });
+          }
+          await reg.update().catch(() => {});
+        }
+      }
+
+      showToast('Aplicativo atualizado com sucesso! Recarregando...');
+      setTimeout(() => {
+        window.location.reload();
+      }, 600);
+    } catch (err) {
+      console.warn('Erro ao forçar atualização:', err);
+      window.location.reload();
+    }
+  }
+
+  // Expor no window para debug e chamadas externas se necessário
+  window.forcarAtualizacaoPwa = forcarAtualizacaoPwa;
 
   function showToast(msg) {
     dom.toast.textContent = msg;
