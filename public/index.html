@@ -296,6 +296,354 @@
       </ul>
     </section>
 
+    <!-- SEÇÃO 📚 GUIA NACIONAL DE FREE FLOW E RODOVIAS -->
+    <section class="guia-section" id="guiaSection">
+      <div class="guia-header">
+        <div class="guia-title-row">
+          <span style="font-size: 1.25rem;">📚</span>
+          <h2 class="guia-title">Guia Nacional de Free Flow e Rodovias</h2>
+        </div>
+        <span class="guia-legal-badge">Lei Federal nº 14.157/2021 • Art. 209-A do CTB</span>
+        <p class="guia-desc">
+          Entenda o funcionamento da cobrança eletrônica sem cancelas, conheça as regras operacionais de cada concessionária, confira os pórticos ativos e aprenda a evitar autuações por evasão de pedágio.
+        </p>
+
+        <!-- Filtro Rápido do Guia -->
+        <div class="guia-filter-wrapper">
+          <div class="guia-search-box">
+            <span class="guia-search-icon">🔍</span>
+            <input
+              type="text"
+              id="guiaSearchInput"
+              class="guia-search-input"
+              placeholder="Buscar rodovia, cidade ou concessionária no guia..."
+              autocomplete="off"
+            />
+          </div>
+          <div class="guia-chips-bar" id="guiaChipsBar">
+            <button type="button" class="guia-chip active" data-filter="TODAS">🌐 Todas as Rodovias</button>
+            <button type="button" class="guia-chip" data-filter="DUTRA">SP • Via Dutra</button>
+            <button type="button" class="guia-chip" data-filter="RIOSANTOS">RJ • Rio-Santos</button>
+            <button type="button" class="guia-chip" data-filter="TAMOIOS">SP • Tamoios</button>
+            <button type="button" class="guia-chip" data-filter="CSG">RS • Serra Gaúcha</button>
+            <button type="button" class="guia-chip" data-filter="ECONOROESTE">SP • EcoNoroeste</button>
+            <button type="button" class="guia-chip" data-filter="FUTURAS">Projeções Futuras</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sanfona / Cards Expansíveis de Rodovias -->
+      <div class="guia-accordion" id="guiaAccordion">
+        
+        <!-- Rodovia 1: SP / Dutra BR-116 -->
+        <div class="guia-item active" data-tags="DUTRA SP BR-116 CCR RIOSP SÃO PAULO GUARULHOS ARUJÁ">
+          <button type="button" class="guia-trigger">
+            <div class="guia-trigger-left">
+              <span class="guia-road-title">
+                <span class="guia-tag-state">SP</span>
+                Via Dutra (BR-116) • Trecho Metropolitano
+                <span class="guia-tag-status active">🟢 Ativo</span>
+              </span>
+              <span class="guia-conc-sub">Concessionária CCR RioSP • Km 204 ao 231 (São Paulo, Guarulhos, Arujá)</span>
+            </div>
+            <span class="guia-arrow">▼</span>
+          </button>
+          <div class="guia-content">
+            <p style="margin: 0 0 8px 0;">
+              O trecho metropolitano da Via Dutra conta com <strong>21 pontos de cobrança eletrônica Free Flow</strong> distribuídos estrategicamente entre pistas expressas e marginais na chegada à capital paulista, interligando a Marginal Tietê, Fernão Dias e o Rodoanel Leste.
+            </p>
+            <div class="guia-meta-block">
+              <div class="guia-meta-col">
+                <span class="guia-meta-title">Tarifa Passeio</span>
+                <span class="guia-meta-value highlight">R$ 4,10 (Metropolitano)</span>
+              </div>
+              <div class="guia-meta-col">
+                <span class="guia-meta-title">Prazo de Quitação</span>
+                <span class="guia-meta-value">30 dias corridos</span>
+              </div>
+              <div class="guia-meta-col">
+                <span class="guia-meta-title">Motocicletas</span>
+                <span class="guia-meta-value">Isentas neste trecho</span>
+              </div>
+            </div>
+            <div class="guia-rule-box">
+              💡 <strong>Regra por Km:</strong> A cobrança é proporcional ao segmento percorrido. Quem utiliza apenas trechos curtos entre bairros de Guarulhos e Arujá paga tarifa reduzida; cruzamentos de tráfego de longa distância pagam o valor integral do pórtico.
+            </div>
+          </div>
+        </div>
+
+        <!-- Rodovia 2: SP / Tamoios SP-099 -->
+        <div class="guia-item" data-tags="TAMOIOS SP SP-099 CARAGUATATUBA SÃO SEBASTIÃO CONTORNO">
+          <button type="button" class="guia-trigger">
+            <div class="guia-trigger-left">
+              <span class="guia-road-title">
+                <span class="guia-tag-state">SP</span>
+                Rodovia dos Tamoios (SP-099) • Contorno Sul
+                <span class="guia-tag-status active">🟢 Ativo</span>
+              </span>
+              <span class="guia-conc-sub">Concessionária Tamoios • Km 13+500 (Caraguatatuba / São Sebastião)</span>
+            </div>
+            <span class="guia-arrow">▼</span>
+          </button>
+          <div class="guia-content">
+            <p style="margin: 0 0 8px 0;">
+              O novo Contorno Sul da Tamoios conecta Caraguatatuba ao Porto de São Sebastião e ao terminal de balsas de Ilhabela. O sistema opera 100% sem cancelas nos dois sentidos de tráfego.
+            </p>
+            <div class="guia-meta-block">
+              <div class="guia-meta-col">
+                <span class="guia-meta-title">Tarifa Passeio</span>
+                <span class="guia-meta-value highlight">R$ 5,20</span>
+              </div>
+              <div class="guia-meta-col">
+                <span class="guia-meta-title">Motocicletas</span>
+                <span class="guia-meta-value">R$ 2,60 (Tarifadas)</span>
+              </div>
+              <div class="guia-meta-col">
+                <span class="guia-meta-title">Ponto Tarifário</span>
+                <span class="guia-meta-value">Km 13+500 (Bidirecional)</span>
+              </div>
+            </div>
+            <div class="guia-rule-box">
+              💡 <strong>Dica Prática:</strong> As praças do planalto (Jambeiro e Paraibuna) continuam com cabines convencionais. O Free Flow é exclusivo no Contorno Sul da Serra do Mar.
+            </div>
+          </div>
+        </div>
+
+        <!-- Rodovia 3: RJ / Rio-Santos BR-101 -->
+        <div class="guia-item" data-tags="RIOSANTOS RJ BR-101 CCR RIOSP PARATY MANGARATIBA ITAGUAÍ COSTA VERDE">
+          <button type="button" class="guia-trigger">
+            <div class="guia-trigger-left">
+              <span class="guia-road-title">
+                <span class="guia-tag-state" style="background: #0284c7;">RJ</span>
+                Rio-Santos (BR-101) • Costa Verde Fluminense
+                <span class="guia-tag-status active">🟢 Ativo</span>
+              </span>
+              <span class="guia-conc-sub">Concessionária CCR RioSP • Paraty (Km 538,5), Mangaratiba (Km 447,3) e Itaguaí (Km 414,9)</span>
+            </div>
+            <span class="guia-arrow">▼</span>
+          </button>
+          <div class="guia-content">
+            <p style="margin: 0 0 8px 0;">
+              Primeiro pedágio Free Flow do Brasil, em operação contínua desde março de 2023. Três pórticos fixos cobrem toda a extensão litorânea entre a divisa com SP e a Baixada Fluminense.
+            </p>
+            <div class="guia-meta-block">
+              <div class="guia-meta-col">
+                <span class="guia-meta-title">Tarifa Passeio</span>
+                <span class="guia-meta-value highlight">R$ 4,80 por pórtico</span>
+              </div>
+              <div class="guia-meta-col">
+                <span class="guia-meta-title">Pórticos Ativos</span>
+                <span class="guia-meta-value">3 estruturas de leitura</span>
+              </div>
+              <div class="guia-meta-col">
+                <span class="guia-meta-title">Motos / Bicicletas</span>
+                <span class="guia-meta-value">Isentas de tarifa</span>
+              </div>
+            </div>
+            <div class="guia-rule-box">
+              💡 <strong>Regra de Passagem:</strong> Cada pórtico é independente. Se o motorista passar pelos três (Itaguaí, Mangaratiba e Paraty), pagará 3x R$ 4,80 = R$ 14,40, unificados no Estradapay com uma única taxa de conveniência de R$ 1,00.
+            </div>
+          </div>
+        </div>
+
+        <!-- Rodovia 4: RS / Caminhos da Serra Gaúcha (CSG) -->
+        <div class="guia-item" data-tags="CSG RS ERS-122 ERS-446 ERS-240 FLORES DA CUNHA ANTÔNIO PRADO IPÊ PORTÃO CARLOS BARBOSA">
+          <button type="button" class="guia-trigger">
+            <div class="guia-trigger-left">
+              <span class="guia-road-title">
+                <span class="guia-tag-state" style="background: #15803d;">RS</span>
+                Caminhos da Serra Gaúcha (CSG) • ERS-122, ERS-446 e ERS-240
+                <span class="guia-tag-status active">🟢 Ativo</span>
+              </span>
+              <span class="guia-conc-sub">Concessionária CSG • 6 pórticos em operação na Serra Gaúcha e Vale do Caí</span>
+            </div>
+            <span class="guia-arrow">▼</span>
+          </button>
+          <div class="guia-content">
+            <p style="margin: 0 0 8px 0;">
+              Maior rede rodoviária 100% eletrônica do sul do país. Todas as praças com cancelas do Bloco 3 foram substituídas por pórticos inteligentes de leitura automática.
+            </p>
+            <div class="guia-meta-block">
+              <div class="guia-meta-col">
+                <span class="guia-meta-title">Tarifa Passeio</span>
+                <span class="guia-meta-value highlight">R$ 8,60 a R$ 10,70</span>
+              </div>
+              <div class="guia-meta-col">
+                <span class="guia-meta-title">Localidades</span>
+                <span class="guia-meta-value">Flores da Cunha, Antônio Prado, Ipê, Portão, Carlos Barbosa</span>
+              </div>
+              <div class="guia-meta-col">
+                <span class="guia-meta-title">Prazo Quitação</span>
+                <span class="guia-meta-value">30 dias corridos</span>
+              </div>
+            </div>
+            <div class="guia-rule-box">
+              💡 <strong>Atenção Turistas:</strong> Visitantes de Gramado, Canela, Bento Gonçalves e Caxias do Sul frequentemente passam por múltiplos pórticos da ERS-122 sem perceber. Faça a consulta da sua placa para evitar multas após o retorno de viagem.
+            </div>
+          </div>
+        </div>
+
+        <!-- Rodovia 5: SP / EcoNoroeste SP-333 e SP-326 -->
+        <div class="guia-item" data-tags="ECONOROESTE SP SP-333 SP-326 ITÁPOLIS JABOTICABAL DOBRADA TAIÚVA NOROESTE">
+          <button type="button" class="guia-trigger">
+            <div class="guia-trigger-left">
+              <span class="guia-road-title">
+                <span class="guia-tag-state">SP</span>
+                EcoNoroeste Paulista • SP-333 e SP-326
+                <span class="guia-tag-status active">🟢 Ativo</span>
+              </span>
+              <span class="guia-conc-sub">Ecovias Noroeste Paulista • Itápolis (Km 179) e Jaboticabal (Km 110)</span>
+            </div>
+            <span class="guia-arrow">▼</span>
+          </button>
+          <div class="guia-content">
+            <p style="margin: 0 0 8px 0;">
+              O pórtico de Itápolis (SP-333) foi o primeiro inaugurado no estado de São Paulo, substituindo a antiga praça física. O trecho atende o agronegócio e corredores de alta capacidade entre Araraquara, Ribeirão Preto e Barretos.
+            </p>
+            <div class="guia-meta-block">
+              <div class="guia-meta-col">
+                <span class="guia-meta-title">Tarifa Passeio</span>
+                <span class="guia-meta-value highlight">R$ 8,90 a R$ 11,40</span>
+              </div>
+              <div class="guia-meta-col">
+                <span class="guia-meta-title">Prazo de Quitação</span>
+                <span class="guia-meta-value">30 dias (CONTRAN 989)</span>
+              </div>
+              <div class="guia-meta-col">
+                <span class="guia-meta-title">Desconto Usuário Frequente</span>
+                <span class="guia-meta-value">Aplicável com Tag</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rodovia 6: Projeções Futuras (Imigrantes, Anchieta e Rodoanel Norte) -->
+        <div class="guia-item" data-tags="FUTURAS PROJEÇÕES IMIGRANTES ANCHIETA SP-160 SP-150 RODOANEL SP-021 ECOVIAS VIA APPIA">
+          <button type="button" class="guia-trigger">
+            <div class="guia-trigger-left">
+              <span class="guia-road-title">
+                <span class="guia-tag-state" style="background: #d97706;">FUTURO</span>
+                Projeções Futuras • Sistema Anchieta-Imigrantes e Rodoanel Norte
+                <span class="guia-tag-status future">🟡 Em Implantação</span>
+              </span>
+              <span class="guia-conc-sub">Ecovias dos Imigrantes (SP-160/150) e Via SP Serra (SP-021 Rodoanel)</span>
+            </div>
+            <span class="guia-arrow">▼</span>
+          </button>
+          <div class="guia-content">
+            <p style="margin: 0 0 8px 0;">
+              Pórticos eletrônicos já foram fisicamente instalados no Sistema Anchieta-Imigrantes (Km 29 e Km 38 em São Bernardo do Campo) e no Rodoanel Norte (Km 135 em Guarulhos). Atualmente, as estruturas operam em regime de <strong>monitoramento de fluxo e testes tecnológicos</strong>.
+            </p>
+            <div class="guia-rule-box" style="background: #fffbeb; border-color: #f59e0b; color: #92400e;">
+              ⚠️ <strong>Situação da Cobrança:</strong> As praças com cancelas de Riacho Grande e Piratininga continuam cobrando normalmente. A cobrança exclusivamente por pórtico no Sistema SAI foi adiada pelo Governo de SP e pela ARTESP para conclusão do ponto tarifário definitivo do Pós-Balsa.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- DICAS PRÁTICAS DO BLOG E ALERTA JURÍDICO -->
+      <div class="dicas-grid">
+        <div class="dica-card alert">
+          <div class="dica-card-header">
+            <span>⚠️</span>
+            <span>Como Evitar a Multa do Art. 209-A do CTB</span>
+          </div>
+          <p class="dica-card-text">
+            O não pagamento da tarifa de pedágio Free Flow em até 30 dias após a passagem é considerado <strong>infração grave de trânsito</strong> pelo Código de Trânsito Brasileiro. A penalidade inclui multa no valor de <strong>R$ 195,23</strong> e <strong>5 pontos na Carteira Nacional de Habilitação (CNH)</strong>, além da cobrança judicial da tarifa devida.
+          </p>
+        </div>
+
+        <div class="dica-card">
+          <div class="dica-card-header">
+            <span>⏱️</span>
+            <span>Prazo Legal de Pagamento: 30 Dias Corridos</span>
+          </div>
+          <p class="dica-card-text">
+            A Lei Federal nº 14.157/2021 e a Resolução CONTRAN nº 989/2022 estipulam que o condutor dispõe de exatamente <strong>30 dias corridos</strong> da passagem sob os sensores do pórtico para regularizar o débito. As concessionárias não enviam cartas de cobrança para evitar fraudes, cabendo ao motorista consultar online.
+          </p>
+        </div>
+
+        <div class="dica-card">
+          <div class="dica-card-header">
+            <span>🔔</span>
+            <span>Alertas Automáticos de Pedágio no WhatsApp</span>
+          </div>
+          <p class="dica-card-text">
+            Para não correr o risco de esquecimento, acesse a aba <strong>"Alertas de Pedágio"</strong> no menu hambúrguer do Estradapay e registre seu número de WhatsApp ou e-mail. Nosso sistema avisa automaticamente com 5 dias de antecedência sobre qualquer tarifa prestes a expirar.
+          </p>
+        </div>
+
+        <div class="dica-card">
+          <div class="dica-card-header">
+            <span>🛡️</span>
+            <span>Cuidado com Golpes por SMS ou Mensagens Falsas</span>
+          </div>
+          <p class="dica-card-text">
+            A ANTT e as concessionárias oficiais alertam: órgãos de trânsito <strong>jamais enviam links de cobrança por SMS ou WhatsApp</strong> ameaçando bloqueio de CNH. Sempre consulte diretamente digitando a sua placa no Estradapay ou nos portais homologados da agência reguladora.
+          </p>
+        </div>
+      </div>
+
+      <!-- TABELA COMPARATIVA DE TARIFAS POR EIXO E CATEGORIA -->
+      <div class="tabela-tarifas-section">
+        <div class="tabela-tarifas-header">
+          <span>📊</span>
+          <span>Tabela Comparativa de Tarifas Oficiais por Categoria de Veículo</span>
+        </div>
+        <div class="tabela-wrapper">
+          <table class="tabela-tarifas">
+            <thead>
+              <tr>
+                <th>Rodovia / Trecho Oficial</th>
+                <th>Concessionária</th>
+                <th>Motos / Triciclos</th>
+                <th>Carros de Passeio / SUV</th>
+                <th>Caminhão / Ônibus (por eixo)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>BR-116 (Via Dutra Metropolitano)</strong></td>
+                <td>CCR RioSP</td>
+                <td><span style="color: #166534; font-weight: 700;">Isento</span></td>
+                <td>R$ 4,10</td>
+                <td>R$ 4,10 / eixo com rodagem dupla</td>
+              </tr>
+              <tr>
+                <td><strong>BR-101 (Rio-Santos Costa Verde)</strong></td>
+                <td>CCR RioSP</td>
+                <td><span style="color: #166534; font-weight: 700;">Isento</span></td>
+                <td>R$ 4,80</td>
+                <td>R$ 4,80 / eixo comercial</td>
+              </tr>
+              <tr>
+                <td><strong>SP-099 (Rodovia dos Tamoios Contorno)</strong></td>
+                <td>Concessionária Tamoios</td>
+                <td>R$ 2,60</td>
+                <td>R$ 5,20</td>
+                <td>R$ 5,20 / eixo comercial</td>
+              </tr>
+              <tr>
+                <td><strong>ERS-122 / ERS-240 (Serra Gaúcha)</strong></td>
+                <td>CSG</td>
+                <td>R$ 4,30 a R$ 5,35</td>
+                <td>R$ 8,60 a R$ 10,70</td>
+                <td>R$ 8,60 a R$ 10,70 / eixo</td>
+              </tr>
+              <tr>
+                <td><strong>SP-333 (EcoNoroeste Itápolis)</strong></td>
+                <td>Ecovias Noroeste</td>
+                <td><span style="color: #166534; font-weight: 700;">Isento</span></td>
+                <td>R$ 8,90</td>
+                <td>R$ 8,90 / eixo comercial</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <!-- SEÇÃO DE FAQ (PERGUNTAS FREQUENTES) ESTILO ACORDEÃO -->
     <section class="faq-section">
       <div class="faq-header">

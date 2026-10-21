@@ -2222,4 +2222,390 @@ body {
   margin-top: 8px;
 }
 
+/* ========================================================
+   SEÇÃO: GUIA NACIONAL DE FREE FLOW E RODOVIAS
+   ======================================================== */
+.guia-section {
+  margin-top: 24px;
+  background: #ffffff;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.guia-header {
+  margin-bottom: 16px;
+}
+
+.guia-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.guia-title {
+  font-size: 1.0625rem;
+  font-weight: 800;
+  color: var(--dark);
+  margin: 0;
+}
+
+.guia-legal-badge {
+  display: inline-block;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  border: 1px solid #bfdbfe;
+  margin-bottom: 8px;
+}
+
+.guia-desc {
+  font-size: 0.8125rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.guia-filter-wrapper {
+  margin: 16px 0 14px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.guia-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.guia-search-input {
+  width: 100%;
+  padding: 9px 12px 9px 34px;
+  font-size: 0.8125rem;
+  border: 1px solid var(--slate-300);
+  border-radius: var(--radius-md);
+  background: #f8fafc;
+  color: var(--dark);
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.guia-search-input:focus {
+  background: #ffffff;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.guia-search-icon {
+  position: absolute;
+  left: 10px;
+  font-size: 0.875rem;
+  color: #64748b;
+  pointer-events: none;
+}
+
+.guia-chips-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.guia-chip {
+  padding: 5px 11px;
+  font-size: 0.71875rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  border: 1px solid var(--slate-200);
+  background: #f8fafc;
+  color: #475569;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.guia-chip:hover {
+  background: #e2e8f0;
+  color: var(--dark);
+}
+
+.guia-chip.active {
+  background: #1e293b;
+  color: #ffffff;
+  border-color: #1e293b;
+}
+
+.guia-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.guia-item {
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-md);
+  background: #ffffff;
+  overflow: hidden;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.guia-item:hover {
+  border-color: #cbd5e1;
+}
+
+.guia-item.active {
+  border-color: #93c5fd;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.08);
+}
+
+.guia-trigger {
+  width: 100%;
+  padding: 13px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #f8fafc;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.guia-trigger:hover {
+  background: #f1f5f9;
+}
+
+.guia-trigger-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.guia-road-title {
+  font-size: 0.84375rem;
+  font-weight: 800;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.guia-tag-state {
+  font-size: 0.65625rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.guia-tag-status {
+  font-size: 0.65625rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.guia-tag-status.active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.guia-tag-status.future {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.guia-conc-sub {
+  font-size: 0.71875rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.guia-arrow {
+  font-size: 0.8125rem;
+  color: #64748b;
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.guia-item.active .guia-arrow {
+  transform: rotate(180deg);
+}
+
+.guia-content {
+  display: none;
+  padding: 14px;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  font-size: 0.8125rem;
+  color: #334155;
+  line-height: 1.55;
+}
+
+.guia-item.active .guia-content {
+  display: block;
+}
+
+.guia-meta-block {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  margin: 10px 0;
+}
+
+.guia-meta-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.guia-meta-title {
+  font-size: 0.65625rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.guia-meta-value {
+  font-size: 0.78125rem;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.guia-rule-box {
+  background: #eff6ff;
+  border-left: 3px solid #2563eb;
+  padding: 8px 12px;
+  border-radius: 0 6px 6px 0;
+  margin-top: 8px;
+  font-size: 0.78125rem;
+  color: #1e3a8a;
+}
+
+/* Dicas e Blog Informativo */
+.dicas-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+@media (min-width: 640px) {
+  .dicas-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.dica-card {
+  background: #f8fafc;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dica-card.alert {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
+.dica-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84375rem;
+  font-weight: 800;
+  color: var(--dark);
+}
+
+.dica-card.alert .dica-card-header {
+  color: #92400e;
+}
+
+.dica-card-text {
+  font-size: 0.78125rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.dica-card.alert .dica-card-text {
+  color: #78350f;
+}
+
+/* Tabela Comparativa de Tarifas */
+.tabela-tarifas-section {
+  margin-top: 18px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+
+.tabela-tarifas-header {
+  font-size: 0.84375rem;
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tabela-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-sm);
+  border: 1px solid #e2e8f0;
+}
+
+.tabela-tarifas {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  text-align: left;
+  background: #ffffff;
+  min-width: 420px;
+}
+
+.tabela-tarifas th {
+  background: #f1f5f9;
+  padding: 8px 10px;
+  font-weight: 800;
+  color: #334155;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.tabela-tarifas td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #475569;
+}
+
+.tabela-tarifas tr:last-child td {
+  border-bottom: none;
+}
+
+.tabela-tarifas tr:hover td {
+  background: #f8fafc;
+}
+
+
 

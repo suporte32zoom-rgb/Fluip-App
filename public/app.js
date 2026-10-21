@@ -212,6 +212,7 @@
     setupConsentHandlers();
     setupLegalModals();
     setupFaqAccordion();
+    setupGuiaNacional();
     setupDrawerMenu();
     setupAuthHandlers();
     setupGarageHandlers();
@@ -660,6 +661,81 @@
         item.classList.toggle('active', !isActive);
       });
     });
+  }
+
+  /**
+   * Seção 📚 Guia Nacional de Free Flow e Rodovias (Acordeão, Chips e Busca Rápida)
+   */
+  function setupGuiaNacional() {
+    const searchInput = document.getElementById('guiaSearchInput');
+    const chipsBar = document.getElementById('guiaChipsBar');
+    const items = document.querySelectorAll('#guiaAccordion .guia-item');
+
+    if (!items || items.length === 0) return;
+
+    let activeFilter = 'TODAS';
+    let searchQuery = '';
+
+    // 1. Sanfona / Cards Expansíveis (Permite abrir e fechar com transição suave)
+    items.forEach((item) => {
+      const trigger = item.querySelector('.guia-trigger');
+      if (trigger) {
+        trigger.addEventListener('click', () => {
+          const wasActive = item.classList.contains('active');
+          item.classList.toggle('active', !wasActive);
+        });
+      }
+    });
+
+    // Função de filtragem unificada (Chips de Rodovia + Busca por Texto)
+    function filtrarGuia() {
+      const termo = searchQuery.toLowerCase().trim();
+
+      items.forEach((item) => {
+        const tags = (item.getAttribute('data-tags') || '').toUpperCase();
+        const textoConteudo = item.textContent.toLowerCase();
+
+        // Filtro por Chip
+        const atendeChip =
+          activeFilter === 'TODAS' ||
+          tags.includes(activeFilter);
+
+        // Filtro por Texto de Busca
+        const atendeBusca =
+          !termo ||
+          tags.toLowerCase().includes(termo) ||
+          textoConteudo.includes(termo);
+
+        if (atendeChip && atendeBusca) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    // 2. Chips de Filtro Rápido de Rodovias
+    if (chipsBar) {
+      chipsBar.addEventListener('click', (e) => {
+        const chip = e.target.closest('.guia-chip');
+        if (!chip) return;
+
+        activeFilter = chip.getAttribute('data-filter') || 'TODAS';
+
+        chipsBar.querySelectorAll('.guia-chip').forEach((c) => c.classList.remove('active'));
+        chip.classList.add('active');
+
+        filtrarGuia();
+      });
+    }
+
+    // 3. Campo de Busca Instantânea
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        filtrarGuia();
+      });
+    }
   }
 
   function setupEventListeners() {
