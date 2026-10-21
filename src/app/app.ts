@@ -9,16 +9,22 @@ export interface DebitoPedagioItem {
   placa: string;
   concessionaria: string;
   rodovia: string;
+  trechoKm?: string;
   portico: string;
   sentido: string;
   categoriaVeiculo: string;
   dataHora: string;
   dataHoraFormatada: string;
   valorTarifa: number;
+  taxaEstradapay?: number;
+  valorTotalComTaxa?: number;
+  municipio?: string;
+  uf?: string;
   dataLimiteInfracao: string;
   dataLimiteFormatada: string;
   diasRestantes: number;
   status: 'PENDENTE' | 'PAGO';
+  origemFonte?: string;
 }
 
 export interface CobrancaPixResposta {

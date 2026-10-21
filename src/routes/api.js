@@ -1,55 +1,51 @@
 import { Router } from 'express';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import pedagioService from '../services/pedagioService.js';
 import pagamentoService from '../services/pagamentoService.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const porticosFilePath = path.join(__dirname, '../data/freeflowPorticos.json');
+import freeFlowBaseService from '../services/freeFlowBaseService.js';
 
 const router = Router();
 
 /**
  * GET /api/v1/porticos
- * Retorna os pórticos e rodovias Free Flow cadastrados (Base Aberta Sem Parar / CC BY 4.0)
- * Suporta filtros por estado (?uf=RJ) e busca por texto (?q=...)
+ * Retorna os pórticos e rodovias Free Flow sincronizados com a base aberta Sem Parar (GitHub)
+ * Suporta filtros por estado (?uf=SP) e busca por texto (?q=Dutra)
  */
 router.get('/porticos', (req, res) => {
   try {
-    const rawData = fs.readFileSync(porticosFilePath, 'utf-8');
-    const data = JSON.parse(rawData);
-
-    const { uf, q } = req.query;
-    let filtrados = data.porticos || [];
-
-    if (uf && uf !== 'TODOS') {
-      const ufUpper = String(uf).toUpperCase().trim();
-      filtrados = filtrados.filter((p) => p.uf.toUpperCase() === ufUpper);
-    }
-
-    if (q) {
-      const qLower = String(q).toLowerCase().trim();
-      filtrados = filtrados.filter((p) =>
-        p.rodovia.toLowerCase().includes(qLower) ||
-        p.concessionaria.toLowerCase().includes(qLower) ||
-        p.municipio.toLowerCase().includes(qLower) ||
-        p.km.toLowerCase().includes(qLower)
-      );
-    }
+    const { uf, q, status } = req.query;
+    const resultado = freeFlowBaseService.obterPorticos({ uf, q, status });
 
     return res.status(200).json({
       success: true,
-      metadados: data.metadados,
-      total: filtrados.length,
-      porticos: filtrados,
+      metadados: resultado.metadados,
+      total: resultado.total,
+      porticos: resultado.porticos,
     });
   } catch (error) {
     console.error('[API /porticos] Erro ao carregar dados:', error);
     return res.status(500).json({
       success: false,
       error: 'Erro ao carregar base de pórticos Free Flow.',
+    });
+  }
+});
+
+/**
+ * POST /api/v1/porticos/sync
+ * Força a sincronização imediata com o repositório público do Sem Parar no GitHub
+ */
+router.post('/porticos/sync', async (req, res) => {
+  try {
+    const resultado = await freeFlowBaseService.sincronizarComGitHub(true);
+    return res.status(200).json({
+      success: true,
+      mensagem: 'Base de dados sincronizada com sucesso com o repositório do Sem Parar no GitHub.',
+      resultado,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: error.message || 'Erro ao sincronizar com GitHub.',
     });
   }
 });

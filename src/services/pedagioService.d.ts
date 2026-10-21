@@ -4,12 +4,17 @@ export interface DebitoPedagio {
   placaEstrangeira?: boolean;
   concessionaria: string;
   rodovia: string;
+  trechoKm?: string;
   portico: string;
   sentido: string;
   categoriaVeiculo: string;
   dataHora: string;
   dataHoraFormatada: string;
   valorTarifa: number;
+  taxaEstradapay?: number;
+  valorTotalComTaxa?: number;
+  municipio?: string;
+  uf?: string;
   dataLimiteInfracao: string;
   limiteInfracao?: string;
   dataLimiteFormatada: string;

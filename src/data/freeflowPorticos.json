@@ -1,318 +1,1669 @@
 {
   "metadados": {
-    "titulo": "Base de Dados de Pórticos e Rodovias Free Flow no Brasil",
     "fonte": "Base Aberta Sem Parar / SEM-PARAR-FREE-FLOW",
-    "repositorio": "https://github.com/Sem-Parar/SEM-PARAR-FREE-FLOW",
     "licenca": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
-    "dataAtualizacao": "2026-10-19",
-    "versao": "2026.1",
-    "notaLegal": "Prazos de quitação e penalidades em conformidade com a Lei Federal nº 14.157/2021, Art. 209-A do CTB e Resolução CONTRAN nº 989/2022.",
-    "estadosAtendidos": ["TODOS", "RJ", "SP", "RS", "MG"]
+    "repositorio": "https://github.com/Sem-Parar/SEM-PARAR-FREE-FLOW",
+    "dataSincronizacao": "2026-10-21T00:59:24.370Z",
+    "origem": "GITHUB_ONLINE",
+    "totalPorticos": 69,
+    "notaLegal": "Prazos de quitação e penalidades em conformidade com a Lei nº 14.157/2021, Art. 209-A do CTB e Resolução CONTRAN nº 989/2022."
   },
   "porticos": [
     {
-      "id": "portico_riosp_01",
-      "concessionaria": "CCR RioSP",
-      "rodovia": "BR-101 (Rodovia Rio-Santos)",
-      "km": "Km 538",
-      "municipio": "Paraty",
-      "uf": "RJ",
-      "sentido": "Bidirecional (Norte / Sul)",
-      "tarifaBase": 4.80,
-      "prazoPagamentoDias": 30,
-      "status": "ATIVO",
-      "tipoVia": "Rodovia Federal",
-      "localizacaoDescricao": "Próximo ao trevo de acesso histórico a Paraty",
-      "coordenadas": { "lat": -23.2201, "lng": -44.7174 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
-    },
-    {
-      "id": "portico_riosp_02",
-      "concessionaria": "CCR RioSP",
-      "rodovia": "BR-101 (Rodovia Rio-Santos)",
-      "km": "Km 447",
-      "municipio": "Mangaratiba",
-      "uf": "RJ",
-      "sentido": "Bidirecional (Norte / Sul)",
-      "tarifaBase": 4.80,
-      "prazoPagamentoDias": 30,
-      "status": "ATIVO",
-      "tipoVia": "Rodovia Federal",
-      "localizacaoDescricao": "Trecho da Costa Verde entre Conceição de Jacareí e Mangaratiba",
-      "coordenadas": { "lat": -22.9602, "lng": -44.0416 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
-    },
-    {
-      "id": "portico_riosp_03",
-      "concessionaria": "CCR RioSP",
-      "rodovia": "BR-101 (Rodovia Rio-Santos)",
-      "km": "Km 414",
+      "id": "gh_portico_BR-101_4149_0",
+      "concessionaria": "Concessionária do Sistema Rodoviário Rio-São Paulo (RioSP)",
+      "rodovia": "Rio-Santos (Costa Verde) (BR-101)",
+      "sigla": "BR-101",
+      "km": "Km 414,9",
       "municipio": "Itaguaí",
       "uf": "RJ",
-      "sentido": "Bidirecional (Norte / Sul)",
-      "tarifaBase": 4.80,
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
       "prazoPagamentoDias": 30,
       "status": "ATIVO",
-      "tipoVia": "Rodovia Federal",
-      "localizacaoDescricao": "Acesso metropolitano ao Porto de Itaguaí e Baixada Fluminense",
-      "coordenadas": { "lat": -22.8872, "lng": -43.7758 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Primeiro sistema Free Flow do Brasil. Operação assistida desde 30/01/2023, cobrança a partir de março de 2023. Tarifa fixa por pórtico, não proporcional ao trecho.",
+      "coordenadas": {
+        "lat": -22.9068,
+        "lng": -43.1729
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
     },
     {
-      "id": "portico_ecovias_01",
-      "concessionaria": "Ecovias do Litoral",
-      "rodovia": "SP-055 (Rodovia Cônego Domênico Rangoni)",
-      "km": "Km 262",
-      "municipio": "Cubatão",
+      "id": "gh_portico_BR-101_4473_1",
+      "concessionaria": "Concessionária do Sistema Rodoviário Rio-São Paulo (RioSP)",
+      "rodovia": "Rio-Santos (Costa Verde) (BR-101)",
+      "sigla": "BR-101",
+      "km": "Km 447,3",
+      "municipio": "Mangaratiba",
+      "uf": "RJ",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Tarifa fixa por pórtico. Totem de pagamento no km 417,4.",
+      "coordenadas": {
+        "lat": -22.9068,
+        "lng": -43.1729
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-101_5385_2",
+      "concessionaria": "Concessionária do Sistema Rodoviário Rio-São Paulo (RioSP)",
+      "rodovia": "Rio-Santos (Costa Verde) (BR-101)",
+      "sigla": "BR-101",
+      "km": "Km 538,5",
+      "municipio": "Paraty",
+      "uf": "RJ",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Tarifa fixa por pórtico. Totem de pagamento no km 580.",
+      "coordenadas": {
+        "lat": -22.9068,
+        "lng": -43.1729
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-116_204231_3",
+      "concessionaria": "Concessionária do Sistema Rodoviário Rio-São Paulo (RioSP)",
+      "rodovia": "Via Dutra - Trecho Metropolitano (BR-116)",
+      "sigla": "BR-116",
+      "km": "Km 204 a 231",
+      "municipio": "São Paulo; Guarulhos; Arujá",
       "uf": "SP",
-      "sentido": "Norte / Sul",
-      "tarifaBase": 10.20,
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
       "prazoPagamentoDias": 30,
       "status": "ATIVO",
-      "tipoVia": "Rodovia Estadual",
-      "localizacaoDescricao": "Conexão industrial do Polo de Cubatão com a Margem Esquerda do Porto de Santos",
-      "coordenadas": { "lat": -23.8953, "lng": -46.4251 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "DIVERGÊNCIA DE UNIDADE, registrada e não resolvida: a concessionária comunica 21 pontos de cobrança e o cadastro da ANTT registra 10 pórticos entre os km 206 e 231,3, anotando que cada pórtico concentra vários pontos de cobrança de entrada e saída. Este repositório adota 21, o número da concessionária, e sinaliza a divergência. Ver o dicionário de dados.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
     },
     {
-      "id": "portico_ecovias_02",
-      "concessionaria": "Ecovias do Litoral",
-      "rodovia": "SP-055 (Rodovia Padre Manoel da Nóbrega)",
-      "km": "Km 291",
-      "municipio": "Praia Grande",
+      "id": "gh_portico_SP-021_135_4",
+      "concessionaria": "Via SP Serra (Rodoanel Norte SPE)",
+      "rodovia": "Rodoanel Mário Covas - Trecho Norte (SP-021)",
+      "sigla": "SP-021",
+      "km": "Km 135",
+      "municipio": "Guarulhos",
       "uf": "SP",
-      "sentido": "Litoral Sul",
-      "tarifaBase": 6.80,
+      "sentido": "ambos",
+      "tarifaBase": 5.5,
       "prazoPagamentoDias": 30,
       "status": "ATIVO",
-      "tipoVia": "Rodovia Estadual",
-      "localizacaoDescricao": "Entroncamento viário de acesso a Praia Grande e Mongaguá",
-      "coordenadas": { "lat": -24.0058, "lng": -46.4029 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Um pórtico por sentido. Programa Siga Fácil. Neste trecho motos não são isentas.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.sigafacil.sp.gov.br"
     },
     {
-      "id": "portico_ecovias_03",
-      "concessionaria": "Ecovias do Litoral",
-      "rodovia": "SP-055 (Interligação Baixada Santista)",
-      "km": "Km 279",
-      "municipio": "São Vicente",
+      "id": "gh_portico_SP-055_236000_5",
+      "concessionaria": "Concessionária Novo Litoral (CNL)",
+      "rodovia": "Manoel Hipólito do Rego / Padre Manoel da Nóbrega (SP-055)",
+      "sigla": "SP-055",
+      "km": "Km 236+000",
+      "municipio": "Santos",
       "uf": "SP",
-      "sentido": "Litoral / Capital",
-      "tarifaBase": 8.40,
+      "sentido": "leste e oeste",
+      "tarifaBase": 10.2,
       "prazoPagamentoDias": 30,
       "status": "ATIVO",
-      "tipoVia": "Rodovia Estadual",
-      "localizacaoDescricao": "Travessia insular entre Santos, São Vicente e área continental",
-      "coordenadas": { "lat": -23.9631, "lng": -46.3919 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Trecho Doutor Manoel Hipólito do Rego, chamado de Rio-Santos em São Paulo. Não confundir com a BR-101 Rio-Santos, no Rio de Janeiro.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.semparar.com.br/novo-litoral-cnl"
     },
     {
-      "id": "portico_tamoios_01",
+      "id": "gh_portico_SP-055_389560_6",
+      "concessionaria": "Concessionária Novo Litoral (CNL)",
+      "rodovia": "Manoel Hipólito do Rego / Padre Manoel da Nóbrega (SP-055)",
+      "sigla": "SP-055",
+      "km": "Km 389+560",
+      "municipio": "Miracatu",
+      "uf": "SP",
+      "sentido": "ambos",
+      "tarifaBase": 10.2,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Trecho Padre Manoel da Nóbrega, entre Praia Grande e Miracatu. A concessionária não publica a quilometragem exata deste ponto.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.semparar.com.br/novo-litoral-cnl"
+    },
+    {
+      "id": "gh_portico_SP-055_369860360200_7",
+      "concessionaria": "Concessionária Novo Litoral (CNL)",
+      "rodovia": "Manoel Hipólito do Rego / Padre Manoel da Nóbrega (SP-055)",
+      "sigla": "SP-055",
+      "km": "Km 369+860 e 360+200",
+      "municipio": "Itariri",
+      "uf": "SP",
+      "sentido": "n/d",
+      "tarifaBase": 10.2,
+      "prazoPagamentoDias": 30,
+      "status": "MONITORAMENTO",
+      "tipoVia": "Monitoramento de Tráfego",
+      "localizacaoDescricao": "Duas estruturas na Padre Manoel da Nóbrega que operam apenas como monitoramento. A passagem por elas não gera cobrança de pedágio.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.semparar.com.br/novo-litoral-cnl"
+    },
+    {
+      "id": "gh_portico_SP-088_3715037780_8",
+      "concessionaria": "Concessionária Novo Litoral (CNL)",
+      "rodovia": "Pedro Eroles (Mogi-Dutra) (SP-088)",
+      "sigla": "SP-088",
+      "km": "Km 37+150 (norte) e 37+780 (sul)",
+      "municipio": "Arujá",
+      "uf": "SP",
+      "sentido": "norte e sul",
+      "tarifaBase": 6.8,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Ponto tarifário único, com estruturas em quilômetros diferentes por sentido.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.semparar.com.br/novo-litoral-cnl"
+    },
+    {
+      "id": "gh_portico_SP-088_4160040800_9",
+      "concessionaria": "Concessionária Novo Litoral (CNL)",
+      "rodovia": "Pedro Eroles (Mogi-Dutra) (SP-088)",
+      "sigla": "SP-088",
+      "km": "Km 41+600 (norte) e 40+800 (sul)",
+      "municipio": "Mogi das Cruzes",
+      "uf": "SP",
+      "sentido": "norte e sul",
+      "tarifaBase": 6.8,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Ponto tarifário único, com estruturas em quilômetros diferentes por sentido.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.semparar.com.br/novo-litoral-cnl"
+    },
+    {
+      "id": "gh_portico_SP-098_92740_10",
+      "concessionaria": "Concessionária Novo Litoral (CNL)",
+      "rodovia": "Dom Paulo Rolim Loureiro (Mogi-Bertioga) (SP-098)",
+      "sigla": "SP-098",
+      "km": "Km 92+740",
+      "municipio": "Bertioga",
+      "uf": "SP",
+      "sentido": "norte e sul",
+      "tarifaBase": 8.4,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico eletrônico localizado em Bertioga (SP)",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.semparar.com.br/novo-litoral-cnl"
+    },
+    {
+      "id": "gh_portico_SP-099_13500_11",
       "concessionaria": "Concessionária Tamoios",
-      "rodovia": "SP-099 (Contorno Sul de São Sebastião / Caraguatatuba)",
-      "km": "Km 13",
+      "rodovia": "Rodovia dos Tamoios - Contorno Sul (SP-099)",
+      "sigla": "SP-099",
+      "km": "Km 13+500",
       "municipio": "Caraguatatuba",
       "uf": "SP",
-      "sentido": "Litoral Norte",
-      "tarifaBase": 5.20,
+      "sentido": "ambos",
+      "tarifaBase": 5.2,
       "prazoPagamentoDias": 30,
       "status": "ATIVO",
-      "tipoVia": "Rodovia Estadual",
-      "localizacaoDescricao": "Novo Contorno viário da Serra do Mar ligando Caraguatatuba a São Sebastião",
-      "coordenadas": { "lat": -23.6229, "lng": -45.4128 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Contorno Sul, ligação Caraguatatuba a São Sebastião. Cobrança de todos os tipos de veículo nos dois sentidos, inclusive motocicletas. Totens de pagamento no SAU 3 (km 10,8) e no SAU 4 (km 20). Passagens já cobradas por tag não aparecem no portal de pagamento avulso.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://freeflowtamoios.com.br"
     },
     {
-      "id": "portico_csg_01",
-      "concessionaria": "CSG (Caminhos da Serra Gaúcha)",
-      "rodovia": "ERS-122",
-      "km": "Km 99",
-      "municipio": "Flores da Cunha",
+      "id": "gh_portico_SP-270_48_12",
+      "concessionaria": "Motiva Sorocabana (CCR Sorocabana)",
+      "rodovia": "Raposo Tavares (SP-270)",
+      "sigla": "SP-270",
+      "km": "Km 48",
+      "municipio": "São Roque",
+      "uf": "SP",
+      "sentido": "ambos",
+      "tarifaBase": 5.9,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico eletrônico localizado em São Roque (SP)",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://rodovias.motiva.com.br/sorocabana/freeflow/"
+    },
+    {
+      "id": "gh_portico_SP-270_83_13",
+      "concessionaria": "Motiva Sorocabana (CCR Sorocabana)",
+      "rodovia": "Raposo Tavares (SP-270)",
+      "sigla": "SP-270",
+      "km": "Km 83",
+      "municipio": "Alumínio / Sorocaba",
+      "uf": "SP",
+      "sentido": "ambos",
+      "tarifaBase": 5.9,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico eletrônico localizado em Alumínio / Sorocaba (SP)",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://rodovias.motiva.com.br/sorocabana/freeflow/"
+    },
+    {
+      "id": "gh_portico_SP-270_111_14",
+      "concessionaria": "Motiva Sorocabana (CCR Sorocabana)",
+      "rodovia": "Raposo Tavares (SP-270)",
+      "sigla": "SP-270",
+      "km": "Km 111",
+      "municipio": "Araçoiaba da Serra",
+      "uf": "SP",
+      "sentido": "ambos",
+      "tarifaBase": 5.9,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico eletrônico localizado em Araçoiaba da Serra (SP)",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://rodovias.motiva.com.br/sorocabana/freeflow/"
+    },
+    {
+      "id": "gh_portico_SP-079_114138193_15",
+      "concessionaria": "Motiva Sorocabana (CCR Sorocabana)",
+      "rodovia": "Tenente Celestino Américo (SP-079)",
+      "sigla": "SP-079",
+      "km": "Km 114; 138; 193",
+      "municipio": "Piedade; Tapiraí",
+      "uf": "SP",
+      "sentido": "n/d",
+      "tarifaBase": 5.9,
+      "prazoPagamentoDias": 30,
+      "status": "PREVISTO",
+      "tipoVia": "Monitoramento de Tráfego",
+      "localizacaoDescricao": "Pórticos instalados que hoje operam apenas como monitoramento. Cobrança adiada, sem data.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.sigafacil.sp.gov.br"
+    },
+    {
+      "id": "gh_portico_SP-139_110_16",
+      "concessionaria": "Motiva Sorocabana (CCR Sorocabana)",
+      "rodovia": "Rota Sorocabana - 2ª etapa (SP-139)",
+      "sigla": "SP-139",
+      "km": "Km 110",
+      "municipio": "São Miguel Arcanjo",
+      "uf": "SP",
+      "sentido": "n/d",
+      "tarifaBase": 5.9,
+      "prazoPagamentoDias": 30,
+      "status": "PREVISTO",
+      "tipoVia": "Monitoramento de Tráfego",
+      "localizacaoDescricao": "Pórticos instalados que hoje operam apenas como monitoramento. Cobrança adiada, sem data.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.sigafacil.sp.gov.br"
+    },
+    {
+      "id": "gh_portico_SP-250_5693122162188_17",
+      "concessionaria": "Motiva Sorocabana (CCR Sorocabana)",
+      "rodovia": "Bunjiro Nakao (SP-250)",
+      "sigla": "SP-250",
+      "km": "Km 56; 93; 122; 162; 188",
+      "municipio": "Ibiúna; Piedade; Pilar do Sul; Capão Bonito",
+      "uf": "SP",
+      "sentido": "n/d",
+      "tarifaBase": 5.9,
+      "prazoPagamentoDias": 30,
+      "status": "PREVISTO",
+      "tipoVia": "Monitoramento de Tráfego",
+      "localizacaoDescricao": "Pórticos instalados que hoje operam apenas como monitoramento. Cobrança adiada, sem data.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.sigafacil.sp.gov.br"
+    },
+    {
+      "id": "gh_portico_SP-264_114230_18",
+      "concessionaria": "Motiva Sorocabana (CCR Sorocabana)",
+      "rodovia": "João Leme dos Santos (SP-264)",
+      "sigla": "SP-264",
+      "km": "Km 114; 230",
+      "municipio": "Salto de Pirapora",
+      "uf": "SP",
+      "sentido": "n/d",
+      "tarifaBase": 5.9,
+      "prazoPagamentoDias": 30,
+      "status": "PREVISTO",
+      "tipoVia": "Monitoramento de Tráfego",
+      "localizacaoDescricao": "Pórticos instalados que hoje operam apenas como monitoramento. Cobrança adiada, sem data.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.sigafacil.sp.gov.br"
+    },
+    {
+      "id": "gh_portico_SP-333_179_19",
+      "concessionaria": "Ecovias Noroeste Paulista",
+      "rodovia": "Laurentino Mascari / Carlos Tonanni (SP-333)",
+      "sigla": "SP-333",
+      "km": "Km 179",
+      "municipio": "Itápolis",
+      "uf": "SP",
+      "sentido": "ambos",
+      "tarifaBase": 8.9,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Prazo de 30 dias. No lançamento, em setembro de 2024, a concessionária divulgava 15 dias.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://freeflow.eco.br"
+    },
+    {
+      "id": "gh_portico_SP-333_110_20",
+      "concessionaria": "Ecovias Noroeste Paulista",
+      "rodovia": "Laurentino Mascari / Carlos Tonanni (SP-333)",
+      "sigla": "SP-333",
+      "km": "Km 110",
+      "municipio": "Jaboticabal",
+      "uf": "SP",
+      "sentido": "ambos",
+      "tarifaBase": 8.9,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Prazo de 30 dias. No lançamento, em setembro de 2024, a concessionária divulgava 15 dias.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://freeflow.eco.br"
+    },
+    {
+      "id": "gh_portico_SP-326_307_21",
+      "concessionaria": "Ecovias Noroeste Paulista",
+      "rodovia": "Brigadeiro Faria Lima (SP-326)",
+      "sigla": "SP-326",
+      "km": "Km 307",
+      "municipio": "Dobrada",
+      "uf": "SP",
+      "sentido": "ambos",
+      "tarifaBase": 11.4,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico eletrônico localizado em Dobrada (SP)",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://freeflow.eco.br"
+    },
+    {
+      "id": "gh_portico_SP-326_357_22",
+      "concessionaria": "Ecovias Noroeste Paulista",
+      "rodovia": "Brigadeiro Faria Lima (SP-326)",
+      "sigla": "SP-326",
+      "km": "Km 357",
+      "municipio": "Taiúva",
+      "uf": "SP",
+      "sentido": "ambos",
+      "tarifaBase": 11.4,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico eletrônico localizado em Taiúva (SP)",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://freeflow.eco.br"
+    },
+    {
+      "id": "gh_portico_SP-150_33_23",
+      "concessionaria": "Ecovias dos Imigrantes",
+      "rodovia": "Via Anchieta (Sistema Anchieta-Imigrantes) (SP-150)",
+      "sigla": "SP-150",
+      "km": "Km 33",
+      "municipio": "São Bernardo do Campo",
+      "uf": "SP",
+      "sentido": "ambos",
+      "tarifaBase": 35.8,
+      "prazoPagamentoDias": 30,
+      "status": "PREVISTO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórticos instalados nos dois sentidos, sem cobrança. Início adiado em 27/07/2026 sem nova data. A praça física do km 31 (Riacho Grande) segue em operação.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.sigafacil.sp.gov.br"
+    },
+    {
+      "id": "gh_portico_SP-160_29_24",
+      "concessionaria": "Ecovias dos Imigrantes",
+      "rodovia": "Rodovia dos Imigrantes (Sistema Anchieta-Imigrantes) (SP-160)",
+      "sigla": "SP-160",
+      "km": "Km 29",
+      "municipio": "São Bernardo do Campo",
+      "uf": "SP",
+      "sentido": "descida (litoral)",
+      "tarifaBase": 35.8,
+      "prazoPagamentoDias": 30,
+      "status": "PREVISTO",
+      "tipoVia": "Monitoramento de Tráfego",
+      "localizacaoDescricao": "A estrutura permanece no local e passa a cumprir função de monitoramento de tráfego, após a determinação de que o ponto de cobrança no sentido capital fique depois do km 38.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.sigafacil.sp.gov.br"
+    },
+    {
+      "id": "gh_portico_SP-160_38_25",
+      "concessionaria": "Ecovias dos Imigrantes",
+      "rodovia": "Rodovia dos Imigrantes (Sistema Anchieta-Imigrantes) (SP-160)",
+      "sigla": "SP-160",
+      "km": "Km após o 38",
+      "municipio": "São Bernardo do Campo",
+      "uf": "SP",
+      "sentido": "subida (capital)",
+      "tarifaBase": 35.8,
+      "prazoPagamentoDias": 30,
+      "status": "PREVISTO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Ponto de cobrança realocado do km 29 para a região após o km 38, em julho de 2026, para preservar deslocamentos locais da região do Pós-Balsa. Ponto exato ainda em definição.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.sigafacil.sp.gov.br"
+    },
+    {
+      "id": "gh_portico_BR-163_154_26",
+      "concessionaria": "EPR Iguaçu",
+      "rodovia": "Lote Iguaçu (BR-163)",
+      "sigla": "BR-163",
+      "km": "Km 154",
+      "municipio": "Santa Lúcia",
+      "uf": "PR",
+      "sentido": "ambos",
+      "tarifaBase": 11.2,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico eletrônico localizado em Santa Lúcia (PR)",
+      "coordenadas": {
+        "lat": -25.4284,
+        "lng": -49.2733
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-163_1561_27",
+      "concessionaria": "EPR Iguaçu",
+      "rodovia": "Lote Iguaçu (BR-163)",
+      "sigla": "BR-163",
+      "km": "Km 156,1",
+      "municipio": "Santa Lúcia",
+      "uf": "PR",
+      "sentido": "ambos",
+      "tarifaBase": 11.2,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico eletrônico localizado em Santa Lúcia (PR)",
+      "coordenadas": {
+        "lat": -25.4284,
+        "lng": -49.2733
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_PR-182_5174_28",
+      "concessionaria": "EPR Iguaçu",
+      "rodovia": "Lote Iguaçu (PR-182)",
+      "sigla": "PR-182",
+      "km": "Km 517,4",
+      "municipio": "Ampére",
+      "uf": "PR",
+      "sentido": "ambos",
+      "tarifaBase": 10.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico eletrônico localizado em Ampére (PR)",
+      "coordenadas": {
+        "lat": -25.4284,
+        "lng": -49.2733
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_PR-280_2343_29",
+      "concessionaria": "EPR Iguaçu",
+      "rodovia": "Lote Iguaçu (PR-280)",
+      "sigla": "PR-280",
+      "km": "Km 234,3",
+      "municipio": "Vitorino",
+      "uf": "PR",
+      "sentido": "ambos",
+      "tarifaBase": 10.8,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico eletrônico localizado em Vitorino (PR)",
+      "coordenadas": {
+        "lat": -25.4284,
+        "lng": -49.2733
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-369_126_30",
+      "concessionaria": "EPR Paraná",
+      "rodovia": "Lote 4 - Norte e Noroeste do Paraná (BR-369)",
+      "sigla": "BR-369",
+      "km": "Km 126",
+      "municipio": "Jataizinho",
+      "uf": "PR",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Um pórtico por sentido.",
+      "coordenadas": {
+        "lat": -25.4284,
+        "lng": -49.2733
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-369_1802_31",
+      "concessionaria": "EPR Paraná",
+      "rodovia": "Lote 4 - Norte e Noroeste do Paraná (BR-369)",
+      "sigla": "BR-369",
+      "km": "Km 180,2",
+      "municipio": "Rolândia / Arapongas",
+      "uf": "PR",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Um pórtico por sentido.",
+      "coordenadas": {
+        "lat": -25.4284,
+        "lng": -49.2733
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-376_1458_32",
+      "concessionaria": "EPR Paraná",
+      "rodovia": "Lote 4 - Norte e Noroeste do Paraná (BR-376)",
+      "sigla": "BR-376",
+      "km": "Km 145,8",
+      "municipio": "Presidente Castelo Branco / Mandaguaçu",
+      "uf": "PR",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Um pórtico por sentido.",
+      "coordenadas": {
+        "lat": -25.4284,
+        "lng": -49.2733
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-376_196_33",
+      "concessionaria": "EPR Paraná",
+      "rodovia": "Lote 4 - Norte e Noroeste do Paraná (BR-376)",
+      "sigla": "BR-376",
+      "km": "Km 196",
+      "municipio": "Marialva / Mandaguari",
+      "uf": "PR",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Um pórtico por sentido.",
+      "coordenadas": {
+        "lat": -25.4284,
+        "lng": -49.2733
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-376_2948_34",
+      "concessionaria": "PRVias (Motiva Paraná, ex-CCR RodoNorte)",
+      "rodovia": "Rodovia do Café (BR-376)",
+      "sigla": "BR-376",
+      "km": "Km 294,8",
+      "municipio": "Mauá da Serra",
+      "uf": "PR",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Divergência de quilometragem: o cadastro da ANTT registra km 294,8 e a concessionária comunica km 292. Adotado o valor da ANTT.",
+      "coordenadas": {
+        "lat": -25.4284,
+        "lng": -49.2733
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_PR-445_247_35",
+      "concessionaria": "PRVias (Motiva Paraná, ex-CCR RodoNorte)",
+      "rodovia": "Rodovia Celso Garcia Cid (PR-445)",
+      "sigla": "PR-445",
+      "km": "Km 2,47",
+      "municipio": "Tamarana",
+      "uf": "PR",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Divergência de município: a ANTT registra Londrina e a concessionária registra Tamarana.",
+      "coordenadas": {
+        "lat": -25.4284,
+        "lng": -49.2733
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-262_45295_36",
+      "concessionaria": "Concessionária da Rodovia BR-262/MG (Way-262)",
+      "rodovia": "Rota do Zebu (BR-262)",
+      "sigla": "BR-262",
+      "km": "Km 452,95",
+      "municipio": "Nova Serrana",
+      "uf": "MG",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Quilometragem do cadastro da ANTT. Motocicletas são isentas em todo o trecho da concessão. Todas as operadoras de tag do mercado são aceitas.",
+      "coordenadas": {
+        "lat": -19.9167,
+        "lng": -43.9345
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-262_6651_37",
+      "concessionaria": "Concessionária da Rodovia BR-262/MG (Way-262)",
+      "rodovia": "Rota do Zebu (BR-262)",
+      "sigla": "BR-262",
+      "km": "Km 665,1",
+      "municipio": "Ibiá",
+      "uf": "MG",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Quilometragem do cadastro da ANTT. Motocicletas são isentas em todo o trecho da concessão. Todas as operadoras de tag do mercado são aceitas.",
+      "coordenadas": {
+        "lat": -19.9167,
+        "lng": -43.9345
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-381_17655_38",
+      "concessionaria": "Concessionária de Rodovia Nova 381",
+      "rodovia": "Vale do Aço (BR-381)",
+      "sigla": "BR-381",
+      "km": "Km 176,55",
+      "municipio": "Governador Valadares",
+      "uf": "MG",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Quilometragem do cadastro de pórticos das concessões federais da ANTT. Concessão 100% em pedágio eletrônico, com 25 totens ao longo da rodovia.",
+      "coordenadas": {
+        "lat": -19.9167,
+        "lng": -43.9345
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-381_2275_39",
+      "concessionaria": "Concessionária de Rodovia Nova 381",
+      "rodovia": "Vale do Aço (BR-381)",
+      "sigla": "BR-381",
+      "km": "Km 227,5",
+      "municipio": "Belo Oriente",
+      "uf": "MG",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Quilometragem do cadastro de pórticos das concessões federais da ANTT. Concessão 100% em pedágio eletrônico, com 25 totens ao longo da rodovia.",
+      "coordenadas": {
+        "lat": -19.9167,
+        "lng": -43.9345
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-381_28015_40",
+      "concessionaria": "Concessionária de Rodovia Nova 381",
+      "rodovia": "Vale do Aço (BR-381)",
+      "sigla": "BR-381",
+      "km": "Km 280,15",
+      "municipio": "Jaguaraçu",
+      "uf": "MG",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Quilometragem do cadastro de pórticos das concessões federais da ANTT. Concessão 100% em pedágio eletrônico, com 25 totens ao longo da rodovia.",
+      "coordenadas": {
+        "lat": -19.9167,
+        "lng": -43.9345
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-381_34227_41",
+      "concessionaria": "Concessionária de Rodovia Nova 381",
+      "rodovia": "Vale do Aço (BR-381)",
+      "sigla": "BR-381",
+      "km": "Km 342,27",
+      "municipio": "João Monlevade",
+      "uf": "MG",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Quilometragem do cadastro de pórticos das concessões federais da ANTT. Concessão 100% em pedágio eletrônico, com 25 totens ao longo da rodovia.",
+      "coordenadas": {
+        "lat": -19.9167,
+        "lng": -43.9345
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-381_41185_42",
+      "concessionaria": "Concessionária de Rodovia Nova 381",
+      "rodovia": "Vale do Aço (BR-381)",
+      "sigla": "BR-381",
+      "km": "Km 411,85",
+      "municipio": "Caeté",
+      "uf": "MG",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Quilometragem do cadastro de pórticos das concessões federais da ANTT. Concessão 100% em pedágio eletrônico, com 25 totens ao longo da rodovia.",
+      "coordenadas": {
+        "lat": -19.9167,
+        "lng": -43.9345
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-364_1222_43",
+      "concessionaria": "Concessionária de Rodovia Nova 364",
+      "rodovia": "Rota Agro Norte (BR-364)",
+      "sigla": "BR-364",
+      "km": "Km 122,2",
+      "municipio": "Pimenta Bueno",
+      "uf": "RO",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Quilometragem do cadastro da ANTT. Motocicletas têm passe livre. Ambulâncias, veículos oficiais e corpo diplomático são isentos mediante cadastro prévio. Cobrança suspensa por liminar entre 29/01 e 11/02/2026 e retomada em 12/02/2026 por decisão do TRF1.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-364_2213_44",
+      "concessionaria": "Concessionária de Rodovia Nova 364",
+      "rodovia": "Rota Agro Norte (BR-364)",
+      "sigla": "BR-364",
+      "km": "Km 221,3",
+      "municipio": "Pimenta Bueno",
+      "uf": "RO",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Quilometragem do cadastro da ANTT. Motocicletas têm passe livre. Ambulâncias, veículos oficiais e corpo diplomático são isentos mediante cadastro prévio. Cobrança suspensa por liminar entre 29/01 e 11/02/2026 e retomada em 12/02/2026 por decisão do TRF1.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-364_2724_45",
+      "concessionaria": "Concessionária de Rodovia Nova 364",
+      "rodovia": "Rota Agro Norte (BR-364)",
+      "sigla": "BR-364",
+      "km": "Km 272,4",
+      "municipio": "Cacoal",
+      "uf": "RO",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Quilometragem do cadastro da ANTT. Motocicletas têm passe livre. Ambulâncias, veículos oficiais e corpo diplomático são isentos mediante cadastro prévio. Cobrança suspensa por liminar entre 29/01 e 11/02/2026 e retomada em 12/02/2026 por decisão do TRF1.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-364_3993_46",
+      "concessionaria": "Concessionária de Rodovia Nova 364",
+      "rodovia": "Rota Agro Norte (BR-364)",
+      "sigla": "BR-364",
+      "km": "Km 399,3",
+      "municipio": "Ouro Preto do Oeste",
+      "uf": "RO",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Quilometragem do cadastro da ANTT. Motocicletas têm passe livre. Ambulâncias, veículos oficiais e corpo diplomático são isentos mediante cadastro prévio. Cobrança suspensa por liminar entre 29/01 e 11/02/2026 e retomada em 12/02/2026 por decisão do TRF1.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-364_4523_47",
+      "concessionaria": "Concessionária de Rodovia Nova 364",
+      "rodovia": "Rota Agro Norte (BR-364)",
+      "sigla": "BR-364",
+      "km": "Km 452,3",
+      "municipio": "Theobroma / Jaru",
+      "uf": "RO",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Quilometragem do cadastro da ANTT. Motocicletas têm passe livre. Ambulâncias, veículos oficiais e corpo diplomático são isentos mediante cadastro prévio. Cobrança suspensa por liminar entre 29/01 e 11/02/2026 e retomada em 12/02/2026 por decisão do TRF1.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-364_5623_48",
+      "concessionaria": "Concessionária de Rodovia Nova 364",
+      "rodovia": "Rota Agro Norte (BR-364)",
+      "sigla": "BR-364",
+      "km": "Km 562,3",
+      "municipio": "Alto Paraíso",
+      "uf": "RO",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Quilometragem do cadastro da ANTT. Motocicletas têm passe livre. Ambulâncias, veículos oficiais e corpo diplomático são isentos mediante cadastro prévio. Cobrança suspensa por liminar entre 29/01 e 11/02/2026 e retomada em 12/02/2026 por decisão do TRF1.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-364_6869_49",
+      "concessionaria": "Concessionária de Rodovia Nova 364",
+      "rodovia": "Rota Agro Norte (BR-364)",
+      "sigla": "BR-364",
+      "km": "Km 686,9",
+      "municipio": "Candeias do Jamari",
+      "uf": "RO",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Quilometragem do cadastro da ANTT. Motocicletas têm passe livre. Ambulâncias, veículos oficiais e corpo diplomático são isentos mediante cadastro prévio. Cobrança suspensa por liminar entre 29/01 e 11/02/2026 e retomada em 12/02/2026 por decisão do TRF1.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_MG-459_127_50",
+      "concessionaria": "EPR Sul de Minas",
+      "rodovia": "Doutor Francisco Bueno Brandão (MG-459)",
+      "sigla": "MG-459",
+      "km": "Km 12,7",
+      "municipio": "Monte Sião",
+      "uf": "MG",
+      "sentido": "ambos",
+      "tarifaBase": 9.4,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Tem modalidade pré-paga.",
+      "coordenadas": {
+        "lat": -19.9167,
+        "lng": -43.9345
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.pedagiosemcancela.com.br"
+    },
+    {
+      "id": "gh_portico_BR-060_1721826_51",
+      "concessionaria": "Rota Verde Goiás",
+      "rodovia": "Concessão Centro-Norte (Rota Verde) (BR-060)",
+      "sigla": "BR-060",
+      "km": "Km 172 / 182,6",
+      "municipio": "Abadia de Goiás",
+      "uf": "GO",
+      "sentido": "ambos",
+      "tarifaBase": 9.6,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Par de pórticos, um por sentido, com quilometragens A e B distintas no cadastro da ANTT.",
+      "coordenadas": {
+        "lat": -16.6869,
+        "lng": -49.2648
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-060_2337523385_52",
+      "concessionaria": "Rota Verde Goiás",
+      "rodovia": "Concessão Centro-Norte (Rota Verde) (BR-060)",
+      "sigla": "BR-060",
+      "km": "Km 233,75 / 233,85",
+      "municipio": "Indiara",
+      "uf": "GO",
+      "sentido": "ambos",
+      "tarifaBase": 9.6,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Par de pórticos, um por sentido, com quilometragens A e B distintas no cadastro da ANTT.",
+      "coordenadas": {
+        "lat": -16.6869,
+        "lng": -49.2648
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-060_28162817_53",
+      "concessionaria": "Rota Verde Goiás",
+      "rodovia": "Concessão Centro-Norte (Rota Verde) (BR-060)",
+      "sigla": "BR-060",
+      "km": "Km 281,6 / 281,7",
+      "municipio": "Jandaia",
+      "uf": "GO",
+      "sentido": "ambos",
+      "tarifaBase": 9.6,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Par de pórticos, um por sentido, com quilometragens A e B distintas no cadastro da ANTT.",
+      "coordenadas": {
+        "lat": -16.6869,
+        "lng": -49.2648
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-060_32589326_54",
+      "concessionaria": "Rota Verde Goiás",
+      "rodovia": "Concessão Centro-Norte (Rota Verde) (BR-060)",
+      "sigla": "BR-060",
+      "km": "Km 325,89 / 326",
+      "municipio": "Acreúna",
+      "uf": "GO",
+      "sentido": "ambos",
+      "tarifaBase": 9.6,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Par de pórticos, um por sentido, com quilometragens A e B distintas no cadastro da ANTT.",
+      "coordenadas": {
+        "lat": -16.6869,
+        "lng": -49.2648
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-452_449_55",
+      "concessionaria": "Rota Verde Goiás",
+      "rodovia": "Concessão Centro-Norte (Rota Verde) (BR-452)",
+      "sigla": "BR-452",
+      "km": "Km 44,9",
+      "municipio": "Santa Helena de Goiás",
+      "uf": "GO",
+      "sentido": "ambos",
+      "tarifaBase": 10.2,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico único, com cobrança nos dois sentidos, conforme o cadastro da ANTT.",
+      "coordenadas": {
+        "lat": -16.6869,
+        "lng": -49.2648
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-452_9985_56",
+      "concessionaria": "Rota Verde Goiás",
+      "rodovia": "Concessão Centro-Norte (Rota Verde) (BR-452)",
+      "sigla": "BR-452",
+      "km": "Km 99,85",
+      "municipio": "Bom Jesus de Goiás",
+      "uf": "GO",
+      "sentido": "ambos",
+      "tarifaBase": 10.2,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico único, com cobrança nos dois sentidos, conforme o cadastro da ANTT.",
+      "coordenadas": {
+        "lat": -16.6869,
+        "lng": -49.2648
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_BR-452_14759_57",
+      "concessionaria": "Rota Verde Goiás",
+      "rodovia": "Concessão Centro-Norte (Rota Verde) (BR-452)",
+      "sigla": "BR-452",
+      "km": "Km 147,59",
+      "municipio": "Bom Jesus de Goiás",
+      "uf": "GO",
+      "sentido": "ambos",
+      "tarifaBase": 10.2,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico único, com cobrança nos dois sentidos, conforme o cadastro da ANTT.",
+      "coordenadas": {
+        "lat": -16.6869,
+        "lng": -49.2648
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://www.gov.br/antt/pt-br/free-flow"
+    },
+    {
+      "id": "gh_portico_ERS-122_46_58",
+      "concessionaria": "Caminhos da Serra Gaúcha (CSG)",
+      "rodovia": "Rota da Serra Gaúcha (ERS-122)",
+      "sigla": "ERS-122",
+      "km": "Km 4,6",
+      "municipio": "São Sebastião do Caí",
       "uf": "RS",
-      "sentido": "Serra / Capital",
-      "tarifaBase": 8.60,
+      "sentido": "ambos",
+      "tarifaBase": 8.6,
       "prazoPagamentoDias": 30,
       "status": "ATIVO",
-      "tipoVia": "Rodovia Estadual",
-      "localizacaoDescricao": "Pórtico eletrônico de integração da Região das Hortênsias e Vinhedos",
-      "coordenadas": { "lat": -29.0289, "lng": -51.1895 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico eletrônico localizado em São Sebastião do Caí (RS)",
+      "coordenadas": {
+        "lat": -30.0346,
+        "lng": -51.2177
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://parcerias.rs.gov.br/free-flow"
     },
     {
-      "id": "portico_csg_02",
-      "concessionaria": "CSG (Caminhos da Serra Gaúcha)",
-      "rodovia": "ERS-122",
-      "km": "Km 108",
-      "municipio": "Antônio Prado",
-      "uf": "RS",
-      "sentido": "Norte / Vacaria",
-      "tarifaBase": 8.60,
-      "prazoPagamentoDias": 30,
-      "status": "ATIVO",
-      "tipoVia": "Rodovia Estadual",
-      "localizacaoDescricao": "Travessia do Rio das Antas em direção a Vacaria e Campos de Cima da Serra",
-      "coordenadas": { "lat": -28.8584, "lng": -51.3021 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
-    },
-    {
-      "id": "portico_csg_03",
-      "concessionaria": "CSG (Caminhos da Serra Gaúcha)",
-      "rodovia": "ERS-122",
-      "km": "Km 151",
-      "municipio": "Ipê",
-      "uf": "RS",
-      "sentido": "Bidirecional",
-      "tarifaBase": 8.60,
-      "prazoPagamentoDias": 30,
-      "status": "ATIVO",
-      "tipoVia": "Rodovia Estadual",
-      "localizacaoDescricao": "Pórtico no planalto serrano entre Ipê e Campestre da Serra",
-      "coordenadas": { "lat": -28.5623, "lng": -51.2789 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
-    },
-    {
-      "id": "portico_csg_04",
-      "concessionaria": "CSG (Caminhos da Serra Gaúcha)",
-      "rodovia": "ERS-122",
-      "km": "Km 45",
+      "id": "gh_portico_ERS-122_455_59",
+      "concessionaria": "Caminhos da Serra Gaúcha (CSG)",
+      "rodovia": "Rota da Serra Gaúcha (ERS-122)",
+      "sigla": "ERS-122",
+      "km": "Km 45,5",
       "municipio": "Farroupilha",
       "uf": "RS",
-      "sentido": "Caxias do Sul / Porto Alegre",
-      "tarifaBase": 10.70,
+      "sentido": "ambos",
+      "tarifaBase": 8.6,
       "prazoPagamentoDias": 30,
       "status": "ATIVO",
-      "tipoVia": "Rodovia Estadual",
-      "localizacaoDescricao": "Corredor logístico entre Caxias do Sul, Farroupilha e Bento Gonçalves",
-      "coordenadas": { "lat": -29.2241, "lng": -51.3468 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico eletrônico localizado em Farroupilha (RS)",
+      "coordenadas": {
+        "lat": -30.0346,
+        "lng": -51.2177
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://parcerias.rs.gov.br/free-flow"
     },
     {
-      "id": "portico_csg_05",
-      "concessionaria": "CSG (Caminhos da Serra Gaúcha)",
-      "rodovia": "ERS-240",
-      "km": "Km 22",
-      "municipio": "Portão",
+      "id": "gh_portico_ERS-122_1083_60",
+      "concessionaria": "Caminhos da Serra Gaúcha (CSG)",
+      "rodovia": "Rota da Serra Gaúcha (ERS-122)",
+      "sigla": "ERS-122",
+      "km": "Km 108,3",
+      "municipio": "Antônio Prado",
       "uf": "RS",
-      "sentido": "Vale do Sinos / Serra Gaúcha",
-      "tarifaBase": 9.00,
+      "sentido": "ambos",
+      "tarifaBase": 8.6,
       "prazoPagamentoDias": 30,
       "status": "ATIVO",
-      "tipoVia": "Rodovia Estadual",
-      "localizacaoDescricao": "Principal elo metropolitano entre São Leopoldo, Novo Hamburgo e o Vale do Caí",
-      "coordenadas": { "lat": -29.7011, "lng": -51.2423 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Primeiro pórtico de free flow em rodovia estadual do Brasil, entre Antônio Prado e Flores da Cunha. Os demais pórticos do Bloco 3 entraram em 30/03/2024.",
+      "coordenadas": {
+        "lat": -30.0346,
+        "lng": -51.2177
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://parcerias.rs.gov.br/free-flow"
     },
     {
-      "id": "portico_csg_06",
-      "concessionaria": "CSG (Caminhos da Serra Gaúcha)",
-      "rodovia": "ERS-446",
+      "id": "gh_portico_ERS-122_1519_61",
+      "concessionaria": "Caminhos da Serra Gaúcha (CSG)",
+      "rodovia": "Rota da Serra Gaúcha (ERS-122)",
+      "sigla": "ERS-122",
+      "km": "Km 151,9",
+      "municipio": "Ipê",
+      "uf": "RS",
+      "sentido": "ambos",
+      "tarifaBase": 8.6,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico eletrônico localizado em Ipê (RS)",
+      "coordenadas": {
+        "lat": -30.0346,
+        "lng": -51.2177
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://parcerias.rs.gov.br/free-flow"
+    },
+    {
+      "id": "gh_portico_ERS-240_301_62",
+      "concessionaria": "Caminhos da Serra Gaúcha (CSG)",
+      "rodovia": "Vale do Caí (ERS-240)",
+      "sigla": "ERS-240",
+      "km": "Km 30,1",
+      "municipio": "Capela de Santana",
+      "uf": "RS",
+      "sentido": "ambos",
+      "tarifaBase": 9,
+      "prazoPagamentoDias": 30,
+      "status": "ATIVO",
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico eletrônico localizado em Capela de Santana (RS)",
+      "coordenadas": {
+        "lat": -30.0346,
+        "lng": -51.2177
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://parcerias.rs.gov.br/free-flow"
+    },
+    {
+      "id": "gh_portico_ERS-446_6_63",
+      "concessionaria": "Caminhos da Serra Gaúcha (CSG)",
+      "rodovia": "Carlos Barbosa (ERS-446)",
+      "sigla": "ERS-446",
       "km": "Km 6",
       "municipio": "Carlos Barbosa",
       "uf": "RS",
-      "sentido": "Vale dos Vinhedos / Garibaldi",
-      "tarifaBase": 8.60,
+      "sentido": "ambos",
+      "tarifaBase": 8.6,
       "prazoPagamentoDias": 30,
       "status": "ATIVO",
-      "tipoVia": "Rodovia Estadual",
-      "localizacaoDescricao": "Garganta da Serra Gaúcha ligando a BR-470 ao Vale do Caí",
-      "coordenadas": { "lat": -29.2983, "lng": -51.5031 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "Pórtico eletrônico localizado em Carlos Barbosa (RS)",
+      "coordenadas": {
+        "lat": -30.0346,
+        "lng": -51.2177
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://parcerias.rs.gov.br/free-flow"
     },
     {
-      "id": "portico_econoroeste_01",
-      "concessionaria": "EcoNoroeste",
-      "rodovia": "SP-310 (Rodovia Washington Luís)",
-      "km": "Km 392",
-      "municipio": "Itápolis",
-      "uf": "SP",
-      "sentido": "Interior / Capital",
-      "tarifaBase": 8.90,
+      "id": "gh_portico_BR-060_43915_64",
+      "concessionaria": "Concessionária Rota Agro MT-GO",
+      "rodovia": "Rota Agro (CN2 Centro-Oeste Norte) (BR-060)",
+      "sigla": "BR-060",
+      "km": "Km 439,15",
+      "municipio": "Jataí",
+      "uf": "GO",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
       "prazoPagamentoDias": 30,
       "status": "ATIVO",
-      "tipoVia": "Rodovia Estadual",
-      "localizacaoDescricao": "Pórtico Free Flow substituto de praça convencional no centro-norte paulista",
-      "coordenadas": { "lat": -21.5956, "lng": -48.8142 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "P1 do contrato. Concessão 100% eletrônica, sem praça física. Cobrança autorizada pela Deliberação ANTT nº 248/2026 e iniciada em 07/09/2026, depois de dez dias de marcha branca desde 28/08/2026. Motocicletas isentas em todo o trecho concedido. Prazo de 30 dias para pagar sem tag. Quilometragem da Deliberação nº 248/2026: o cadastro de pórticos da ANTT ainda não listava esta concessão na verificação de 10/09/2026.",
+      "coordenadas": {
+        "lat": -16.6869,
+        "lng": -49.2648
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=DLB&numeroAto=00000248&seqAto=000&valorAno=2026&orgao=DG%2FANTT%2FMT&cod_modulo=623&cod_menu=9230"
     },
     {
-      "id": "portico_econoroeste_02",
-      "concessionaria": "EcoNoroeste",
-      "rodovia": "SP-326 (Rodovia Brigadeiro Faria Lima)",
-      "km": "Km 338",
-      "municipio": "Jaboticabal",
-      "uf": "SP",
-      "sentido": "Ribeirão Preto / Barretos",
-      "tarifaBase": 11.40,
+      "id": "gh_portico_BR-364_25866_65",
+      "concessionaria": "Concessionária Rota Agro MT-GO",
+      "rodovia": "Rota Agro (CN2 Centro-Oeste Norte) (BR-364)",
+      "sigla": "BR-364",
+      "km": "Km 258,66",
+      "municipio": "Jataí / Mineiros",
+      "uf": "GO",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
       "prazoPagamentoDias": 30,
       "status": "ATIVO",
-      "tipoVia": "Rodovia Estadual",
-      "localizacaoDescricao": "Tronco rodoviário agroindustrial de alta capacidade de tráfego",
-      "coordenadas": { "lat": -21.2541, "lng": -48.3248 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "P2 do contrato. A Deliberação ANTT nº 248/2026 nomeia a praça como Jataí; a concessionária e a imprensa local situam o ponto em Mineiros. Registro sob os dois nomes enquanto a divergência não se resolve. Concessão 100% eletrônica, sem praça física. Cobrança autorizada pela Deliberação ANTT nº 248/2026 e iniciada em 07/09/2026, depois de dez dias de marcha branca desde 28/08/2026. Motocicletas isentas em todo o trecho concedido. Prazo de 30 dias para pagar sem tag. Quilometragem da Deliberação nº 248/2026: o cadastro de pórticos da ANTT ainda não listava esta concessão na verificação de 10/09/2026.",
+      "coordenadas": {
+        "lat": -16.6869,
+        "lng": -49.2648
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=DLB&numeroAto=00000248&seqAto=000&valorAno=2026&orgao=DG%2FANTT%2FMT&cod_modulo=623&cod_menu=9230"
     },
     {
-      "id": "portico_epr_triangulo_01",
-      "concessionaria": "EPR Triângulo",
-      "rodovia": "BR-452",
-      "km": "Km 186",
-      "municipio": "Uberlândia",
-      "uf": "MG",
-      "sentido": "Triângulo Mineiro",
-      "tarifaBase": 12.80,
+      "id": "gh_portico_BR-364_340415_66",
+      "concessionaria": "Concessionária Rota Agro MT-GO",
+      "rodovia": "Rota Agro (CN2 Centro-Oeste Norte) (BR-364)",
+      "sigla": "BR-364",
+      "km": "Km 340,415",
+      "municipio": "Portelândia",
+      "uf": "GO",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
       "prazoPagamentoDias": 30,
       "status": "ATIVO",
-      "tipoVia": "Rodovia Federal Concedida",
-      "localizacaoDescricao": "Pórtico Free Flow entre Uberlândia, Araxá e Santa Juliana",
-      "coordenadas": { "lat": -19.0125, "lng": -47.9863 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "P3 do contrato. Concessão 100% eletrônica, sem praça física. Cobrança autorizada pela Deliberação ANTT nº 248/2026 e iniciada em 07/09/2026, depois de dez dias de marcha branca desde 28/08/2026. Motocicletas isentas em todo o trecho concedido. Prazo de 30 dias para pagar sem tag. Quilometragem da Deliberação nº 248/2026: o cadastro de pórticos da ANTT ainda não listava esta concessão na verificação de 10/09/2026.",
+      "coordenadas": {
+        "lat": -16.6869,
+        "lng": -49.2648
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=DLB&numeroAto=00000248&seqAto=000&valorAno=2026&orgao=DG%2FANTT%2FMT&cod_modulo=623&cod_menu=9230"
     },
     {
-      "id": "portico_epr_triangulo_02",
-      "concessionaria": "EPR Triângulo",
-      "rodovia": "MGF-455",
-      "km": "Km 29",
-      "municipio": "Pirajuba",
-      "uf": "MG",
-      "sentido": "Norte / Sul",
-      "tarifaBase": 10.20,
+      "id": "gh_portico_BR-364_516_67",
+      "concessionaria": "Concessionária Rota Agro MT-GO",
+      "rodovia": "Rota Agro (CN2 Centro-Oeste Norte) (BR-364)",
+      "sigla": "BR-364",
+      "km": "Km 51,6",
+      "municipio": "Alto Garças",
+      "uf": "MT",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
       "prazoPagamentoDias": 30,
       "status": "ATIVO",
-      "tipoVia": "Rodovia Estadual",
-      "localizacaoDescricao": "Ligação rodoviária de escoamento agrícola no Triângulo Mineiro",
-      "coordenadas": { "lat": -19.9042, "lng": -48.1481 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "P4 do contrato. Primeiro ponto de cobrança em fluxo livre de Mato Grosso. Concessão 100% eletrônica, sem praça física. Cobrança autorizada pela Deliberação ANTT nº 248/2026 e iniciada em 07/09/2026, depois de dez dias de marcha branca desde 28/08/2026. Motocicletas isentas em todo o trecho concedido. Prazo de 30 dias para pagar sem tag. Quilometragem da Deliberação nº 248/2026: o cadastro de pórticos da ANTT ainda não listava esta concessão na verificação de 10/09/2026.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=DLB&numeroAto=00000248&seqAto=000&valorAno=2026&orgao=DG%2FANTT%2FMT&cod_modulo=623&cod_menu=9230"
     },
     {
-      "id": "portico_epr_suldeminas_01",
-      "concessionaria": "EPR Sul de Minas",
-      "rodovia": "BR-459",
-      "km": "Km 127",
-      "municipio": "Santa Rita do Sapucaí",
-      "uf": "MG",
-      "sentido": "Circuito das Águas",
-      "tarifaBase": 9.40,
+      "id": "gh_portico_BR-364_106106_68",
+      "concessionaria": "Concessionária Rota Agro MT-GO",
+      "rodovia": "Rota Agro (CN2 Centro-Oeste Norte) (BR-364)",
+      "sigla": "BR-364",
+      "km": "Km 106,106",
+      "municipio": "Pedra Preta",
+      "uf": "MT",
+      "sentido": "ambos",
+      "tarifaBase": 7.5,
       "prazoPagamentoDias": 30,
       "status": "ATIVO",
-      "tipoVia": "Rodovia Federal Concedida",
-      "localizacaoDescricao": "Vale da Eletrônica conectando Pouso Alegre, Itajubá e Santa Rita",
-      "coordenadas": { "lat": -22.2519, "lng": -45.7032 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
-    },
-    {
-      "id": "portico_epr_suldeminas_02",
-      "concessionaria": "EPR Sul de Minas",
-      "rodovia": "MG-290",
-      "km": "Km 34",
-      "municipio": "Borda da Mata",
-      "uf": "MG",
-      "sentido": "Sul de Minas / SP",
-      "tarifaBase": 9.40,
-      "prazoPagamentoDias": 30,
-      "status": "ATIVO",
-      "tipoVia": "Rodovia Estadual",
-      "localizacaoDescricao": "Corredor de confecções e turismo entre Pouso Alegre e a divisa com SP",
-      "coordenadas": { "lat": -22.3789, "lng": -46.1624 },
-      "formasDePagamento": ["PIX Instantâneo", "Tag Automática"]
+      "tipoVia": "Cobrança Eletrônica Free Flow",
+      "localizacaoDescricao": "P5 do contrato. Concessão 100% eletrônica, sem praça física. Cobrança autorizada pela Deliberação ANTT nº 248/2026 e iniciada em 07/09/2026, depois de dez dias de marcha branca desde 28/08/2026. Motocicletas isentas em todo o trecho concedido. Prazo de 30 dias para pagar sem tag. Quilometragem da Deliberação nº 248/2026: o cadastro de pórticos da ANTT ainda não listava esta concessão na verificação de 10/09/2026.",
+      "coordenadas": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "formasDePagamento": [
+        "PIX Instantâneo",
+        "Tag Automática"
+      ],
+      "fonteOriginal": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=DLB&numeroAto=00000248&seqAto=000&valorAno=2026&orgao=DG%2FANTT%2FMT&cod_modulo=623&cod_menu=9230"
     }
   ]
 }

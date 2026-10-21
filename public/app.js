@@ -1155,6 +1155,7 @@
       dom.navItemFreeFlow.addEventListener('click', () => {
         closeDrawer();
         openModal(dom.modalFreeFlow);
+        carregarPorticosFreeFlow();
       });
     }
 
@@ -1785,7 +1786,7 @@
   }
 
   /* ========================================================
-     ONDE TEM FREE FLOW?
+     ONDE TEM FREE FLOW? (BASE ABERTA SEM PARAR / GITHUB)
      ======================================================== */
   function setupFreeFlowModal() {
     if (dom.btnFreeFlowConsultar) {
@@ -1795,6 +1796,323 @@
         if (dom.inputPlaca) dom.inputPlaca.focus();
       });
     }
+
+    // Filtro por Estado (Pills / Chips)
+    if (dom.freeflowChipsRow) {
+      dom.freeflowChipsRow.addEventListener('click', (e) => {
+        const chip = e.target.closest('.freeflow-chip');
+        if (!chip) return;
+        const uf = chip.getAttribute('data-uf') || 'TODOS';
+        state.porticosUfFiltro = uf;
+
+        // Atualizar classe ativa
+        dom.freeflowChipsRow.querySelectorAll('.freeflow-chip').forEach((c) => {
+          c.classList.remove('active');
+        });
+        chip.classList.add('active');
+
+        renderPorticosList();
+      });
+    }
+
+    // Busca por Texto (Rodovia, Município, Concessionária)
+    if (dom.freeflowSearchInput) {
+      dom.freeflowSearchInput.addEventListener('input', (e) => {
+        state.porticosBusca = (e.target.value || '').trim();
+        renderPorticosList();
+      });
+    }
+  }
+
+  async function carregarPorticosFreeFlow(forcar = false) {
+    if (state.porticosCarregados && !forcar && state.porticosFreeFlow.length > 0) {
+      renderPorticosList();
+      return;
+    }
+
+    if (dom.freeflowContainer) {
+      dom.freeflowContainer.innerHTML = `
+        <div class="empty-state">
+          <div class="spinner" style="width: 24px; height: 24px; border-width: 2px;"></div>
+          <span style="font-size: 0.78125rem;">Consultando base de pórticos oficial do Sem Parar...</span>
+        </div>
+      `;
+    }
+
+    try {
+      const response = await fetch('/api/v1/porticos');
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+
+      if (data && Array.isArray(data.porticos) && data.porticos.length > 0) {
+        state.porticosFreeFlow = data.porticos;
+        state.porticosCarregados = true;
+        renderPorticosList();
+        return;
+      }
+    } catch (err) {
+      console.warn('[FreeFlow PWA] Falha ao consultar endpoint da API, recorrendo ao cache ou fallback:', err);
+    }
+
+    // Fallback integrado seguro caso o dispositivo esteja offline
+    state.porticosFreeFlow = [
+      {
+        id: 'portico_dutra_01',
+        concessionaria: 'CCR RioSP',
+        rodovia: 'BR-116 (Via Dutra - Trecho Metropolitano)',
+        km: 'Km 204 a 231',
+        municipio: 'Arujá / Guarulhos / SP',
+        uf: 'SP',
+        tarifaBase: 4.10,
+        prazoPagamentoDias: 30,
+        status: 'ATIVO',
+        localizacaoDescricao: '21 pontos de cobrança Free Flow na chegada a São Paulo e entroncamento com o Rodoanel',
+        coordenadas: { lat: -23.4472, lng: -46.4715 },
+      },
+      {
+        id: 'portico_imigrantes_01',
+        concessionaria: 'Ecovias dos Imigrantes',
+        rodovia: 'SP-160 (Rodovia dos Imigrantes - SAI)',
+        km: 'Km 29 e Km 38',
+        municipio: 'São Bernardo do Campo',
+        uf: 'SP',
+        tarifaBase: 35.80,
+        prazoPagamentoDias: 30,
+        status: 'ATIVO',
+        localizacaoDescricao: 'Pórticos eletrônicos no topo da Serra do Mar (descida litoral e subida capital)',
+        coordenadas: { lat: -23.7712, lng: -46.5647 },
+      },
+      {
+        id: 'portico_tamoios_01',
+        concessionaria: 'Concessionária Tamoios',
+        rodovia: 'SP-099 (Contorno Sul Caraguatatuba - São Sebastião)',
+        km: 'Km 13+500',
+        municipio: 'Caraguatatuba',
+        uf: 'SP',
+        tarifaBase: 5.20,
+        prazoPagamentoDias: 30,
+        status: 'ATIVO',
+        localizacaoDescricao: 'Pórtico eletrônico do novo Contorno da Serra do Mar',
+        coordenadas: { lat: -23.6229, lng: -45.4128 },
+      },
+      {
+        id: 'portico_riosp_01',
+        concessionaria: 'CCR RioSP',
+        rodovia: 'BR-101 (Rio-Santos - Costa Verde)',
+        km: 'Km 538,5',
+        municipio: 'Paraty',
+        uf: 'RJ',
+        tarifaBase: 4.80,
+        prazoPagamentoDias: 30,
+        status: 'ATIVO',
+        localizacaoDescricao: 'Próximo ao trevo de acesso histórico a Paraty',
+        coordenadas: { lat: -23.2201, lng: -44.7174 },
+      },
+      {
+        id: 'portico_riosp_02',
+        concessionaria: 'CCR RioSP',
+        rodovia: 'BR-101 (Rio-Santos - Costa Verde)',
+        km: 'Km 447,3',
+        municipio: 'Mangaratiba',
+        uf: 'RJ',
+        tarifaBase: 4.80,
+        prazoPagamentoDias: 30,
+        status: 'ATIVO',
+        localizacaoDescricao: 'Trecho da Costa Verde entre Conceição de Jacareí e Mangaratiba',
+        coordenadas: { lat: -22.9602, lng: -44.0416 },
+      },
+      {
+        id: 'portico_riosp_03',
+        concessionaria: 'CCR RioSP',
+        rodovia: 'BR-101 (Rio-Santos - Costa Verde)',
+        km: 'Km 414,9',
+        municipio: 'Itaguaí',
+        uf: 'RJ',
+        tarifaBase: 4.80,
+        prazoPagamentoDias: 30,
+        status: 'ATIVO',
+        localizacaoDescricao: 'Acesso metropolitano ao Porto de Itaguaí e Baixada Fluminense',
+        coordenadas: { lat: -22.8872, lng: -43.7758 },
+      },
+      {
+        id: 'portico_csg_01',
+        concessionaria: 'Caminhos da Serra Gaúcha (CSG)',
+        rodovia: 'ERS-122',
+        km: 'Km 99 e Km 108',
+        municipio: 'Flores da Cunha / Antônio Prado',
+        uf: 'RS',
+        tarifaBase: 8.60,
+        prazoPagamentoDias: 30,
+        status: 'ATIVO',
+        localizacaoDescricao: 'Pórticos de integração da Serra Gaúcha e travessia do Rio das Antas',
+        coordenadas: { lat: -29.0289, lng: -51.1895 },
+      },
+      {
+        id: 'portico_econoroeste_01',
+        concessionaria: 'Ecovias Noroeste Paulista',
+        rodovia: 'SP-333 / SP-326',
+        km: 'Km 179 e Km 110',
+        municipio: 'Itápolis / Jaboticabal',
+        uf: 'SP',
+        tarifaBase: 8.90,
+        prazoPagamentoDias: 30,
+        status: 'ATIVO',
+        localizacaoDescricao: 'Pórticos eletrônicos substitutos de praça convencional no interior de SP',
+        coordenadas: { lat: -21.5956, lng: -48.8142 },
+      },
+      {
+        id: 'portico_cnl_01',
+        concessionaria: 'Concessionária Novo Litoral (CNL)',
+        rodovia: 'SP-055 / SP-088 / SP-098',
+        km: 'Km 236 a 291',
+        municipio: 'Santos / Cubatão / Praia Grande',
+        uf: 'SP',
+        tarifaBase: 8.50,
+        prazoPagamentoDias: 30,
+        status: 'ATIVO',
+        localizacaoDescricao: 'Malha 100% eletrônica da Baixada Santista e Litoral Paulista',
+        coordenadas: { lat: -23.8953, lng: -46.4251 },
+      },
+      {
+        id: 'portico_epr_triangulo_01',
+        concessionaria: 'EPR Triângulo',
+        rodovia: 'BR-452',
+        km: 'Km 186',
+        municipio: 'Uberlândia',
+        uf: 'MG',
+        tarifaBase: 12.80,
+        prazoPagamentoDias: 30,
+        status: 'ATIVO',
+        localizacaoDescricao: 'Corredor rodoviário entre Uberlândia e Araxá no Triângulo Mineiro',
+        coordenadas: { lat: -19.0125, lng: -47.9863 },
+      },
+    ];
+
+    state.porticosCarregados = true;
+    renderPorticosList();
+  }
+
+  function renderPorticosList() {
+    if (!dom.freeflowContainer) return;
+
+    let lista = [...state.porticosFreeFlow];
+
+    // Filtro por Estado
+    if (state.porticosUfFiltro && state.porticosUfFiltro !== 'TODOS') {
+      const ufUpper = state.porticosUfFiltro.toUpperCase();
+      lista = lista.filter((p) => (p.uf || '').toUpperCase() === ufUpper);
+    }
+
+    // Filtro por Busca
+    if (state.porticosBusca) {
+      const q = state.porticosBusca.toLowerCase();
+      lista = lista.filter((p) =>
+        (p.rodovia && p.rodovia.toLowerCase().includes(q)) ||
+        (p.concessionaria && p.concessionaria.toLowerCase().includes(q)) ||
+        (p.municipio && p.municipio.toLowerCase().includes(q)) ||
+        (p.km && p.km.toLowerCase().includes(q))
+      );
+    }
+
+    // Atualizar contador
+    if (dom.freeflowCountNotice) {
+      const ufTexto = state.porticosUfFiltro === 'TODOS' ? 'no Brasil' : `em ${state.porticosUfFiltro}`;
+      dom.freeflowCountNotice.textContent = `Exibindo ${lista.length} pórtico(s) ${ufTexto}`;
+    }
+
+    if (lista.length === 0) {
+      dom.freeflowContainer.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">🔍</div>
+          <span style="font-weight: 700; color: #1e293b;">Nenhum pórtico encontrado</span>
+          <span style="font-size: 0.75rem; color: #64748b;">Tente buscar por outro termo ou selecione "Todos os Estados".</span>
+          <button type="button" class="btn-secondary" id="btnLimparFiltrosFreeflow" style="padding: 6px 14px; font-size: 0.75rem; margin-top: 8px;">
+            Limpar Filtros
+          </button>
+        </div>
+      `;
+      const btnLimpar = document.getElementById('btnLimparFiltrosFreeflow');
+      if (btnLimpar) {
+        btnLimpar.addEventListener('click', () => {
+          state.porticosUfFiltro = 'TODOS';
+          state.porticosBusca = '';
+          if (dom.freeflowSearchInput) dom.freeflowSearchInput.value = '';
+          if (dom.freeflowChipsRow) {
+            dom.freeflowChipsRow.querySelectorAll('.freeflow-chip').forEach((c) => {
+              if (c.getAttribute('data-uf') === 'TODOS') c.classList.add('active');
+              else c.classList.remove('active');
+            });
+          }
+          renderPorticosList();
+        });
+      }
+      return;
+    }
+
+    dom.freeflowContainer.innerHTML = lista.map((p) => {
+      const tarifaFormatada = Number(p.tarifaBase || 0).toFixed(2).replace('.', ',');
+      const mapLink = p.coordenadas && p.coordenadas.lat
+        ? `https://www.google.com/maps/search/?api=1&query=${p.coordenadas.lat},${p.coordenadas.lng}`
+        : null;
+
+      return `
+        <div class="freeflow-card" data-uf="${p.uf || 'BR'}">
+          <div class="freeflow-header">
+            <div class="freeflow-road-group">
+              <span class="freeflow-road">${p.rodovia}</span>
+              <span class="freeflow-km-badge">${p.km}</span>
+            </div>
+            <div class="freeflow-badges">
+              <span class="freeflow-state-badge">${p.uf || 'BR'}</span>
+              <span class="freeflow-status-badge">🟢 ATIVO</span>
+            </div>
+          </div>
+
+          <div class="freeflow-concessionaria">
+            🏢 <strong>${p.concessionaria}</strong>
+          </div>
+
+          <div class="freeflow-locations">
+            📍 <strong>${p.municipio} - ${p.uf}</strong> • ${p.localizacaoDescricao || 'Pórtico eletrônico com leitura automática de placas e tags'}
+          </div>
+
+          <div class="freeflow-meta-grid">
+            <div class="freeflow-meta-item">
+              <span class="freeflow-meta-label">Tarifa Oficial Base</span>
+              <span class="freeflow-meta-val highlight">R$ ${tarifaFormatada}</span>
+            </div>
+            <div class="freeflow-meta-item">
+              <span class="freeflow-meta-label">Prazo Legal Sem Multa</span>
+              <span class="freeflow-meta-val">⏱️ ${p.prazoPagamentoDias || 30} dias (Art. 209-A)</span>
+            </div>
+          </div>
+
+          <div class="freeflow-card-footer">
+            ${mapLink ? `
+              <a href="${mapLink}" target="_blank" rel="noopener noreferrer" class="freeflow-map-link">
+                📍 Ver no mapa
+              </a>
+            ` : `<span></span>`}
+            <button type="button" class="freeflow-action-btn" data-rodovia="${p.rodovia || ''}">
+              🚗 Consultar Débitos
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Adicionar eventos aos botões "Consultar Débitos" de cada pórtico
+    dom.freeflowContainer.querySelectorAll('.freeflow-action-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const rodovia = btn.getAttribute('data-rodovia') || '';
+        closeModal(dom.modalFreeFlow);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (dom.inputPlaca) {
+          dom.inputPlaca.focus();
+          showToast(`🚗 Informe sua placa para consultar débitos de ${rodovia}`);
+        }
+      });
+    });
   }
 
   /* ========================================================
