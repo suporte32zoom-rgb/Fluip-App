@@ -21,9 +21,9 @@ const URL_PORTICOS_CSV = `${GITHUB_RAW_BASE}/porticos-free-flow.csv`;
 const URL_CONCESSIONARIAS_CSV = `${GITHUB_RAW_BASE}/concessionarias-free-flow.csv`;
 
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 horas em milissegundos
-const FILE_CACHE_PATH = path.join(__dirname, '../data/freeflowPorticos.json');
-const FILE_BACKUP_PATH = path.join(__dirname, '../data/freeFlowBackup.json');
-const FILE_BACKUP_ALT_PATH = path.join(__dirname, '../data/freeflowPorticosBackup.json');
+const FILE_CACHE_PATH = path.join(process.cwd(), 'src/data/freeflowPorticos.json');
+const FILE_BACKUP_PATH = path.join(process.cwd(), 'src/data/freeFlowBackup.json');
+const FILE_BACKUP_ALT_PATH = path.join(process.cwd(), 'src/data/freeflowPorticosBackup.json');
 
 // Tarifas base oficiais de referência por concessionária / trecho para veículos de passeio (Cat. 1)
 const TARIFAS_BASE_REFERENCIA = {

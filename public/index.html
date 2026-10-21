@@ -960,11 +960,82 @@
           </div>
         </div>
 
-        <!-- Lista dinâmica de pórticos -->
+        <!-- Lista dinâmica de pórticos (Carregamento Imediato com Sincronização em Segundo Plano) -->
         <div id="freeflowContainer" class="freeflow-list" aria-live="polite">
-          <div class="empty-state">
-            <div class="spinner" style="width: 24px; height: 24px; border-width: 2px;"></div>
-            <span>Consultando base oficial de pórticos...</span>
+          <!-- Card 1: Via Dutra BR-116 -->
+          <div class="freeflow-card" data-uf="SP">
+            <div class="freeflow-header">
+              <div class="freeflow-road-group">
+                <span class="freeflow-road">BR-116 (Via Dutra - Trecho Metropolitano SP)</span>
+                <span class="freeflow-km-badge">Km 204 a 231</span>
+              </div>
+              <div class="freeflow-badges">
+                <span class="freeflow-state-badge">SP</span>
+                <span class="freeflow-status-badge">🟢 ATIVO</span>
+              </div>
+            </div>
+            <div class="freeflow-concessionaria">
+              🏢 <strong>CCR RioSP</strong>
+            </div>
+            <div class="freeflow-locations">
+              📍 <strong>São Paulo / Guarulhos / Arujá - SP</strong> • 21 pontos de cobrança Free Flow na chegada à capital e Rodoanel
+            </div>
+            <div class="freeflow-meta-grid">
+              <div class="freeflow-meta-item">
+                <span class="freeflow-meta-label">Tarifa Oficial Base</span>
+                <span class="freeflow-meta-val highlight">R$ 4,10</span>
+              </div>
+              <div class="freeflow-meta-item">
+                <span class="freeflow-meta-label">Prazo Legal Sem Multa</span>
+                <span class="freeflow-meta-val">⏱️ 30 dias (Art. 209-A)</span>
+              </div>
+            </div>
+            <div class="freeflow-card-footer">
+              <a href="https://www.google.com/maps/search/?api=1&query=-23.4472,-46.4715" target="_blank" rel="noopener noreferrer" class="freeflow-map-link">
+                📍 Ver no mapa
+              </a>
+              <button type="button" class="freeflow-action-btn" data-rodovia="BR-116 (Via Dutra)">
+                🚗 Consultar Débitos
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2: BR-101 Rio-Santos -->
+          <div class="freeflow-card" data-uf="RJ">
+            <div class="freeflow-header">
+              <div class="freeflow-road-group">
+                <span class="freeflow-road">BR-101 (Rio-Santos - Costa Verde)</span>
+                <span class="freeflow-km-badge">Km 538,5 • Paraty</span>
+              </div>
+              <div class="freeflow-badges">
+                <span class="freeflow-state-badge">RJ</span>
+                <span class="freeflow-status-badge">🟢 ATIVO</span>
+              </div>
+            </div>
+            <div class="freeflow-concessionaria">
+              🏢 <strong>CCR RioSP</strong>
+            </div>
+            <div class="freeflow-locations">
+              📍 <strong>Paraty - RJ</strong> • Trevo de acesso histórico a Paraty (Pórticos em Paraty, Mangaratiba e Itaguaí)
+            </div>
+            <div class="freeflow-meta-grid">
+              <div class="freeflow-meta-item">
+                <span class="freeflow-meta-label">Tarifa Oficial Base</span>
+                <span class="freeflow-meta-val highlight">R$ 4,80</span>
+              </div>
+              <div class="freeflow-meta-item">
+                <span class="freeflow-meta-label">Prazo Legal Sem Multa</span>
+                <span class="freeflow-meta-val">⏱️ 30 dias (Art. 209-A)</span>
+              </div>
+            </div>
+            <div class="freeflow-card-footer">
+              <a href="https://www.google.com/maps/search/?api=1&query=-23.2201,-44.7174" target="_blank" rel="noopener noreferrer" class="freeflow-map-link">
+                📍 Ver no mapa
+              </a>
+              <button type="button" class="freeflow-action-btn" data-rodovia="BR-101 (Rio-Santos)">
+                🚗 Consultar Débitos
+              </button>
+            </div>
           </div>
         </div>
 

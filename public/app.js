@@ -1785,10 +1785,230 @@
     }
   }
 
+  // Catálogo completo oficial embutido de contingência (Garante exibição instantânea 0ms)
+  const PORTICOS_BACKUP_CATALOG = [
+    {
+      id: 'portico_dutra_01',
+      concessionaria: 'CCR RioSP',
+      rodovia: 'BR-116 (Via Dutra - Trecho Metropolitano SP)',
+      km: 'Km 204 a 231',
+      municipio: 'Arujá / Guarulhos / SP',
+      uf: 'SP',
+      sentido: 'Bidirecional (SP / Rio)',
+      tarifaBase: 4.10,
+      prazoPagamentoDias: 30,
+      status: 'ATIVO',
+      tipoVia: 'Rodovia Federal Concedida',
+      localizacaoDescricao: '21 pontos de cobrança Free Flow na chegada à Marginal Tietê, Arujá e Rodoanel',
+      coordenadas: { lat: -23.4472, lng: -46.4715 },
+    },
+    {
+      id: 'portico_dutra_02',
+      concessionaria: 'CCR RioSP',
+      rodovia: 'BR-116 (Via Dutra - Vale do Paraíba)',
+      km: 'Km 140',
+      municipio: 'São José dos Campos',
+      uf: 'SP',
+      sentido: 'Bidirecional',
+      tarifaBase: 7.40,
+      prazoPagamentoDias: 30,
+      status: 'ATIVO',
+      tipoVia: 'Rodovia Federal Concedida',
+      localizacaoDescricao: 'Pórtico eletrônico no polo industrial e aeroespacial de São José dos Campos',
+      coordenadas: { lat: -23.1896, lng: -45.8841 },
+    },
+    {
+      id: 'portico_riosp_01',
+      concessionaria: 'CCR RioSP',
+      rodovia: 'BR-101 (Rio-Santos - Costa Verde)',
+      km: 'Km 538,5',
+      municipio: 'Paraty',
+      uf: 'RJ',
+      sentido: 'Bidirecional (Norte / Sul)',
+      tarifaBase: 4.80,
+      prazoPagamentoDias: 30,
+      status: 'ATIVO',
+      tipoVia: 'Rodovia Federal',
+      localizacaoDescricao: 'Próximo ao trevo de acesso histórico a Paraty',
+      coordenadas: { lat: -23.2201, lng: -44.7174 },
+    },
+    {
+      id: 'portico_riosp_02',
+      concessionaria: 'CCR RioSP',
+      rodovia: 'BR-101 (Rio-Santos - Costa Verde)',
+      km: 'Km 447,3',
+      municipio: 'Mangaratiba',
+      uf: 'RJ',
+      sentido: 'Bidirecional (Norte / Sul)',
+      tarifaBase: 4.80,
+      prazoPagamentoDias: 30,
+      status: 'ATIVO',
+      tipoVia: 'Rodovia Federal',
+      localizacaoDescricao: 'Trecho da Costa Verde entre Conceição de Jacareí e Mangaratiba',
+      coordenadas: { lat: -22.9602, lng: -44.0416 },
+    },
+    {
+      id: 'portico_riosp_03',
+      concessionaria: 'CCR RioSP',
+      rodovia: 'BR-101 (Rio-Santos - Costa Verde)',
+      km: 'Km 414,9',
+      municipio: 'Itaguaí',
+      uf: 'RJ',
+      sentido: 'Bidirecional (Norte / Sul)',
+      tarifaBase: 4.80,
+      prazoPagamentoDias: 30,
+      status: 'ATIVO',
+      tipoVia: 'Rodovia Federal',
+      localizacaoDescricao: 'Acesso metropolitano ao Porto de Itaguaí e Baixada Fluminense',
+      coordenadas: { lat: -22.8872, lng: -43.7758 },
+    },
+    {
+      id: 'portico_tamoios_01',
+      concessionaria: 'Concessionária Tamoios',
+      rodovia: 'SP-099 (Contorno Sul Caraguatatuba - São Sebastião)',
+      km: 'Km 13+500',
+      municipio: 'Caraguatatuba',
+      uf: 'SP',
+      sentido: 'Bidirecional (Litoral Norte)',
+      tarifaBase: 5.20,
+      prazoPagamentoDias: 30,
+      status: 'ATIVO',
+      tipoVia: 'Rodovia Estadual',
+      localizacaoDescricao: 'Pórtico eletrônico do novo Contorno da Serra do Mar ligando Caraguatatuba a São Sebastião',
+      coordenadas: { lat: -23.6229, lng: -45.4128 },
+    },
+    {
+      id: 'portico_imigrantes_01',
+      concessionaria: 'Ecovias dos Imigrantes',
+      rodovia: 'SP-160 (Rodovia dos Imigrantes - SAI)',
+      km: 'Km 29 e Km 38',
+      municipio: 'São Bernardo do Campo',
+      uf: 'SP',
+      sentido: 'Descida e Subida da Serra',
+      tarifaBase: 35.80,
+      prazoPagamentoDias: 30,
+      status: 'ATIVO',
+      tipoVia: 'Rodovia Estadual Concedida',
+      localizacaoDescricao: 'Pórticos eletrônicos no topo da Serra do Mar e acesso à Baixada Santista',
+      coordenadas: { lat: -23.7712, lng: -46.5647 },
+    },
+    {
+      id: 'portico_csg_01',
+      concessionaria: 'Caminhos da Serra Gaúcha (CSG)',
+      rodovia: 'ERS-122',
+      km: 'Km 99 e Km 108',
+      municipio: 'Flores da Cunha / Antônio Prado',
+      uf: 'RS',
+      sentido: 'Serra / Capital',
+      tarifaBase: 8.60,
+      prazoPagamentoDias: 30,
+      status: 'ATIVO',
+      tipoVia: 'Rodovia Estadual',
+      localizacaoDescricao: 'Pórticos de integração da Serra Gaúcha e travessia do Rio das Antas',
+      coordenadas: { lat: -29.0289, lng: -51.1895 },
+    },
+    {
+      id: 'portico_csg_02',
+      concessionaria: 'Caminhos da Serra Gaúcha (CSG)',
+      rodovia: 'ERS-240 / ERS-446',
+      km: 'Km 22 e Km 6',
+      municipio: 'Portão / Carlos Barbosa',
+      uf: 'RS',
+      sentido: 'Vale do Sinos / Serra Gaúcha',
+      tarifaBase: 9.00,
+      prazoPagamentoDias: 30,
+      status: 'ATIVO',
+      tipoVia: 'Rodovia Estadual',
+      localizacaoDescricao: 'Elo metropolitano e acesso à região dos vinhedos da Serra Gaúcha',
+      coordenadas: { lat: -29.7011, lng: -51.2423 },
+    },
+    {
+      id: 'portico_econoroeste_01',
+      concessionaria: 'Ecovias Noroeste Paulista',
+      rodovia: 'SP-333 (Rodovia Laurentino Mascari)',
+      km: 'Km 179 e Km 110',
+      municipio: 'Itápolis / Jaboticabal',
+      uf: 'SP',
+      sentido: 'Interior / Capital',
+      tarifaBase: 8.90,
+      prazoPagamentoDias: 30,
+      status: 'ATIVO',
+      tipoVia: 'Rodovia Estadual',
+      localizacaoDescricao: 'Primeiros pórticos Free Flow do interior paulista substituindo praças físicas',
+      coordenadas: { lat: -21.5956, lng: -48.8142 },
+    },
+    {
+      id: 'portico_cnl_01',
+      concessionaria: 'Concessionária Novo Litoral (CNL)',
+      rodovia: 'SP-055 / SP-088 (Mogi-Dutra)',
+      km: 'Km 236 a 291 e Km 37',
+      municipio: 'Santos / Cubatão / Arujá',
+      uf: 'SP',
+      sentido: 'Litoral Paulista / Capital',
+      tarifaBase: 8.50,
+      prazoPagamentoDias: 30,
+      status: 'ATIVO',
+      tipoVia: 'Rodovia Estadual',
+      localizacaoDescricao: 'Malha rodoviária 100% eletrônica da Baixada Santista e Mogi das Cruzes',
+      coordenadas: { lat: -23.8953, lng: -46.4251 },
+    },
+    {
+      id: 'portico_rodoanel_01',
+      concessionaria: 'Via SP Serra (Rodoanel Norte SPE)',
+      rodovia: 'SP-021 (Rodoanel Mário Covas)',
+      km: 'Km 135',
+      municipio: 'Guarulhos',
+      uf: 'SP',
+      sentido: 'Ambos os sentidos',
+      tarifaBase: 5.50,
+      prazoPagamentoDias: 30,
+      status: 'ATIVO',
+      tipoVia: 'Rodovia Estadual Concedida',
+      localizacaoDescricao: 'Pórtico eletrônico do Programa Siga Fácil no anel viário metropolitano de SP',
+      coordenadas: { lat: -23.4118, lng: -46.5295 },
+    },
+    {
+      id: 'portico_raposo_01',
+      concessionaria: 'Motiva Sorocabana (CCR Sorocabana)',
+      rodovia: 'SP-270 (Rodovia Raposo Tavares)',
+      km: 'Km 48 e Km 83',
+      municipio: 'São Roque / Alumínio',
+      uf: 'SP',
+      sentido: 'Capital / Interior',
+      tarifaBase: 5.90,
+      prazoPagamentoDias: 30,
+      status: 'ATIVO',
+      tipoVia: 'Rodovia Estadual Concedida',
+      localizacaoDescricao: 'Pórticos eletrônicos no corredor Raposo Tavares',
+      coordenadas: { lat: -23.5312, lng: -47.1354 },
+    },
+    {
+      id: 'portico_epr_triangulo_01',
+      concessionaria: 'EPR Triângulo / Sul de Minas',
+      rodovia: 'BR-452 / BR-459',
+      km: 'Km 186 e Km 127',
+      municipio: 'Uberlândia / Santa Rita do Sapucaí',
+      uf: 'MG',
+      sentido: 'Triângulo e Sul Mineiro',
+      tarifaBase: 11.20,
+      prazoPagamentoDias: 30,
+      status: 'ATIVO',
+      tipoVia: 'Rodovia Federal Concedida',
+      localizacaoDescricao: 'Pórticos eletrônicos em rodovias federais e estaduais de Minas Gerais',
+      coordenadas: { lat: -19.0125, lng: -47.9863 },
+    },
+  ];
+
   /* ========================================================
      ONDE TEM FREE FLOW? (BASE ABERTA SEM PARAR / GITHUB)
      ======================================================== */
   function setupFreeFlowModal() {
+    // Inicialização Imediata com dados do backup: nunca trava o usuário em tela de carregamento
+    if (!state.porticosFreeFlow || state.porticosFreeFlow.length === 0) {
+      state.porticosFreeFlow = [...PORTICOS_BACKUP_CATALOG];
+      state.porticosCarregados = true;
+    }
+
     if (dom.btnFreeFlowConsultar) {
       dom.btnFreeFlowConsultar.addEventListener('click', () => {
         closeModal(dom.modalFreeFlow);
@@ -1822,174 +2042,58 @@
         renderPorticosList();
       });
     }
+
+    // Renderizar imediatamente no carregamento da aplicação
+    renderPorticosList();
+
+    // Sincronizar em segundo plano de forma silenciosa e resiliente
+    carregarPorticosFreeFlow();
   }
 
+  /**
+   * Carregamento assíncrono com exibição imediata do backup e atualização resiliente (Timeout 1.5s)
+   */
   async function carregarPorticosFreeFlow(forcar = false) {
-    if (state.porticosCarregados && !forcar && state.porticosFreeFlow.length > 0) {
+    // 1. GARANTIA INSTANTÂNEA: Se o estado estiver vazio, aplicar o backup imediatamente
+    if (!state.porticosFreeFlow || state.porticosFreeFlow.length === 0) {
+      state.porticosFreeFlow = [...PORTICOS_BACKUP_CATALOG];
+      state.porticosCarregados = true;
       renderPorticosList();
-      return;
+    } else {
+      renderPorticosList();
     }
 
-    if (dom.freeflowContainer) {
-      dom.freeflowContainer.innerHTML = `
-        <div class="empty-state">
-          <div class="spinner" style="width: 24px; height: 24px; border-width: 2px;"></div>
-          <span style="font-size: 0.78125rem;">Consultando base de pórticos oficial do Sem Parar...</span>
-        </div>
-      `;
-    }
+    // 2. Tentar carregar em segundo plano o arquivo estático público public/data/porticos.json
+    fetch('/data/porticos.json')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && Array.isArray(data.porticos) && data.porticos.length > 0) {
+          state.porticosFreeFlow = data.porticos;
+          renderPorticosList();
+        }
+      })
+      .catch(() => {});
 
+    // 3. Atualizar em segundo plano via rota /api/freeflow conectada ao GitHub (com timeout de 1.5s)
     try {
-      const response = await fetch('/api/v1/porticos');
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const data = await response.json();
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 1500);
 
-      if (data && Array.isArray(data.porticos) && data.porticos.length > 0) {
-        state.porticosFreeFlow = data.porticos;
-        state.porticosCarregados = true;
-        renderPorticosList();
-        return;
+      const response = await fetch('/api/freeflow', { signal: controller.signal });
+      clearTimeout(timeoutId);
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data && Array.isArray(data.porticos) && data.porticos.length > 0) {
+          state.porticosFreeFlow = data.porticos;
+          state.porticosCarregados = true;
+          renderPorticosList();
+        }
       }
     } catch (err) {
-      console.warn('[FreeFlow PWA] Falha ao consultar endpoint da API, recorrendo ao cache ou fallback:', err);
+      // Falha de rede ou timeout de 1.5s: lista do backup local já está ativa na tela
+      console.log('[FreeFlow PWA] Mantendo catálogo de contingência rápida do backup');
     }
-
-    // Fallback integrado seguro caso o dispositivo esteja offline
-    state.porticosFreeFlow = [
-      {
-        id: 'portico_dutra_01',
-        concessionaria: 'CCR RioSP',
-        rodovia: 'BR-116 (Via Dutra - Trecho Metropolitano)',
-        km: 'Km 204 a 231',
-        municipio: 'Arujá / Guarulhos / SP',
-        uf: 'SP',
-        tarifaBase: 4.10,
-        prazoPagamentoDias: 30,
-        status: 'ATIVO',
-        localizacaoDescricao: '21 pontos de cobrança Free Flow na chegada a São Paulo e entroncamento com o Rodoanel',
-        coordenadas: { lat: -23.4472, lng: -46.4715 },
-      },
-      {
-        id: 'portico_imigrantes_01',
-        concessionaria: 'Ecovias dos Imigrantes',
-        rodovia: 'SP-160 (Rodovia dos Imigrantes - SAI)',
-        km: 'Km 29 e Km 38',
-        municipio: 'São Bernardo do Campo',
-        uf: 'SP',
-        tarifaBase: 35.80,
-        prazoPagamentoDias: 30,
-        status: 'ATIVO',
-        localizacaoDescricao: 'Pórticos eletrônicos no topo da Serra do Mar (descida litoral e subida capital)',
-        coordenadas: { lat: -23.7712, lng: -46.5647 },
-      },
-      {
-        id: 'portico_tamoios_01',
-        concessionaria: 'Concessionária Tamoios',
-        rodovia: 'SP-099 (Contorno Sul Caraguatatuba - São Sebastião)',
-        km: 'Km 13+500',
-        municipio: 'Caraguatatuba',
-        uf: 'SP',
-        tarifaBase: 5.20,
-        prazoPagamentoDias: 30,
-        status: 'ATIVO',
-        localizacaoDescricao: 'Pórtico eletrônico do novo Contorno da Serra do Mar',
-        coordenadas: { lat: -23.6229, lng: -45.4128 },
-      },
-      {
-        id: 'portico_riosp_01',
-        concessionaria: 'CCR RioSP',
-        rodovia: 'BR-101 (Rio-Santos - Costa Verde)',
-        km: 'Km 538,5',
-        municipio: 'Paraty',
-        uf: 'RJ',
-        tarifaBase: 4.80,
-        prazoPagamentoDias: 30,
-        status: 'ATIVO',
-        localizacaoDescricao: 'Próximo ao trevo de acesso histórico a Paraty',
-        coordenadas: { lat: -23.2201, lng: -44.7174 },
-      },
-      {
-        id: 'portico_riosp_02',
-        concessionaria: 'CCR RioSP',
-        rodovia: 'BR-101 (Rio-Santos - Costa Verde)',
-        km: 'Km 447,3',
-        municipio: 'Mangaratiba',
-        uf: 'RJ',
-        tarifaBase: 4.80,
-        prazoPagamentoDias: 30,
-        status: 'ATIVO',
-        localizacaoDescricao: 'Trecho da Costa Verde entre Conceição de Jacareí e Mangaratiba',
-        coordenadas: { lat: -22.9602, lng: -44.0416 },
-      },
-      {
-        id: 'portico_riosp_03',
-        concessionaria: 'CCR RioSP',
-        rodovia: 'BR-101 (Rio-Santos - Costa Verde)',
-        km: 'Km 414,9',
-        municipio: 'Itaguaí',
-        uf: 'RJ',
-        tarifaBase: 4.80,
-        prazoPagamentoDias: 30,
-        status: 'ATIVO',
-        localizacaoDescricao: 'Acesso metropolitano ao Porto de Itaguaí e Baixada Fluminense',
-        coordenadas: { lat: -22.8872, lng: -43.7758 },
-      },
-      {
-        id: 'portico_csg_01',
-        concessionaria: 'Caminhos da Serra Gaúcha (CSG)',
-        rodovia: 'ERS-122',
-        km: 'Km 99 e Km 108',
-        municipio: 'Flores da Cunha / Antônio Prado',
-        uf: 'RS',
-        tarifaBase: 8.60,
-        prazoPagamentoDias: 30,
-        status: 'ATIVO',
-        localizacaoDescricao: 'Pórticos de integração da Serra Gaúcha e travessia do Rio das Antas',
-        coordenadas: { lat: -29.0289, lng: -51.1895 },
-      },
-      {
-        id: 'portico_econoroeste_01',
-        concessionaria: 'Ecovias Noroeste Paulista',
-        rodovia: 'SP-333 / SP-326',
-        km: 'Km 179 e Km 110',
-        municipio: 'Itápolis / Jaboticabal',
-        uf: 'SP',
-        tarifaBase: 8.90,
-        prazoPagamentoDias: 30,
-        status: 'ATIVO',
-        localizacaoDescricao: 'Pórticos eletrônicos substitutos de praça convencional no interior de SP',
-        coordenadas: { lat: -21.5956, lng: -48.8142 },
-      },
-      {
-        id: 'portico_cnl_01',
-        concessionaria: 'Concessionária Novo Litoral (CNL)',
-        rodovia: 'SP-055 / SP-088 / SP-098',
-        km: 'Km 236 a 291',
-        municipio: 'Santos / Cubatão / Praia Grande',
-        uf: 'SP',
-        tarifaBase: 8.50,
-        prazoPagamentoDias: 30,
-        status: 'ATIVO',
-        localizacaoDescricao: 'Malha 100% eletrônica da Baixada Santista e Litoral Paulista',
-        coordenadas: { lat: -23.8953, lng: -46.4251 },
-      },
-      {
-        id: 'portico_epr_triangulo_01',
-        concessionaria: 'EPR Triângulo',
-        rodovia: 'BR-452',
-        km: 'Km 186',
-        municipio: 'Uberlândia',
-        uf: 'MG',
-        tarifaBase: 12.80,
-        prazoPagamentoDias: 30,
-        status: 'ATIVO',
-        localizacaoDescricao: 'Corredor rodoviário entre Uberlândia e Araxá no Triângulo Mineiro',
-        coordenadas: { lat: -19.0125, lng: -47.9863 },
-      },
-    ];
-
-    state.porticosCarregados = true;
-    renderPorticosList();
   }
 
   function renderPorticosList() {

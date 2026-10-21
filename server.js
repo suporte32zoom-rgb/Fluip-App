@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import apiRoutes from './src/routes/api.js';
 import authRoutes from './src/routes/auth.js';
+import pedagioRoutes from './src/routes/pedagioRoutes.js';
 
 // Carregar variáveis de ambiente
 dotenv.config();
@@ -39,7 +40,9 @@ app.get('/manifest.json', (req, res) => {
 const publicDir = path.join(__dirname, 'public');
 app.use(express.static(publicDir));
 
-// Rotas da API RESTful (v1) e Autenticação Opcional
+// Rotas da API RESTful (v1), Free Flow Oficial e Autenticação Opcional
+app.use('/api', pedagioRoutes);
+app.use('/api/v1', pedagioRoutes);
 app.use('/api/v1', apiRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/v1/auth', authRoutes);
