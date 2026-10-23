@@ -134,96 +134,13 @@ const handleGetFreeFlow = async (req, res) => {
 };
 
 /**
- * Rota Oficial ANTT / Veículo (Infosimples)
- * Docs: https://api.infosimples.com/consultas/docs/antt/veiculo
- * Requisição: https://api.infosimples.com/api/v2/consultas/antt/veiculo?token=...&timeout=600&ignore_site_receipt=0&placa=&cpf=&cnpj=&rntrc=
- */
-const handleConsultarAntt = async (req, res) => {
-  setCorsHeaders(res);
-  const token = process.env.INFOSIMPLES_TOKEN || 'x0tKkeGRNjcCuMbrF7DPtkF8hGGDJANd7lFNIU72';
-
-  const placa = (req.query.placa || req.body?.placa || '').toUpperCase().trim();
-  const cpf = (req.query.cpf || req.body?.cpf || '').replace(/\D/g, '').trim();
-  const cnpj = (req.query.cnpj || req.body?.cnpj || '').replace(/\D/g, '').trim();
-  const rntrc = (req.query.rntrc || req.body?.rntrc || '').trim();
-  const timeout = Number(req.query.timeout || req.body?.timeout) || 600;
-  const ignoreSiteReceipt = req.query.ignore_site_receipt !== undefined 
-    ? Number(req.query.ignore_site_receipt) 
-    : (req.body?.ignore_site_receipt !== undefined ? Number(req.body.ignore_site_receipt) : 0);
-
-  if (!placa) {
-    return res.status(400).json({
-      sucesso: false,
-      mensagem: 'O parâmetro "placa" é obrigatório para a consulta ANTT.'
-    });
-  }
-
-  if (!cpf && !cnpj && !rntrc) {
-    return res.status(400).json({
-      sucesso: false,
-      mensagem: "É necessário informar ao menos um dos parâmetros: 'cpf', 'cnpj' ou 'rntrc' conforme especificação oficial da ANTT.",
-      documentacao: 'https://api.infosimples.com/consultas/docs/antt/veiculo'
-    });
-  }
-
-  try {
-    const url = 'https://api.infosimples.com/api/v2/consultas/antt/veiculo';
-    const params = {
-      token,
-      timeout,
-      ignore_site_receipt: ignoreSiteReceipt,
-      placa,
-      ...(cpf ? { cpf } : {}),
-      ...(cnpj ? { cnpj } : {}),
-      ...(rntrc ? { rntrc } : {}),
-    };
-
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(params)
-    });
-
-    const dados = await response.json();
-
-    if (dados.code && dados.code !== 200) {
-      return res.status(400).json({
-        sucesso: false,
-        codigo: dados.code,
-        mensagem: dados.message || dados.code_message || 'Não foi possível localizar dados na base da ANTT para estes parâmetros.',
-        erros: dados.errors || [],
-        documentacao: 'https://api.infosimples.com/consultas/docs/antt/veiculo'
-      });
-    }
-
-    const itemData = Array.isArray(dados.data) ? dados.data[0] : (dados.data || {});
-
-    return res.status(200).json({
-      sucesso: true,
-      servico: 'antt/veiculo',
-      fonte: 'Agência Nacional de Transportes Terrestres (ANTT)',
-      documentacao: 'https://api.infosimples.com/consultas/docs/antt/veiculo',
-      dados: itemData,
-      header: dados.header
-    });
-
-  } catch (error) {
-    console.error('[ANTT Consulta] Erro:', error);
-    return res.status(500).json({
-      sucesso: false,
-      mensagem: 'Erro de comunicação ao consultar base oficial da ANTT.'
-    });
-  }
-};
-
-/**
- * 1. Rota para consultar a placa e os débitos reais na Infosimples / ANTT
- * GET & POST /api/consultar-placa/:placa
+ * 1. Rota para consultar a placa e os débitos reais na Infosimples
+ * GET /api/consultar-placa/:placa
  */
 const handleConsultarPlaca = async (req, res) => {
   setCorsHeaders(res);
   const { placa } = req.params;
-  const tokenSegredo = process.env.INFOSIMPLES_TOKEN || 'x0tKkeGRNjcCuMbrF7DPtkF8hGGDJANd7lFNIU72';
+  const tokenSegredo = process.env.INFOSIMPLES_TOKEN || 'x0tKkeGRNjcCuMbrF7DPtkF8hGGDJANd7lFNIU72'; // Variável segura do servidor
 
   if (!tokenSegredo) {
     return res.status(500).json({ 
@@ -232,63 +149,10 @@ const handleConsultarPlaca = async (req, res) => {
     });
   }
 
-  const cpf = (req.query.cpf || req.body?.cpf || '').replace(/\D/g, '').trim();
-  const cnpj = (req.query.cnpj || req.body?.cnpj || '').replace(/\D/g, '').trim();
-  const rntrc = (req.query.rntrc || req.body?.rntrc || '').trim();
-  const timeout = Number(req.query.timeout || req.body?.timeout) || 600;
-  const ignoreSiteReceipt = req.query.ignore_site_receipt !== undefined 
-    ? Number(req.query.ignore_site_receipt) 
-    : (req.body?.ignore_site_receipt !== undefined ? Number(req.body.ignore_site_receipt) : 0);
-
-  // Se o usuário enviou CPF, CNPJ ou RNTRC, aciona prioritariamente a API oficial da ANTT
-  if (cpf || cnpj || rntrc) {
-    try {
-      const urlAntt = 'https://api.infosimples.com/api/v2/consultas/antt/veiculo';
-      const responseAntt = await fetch(urlAntt, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          token: tokenSegredo,
-          timeout,
-          ignore_site_receipt: ignoreSiteReceipt,
-          placa: (placa || '').toUpperCase(),
-          ...(cpf ? { cpf } : {}),
-          ...(cnpj ? { cnpj } : {}),
-          ...(rntrc ? { rntrc } : {}),
-        })
-      });
-
-      const dadosAntt = await responseAntt.json();
-
-      if (dadosAntt && dadosAntt.code === 200) {
-        const itemAntt = Array.isArray(dadosAntt.data) ? dadosAntt.data[0] : (dadosAntt.data || {});
-        return res.json({
-          sucesso: true,
-          fonte: 'ANTT / Infosimples (RNTRC Oficial)',
-          documentacao: 'https://api.infosimples.com/consultas/docs/antt/veiculo',
-          veiculo: itemAntt.veiculo || itemAntt,
-          transportador: itemAntt.transportador || {},
-          rntrc: itemAntt.rntrc || {},
-          debitos: itemAntt.debitos_pendentes || []
-        });
-      } else if (dadosAntt && dadosAntt.code) {
-        return res.status(400).json({
-          sucesso: false,
-          codigo: dadosAntt.code,
-          mensagem: dadosAntt.message || dadosAntt.code_message || 'Não foi possível localizar dados na ANTT para esta placa e documento.',
-          erros: dadosAntt.errors || [],
-          documentacao: 'https://api.infosimples.com/consultas/docs/antt/veiculo'
-        });
-      }
-    } catch (eAntt) {
-      console.warn('[ANTT via consultar-placa] Aviso de rede:', eAntt.message);
-    }
-  }
-
-  // Consulta padrão via endpoint da Infosimples
   try {
-    const url = 'https://api.infosimples.com/api/v2/consultas/antt/veiculo';
-    const altUrl = 'https://api.infosimples.com/v2/consultas/detran/sp/debitos-e-multas';
+    // Endpoint oficial de consulta da Infosimples
+    const url = 'https://api.infosimples.com/v2/consultas/detran/sp/debitos-e-multas';
+    const altUrl = 'https://api.infosimples.com/api/v2/consultas/detran/sp/debitos-e-multas';
     
     let dados = null;
 
@@ -298,12 +162,7 @@ const handleConsultarPlaca = async (req, res) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           token: tokenSegredo,
-          timeout,
-          ignore_site_receipt: ignoreSiteReceipt,
-          placa: (placa || '').toUpperCase(),
-          ...(cpf ? { cpf } : {}),
-          ...(cnpj ? { cnpj } : {}),
-          ...(rntrc ? { rntrc } : {}),
+          placa: (placa || '').toUpperCase()
         })
       });
       const text = await response.text();
@@ -335,10 +194,7 @@ const handleConsultarPlaca = async (req, res) => {
     if (dados.code && dados.code !== 200) {
       return res.status(400).json({ 
         sucesso: false, 
-        codigo: dados.code,
-        mensagem: dados.message || dados.code_message || 'Não foi possível localizar dados para esta placa.',
-        erros: dados.errors || [],
-        documentacao: 'https://api.infosimples.com/consultas/docs/antt/veiculo'
+        mensagem: dados.message || dados.code_message || 'Não foi possível localizar dados para esta placa.' 
       });
     }
 
@@ -346,8 +202,7 @@ const handleConsultarPlaca = async (req, res) => {
 
     res.json({
       sucesso: true,
-      fonte: 'ANTT / Infosimples',
-      veiculo: itemData.veiculo || dados.data?.veiculo || itemData,
+      veiculo: itemData.veiculo || dados.data?.veiculo || {},
       debitos: itemData.debitos_pendentes || dados.data?.debitos_pendentes || []
     });
 
@@ -359,20 +214,15 @@ const handleConsultarPlaca = async (req, res) => {
   }
 };
 
-// Rota GET /freeflow
+// Rota GET /freeflow (quando montada em /api, torna-se /api/freeflow)
 router.get('/freeflow', handleGetFreeFlow);
+
+// Rota GET /api/freeflow (para caso o router seja montado na raiz)
 router.get('/api/freeflow', handleGetFreeFlow);
 
-// Rotas de Consulta na Infosimples / ANTT
+// Rotas de Consulta na Infosimples
 router.get('/consultar-placa/:placa', handleConsultarPlaca);
-router.post('/consultar-placa/:placa', handleConsultarPlaca);
 router.get('/api/consultar-placa/:placa', handleConsultarPlaca);
-router.post('/api/consultar-placa/:placa', handleConsultarPlaca);
-
-router.get('/consultar-antt', handleConsultarAntt);
-router.post('/consultar-antt', handleConsultarAntt);
-router.get('/api/consultar-antt', handleConsultarAntt);
-router.post('/api/consultar-antt', handleConsultarAntt);
 
 // Preflight CORS
 router.options('/freeflow', (req, res) => {
@@ -388,14 +238,6 @@ router.options('/consultar-placa/:placa', (req, res) => {
   res.status(204).end();
 });
 router.options('/api/consultar-placa/:placa', (req, res) => {
-  setCorsHeaders(res);
-  res.status(204).end();
-});
-router.options('/consultar-antt', (req, res) => {
-  setCorsHeaders(res);
-  res.status(204).end();
-});
-router.options('/api/consultar-antt', (req, res) => {
   setCorsHeaders(res);
   res.status(204).end();
 });
