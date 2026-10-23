@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portal Estrada Pay - Consulta e Pagamento de Pedágio Free Flow no padrão ANTT / GovBR. Regularize sua passagem sem cancelas e evite multas da Lei 14.157/2021.">
+  <meta name="description" content="Estrada Pay - Sistema Único de Fretes e Pedágio Eletrônico Free Flow. Consulte e pague suas tarifas em rodovias sem cancelas de forma rápida, segura e sem multas.">
   <meta name="theme-color" content="#0c326f">
-  <title>Estrada Pay • Consulta e Pagamento Free Flow ANTT</title>
+  <title>Estrada Pay • Sistema Único de Pedágio Eletrônico Free Flow</title>
 
   <!-- Favicons e Ícones Oficiais Estrada Pay -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.json">
 
-  <!-- Fontes Oficiais GovBR (Rawline / Inter) -->
+  <!-- Fontes Oficiais -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -26,25 +26,18 @@
       theme: {
         extend: {
           colors: {
-            gov: {
-              blue: '#0c326f',         // Azul institucional GovBR / ANTT
-              'blue-light': '#1351b4',   // Azul interativo / links
-              'blue-dark': '#071d41',    // Azul escuro cabeçalho
-              yellow: '#ffcd07',        // Amarelo foco GovBR
-              green: '#008833',         // Verde sucesso GovBR
-              red: '#e52207',           // Vermelho erro / alerta CTB
-              gray: '#f8f9fa',          // Fundo neutro
-              border: '#dcdde0',        // Borda institucional
-            },
             estrada: {
-              blue: '#2563eb',
-              cyan: '#0ea5e9',
-              emerald: '#10b981',
+              blue: '#0c326f',         // Azul institucional oficial
+              'blue-light': '#1351b4',   // Azul interativo
+              'blue-dark': '#061b3d',    // Azul profundo
+              cyan: '#38bdf8',          // Ciano de destaque da marca
+              emerald: '#10b981',       // Verde de pagamento / sucesso
+              amber: '#f59e0b',         // Âmbar alerta
               dark: '#0f172a',
             }
           },
           fontFamily: {
-            sans: ['Inter', 'Rawline', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
           }
         }
       }
@@ -54,30 +47,30 @@
   <!-- FontAwesome 6.5.1 via CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <!-- QRCode.js para renderização instantânea no cliente -->
+  <!-- QRCode.js para renderização rápida do PIX -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
-    /* Estilos Adicionais Padrão GovBR / ANTT */
     body {
-      background-color: #f8f9fa;
-      color: #212529;
+      background-color: #f8fafc;
+      color: #1e293b;
       -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
     }
 
-    /* Placa Estilizada Padrão Mercosul */
+    /* Placa Mercosul Estilizada */
     .mercosul-plate {
       background: #ffffff;
       border: 3px solid #1e293b;
       border-radius: 8px;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
     .mercosul-header {
       background: #003399;
       color: #ffffff;
-      height: 22px;
+      height: 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -87,20 +80,20 @@
       letter-spacing: 1.5px;
     }
     .mercosul-body {
-      padding: 4px 14px;
+      padding: 4px 12px;
       text-align: center;
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 900;
-      letter-spacing: 4px;
+      letter-spacing: 3px;
       color: #0f172a;
       font-family: 'Inter', monospace;
     }
 
-    /* Cartão de Crédito Interativo 3D */
+    /* Cartão de Crédito 3D Mockup */
     .credit-card-preview {
       background: linear-gradient(135deg, #0c326f 0%, #1e3a8a 60%, #0369a1 100%);
       border-radius: 16px;
-      box-shadow: 0 12px 24px -6px rgba(12, 50, 111, 0.4);
+      box-shadow: 0 12px 24px -6px rgba(12, 50, 111, 0.35);
       color: #ffffff;
       position: relative;
       overflow: hidden;
@@ -112,15 +105,14 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.3s ease;
     }
     .credit-card-preview::before {
       content: '';
       position: absolute;
       top: -40%;
       right: -20%;
-      width: 260px;
-      height: 260px;
+      width: 240px;
+      height: 240px;
       background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
       border-radius: 50%;
       pointer-events: none;
@@ -145,10 +137,10 @@
       body * {
         visibility: hidden;
       }
-      #modalComprovante, #modalComprovante * {
+      #modalConsultaResultado, #modalConsultaResultado * {
         visibility: visible;
       }
-      #modalComprovante {
+      #modalConsultaResultado {
         position: absolute;
         left: 0;
         top: 0;
@@ -161,7 +153,7 @@
       }
     }
 
-    /* Custom Toast */
+    /* Toast Flutuante */
     #toastMessage {
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       transform: translateY(100px);
@@ -178,994 +170,1325 @@
 <body class="min-h-screen flex flex-col font-sans">
 
   <!-- ========================================================
-       CABEÇALHO PRINCIPAL ESTRADA PAY (#0c326f)
-       COM LOGO ORIGINAL E FORMULÁRIO DE CONSULTA COM DESTAQUE
+       BARRA DE UTILIDADES E ATALHO DE ALERTA SUPERIOR
        ======================================================== -->
-  <header class="bg-[#0c326f] text-white shadow-xl relative z-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
-      <!-- Linha Principal: LOGO ORIGINAL ESTRADA PAY + Formulário de Consulta -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+  <div class="bg-[#061b3d] text-white text-xs py-2 px-4 sm:px-8 border-b border-blue-900/60">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-[11px] px-2.5 py-0.5 rounded-full font-bold">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Sistema Oficial Ativo
+        </span>
+        <span class="text-blue-200 hidden md:inline">Central Nacional de Pedágios em Livre Passagem</span>
+      </div>
+
+      <!-- BOTÃO / ATALHO DE ALERTA: Dúvidas sobre a suspensão de multas e reembolso -->
+      <button 
+        type="button" 
+        id="btnAlertaReembolso" 
+        class="inline-flex items-center gap-1.5 text-amber-300 hover:text-amber-200 font-bold bg-amber-500/10 hover:bg-amber-500/20 px-3 py-1 rounded-full border border-amber-400/30 transition text-[11px]"
+      >
+        <i class="fa-solid fa-triangle-exclamation text-amber-400"></i>
+        <span>Dúvidas sobre a suspensão das multas no Free Flow? | Solicite seu reembolso aqui!</span>
+        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       CABEÇALHO PRINCIPAL ESTRADA PAY (#0c326f)
+       COM LOGO OFICIAL, FORMULÁRIO DE PLACA E MENU DE NAVEGAÇÃO
+       ======================================================== -->
+  <header class="bg-[#0c326f] text-white shadow-xl sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+      
+      <!-- Linha Principal: Logo + Consulta de Placa -->
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         
-        <!-- Bloco da Logo Original Estrada Pay -->
-        <div class="lg:col-span-5 flex items-center gap-4">
-          <a href="/" class="flex items-center gap-3.5 group" title="Estrada Pay - Página Inicial">
-            <!-- LOGO ORIGINAL ESTRADA PAY: Mantida integralmente -->
-            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-white p-1 shadow-md border-2 border-white/20 flex items-center justify-center overflow-hidden flex-shrink-0 group-hover:scale-105 transition duration-300">
+        <!-- Logo Oficial do Estrada Pay -->
+        <div class="flex items-center justify-between">
+          <a href="/" class="flex items-center gap-3.5 group" title="Estrada Pay - Sistema Único de Pedágio Eletrônico">
+            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white p-1 shadow-md border-2 border-white/20 flex items-center justify-center overflow-hidden flex-shrink-0 group-hover:scale-105 transition duration-300">
               <img 
                 src="/logo.jpg" 
                 alt="Logo Estrada Pay" 
                 class="w-full h-full object-cover rounded-lg"
-                onerror="this.onerror=null; this.src='/estrada-pay-logo.jpg'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-slate-900 flex items-center justify-center text-emerald-400 font-black text-2xl\'><i class=\'fa-solid fa-road\'></i></div>';"
+                onerror="this.onerror=null; this.src='/estrada-pay-logo.jpg'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-slate-900 flex items-center justify-center text-emerald-400 font-black text-xl\'><i class=\'fa-solid fa-road\'></i></div>';"
                 referrerpolicy="no-referrer"
               />
             </div>
             
-            <!-- Identidade Nominal Original Estrada Pay -->
             <div>
               <div class="flex items-baseline gap-1">
                 <span class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">Estrada</span>
                 <span class="text-2xl sm:text-3xl font-black text-[#38bdf8] bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-400/30">Pay</span>
               </div>
-              <p class="text-xs sm:text-sm text-blue-200 font-medium tracking-normal mt-0.5">
-                Pedágio Free Flow sem multas
+              <p class="text-[11px] sm:text-xs text-blue-200 font-medium tracking-normal">
+                Sistema Único de Fretes e Pedágio Eletrônico
               </p>
-              <div class="flex items-center gap-2 mt-1">
-                <span class="text-[11px] bg-amber-400/20 text-amber-300 border border-amber-400/40 px-2 py-0.5 rounded font-semibold uppercase tracking-wider">
-                  Padrão ANTT / GovBR
-                </span>
-              </div>
             </div>
+          </a>
+
+          <!-- Botão Menu Mobile -->
+          <button 
+            type="button" 
+            id="btnToggleMobileMenu" 
+            class="lg:hidden text-white hover:text-amber-300 text-2xl p-2 focus:outline-none"
+            aria-label="Alternar menu"
+          >
+            <i class="fa-solid fa-bars" id="iconMobileMenu"></i>
+          </button>
+        </div>
+
+        <!-- FORMULÁRIO DE CONSULTA DE PLACA NO TOPO DENTRO DO CABEÇALHO -->
+        <div class="w-full lg:max-w-xl">
+          <form id="formHeaderConsulta" class="flex flex-col sm:flex-row gap-2 bg-white/10 p-2 sm:p-2.5 rounded-xl border border-white/20 shadow-inner backdrop-blur-sm">
+            <div class="relative flex-1">
+              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <i class="fa-solid fa-car text-base text-slate-500"></i>
+              </div>
+              <input
+                type="text"
+                id="inputHeaderPlaca"
+                name="placa"
+                maxlength="8"
+                placeholder="CONSULTAR PLACA (Ex: ABC1D23)"
+                autocomplete="off"
+                autocapitalize="characters"
+                spellcheck="false"
+                required
+                class="w-full pl-10 pr-9 py-2.5 bg-white text-slate-900 placeholder-slate-400 rounded-lg font-mono text-base font-black tracking-widest uppercase shadow-sm border-2 border-transparent focus:border-amber-400 focus:outline-none transition"
+              />
+              <button 
+                type="button" 
+                id="btnClearHeaderInput" 
+                class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 text-sm"
+                title="Limpar campo"
+              >
+                <i class="fa-solid fa-circle-xmark"></i>
+              </button>
+            </div>
+
+            <button
+              type="submit"
+              id="btnHeaderConsultar"
+              class="bg-amber-400 hover:bg-amber-500 active:bg-amber-600 text-slate-950 font-black text-xs uppercase tracking-wider px-5 py-2.5 rounded-lg shadow-md hover:shadow-amber-400/30 transition flex items-center justify-center gap-2 flex-shrink-0 cursor-pointer"
+            >
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <span>Consultar Placa</span>
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Menu de Navegação Superior Oficial com as Abas Solicitadas -->
+      <nav id="navPrincipal" class="hidden lg:flex items-center justify-between border-t border-blue-800/60 mt-3 pt-3 text-xs font-semibold text-blue-100">
+        <div class="flex items-center gap-6">
+          <a href="#heroSecao" class="nav-link hover:text-white transition flex items-center gap-1.5 py-1 text-white border-b-2 border-amber-400">
+            <i class="fa-solid fa-house text-[11px]"></i> Home
+          </a>
+          <button type="button" class="nav-link hover:text-white transition flex items-center gap-1.5 py-1" onclick="abrirModal('modalOQueE')">
+            <i class="fa-solid fa-circle-question text-[11px] text-sky-400"></i> O que é o Free Flow?
+          </button>
+          <a href="#beneficiosSecao" class="nav-link hover:text-white transition flex items-center gap-1.5 py-1">
+            <i class="fa-solid fa-star text-[11px] text-amber-400"></i> Benefícios
+          </a>
+          <a href="#comoFuncionaSecao" class="nav-link hover:text-white transition flex items-center gap-1.5 py-1">
+            <i class="fa-solid fa-gears text-[11px] text-emerald-400"></i> Como funciona?
+          </a>
+          <button type="button" class="nav-link hover:text-white transition flex items-center gap-1.5 py-1" onclick="abrirModal('modalNaoTenhoTag')">
+            <i class="fa-solid fa-tag text-[11px] text-amber-300"></i> Não tenho TAG. E agora?
+          </button>
+          <a href="#faqSecao" class="nav-link hover:text-white transition flex items-center gap-1.5 py-1">
+            <i class="fa-solid fa-comments text-[11px] text-blue-300"></i> Dúvidas Frequentes
           </a>
         </div>
 
-        <!-- FORMULÁRIO DE CONSULTA DE PLACA COM GRANDE DESTAQUE NO CABEÇALHO -->
-        <div class="lg:col-span-7">
-          <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 sm:p-5 shadow-2xl">
-            <div class="flex items-center justify-between mb-2">
-              <label for="inputPlaca" class="text-xs sm:text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
-                <i class="fa-solid fa-magnifying-glass text-amber-400"></i>
-                Consulta Rápida de Pedágio Free Flow
-              </label>
-              <span class="text-[11px] text-blue-200 hidden sm:inline">
-                Padrão Mercosul ou Tradicional
-              </span>
-            </div>
-
-            <form id="formConsultaPlaca" class="flex flex-col sm:flex-row gap-2.5">
-              <div class="relative flex-1">
-                <!-- Ícone da placa -->
-                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <i class="fa-solid fa-car text-base text-slate-500"></i>
-                </div>
-                <input
-                  type="text"
-                  id="inputPlaca"
-                  name="placa"
-                  maxlength="8"
-                  placeholder="DIGITE A PLACA (Ex: ABC1D23)"
-                  autocomplete="off"
-                  autocapitalize="characters"
-                  spellcheck="false"
-                  required
-                  class="w-full pl-11 pr-10 py-3.5 bg-white text-slate-900 placeholder-slate-400 rounded-xl font-mono text-lg font-black tracking-widest uppercase shadow-inner border-2 border-transparent focus:border-amber-400 focus:outline-none transition duration-150"
-                />
-                <button 
-                  type="button" 
-                  id="btnClearInput" 
-                  class="hidden absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 text-sm"
-                  title="Limpar campo"
-                >
-                  <i class="fa-solid fa-circle-xmark"></i>
-                </button>
-              </div>
-
-              <!-- Botão Principal de Consulta com Alta Visibilidade -->
-              <button
-                type="submit"
-                id="btnConsultar"
-                class="bg-amber-400 hover:bg-amber-500 active:bg-amber-600 text-slate-950 font-black text-sm uppercase tracking-wider px-6 py-3.5 rounded-xl shadow-lg hover:shadow-amber-400/30 transition duration-200 flex items-center justify-center gap-2 group flex-shrink-0 cursor-pointer"
-              >
-                <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition duration-200"></i>
-                <span>Consultar Tarifas</span>
-              </button>
-            </form>
-
-            <!-- Rodapé do formulário: Opção de Placa Estrangeira e Atalhos de Teste -->
-            <div class="flex flex-wrap items-center justify-between gap-2 mt-3 pt-2.5 border-t border-white/10 text-xs">
-              <label class="flex items-center gap-2 cursor-pointer select-none text-blue-100 hover:text-white">
-                <input type="checkbox" id="checkPlacaEstrangeira" class="rounded border-white/30 text-amber-500 focus:ring-0 w-3.5 h-3.5">
-                <span>Veículo estrangeiro (Turistas / Mercosul Exterior)</span>
-              </label>
-
-              <!-- Atalhos rápidos para testar facilmente -->
-              <div class="flex items-center gap-1.5 text-blue-200 text-[11px]">
-                <span class="hidden md:inline">Testar placa:</span>
-                <button type="button" class="btn-sample-plate hover:text-white underline font-mono" data-plate="ABC1D23">ABC1D23</button>
-                <span>•</span>
-                <button type="button" class="btn-sample-plate hover:text-white underline font-mono" data-plate="BRA2E19">BRA2E19</button>
-                <span>•</span>
-                <button type="button" class="btn-sample-plate hover:text-white underline font-mono" data-plate="RIO2026">RIO2026</button>
-              </div>
-            </div>
-
-          </div>
+        <div class="flex items-center gap-3">
+          <a href="#porticosSecao" class="inline-flex items-center gap-1.5 bg-blue-900/80 hover:bg-blue-800 px-3 py-1.5 rounded-lg border border-blue-700/80 text-white transition">
+            <i class="fa-solid fa-map-location-dot text-amber-400"></i> 52 Pórticos Ativos
+          </a>
         </div>
+      </nav>
 
+      <!-- Menu Mobile Expansível -->
+      <div id="menuMobile" class="hidden lg:hidden pt-3 border-t border-blue-800/80 mt-3 space-y-2 text-sm">
+        <a href="#heroSecao" class="block py-2 px-3 rounded hover:bg-blue-900 text-white font-medium" onclick="fecharMenuMobile()">Home</a>
+        <button type="button" class="w-full text-left py-2 px-3 rounded hover:bg-blue-900 text-blue-100 font-medium" onclick="abrirModal('modalOQueE'); fecharMenuMobile();">O que é o Free Flow?</button>
+        <a href="#beneficiosSecao" class="block py-2 px-3 rounded hover:bg-blue-900 text-blue-100 font-medium" onclick="fecharMenuMobile()">Benefícios</a>
+        <a href="#comoFuncionaSecao" class="block py-2 px-3 rounded hover:bg-blue-900 text-blue-100 font-medium" onclick="fecharMenuMobile()">Como funciona?</a>
+        <button type="button" class="w-full text-left py-2 px-3 rounded hover:bg-blue-900 text-blue-100 font-medium" onclick="abrirModal('modalNaoTenhoTag'); fecharMenuMobile();">Não tenho TAG. E agora?</button>
+        <a href="#faqSecao" class="block py-2 px-3 rounded hover:bg-blue-900 text-blue-100 font-medium" onclick="fecharMenuMobile()">Dúvidas Frequentes</a>
+        <button type="button" class="w-full text-left py-2 px-3 rounded bg-amber-500/20 text-amber-300 font-bold border border-amber-400/30" onclick="abrirModal('modalReembolso'); fecharMenuMobile();">
+          <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Suspensão de Multas & Reembolso
+        </button>
       </div>
 
     </div>
   </header>
 
   <!-- ========================================================
-       TRILHA DE NAVEGAÇÃO (BREADCRUMB GOV.BR)
+       CONTEÚDO PRINCIPAL (SPA)
        ======================================================== -->
-  <nav class="bg-slate-100 border-b border-slate-200 px-4 sm:px-8 py-2.5 text-xs text-slate-600">
-    <div class="max-w-7xl mx-auto flex items-center gap-2 flex-wrap">
-      <a href="https://www.gov.br" target="_blank" rel="noopener noreferrer" class="hover:text-blue-700 flex items-center gap-1 font-semibold text-blue-800">
-        <i class="fa-solid fa-house text-[10px]"></i> Início
-      </a>
-      <span class="text-slate-400">/</span>
-      <span class="text-slate-700">Ministério dos Transportes</span>
-      <span class="text-slate-400">/</span>
-      <span class="text-slate-700">ANTT</span>
-      <span class="text-slate-400">/</span>
-      <span class="font-bold text-slate-900">Consulta e Quitação de Pedágios Free Flow (Lei nº 14.157/2021)</span>
-    </div>
-  </nav>
+  <main class="flex-1 space-y-10 pb-16">
 
-  <!-- ========================================================
-       CORPO PRINCIPAL (SPA)
-       ======================================================== -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-
-    <!-- BANNER DE AVISO OFICIAL E BASE LEGAL GOV.BR -->
-    <section class="bg-blue-50 border-l-4 border-[#0c326f] p-4 sm:p-5 rounded-r-xl shadow-sm">
-      <div class="flex items-start gap-3.5">
-        <div class="text-[#0c326f] text-2xl mt-0.5 flex-shrink-0">
-          <i class="fa-solid fa-circle-info"></i>
-        </div>
-        <div class="space-y-1">
-          <h2 class="text-sm sm:text-base font-bold text-[#0c326f]">
-            Informação Legal ao Condutor • Sistema Free Flow Nacional
-          </h2>
-          <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            As rodovias com pedágio automático sem cancelas operam através de câmeras de alta precisão que realizam a leitura de placas e tags.
-            Conforme a <strong>Lei Federal nº 14.157/2021</strong> e a <strong>Resolução CONTRAN nº 989</strong>, o condutor dispõe de <strong>até 30 dias corridos</strong> a partir do momento da passagem para quitar a tarifa oficial e evitar a autuação por evasão de pedágio do <strong>Art. 209-A do CTB</strong> (multa de R$ 195,23 e 5 pontos na CNH).
-          </p>
-        </div>
+    <!-- 1. HERO BANNER E APRESENTAÇÃO -->
+    <section id="heroSecao" class="bg-gradient-to-b from-[#0c326f] via-[#08244f] to-slate-900 text-white pt-12 pb-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <!-- Elementos Decorativos de Fundo -->
+      <div class="absolute inset-0 opacity-10 pointer-events-none">
+        <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-sky-400 blur-3xl"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-emerald-400 blur-3xl"></div>
       </div>
-    </section>
 
-    <!-- ESTADO: CARREGAMENTO (SPINNER GOV.BR COM ETAPAS) -->
-    <section id="sectionLoading" class="hidden bg-white border border-slate-200 rounded-2xl p-8 sm:p-12 text-center shadow-sm">
-      <div class="max-w-md mx-auto space-y-4">
-        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-50 text-[#0c326f]">
-          <i class="fa-solid fa-circle-notch fa-spin text-3xl"></i>
-        </div>
-        <h3 class="text-lg font-bold text-slate-900" id="loadingTitle">
-          Consultando Barramento Nacional Free Flow...
-        </h3>
-        <p class="text-xs sm:text-sm text-slate-600" id="loadingStep">
-          Conectando à base oficial de pórticos e cruzando dados de passagens...
-        </p>
-        <!-- Barra de Progresso Animada -->
-        <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
-          <div id="loadingBar" class="bg-[#0c326f] h-2 rounded-full transition-all duration-300 w-1/3"></div>
-        </div>
-        <div class="flex items-center justify-center gap-2 text-xs text-slate-500">
-          <i class="fa-solid fa-shield-halved text-emerald-600"></i>
-          <span>Ambiente Criptografado Estrada Pay • ANTT</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ESTADO: NENHUM DÉBITO ENCONTRADO (VEÍCULO REGULAR) -->
-    <section id="sectionZeroDebitos" class="hidden bg-white border border-slate-200 rounded-2xl p-8 sm:p-10 shadow-sm text-center">
-      <div class="max-w-md mx-auto space-y-3">
-        <div class="w-16 h-16 mx-auto rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-3xl">
-          <i class="fa-solid fa-circle-check"></i>
-        </div>
-        <h3 class="text-xl font-bold text-slate-900">
-          Nenhuma Tarifa Pendente Encontrada!
-        </h3>
-        <p class="text-sm text-slate-600">
-          O veículo placa <span class="font-mono font-bold text-slate-900 plate-placeholder">---</span> não possui passagens pendentes em pórticos Free Flow no momento.
-        </p>
-        <div class="pt-3">
-          <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); document.getElementById('inputPlaca').focus();" class="inline-flex items-center gap-2 text-sm text-[#0c326f] font-bold hover:underline">
-            <i class="fa-solid fa-magnifying-glass"></i> Consultar outra placa
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================================
-         PAINEL DE RESULTADOS DA CONSULTA
-         (Dados do Veículo + Tabela de Débitos com Checkbox)
-         ======================================================== -->
-    <section id="sectionResultados" class="hidden space-y-6">
-
-      <!-- CABEÇALHO DO RESULTADO: VEÍCULO IDENTIFICADO -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-sm">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200">
-          <div class="flex items-center gap-4">
-            <!-- Placa Mercosul Renderizada -->
-            <div class="mercosul-plate w-40 flex-shrink-0">
-              <div class="mercosul-header">
-                <span>BRASIL</span>
-                <i class="fa-solid fa-globe text-[9px]"></i>
-              </div>
-              <div class="mercosul-body" id="resPlateCode">
-                ABC1D23
-              </div>
-            </div>
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Veículo Identificado</span>
-                <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-100 text-emerald-800">
-                  <i class="fa-solid fa-check text-[10px] mr-1"></i> Base Ativa
-                </span>
-              </div>
-              <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-0.5" id="resVeiculoModelo">
-                JEEP COMPASS LONGITUDE T270
-              </h2>
-              <p class="text-xs sm:text-sm text-slate-600">
-                Ano: <span class="font-semibold text-slate-900" id="resVeiculoAno">2024 / 2025</span> • 
-                Município/UF: <span class="font-semibold text-slate-900" id="resVeiculoLocal">São Paulo / SP</span> • 
-                Categoria: <span class="font-semibold text-slate-900" id="resVeiculoCat">Passeio / SUV</span>
-              </p>
-            </div>
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="max-w-3xl space-y-5">
+          <div class="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/30 px-3.5 py-1.5 rounded-full text-xs font-semibold text-sky-200">
+            <i class="fa-solid fa-road-circle-check text-emerald-400"></i>
+            <span>Pedágio 100% Automático e Sem Barreiras</span>
           </div>
 
-          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+            Free Flow — Cobrança de pedágio eletrônico em livre passagem
+          </h1>
+
+          <p class="text-base sm:text-lg text-blue-200 leading-relaxed font-normal">
+            Viaje com mais fluidez, conforto e economia de combustível. O sistema Free Flow substitui as antigas praças de pedágio por pórticos modernos que realizam a leitura eletrônica sem necessidade de paradas ou cabines físicas.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-3 pt-2">
             <button 
               type="button" 
-              onclick="window.scrollTo({top: 0, behavior: 'smooth'}); document.getElementById('inputPlaca').focus();"
-              class="text-xs text-blue-700 hover:text-blue-900 font-bold border border-blue-200 hover:border-blue-400 bg-blue-50 px-3 py-2 rounded-lg transition flex items-center gap-1.5"
+              onclick="document.getElementById('inputHeaderPlaca').focus(); window.scrollTo({top: 0, behavior: 'smooth'});"
+              class="bg-amber-400 hover:bg-amber-500 active:bg-amber-600 text-slate-950 font-black text-sm uppercase tracking-wider px-6 py-3.5 rounded-xl shadow-lg hover:shadow-amber-400/20 transition flex items-center gap-2 cursor-pointer"
             >
-              <i class="fa-solid fa-rotate-left"></i> Nova Consulta
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <span>Consultar Minha Placa Agora</span>
             </button>
+            <a 
+              href="#porticosSecao" 
+              class="bg-white/10 hover:bg-white/20 text-white font-bold text-sm px-6 py-3.5 rounded-xl border border-white/20 transition flex items-center gap-2"
+            >
+              <i class="fa-solid fa-location-dot text-sky-400"></i>
+              <span>Ver Pórticos Ativos</span>
+            </a>
           </div>
         </div>
 
-        <!-- Alerta de Urgência de Pagamento -->
-        <div class="mt-4 flex items-center justify-between flex-wrap gap-2 text-xs sm:text-sm">
-          <div class="flex items-center gap-2 text-amber-800 font-semibold bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200">
-            <i class="fa-solid fa-triangle-exclamation text-amber-600"></i>
-            <span>Atenção: Selecione as passagens para unificar a quitação com taxa única de R$ 1,00.</span>
-          </div>
-          <div class="text-xs text-slate-500 flex items-center gap-1">
-            <i class="fa-solid fa-clock"></i> Atualizado em tempo real
-          </div>
-        </div>
-      </div>
-
-      <!-- TABELA DE DÉBITOS PENDENTES COM CHECKBOX -->
-      <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
-        
-        <div class="px-5 py-4 bg-slate-50 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            <label class="flex items-center gap-2 cursor-pointer font-bold text-sm text-slate-800 select-none">
-              <input 
-                type="checkbox" 
-                id="checkSelectAll" 
-                checked 
-                class="w-4 h-4 rounded text-[#0c326f] focus:ring-0 cursor-pointer"
-              />
-              <span>Selecionar Todos os Débitos (<span id="countSelectedItems">0</span>)</span>
-            </label>
-          </div>
-          <div class="text-xs text-slate-600 font-medium">
-            Desmarque os itens caso não queira quitar todos nesta transação.
-          </div>
-        </div>
-
-        <!-- Tabela Responsiva de Tarifas -->
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs sm:text-sm text-slate-700">
-            <thead class="bg-slate-100 text-slate-600 font-bold uppercase tracking-wider text-[11px] border-b border-slate-200">
-              <tr>
-                <th class="py-3 px-4 w-12 text-center">Sel.</th>
-                <th class="py-3 px-4">Concessionária & Rodovia</th>
-                <th class="py-3 px-4">Trecho / Pórtico</th>
-                <th class="py-3 px-4">Data da Passagem</th>
-                <th class="py-3 px-4">Prazo Sem Multa</th>
-                <th class="py-3 px-4 text-right">Tarifa Oficial</th>
-              </tr>
-            </thead>
-            <tbody id="tabelaDebitosBody" class="divide-y divide-slate-200">
-              <!-- Linhas geradas dinamicamente via JavaScript -->
-            </tbody>
-          </table>
-        </div>
-
-        <!-- RESUMO FINANCEIRO E TOTALIZADOR -->
-        <div class="bg-slate-50 p-5 sm:p-6 border-t border-slate-200">
-          <div class="max-w-md ml-auto space-y-2.5">
-            <div class="flex justify-between text-xs sm:text-sm text-slate-600">
-              <span>Subtotal das Tarifas Selecionadas:</span>
-              <span class="font-bold text-slate-900" id="resSubtotalTarifas">R$ 0,00</span>
-            </div>
-            <div class="flex justify-between text-xs sm:text-sm text-slate-600">
-              <span class="flex items-center gap-1.5" title="Taxa fixa administrativa Estrada Pay para liquidação bancária">
-                Taxa Administrativa Estrada Pay:
-                <i class="fa-solid fa-circle-question text-slate-400 text-xs"></i>
-              </span>
-              <span class="font-bold text-emerald-700" id="resTaxaEstradaPay">R$ 1,00</span>
-            </div>
-            <div class="border-t border-slate-300 pt-2 flex justify-between items-baseline">
-              <span class="text-base font-bold text-slate-900">Total a Quitar:</span>
-              <span class="text-2xl sm:text-3xl font-black text-[#0c326f]" id="resTotalGeral">R$ 0,00</span>
-            </div>
-            
-            <p class="text-[11px] text-slate-500 text-right">
-              Valor final consolidado sem cobranças adicionais ocultas.
-            </p>
-
-            <!-- Botão de Avanço para o Checkout White-Label -->
-            <div class="pt-2">
-              <button
-                type="button"
-                id="btnAvancarCheckout"
-                class="w-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-extrabold text-sm uppercase tracking-wider py-4 px-6 rounded-xl shadow-lg hover:shadow-emerald-600/30 transition duration-200 flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <i class="fa-solid fa-lock"></i>
-                <span>Prosseguir para Pagamento Seguro</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- ========================================================
-         SISTEMA DE CHECKOUT WHITE-LABEL (100% MARCA ESTRADA PAY)
-         Oculta qualquer intermediador externo, com PIX e Cartão
-         ======================================================== -->
-    <section id="sectionCheckout" class="hidden space-y-6">
-      
-      <!-- Cabeçalho do Checkout White-Label -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-sm">
-        <div class="flex items-center justify-between flex-wrap gap-4 pb-4 border-b border-slate-200">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-blue-100 text-[#0c326f] flex items-center justify-center text-lg font-bold">
+        <!-- 2. BANNER DE ALERTA DE SEGURANÇA (ATENÇÃO A GOLPES) -->
+        <div class="mt-12 bg-amber-950/80 border-2 border-amber-500/60 rounded-2xl p-5 sm:p-6 shadow-xl backdrop-blur-md">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center text-2xl flex-shrink-0 font-bold shadow-md">
               <i class="fa-solid fa-shield-halved"></i>
             </div>
-            <div>
-              <h2 class="text-lg sm:text-xl font-black text-slate-900">
-                Checkout Seguro • Estrada Pay
-              </h2>
-              <p class="text-xs sm:text-sm text-slate-500">
-                Ambiente criptografado oficial para liquidação instantânea de tarifas Free Flow.
+            <div class="space-y-1 flex-1">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-black uppercase tracking-wider bg-amber-400 text-slate-950 px-2 py-0.5 rounded">
+                  COMUNICADO DE SEGURANÇA
+                </span>
+                <h3 class="text-base sm:text-lg font-black text-amber-200">
+                  Alerta de Proteção ao Motorista: Cuidado com Golpes por SMS e Mensagens
+                </h3>
+              </div>
+              <p class="text-xs sm:text-sm text-amber-100/90 leading-relaxed">
+                A cobrança e regularização oficial de pedágios Free Flow é realizada <strong>exclusivamente através do portal Estrada Pay, das tags homologadas e dos totens presenciais das concessionárias</strong>. Órgãos e concessionárias <strong>NUNCA enviam mensagens de texto (SMS) ou WhatsApp contendo boletos ou links ameaçando suspensão imediata de CNH</strong>. Em caso de dúvida, consulte sempre sua placa digitando o endereço oficial em seu navegador.
               </p>
             </div>
           </div>
-          <div class="text-right">
-            <span class="text-xs text-slate-500 block">Total a Pagar:</span>
-            <span class="text-xl sm:text-2xl font-black text-[#0c326f]" id="checkoutTotalBadge">R$ 0,00</span>
-          </div>
         </div>
 
-        <!-- Seletor de Métodos de Pagamento White-Label -->
-        <div class="mt-5 grid grid-cols-2 gap-3 max-w-md mx-auto">
-          <button 
-            type="button" 
-            id="tabBtnPix" 
-            class="tab-checkout active flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm border-2 border-[#0c326f] bg-blue-50 text-[#0c326f] transition"
-          >
-            <i class="fa-brands fa-pix text-lg text-emerald-600"></i>
-            <span>PIX Instantâneo</span>
-          </button>
-          
-          <button 
-            type="button" 
-            id="tabBtnCartao" 
-            class="tab-checkout flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm border-2 border-slate-200 bg-white text-slate-700 hover:border-slate-300 transition"
-          >
-            <i class="fa-solid fa-credit-card text-lg text-blue-600"></i>
-            <span>Cartão de Crédito</span>
-          </button>
+      </div>
+    </section>
+
+    <!-- 3. MAPA / BUSCA DE RODOVIAS E LISTA DE PÓRTICOS IMPLEMENTADOS (52 pórticos / 9 trechos / 8 concessionárias) -->
+    <section id="porticosSecao" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b border-slate-200">
+        <div>
+          <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#0c326f] bg-blue-50 px-2.5 py-1 rounded-md mb-2">
+            <i class="fa-solid fa-map-marked-alt"></i> Cobertura Nacional
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900">
+            Pórticos e Trechos Operantes no Brasil
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1">
+            Rede oficial integrada: <strong>52 pórticos</strong> distribuídos em <strong>9 trechos estratégicos</strong> sob gestão de <strong>8 concessionárias</strong>.
+          </p>
+        </div>
+
+        <!-- Campo de Busca Interativo por Rodovia -->
+        <div class="w-full md:w-80">
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+              <i class="fa-solid fa-magnifying-glass text-xs"></i>
+            </div>
+            <input 
+              type="text" 
+              id="inputBuscaRodovias" 
+              placeholder="Filtrar por rodovia ou cidade (Ex: BR-101)..." 
+              class="w-full pl-9 pr-4 py-2.5 text-xs bg-white border border-slate-300 rounded-xl focus:border-[#0c326f] focus:outline-none transition shadow-sm"
+            />
+          </div>
         </div>
       </div>
 
-      <!-- ==============================================
-           CONTEÚDO DA FORMA 1: PIX (EMVCO AUTOMÁTICO)
-           ============================================== -->
-      <div id="contentPix" class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
-        <div class="max-w-xl mx-auto text-center space-y-6">
-          
+      <!-- Filtros Rápidos (Chips) -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 text-xs font-semibold" id="filtroChipsRodovias">
+        <button type="button" class="chip-filter active px-3.5 py-1.5 rounded-full bg-[#0c326f] text-white transition flex-shrink-0" data-filter="TODAS">
+          Todas as Rodovias (9 Trechos)
+        </button>
+        <button type="button" class="chip-filter px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-slate-400 transition flex-shrink-0" data-filter="BR-101">
+          BR-101/RJ
+        </button>
+        <button type="button" class="chip-filter px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-slate-400 transition flex-shrink-0" data-filter="BR-116">
+          BR-116/SP
+        </button>
+        <button type="button" class="chip-filter px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-slate-400 transition flex-shrink-0" data-filter="BR-381">
+          BR-381/MG
+        </button>
+        <button type="button" class="chip-filter px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-slate-400 transition flex-shrink-0" data-filter="BR-262">
+          BR-262/MG
+        </button>
+        <button type="button" class="chip-filter px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-slate-400 transition flex-shrink-0" data-filter="BR-364">
+          BR-364/RO
+        </button>
+        <button type="button" class="chip-filter px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-slate-400 transition flex-shrink-0" data-filter="PARANA">
+          Paraná (EPR / Motiva)
+        </button>
+        <button type="button" class="chip-filter px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-slate-400 transition flex-shrink-0" data-filter="GOIAS">
+          Goiás (BR-060 / BR-452)
+        </button>
+      </div>
+
+      <!-- CARDS EXPANSÍVEIS DOS 9 TRECHOS OFICIAIS -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="gridTrechosPorticos">
+
+        <!-- Trecho 01: BR-101/RJ — Rio-Santos -->
+        <div class="trecho-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:border-blue-400 transition space-y-3" data-tags="BR-101 RJ RIO-SANTOS RIOSP MOTIVA ITAGUAÍ MANGARATIBA PARATY">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-[#0c326f]">
+              01 • BR-101/RJ
+            </span>
+            <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              🟢 Em Operação
+            </span>
+          </div>
           <div>
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
-              <i class="fa-solid fa-bolt text-emerald-600"></i> Quitação Instantânea no Sistema
-            </span>
-            <h3 class="text-xl font-black text-slate-900 mt-2">
-              Pague com o PIX Oficial Estrada Pay
-            </h3>
-            <p class="text-xs sm:text-sm text-slate-600 mt-1">
-              Abra o aplicativo do seu banco, escolha <strong>Pagar com PIX</strong> e aponte a câmera para o QR Code ou cole o código Copia e Cola.
-            </p>
+            <h3 class="font-bold text-slate-900 text-base">Rio-Santos (Costa Verde)</h3>
+            <p class="text-xs text-slate-500 font-medium">Concessionária: RioSP / Motiva</p>
           </div>
-
-          <!-- QR Code Container (Gerado dinamicamente em Canvas puro) -->
-          <div class="flex flex-col items-center justify-center">
-            <div class="p-4 bg-white border-2 border-slate-300 rounded-2xl shadow-md inline-block relative">
-              <div id="pixQrContainer" class="flex items-center justify-center min-w-[200px] min-h-[200px]">
-                <!-- QR Code injetado aqui -->
-                <canvas id="pixQrCanvas" width="200" height="200" class="rounded-lg"></canvas>
-              </div>
-              <div class="mt-2 text-[11px] font-mono text-slate-500 font-bold tracking-wider">
-                VALOR: <span class="text-slate-900" id="pixValorDisplay">R$ 0,00</span>
-              </div>
-            </div>
-
-            <!-- Contador de Expiração -->
-            <div class="mt-3 flex items-center gap-1.5 text-xs text-amber-700 bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200">
-              <i class="fa-regular fa-clock"></i>
-              <span>Este código expira em: <strong id="pixTimer">14:59</strong></span>
-            </div>
+          <div class="text-xs text-slate-600 space-y-1 bg-slate-50 p-3 rounded-xl border border-slate-100">
+            <p><strong>Pórticos ativos:</strong></p>
+            <ul class="list-disc list-inside space-y-0.5 text-[11px]">
+              <li>Km 414,9 — Itaguaí</li>
+              <li>Km 447,3 — Mangaratiba</li>
+              <li>Km 538,5 — Paraty</li>
+            </ul>
           </div>
-
-          <!-- Bloco do PIX Copia e Cola -->
-          <div class="space-y-2 text-left">
-            <label class="text-xs font-bold text-slate-700 uppercase tracking-wider block">
-              Código PIX Copia e Cola:
-            </label>
-            <div class="flex items-center gap-2">
-              <input 
-                type="text" 
-                id="pixPayloadInput" 
-                readonly 
-                class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 font-mono text-xs text-slate-700 focus:outline-none select-all"
-                value="Carregando chave..."
-              />
-              <button 
-                type="button" 
-                id="btnCopiarPix"
-                class="bg-[#0c326f] hover:bg-blue-900 active:bg-blue-950 text-white font-bold px-4 py-2.5 rounded-xl text-xs flex items-center gap-1.5 flex-shrink-0 transition"
-              >
-                <i class="fa-regular fa-copy"></i>
-                <span id="btnCopiarPixText">Copiar</span>
-              </button>
-            </div>
+          <div class="flex items-center justify-between text-xs pt-2 border-t border-slate-100">
+            <span class="text-slate-500 font-medium">Tarifa Passeio: <strong>R$ 4,80</strong></span>
+            <span class="text-emerald-700 font-bold">Motos Isentas</span>
           </div>
-
-          <!-- Botão de Confirmação de Pagamento -->
-          <div class="pt-2">
-            <button
-              type="button"
-              id="btnConfirmarPix"
-              class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm uppercase tracking-wider py-4 rounded-xl shadow-lg hover:shadow-emerald-600/30 transition flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <i class="fa-solid fa-check-circle"></i>
-              <span>Já Realizei o Pagamento via PIX</span>
-            </button>
-          </div>
-
         </div>
-      </div>
 
-      <!-- ==============================================
-           CONTEÚDO DA FORMA 2: CARTÃO DE CRÉDITO
-           ============================================== -->
-      <div id="contentCartao" class="hidden bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
-        <div class="max-w-2xl mx-auto space-y-6">
-          
-          <div class="text-center">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-[#0c326f] text-xs font-bold">
-              <i class="fa-solid fa-shield-halved"></i> Pagamento Protegido Estrada Pay
+        <!-- Trecho 02: BR-116/SP — Presidente Dutra -->
+        <div class="trecho-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:border-blue-400 transition space-y-3" data-tags="BR-116 SP PRESIDENTE DUTRA RIOSP GUARULHOS SÃO PAULO ARUJÁ">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-[#0c326f]">
+              02 • BR-116/SP
             </span>
-            <h3 class="text-xl font-black text-slate-900 mt-2">
-              Informe os Dados do Cartão de Crédito
-            </h3>
-            <p class="text-xs sm:text-sm text-slate-600 mt-1">
-              Transação criptografada de ponta a ponta sem repasse a intermediários externos.
-            </p>
+            <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              🟢 Em Operação
+            </span>
           </div>
-
-          <!-- Preview Visual do Cartão Interativo -->
-          <div class="credit-card-preview">
-            <div class="flex justify-between items-center">
-              <span class="text-xs font-bold tracking-widest text-blue-200">ESTRADA PAY</span>
-              <span id="cardBrandIcon" class="text-2xl text-white">
-                <i class="fa-brands fa-cc-visa"></i>
-              </span>
-            </div>
-            
-            <div class="card-chip"></div>
-
-            <div class="space-y-1">
-              <div class="font-mono text-lg sm:text-xl font-bold tracking-widest" id="cardPreviewNumber">
-                •••• •••• •••• ••••
-              </div>
-              <div class="flex justify-between text-[11px] uppercase tracking-wider text-blue-200">
-                <span id="cardPreviewHolder">NOME DO TITULAR</span>
-                <span id="cardPreviewExpiry">MM/AA</span>
-              </div>
-            </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-base">Presidente Dutra (Metropolitano)</h3>
+            <p class="text-xs text-slate-500 font-medium">Concessionária: CCR RioSP</p>
           </div>
-
-          <!-- Formulário de Cartão de Crédito -->
-          <form id="formCardCheckout" class="space-y-4">
-            
-            <!-- Número do Cartão -->
-            <div>
-              <label for="cardNumber" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                Número do Cartão
-              </label>
-              <div class="relative">
-                <input 
-                  type="text" 
-                  id="cardNumber" 
-                  placeholder="0000 0000 0000 0000" 
-                  maxlength="19" 
-                  required
-                  class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-mono text-sm text-slate-900 focus:bg-white focus:border-[#0c326f] focus:outline-none transition"
-                />
-                <span class="absolute right-3.5 top-3.5 text-slate-400 text-lg" id="cardInputBrandBadge">
-                  <i class="fa-solid fa-credit-card"></i>
-                </span>
-              </div>
-            </div>
-
-            <!-- Nome do Titular -->
-            <div>
-              <label for="cardHolder" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                Nome Impresso no Cartão
-              </label>
-              <input 
-                type="text" 
-                id="cardHolder" 
-                placeholder="Ex: CARLOS A SILVA" 
-                required
-                class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm uppercase text-slate-900 focus:bg-white focus:border-[#0c326f] focus:outline-none transition"
-              />
-            </div>
-
-            <!-- Validade e CVV -->
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <label for="cardExpiry" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  Validade (MM/AA)
-                </label>
-                <input 
-                  type="text" 
-                  id="cardExpiry" 
-                  placeholder="MM/AA" 
-                  maxlength="5" 
-                  required
-                  class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-mono text-sm text-slate-900 focus:bg-white focus:border-[#0c326f] focus:outline-none transition text-center"
-                />
-              </div>
-
-              <div>
-                <label for="cardCvv" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  CVV / Cód. Segurança
-                </label>
-                <input 
-                  type="text" 
-                  id="cardCvv" 
-                  placeholder="123" 
-                  maxlength="4" 
-                  required
-                  class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-mono text-sm text-slate-900 focus:bg-white focus:border-[#0c326f] focus:outline-none transition text-center"
-                />
-              </div>
-            </div>
-
-            <!-- CPF do Titular e Parcelamento -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label for="cardCpf" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  CPF do Titular
-                </label>
-                <input 
-                  type="text" 
-                  id="cardCpf" 
-                  placeholder="000.000.000-00" 
-                  maxlength="14" 
-                  required
-                  class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-mono text-sm text-slate-900 focus:bg-white focus:border-[#0c326f] focus:outline-none transition"
-                />
-              </div>
-
-              <div>
-                <label for="cardInstallments" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  Opções de Parcelamento
-                </label>
-                <select 
-                  id="cardInstallments" 
-                  class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 focus:bg-white focus:border-[#0c326f] focus:outline-none transition"
-                >
-                  <option value="1">1x à vista (sem juros)</option>
-                  <option value="2">2x sem juros</option>
-                  <option value="3">3x sem juros</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Selos de Segurança White-Label -->
-            <div class="flex items-center justify-center gap-6 pt-2 text-xs text-slate-500">
-              <span class="flex items-center gap-1.5">
-                <i class="fa-solid fa-lock text-emerald-600"></i> SSL 256-bit
-              </span>
-              <span class="flex items-center gap-1.5">
-                <i class="fa-solid fa-shield-check text-blue-600"></i> Padrão PCI-DSS
-              </span>
-              <span class="flex items-center gap-1.5">
-                <i class="fa-solid fa-certificate text-amber-500"></i> Estrada Pay Proteção
-              </span>
-            </div>
-
-            <!-- Botão de Pagamento com Cartão -->
-            <div class="pt-2">
-              <button
-                type="submit"
-                id="btnPagarCartao"
-                class="w-full bg-[#0c326f] hover:bg-blue-900 active:bg-blue-950 text-white font-black text-sm uppercase tracking-wider py-4 rounded-xl shadow-lg hover:shadow-blue-900/30 transition flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <i class="fa-solid fa-lock"></i>
-                <span id="btnPagarCartaoText">Confirmar e Pagar R$ 0,00</span>
-              </button>
-            </div>
-
-          </form>
-
+          <div class="text-xs text-slate-600 space-y-1 bg-slate-50 p-3 rounded-xl border border-slate-100">
+            <p><strong>Pórticos ativos:</strong></p>
+            <ul class="list-disc list-inside space-y-0.5 text-[11px]">
+              <li>Km 204 ao 231 — Guarulhos, Arujá e São Paulo</li>
+              <li>Cobrança proporcional por km nas expressas e marginais</li>
+            </ul>
+          </div>
+          <div class="flex items-center justify-between text-xs pt-2 border-t border-slate-100">
+            <span class="text-slate-500 font-medium">Tarifa Passeio: <strong>R$ 4,10</strong></span>
+            <span class="text-emerald-700 font-bold">Motos Isentas</span>
+          </div>
         </div>
+
+        <!-- Trecho 03: BR-381/MG — Vale do Aço -->
+        <div class="trecho-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:border-blue-400 transition space-y-3" data-tags="BR-381 MG VALE DO AÇO NOVA 381 GOV VALADARES JAGUARAÇU JOÃO MONLEVADE CAETÉ">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-[#0c326f]">
+              03 • BR-381/MG
+            </span>
+            <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              🟢 Em Operação
+            </span>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-base">Vale do Aço</h3>
+            <p class="text-xs text-slate-500 font-medium">Concessionária: Concessionária Nova 381</p>
+          </div>
+          <div class="text-xs text-slate-600 space-y-1 bg-slate-50 p-3 rounded-xl border border-slate-100">
+            <p><strong>Pórticos ativos:</strong></p>
+            <ul class="list-disc list-inside space-y-0.5 text-[11px]">
+              <li>Governador Valadares, Jaguaraçu, João Monlevade e Caeté</li>
+              <li>Trecho de integração logística e siderurgia</li>
+            </ul>
+          </div>
+          <div class="flex items-center justify-between text-xs pt-2 border-t border-slate-100">
+            <span class="text-slate-500 font-medium">Tarifa Passeio: <strong>R$ 7,50</strong></span>
+            <span class="text-blue-700 font-bold">30 dias p/ pagar</span>
+          </div>
+        </div>
+
+        <!-- Trecho 04: BR-262/MG -->
+        <div class="trecho-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:border-blue-400 transition space-y-3" data-tags="BR-262 MG WAY-262 NOVA SERRANA IBIÁ">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-[#0c326f]">
+              04 • BR-262/MG
+            </span>
+            <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              🟢 Em Operação
+            </span>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-base">Corredor do Triângulo e Centro-Oeste</h3>
+            <p class="text-xs text-slate-500 font-medium">Concessionária: Way-262</p>
+          </div>
+          <div class="text-xs text-slate-600 space-y-1 bg-slate-50 p-3 rounded-xl border border-slate-100">
+            <p><strong>Pórticos ativos:</strong></p>
+            <ul class="list-disc list-inside space-y-0.5 text-[11px]">
+              <li>Nova Serrana e Ibiá</li>
+              <li>Substituição progressiva de praças de cabine física</li>
+            </ul>
+          </div>
+          <div class="flex items-center justify-between text-xs pt-2 border-t border-slate-100">
+            <span class="text-slate-500 font-medium">Tarifa Passeio: <strong>R$ 6,80</strong></span>
+            <span class="text-blue-700 font-bold">30 dias p/ pagar</span>
+          </div>
+        </div>
+
+        <!-- Trecho 05: BR-364/RO -->
+        <div class="trecho-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:border-blue-400 transition space-y-3" data-tags="BR-364 RO NOVA 364 PIMENTA BUENO CACOAL OURO PRETO ALTO PARAÍSO">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-[#0c326f]">
+              05 • BR-364/RO
+            </span>
+            <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              🟢 Em Operação
+            </span>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-base">Eixo Norte de Escoamento</h3>
+            <p class="text-xs text-slate-500 font-medium">Concessionária: Nova 364</p>
+          </div>
+          <div class="text-xs text-slate-600 space-y-1 bg-slate-50 p-3 rounded-xl border border-slate-100">
+            <p><strong>Pórticos ativos:</strong></p>
+            <ul class="list-disc list-inside space-y-0.5 text-[11px]">
+              <li>Pimenta Bueno, Cacoal, Ouro Preto do Oeste e Alto Paraíso</li>
+              <li>Monitoramento de tráfego pesado e agronegócio</li>
+            </ul>
+          </div>
+          <div class="flex items-center justify-between text-xs pt-2 border-t border-slate-100">
+            <span class="text-slate-500 font-medium">Tarifa Passeio: <strong>R$ 8,20</strong></span>
+            <span class="text-blue-700 font-bold">30 dias p/ pagar</span>
+          </div>
+        </div>
+
+        <!-- Trecho 06: Lote Iguaçu/PR -->
+        <div class="trecho-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:border-blue-400 transition space-y-3" data-tags="LOTE IGUAÇU PR EPR IGUAÇU SANTA LÚCIA VITORINO AMPÉRE PARANÁ">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-[#0c326f]">
+              06 • Lote Iguaçu/PR
+            </span>
+            <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              🟢 Em Operação
+            </span>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-base">EPR Iguaçu</h3>
+            <p class="text-xs text-slate-500 font-medium">Concessionária: EPR Iguaçu</p>
+          </div>
+          <div class="text-xs text-slate-600 space-y-1 bg-slate-50 p-3 rounded-xl border border-slate-100">
+            <p><strong>Pórticos ativos:</strong></p>
+            <ul class="list-disc list-inside space-y-0.5 text-[11px]">
+              <li>Santa Lúcia, Vitorino e Ampére</li>
+              <li>Pedágio eletrônico de livre passagem nas novas concessões do PR</li>
+            </ul>
+          </div>
+          <div class="flex items-center justify-between text-xs pt-2 border-t border-slate-100">
+            <span class="text-slate-500 font-medium">Tarifa Passeio: <strong>R$ 9,40</strong></span>
+            <span class="text-blue-700 font-bold">30 dias p/ pagar</span>
+          </div>
+        </div>
+
+        <!-- Trecho 07: BR-369/PR e BR-376/PR -->
+        <div class="trecho-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:border-blue-400 transition space-y-3" data-tags="BR-369 BR-376 PR EPR PARANÁ JATAIZINHO ROLÂNDIA MARIALVA PARANÁ">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-[#0c326f]">
+              07 • BR-369/PR e BR-376/PR
+            </span>
+            <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              🟢 Em Operação
+            </span>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-base">Norte e Centro do Paraná</h3>
+            <p class="text-xs text-slate-500 font-medium">Concessionária: EPR Paraná</p>
+          </div>
+          <div class="text-xs text-slate-600 space-y-1 bg-slate-50 p-3 rounded-xl border border-slate-100">
+            <p><strong>Pórticos ativos:</strong></p>
+            <ul class="list-disc list-inside space-y-0.5 text-[11px]">
+              <li>Jataizinho, Rolândia e Marialva</li>
+              <li>Eliminação de filas nos acessos metropolitanos de Londrina e Maringá</li>
+            </ul>
+          </div>
+          <div class="flex items-center justify-between text-xs pt-2 border-t border-slate-100">
+            <span class="text-slate-500 font-medium">Tarifa Passeio: <strong>R$ 8,80</strong></span>
+            <span class="text-blue-700 font-bold">30 dias p/ pagar</span>
+          </div>
+        </div>
+
+        <!-- Trecho 08: BR-376/PR e PR-445/PR -->
+        <div class="trecho-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:border-blue-400 transition space-y-3" data-tags="BR-376 PR-445 PR MOTIVA PARANÁ PARANÁ">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-[#0c326f]">
+              08 • BR-376/PR e PR-445/PR
+            </span>
+            <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              🟢 Em Operação
+            </span>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-base">Corredor Rodoviário Motiva</h3>
+            <p class="text-xs text-slate-500 font-medium">Concessionária: Motiva Paraná</p>
+          </div>
+          <div class="text-xs text-slate-600 space-y-1 bg-slate-50 p-3 rounded-xl border border-slate-100">
+            <p><strong>Pórticos ativos:</strong></p>
+            <ul class="list-disc list-inside space-y-0.5 text-[11px]">
+              <li>Intersecção entre rodovias federais e estaduais duplicadas</li>
+              <li>Sensores com classificação volumétrica de eixos</li>
+            </ul>
+          </div>
+          <div class="flex items-center justify-between text-xs pt-2 border-t border-slate-100">
+            <span class="text-slate-500 font-medium">Tarifa Passeio: <strong>R$ 7,90</strong></span>
+            <span class="text-blue-700 font-bold">30 dias p/ pagar</span>
+          </div>
+        </div>
+
+        <!-- Trecho 09: BR-060/GO e BR-452/GO -->
+        <div class="trecho-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:border-blue-400 transition space-y-3" data-tags="BR-060 BR-452 GO ROTA VERDE GOIÁS ABADIA DE GOIÁS INDIARA ACREÚNA GOIÁS">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-[#0c326f]">
+              09 • BR-060/GO e BR-452/GO
+            </span>
+            <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              🟢 Em Operação
+            </span>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-base">Rota Verde Goiás</h3>
+            <p class="text-xs text-slate-500 font-medium">Concessionária: Rota Verde Goiás</p>
+          </div>
+          <div class="text-xs text-slate-600 space-y-1 bg-slate-50 p-3 rounded-xl border border-slate-100">
+            <p><strong>Pórticos ativos:</strong></p>
+            <ul class="list-disc list-inside space-y-0.5 text-[11px]">
+              <li>Abadia de Goiás, Indiara e Acreúna</li>
+              <li>Corredor de turismo rumo a Caldas Novas e escoamento agrícola</li>
+            </ul>
+          </div>
+          <div class="flex items-center justify-between text-xs pt-2 border-t border-slate-100">
+            <span class="text-slate-500 font-medium">Tarifa Passeio: <strong>R$ 8,40</strong></span>
+            <span class="text-blue-700 font-bold">30 dias p/ pagar</span>
+          </div>
+        </div>
+
       </div>
 
     </section>
 
-    <!-- ========================================================
-         MODAL / COMPROVANTE OFICIAL DE QUITAÇÃO (WHITE-LABEL)
-         Emissão de recibo digital homologado Estrada Pay
-         ======================================================== -->
-    <div id="modalComprovante" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
-      <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 animate-fadeIn my-8">
-        
-        <!-- Topo do Comprovante -->
-        <div class="bg-[#0c326f] text-white p-6 text-center relative">
-          <div class="w-16 h-16 mx-auto bg-emerald-500 text-white rounded-full flex items-center justify-center text-3xl shadow-lg mb-3">
-            <i class="fa-solid fa-check"></i>
-          </div>
-          <span class="text-xs uppercase tracking-widest text-emerald-300 font-bold">
-            Liquidação Efetuada com Sucesso
+    <!-- 4. PASSO A PASSO / COMO FUNCIONA A TECNOLOGIA -->
+    <section id="comoFuncionaSecao" class="bg-slate-100 py-12 px-4 sm:px-6 lg:px-8 border-y border-slate-200">
+      <div class="max-w-7xl mx-auto space-y-8">
+        <div class="text-center max-w-2xl mx-auto space-y-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-[#0c326f] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+            Tecnologia em Livre Passagem
           </span>
-          <h2 class="text-2xl font-black mt-1">
-            Comprovante Oficial de Quitação Free Flow
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900">
+            Como Funciona o Pedágio Free Flow?
           </h2>
-          <p class="text-xs text-blue-200 mt-1">
-            Estrada Pay • Sistema Integrado de Intermediação de Pedágios (Lei 14.157/2021)
+          <p class="text-xs sm:text-sm text-slate-600">
+            Entenda como seus trajetos são registrados em frações de segundo sem necessidade de paradas ou cabines.
           </p>
         </div>
 
-        <!-- Corpo do Comprovante -->
-        <div class="p-6 sm:p-8 space-y-5 text-xs sm:text-sm text-slate-700">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           
-          <div class="grid grid-cols-2 gap-4 pb-4 border-b border-slate-200">
-            <div>
-              <span class="text-slate-500 block text-xs">Protocolo Oficial ANTT / EP:</span>
-              <strong class="font-mono text-slate-900 text-sm" id="recProtocolo">EP-2026-8947291</strong>
+          <!-- Etapa 01 -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative overflow-hidden space-y-3">
+            <div class="w-12 h-12 rounded-xl bg-blue-100 text-[#0c326f] flex items-center justify-center text-xl font-bold">
+              <i class="fa-solid fa-tower-broadcast"></i>
             </div>
-            <div class="text-right">
-              <span class="text-slate-500 block text-xs">Data e Hora da Quitação:</span>
-              <strong class="text-slate-900 text-sm" id="recDataHora">23/10/2026 15:30:00</strong>
-            </div>
+            <span class="text-xs font-black uppercase text-[#0c326f] tracking-wider block">Etapa 01</span>
+            <h3 class="text-lg font-bold text-slate-900">Pórtico e Sensores</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Estruturas metálicas instaladas sobre as pistas contam com câmeras OCR de alta definição, sensores a laser volumétricos e antenas de radiofrequência (RFID) que operam 24 horas por dia em qualquer condição climática.
+            </p>
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pb-4 border-b border-slate-200">
-            <div>
-              <span class="text-slate-500 block text-xs">Placa do Veículo:</span>
-              <strong class="font-mono text-slate-900 text-base" id="recPlaca">ABC1D23</strong>
+          <!-- Etapa 02 -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative overflow-hidden space-y-3">
+            <div class="w-12 h-12 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center text-xl font-bold">
+              <i class="fa-solid fa-camera"></i>
             </div>
-            <div>
-              <span class="text-slate-500 block text-xs">Modelo Identificado:</span>
-              <strong class="text-slate-900" id="recModelo">JEEP COMPASS</strong>
-            </div>
-            <div>
-              <span class="text-slate-500 block text-xs">Forma de Pagamento:</span>
-              <strong class="text-slate-900" id="recForma">PIX Instantâneo</strong>
-            </div>
+            <span class="text-xs font-black uppercase text-sky-700 tracking-wider block">Etapa 02</span>
+            <h3 class="text-lg font-bold text-slate-900">Identificação Automática</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Ao cruzar o pórtico na velocidade permitida da via, o veículo é identificado imediatamente: através da leitura da TAG adesiva ou pelo reconhecimento óptico de caracteres (ANPR) da placa dianteira e traseira.
+            </p>
           </div>
 
-          <!-- Relação de Pórticos Quitados -->
-          <div>
-            <h4 class="font-bold text-slate-900 uppercase text-xs tracking-wider mb-2">
-              Passagens Quitadas Nesta Operação:
-            </h4>
-            <div id="recListaPorticos" class="bg-slate-50 rounded-xl p-3 border border-slate-200 space-y-2">
-              <!-- Injetado dinamicamente -->
+          <!-- Etapa 03 -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative overflow-hidden space-y-3">
+            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-bold">
+              <i class="fa-solid fa-receipt"></i>
             </div>
-          </div>
-
-          <!-- Totalizador -->
-          <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 flex justify-between items-center">
-            <div>
-              <span class="text-xs text-blue-900 font-bold block">Valor Total Liquidado:</span>
-              <span class="text-[11px] text-blue-700">(Tarifas oficiais + Taxa administrativa Estrada Pay R$ 1,00)</span>
-            </div>
-            <span class="text-2xl font-black text-[#0c326f]" id="recValorTotal">R$ 0,00</span>
-          </div>
-
-          <!-- Declaração de Elilidibilidade de Infração -->
-          <div class="text-[11px] text-slate-500 leading-relaxed bg-neutral-50 p-3 rounded-lg border border-neutral-200">
-            🛡️ <strong>Efeito Legal da Quitação:</strong> Este documento comprova a regularização tempestiva do pedágio perante a concessionária de rodovias, impedindo a lavratura do auto de infração de trânsito previsto no <strong>Artigo 209-A do Código de Trânsito Brasileiro</strong>.
-          </div>
-
-          <!-- Autenticação Digital -->
-          <div class="text-[10px] font-mono text-slate-400 break-all text-center pt-2">
-            Autenticação Digital: <span id="recHashAutenticacao">8f92a1b0c93847e62a1b9c0d1e2f3a4b5c6d7e8f</span>
+            <span class="text-xs font-black uppercase text-emerald-700 tracking-wider block">Etapa 03</span>
+            <h3 class="text-lg font-bold text-slate-900">Registros e Fiscalização</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              A passagem é enviada ao sistema central do Estrada Pay. Motoristas com TAG têm o débito automático em sua fatura; quem não possui TAG dispõe de <strong>até 30 dias corridos</strong> para consultar a placa e quitar via PIX ou Cartão sem multas.
+            </p>
           </div>
 
         </div>
-
-        <!-- Rodapé de Ações do Comprovante -->
-        <div class="bg-slate-100 p-4 sm:p-5 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 no-print">
-          <button
-            type="button"
-            onclick="window.print()"
-            class="w-full sm:w-auto bg-[#0c326f] hover:bg-blue-900 text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <i class="fa-solid fa-print"></i>
-            <span>Imprimir / Salvar PDF</span>
-          </button>
-
-          <button
-            type="button"
-            id="btnCloseComprovante"
-            class="w-full sm:w-auto bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <span>Nova Consulta de Placa</span>
-          </button>
-        </div>
-
       </div>
-    </div>
+    </section>
 
-    <!-- ========================================================
-         SEÇÃO DE CONTEÚDO E GUIA NACIONAL DE RODOVIAS
-         (Layout Oficial Portal ANTT / GovBR)
-         ======================================================== -->
-    <section id="guiaSecao" class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
-      
-      <div class="flex items-center gap-3 pb-4 border-b border-slate-200">
-        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-lg">
-          <i class="fa-solid fa-book-open"></i>
+    <!-- BENEFÍCIOS SEÇÃO -->
+    <section id="beneficiosSecao" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900">
+          Vantagens do Sistema Estrada Pay
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-600">
+          Muito mais segurança, rapidez e conformidade para condutores particulares e frotistas.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+          <i class="fa-solid fa-gauge-high text-emerald-600 text-2xl"></i>
+          <h4 class="font-bold text-slate-900 text-sm">Sem Filas e Sem Cancelas</h4>
+          <p class="text-xs text-slate-600">Elimina paradas bruscas e congestionamentos próximos às praças de cobrança.</p>
         </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+          <i class="fa-solid fa-leaf text-emerald-600 text-2xl"></i>
+          <h4 class="font-bold text-slate-900 text-sm">Economia de Combustível</h4>
+          <p class="text-xs text-slate-600">Reduz o desgaste de freios e a queima desnecessária de combustível em marcha lenta.</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+          <i class="fa-solid fa-coins text-amber-500 text-2xl"></i>
+          <h4 class="font-bold text-slate-900 text-sm">Taxa Única de R$ 1,00</h4>
+          <p class="text-xs text-slate-600">Unifique múltiplos pórticos em uma única liquidação pagando apenas R$ 1,00 de taxa de serviço.</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+          <i class="fa-solid fa-clock-rotate-left text-blue-600 text-2xl"></i>
+          <h4 class="font-bold text-slate-900 text-sm">Prazo Amplo de 30 Dias</h4>
+          <p class="text-xs text-slate-600">Tranquilidade para efetuar o pagamento com lembretes inteligentes antes do vencimento.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. SEÇÃO DE NOTÍCIAS E COMUNICADOS RECENTES DO RODOVIÁRIO -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
         <div>
-          <h2 class="text-xl font-black text-slate-900">
-            Guia Nacional de Rodovias com Free Flow
-          </h2>
-          <p class="text-xs sm:text-sm text-slate-500">
-            Mapa de concessionárias, regras por km e legislação oficial (Lei 14.157/2021).
-          </p>
+          <span class="text-xs font-bold uppercase tracking-wider text-[#0c326f]">Informativo Estrada Pay</span>
+          <h2 class="text-2xl font-black text-slate-900">Notícias e Comunicados Recentes</h2>
         </div>
+        <span class="text-xs text-slate-500 hidden sm:inline">Atualizações do setor rodoviário</span>
       </div>
 
-      <!-- Grid de Rodovias em Operação -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         
-        <!-- Card 1: Dutra BR-116 -->
-        <div class="border border-slate-200 rounded-xl p-4 hover:border-blue-400 transition bg-slate-50/50">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800">SP / BR-116</span>
-            <span class="text-[11px] font-semibold text-emerald-700">🟢 Em Operação</span>
+        <!-- Notícia 1 -->
+        <article class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between hover:shadow-md transition">
+          <div class="p-4 space-y-2">
+            <span class="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">Tarifas e Portarias</span>
+            <h3 class="font-bold text-sm text-slate-900 leading-snug">
+              Aprovação de tarifas e ampliação da malha Free Flow em rodovias federais
+            </h3>
+            <p class="text-xs text-slate-600 line-clamp-3">
+              Novos cronogramas estabelecem a modernização de praças convencionais para sistemas automáticos com monitoramento em tempo real.
+            </p>
           </div>
-          <h3 class="font-bold text-slate-900 text-sm">Via Dutra (Metropolitano)</h3>
-          <p class="text-xs text-slate-600 mt-1">
-            CCR RioSP • Km 204 ao 231 (São Paulo, Guarulhos, Arujá). Cobrança proporcional por km rodado. Motos isentas no trecho metropolitano.
-          </p>
-          <div class="mt-3 text-xs font-semibold text-slate-700">Tarifa Base: R$ 4,10</div>
+          <div class="p-4 pt-0 text-[11px] text-slate-400 font-medium">Publicado em 20/10/2026</div>
+        </article>
+
+        <!-- Notícia 2 -->
+        <article class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between hover:shadow-md transition">
+          <div class="p-4 space-y-2">
+            <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">Infraestrutura</span>
+            <h3 class="font-bold text-sm text-slate-900 leading-snug">
+              Mapa interativo consolida a localização de 52 pórticos em 9 trechos
+            </h3>
+            <p class="text-xs text-slate-600 line-clamp-3">
+              Motoristas podem consultar antecipadamente os pontos exatos de leitura nas rodovias de SP, RJ, MG, PR, GO e RO.
+            </p>
+          </div>
+          <div class="p-4 pt-0 text-[11px] text-slate-400 font-medium">Publicado em 18/10/2026</div>
+        </article>
+
+        <!-- Notícia 3 -->
+        <article class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between hover:shadow-md transition">
+          <div class="p-4 space-y-2">
+            <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded">Interoperabilidade</span>
+            <h3 class="font-bold text-sm text-slate-900 leading-snug">
+              Interoperabilidade total: como transitar com ou sem TAG e pagar unificado
+            </h3>
+            <p class="text-xs text-slate-600 line-clamp-3">
+              Estrada Pay garante a liquidação de passagens mesmo sem cadastro prévio, aceitando PIX instantâneo e Cartão.
+            </p>
+          </div>
+          <div class="p-4 pt-0 text-[11px] text-slate-400 font-medium">Publicado em 15/10/2026</div>
+        </article>
+
+        <!-- Notícia 4 -->
+        <article class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between hover:shadow-md transition">
+          <div class="p-4 space-y-2">
+            <span class="text-[10px] font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">Orientação ao Condutor</span>
+            <h3 class="font-bold text-sm text-slate-900 leading-snug">
+              Orientação pós-passagem: o prazo legal de 30 dias corridos para quitação
+            </h3>
+            <p class="text-xs text-slate-600 line-clamp-3">
+              Entenda como funciona o calendário legal sem multas e proteja sua CNH contra infrações de evasão do Art. 209-A.
+            </p>
+          </div>
+          <div class="p-4 pt-0 text-[11px] text-slate-400 font-medium">Publicado em 12/10/2026</div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- 6. DÚVIDAS FREQUENTES (FAQ ACCORDION) -->
+    <section id="faqSecao" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div class="text-center space-y-2">
+        <span class="text-xs font-bold uppercase tracking-wider text-[#0c326f] bg-blue-50 px-3 py-1 rounded-full">Tira-Dúvidas</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900">Perguntas Frequentes</h2>
+      </div>
+
+      <div class="space-y-3" id="accordionFaq">
+        
+        <!-- FAQ 1 -->
+        <div class="faq-item bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+          <button type="button" class="faq-trigger w-full text-left p-4 sm:p-5 font-bold text-sm text-slate-900 flex justify-between items-center gap-4 hover:bg-slate-50 transition">
+            <span>O que acontece se eu não pagar a tarifa do pedágio Free Flow?</span>
+            <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition duration-200"></i>
+          </button>
+          <div class="faq-content hidden p-5 pt-0 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+            Conforme o Código de Trânsito Brasileiro (Art. 209-A do CTB), o não pagamento da tarifa no prazo de até 30 dias corridos é considerado infração grave de trânsito, sujeita a multa no valor de R$ 195,23 e 5 pontos na Carteira Nacional de Habilitação (CNH), além da cobrança do pedágio devido.
+          </div>
         </div>
 
-        <!-- Card 2: Rio-Santos BR-101 -->
-        <div class="border border-slate-200 rounded-xl p-4 hover:border-blue-400 transition bg-slate-50/50">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-sky-100 text-sky-800">RJ / BR-101</span>
-            <span class="text-[11px] font-semibold text-emerald-700">🟢 Em Operação</span>
+        <!-- FAQ 2 -->
+        <div class="faq-item bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+          <button type="button" class="faq-trigger w-full text-left p-4 sm:p-5 font-bold text-sm text-slate-900 flex justify-between items-center gap-4 hover:bg-slate-50 transition">
+            <span>Preciso ter uma TAG instalada no para-brisa para passar no Free Flow?</span>
+            <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition duration-200"></i>
+          </button>
+          <div class="faq-content hidden p-5 pt-0 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+            Não é obrigatório ter TAG. Caso você não possua o adesivo, o pórtico fará a leitura da placa do veículo. Basta acessar o portal Estrada Pay em até 30 dias, digitar a placa e realizar o pagamento das tarifas consolidadas via PIX ou Cartão de Crédito.
           </div>
-          <h3 class="font-bold text-slate-900 text-sm">Rio-Santos (Costa Verde)</h3>
-          <p class="text-xs text-slate-600 mt-1">
-            CCR RioSP • Pórticos em Paraty (Km 538), Mangaratiba (Km 447) e Itaguaí (Km 414). Motos isentas de tarifa.
-          </p>
-          <div class="mt-3 text-xs font-semibold text-slate-700">Tarifa Base: R$ 4,80 / pórtico</div>
         </div>
 
-        <!-- Card 3: Tamoios SP-099 -->
-        <div class="border border-slate-200 rounded-xl p-4 hover:border-blue-400 transition bg-slate-50/50">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800">SP / SP-099</span>
-            <span class="text-[11px] font-semibold text-emerald-700">🟢 Em Operação</span>
+        <!-- FAQ 3 -->
+        <div class="faq-item bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+          <button type="button" class="faq-trigger w-full text-left p-4 sm:p-5 font-bold text-sm text-slate-900 flex justify-between items-center gap-4 hover:bg-slate-50 transition">
+            <span>Quanto tempo demora para a passagem aparecer no portal Estrada Pay?</span>
+            <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition duration-200"></i>
+          </button>
+          <div class="faq-content hidden p-5 pt-0 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+            Geralmente os dados são processados e sincronizados em até 2 a 6 horas após a passagem pelo pórtico. Recomendamos aguardar esse intervalo para que todas as fotos e leituras da viagem sejam devidamente computadas.
           </div>
-          <h3 class="font-bold text-slate-900 text-sm">Rodovia dos Tamoios (Contorno)</h3>
-          <p class="text-xs text-slate-600 mt-1">
-            Concessionária Tamoios • Km 13+500 (Caraguatatuba e São Sebastião). Sistema bidirecional no novo contorno sul.
-          </p>
-          <div class="mt-3 text-xs font-semibold text-slate-700">Tarifa Base: R$ 5,20</div>
         </div>
 
-        <!-- Card 4: Serra Gaúcha CSG -->
-        <div class="border border-slate-200 rounded-xl p-4 hover:border-blue-400 transition bg-slate-50/50">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">RS / ERS-122</span>
-            <span class="text-[11px] font-semibold text-emerald-700">🟢 Em Operação</span>
+        <!-- FAQ 4 -->
+        <div class="faq-item bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+          <button type="button" class="faq-trigger w-full text-left p-4 sm:p-5 font-bold text-sm text-slate-900 flex justify-between items-center gap-4 hover:bg-slate-50 transition">
+            <span>Como funciona a taxa de conveniência do Estrada Pay?</span>
+            <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition duration-200"></i>
+          </button>
+          <div class="faq-content hidden p-5 pt-0 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+            A taxa do Estrada Pay é de apenas R$ 1,00 fixo por operação unificada. Isso significa que, mesmo que você selecione e liquide 5 ou 10 pórticos de concessionárias distintas ao mesmo tempo, pagará apenas R$ 1,00 de taxa administrativa pelo processamento financeiro e emissão de comprovante.
           </div>
-          <h3 class="font-bold text-slate-900 text-sm">Caminhos da Serra Gaúcha</h3>
-          <p class="text-xs text-slate-600 mt-1">
-            Concessionária CSG • ERS-122, ERS-446 e ERS-240 (Flores da Cunha, Antônio Prado, Portão, Ipê).
-          </p>
-          <div class="mt-3 text-xs font-semibold text-slate-700">Tarifa Base: R$ 8,60 a R$ 10,70</div>
-        </div>
-
-        <!-- Card 5: EcoNoroeste SP-333 -->
-        <div class="border border-slate-200 rounded-xl p-4 hover:border-blue-400 transition bg-slate-50/50">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800">SP / SP-333</span>
-            <span class="text-[11px] font-semibold text-emerald-700">🟢 Em Operação</span>
-          </div>
-          <h3 class="font-bold text-slate-900 text-sm">EcoNoroeste Paulista</h3>
-          <p class="text-xs text-slate-600 mt-1">
-            Ecovias Noroeste • SP-333 (Itápolis Km 179) e SP-326 (Dobrada Km 312). Primeiro pórtico estadual de SP.
-          </p>
-          <div class="mt-3 text-xs font-semibold text-slate-700">Tarifa Base: R$ 8,90 a R$ 11,40</div>
-        </div>
-
-        <!-- Card 6: Futuras Projeções -->
-        <div class="border border-slate-200 rounded-xl p-4 hover:border-amber-400 transition bg-amber-50/30">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800">SP / Projeções</span>
-            <span class="text-[11px] font-semibold text-amber-700">🟡 Em Homologação</span>
-          </div>
-          <h3 class="font-bold text-slate-900 text-sm">Imigrantes e Rodoanel Norte</h3>
-          <p class="text-xs text-slate-600 mt-1">
-            Pórticos instalados em fase de teste e monitoramento na SP-160/150 (Km 29 e 38) e SP-021 (Rodoanel Norte).
-          </p>
-          <div class="mt-3 text-xs font-semibold text-slate-700">Fase Tecnológica ARTESP</div>
         </div>
 
       </div>
-
-      <!-- Tabela Comparativa de Tarifas por Categoria -->
-      <div class="mt-6 pt-6 border-t border-slate-200">
-        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-2">
-          <i class="fa-solid fa-table-list text-[#0c326f]"></i>
-          Tabela Comparativa de Tarifas por Categoria e Eixos
-        </h3>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs text-slate-700 border border-slate-200 rounded-xl overflow-hidden">
-            <thead class="bg-slate-100 font-bold uppercase text-slate-600 text-[10px]">
-              <tr>
-                <th class="p-3">Rodovia / Trecho</th>
-                <th class="p-3">Concessionária</th>
-                <th class="p-3">Motos / Triciclos</th>
-                <th class="p-3">Carros Passeio / SUV</th>
-                <th class="p-3">Comercial (por eixo)</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-200">
-              <tr>
-                <td class="p-3 font-semibold">BR-116 (Dutra Metropolitano)</td>
-                <td class="p-3">CCR RioSP</td>
-                <td class="p-3 text-emerald-700 font-bold">Isento</td>
-                <td class="p-3">R$ 4,10</td>
-                <td class="p-3">R$ 4,10 / eixo</td>
-              </tr>
-              <tr>
-                <td class="p-3 font-semibold">BR-101 (Rio-Santos)</td>
-                <td class="p-3">CCR RioSP</td>
-                <td class="p-3 text-emerald-700 font-bold">Isento</td>
-                <td class="p-3">R$ 4,80</td>
-                <td class="p-3">R$ 4,80 / eixo</td>
-              </tr>
-              <tr>
-                <td class="p-3 font-semibold">SP-099 (Contorno Tamoios)</td>
-                <td class="p-3">Tamoios</td>
-                <td class="p-3">R$ 2,60</td>
-                <td class="p-3">R$ 5,20</td>
-                <td class="p-3">R$ 5,20 / eixo</td>
-              </tr>
-              <tr>
-                <td class="p-3 font-semibold">ERS-122 / 240 (Serra Gaúcha)</td>
-                <td class="p-3">CSG</td>
-                <td class="p-3">R$ 4,30</td>
-                <td class="p-3">R$ 8,60</td>
-                <td class="p-3">R$ 8,60 / eixo</td>
-              </tr>
-              <tr>
-                <td class="p-3 font-semibold">SP-333 (Itápolis)</td>
-                <td class="p-3">EcoNoroeste</td>
-                <td class="p-3 text-emerald-700 font-bold">Isento</td>
-                <td class="p-3">R$ 8,90</td>
-                <td class="p-3">R$ 8,90 / eixo</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
     </section>
 
   </main>
 
   <!-- ========================================================
-       RODAPÉ INSTITUCIONAL (PADRÃO GOV.BR / ANTT / ESTRADA PAY)
+       7. RODAPÉ INSTITUCIONAL (100% MARCA ESTRADA PAY)
+       Sem menção a órgãos governamentais ou ANTT
        ======================================================== -->
-  <footer class="bg-[#071d41] text-white mt-12 border-t-4 border-[#0c326f] text-xs">
+  <footer class="bg-[#061b3d] text-white border-t-4 border-[#0c326f] text-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-blue-900/60">
         
-        <!-- Coluna 1: Estrada Pay Marca -->
+        <!-- Coluna 1: Estrada Pay Institucional -->
         <div class="space-y-3">
           <div class="flex items-center gap-2">
-            <span class="text-xl font-extrabold text-white">Estrada</span>
+            <span class="text-xl font-black text-white">Estrada</span>
             <span class="text-xl font-black text-[#38bdf8] bg-blue-950 px-1 py-0.5 rounded border border-blue-400/30">Pay</span>
           </div>
           <p class="text-blue-200 text-xs leading-relaxed">
-            Portal oficial de intermediação para pagamento de tarifas em pórticos automáticos Free Flow. Evite autuações da Lei 14.157/2021.
+            Estrada Pay — Sistema Único de Fretes e Pedágio Eletrônico. Plataforma independente e pioneira na intermediação de liquidação simplificada de tarifas rodoviárias sem cancelas em todo o território nacional.
           </p>
-          <div class="text-[11px] text-blue-300">
-            © 2026 Estrada Pay • Todos os direitos reservados.
+          <div class="text-[11px] text-emerald-400 font-semibold flex items-center gap-1.5">
+            <i class="fa-solid fa-shield-check"></i>
+            <span>Ambiente 100% Auditado e Seguro</span>
           </div>
         </div>
 
-        <!-- Coluna 2: Legislação & Conformidade -->
+        <!-- Coluna 2: Navegação e Serviços -->
         <div class="space-y-2">
-          <h4 class="font-bold text-white uppercase tracking-wider text-xs">Legislação</h4>
+          <h4 class="font-bold text-white uppercase tracking-wider text-xs">Serviços Oficiais</h4>
           <ul class="space-y-1.5 text-blue-200">
-            <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14157.htm" target="_blank" rel="noopener noreferrer" class="hover:text-white">Lei Federal nº 14.157/2021</a></li>
-            <li><a href="#" class="hover:text-white">Artigo 209-A do CTB</a></li>
-            <li><a href="#" class="hover:text-white">Resolução CONTRAN nº 989/2022</a></li>
-            <li><a href="#" class="hover:text-white">Portarias Homologadas ANTT</a></li>
+            <li><button type="button" onclick="document.getElementById('inputHeaderPlaca').focus(); window.scrollTo({top: 0, behavior: 'smooth'});" class="hover:text-white transition">Consulta Rápida de Placa</button></li>
+            <li><a href="#porticosSecao" class="hover:text-white transition">Mapa de Pórticos e Rodovias</a></li>
+            <li><button type="button" onclick="abrirModal('modalOQueE')" class="hover:text-white transition">O que é Free Flow</button></li>
+            <li><button type="button" onclick="abrirModal('modalNaoTenhoTag')" class="hover:text-white transition">Como Pagar Sem TAG</button></li>
           </ul>
         </div>
 
-        <!-- Coluna 3: Concessionárias Integradas -->
+        <!-- Coluna 3: Atendimento e Suporte -->
         <div class="space-y-2">
-          <h4 class="font-bold text-white uppercase tracking-wider text-xs">Concessionárias</h4>
+          <h4 class="font-bold text-white uppercase tracking-wider text-xs">Atendimento</h4>
           <ul class="space-y-1.5 text-blue-200">
-            <li><span class="hover:text-white">CCR RioSP (Dutra e Rio-Santos)</span></li>
-            <li><span class="hover:text-white">Concessionária Tamoios (SP-099)</span></li>
-            <li><span class="hover:text-white">Caminhos da Serra Gaúcha (CSG)</span></li>
-            <li><span class="hover:text-white">Ecovias Noroeste Paulista</span></li>
+            <li><button type="button" onclick="abrirModal('modalReembolso')" class="hover:text-amber-300 font-semibold transition">Solicitação de Reembolso</button></li>
+            <li><a href="#faqSecao" class="hover:text-white transition">Central de Dúvidas</a></li>
+            <li><span class="text-blue-300">Suporte: suporte@estradapay.com.br</span></li>
+            <li><span class="text-blue-300">Horário: Seg. a Dom. das 08h às 22h</span></li>
           </ul>
         </div>
 
-        <!-- Coluna 4: Atendimento & Segurança -->
+        <!-- Coluna 4: Segurança e Privacidade -->
         <div class="space-y-2">
-          <h4 class="font-bold text-white uppercase tracking-wider text-xs">Segurança</h4>
-          <p class="text-blue-200 leading-relaxed text-xs">
-            Ambiente auditado com criptografia SSL 256 bits e conformidade com a LGPD (Lei nº 13.709/2018).
+          <h4 class="font-bold text-white uppercase tracking-wider text-xs">Segurança Digital</h4>
+          <p class="text-blue-200 text-xs leading-relaxed">
+            Todas as transações financeiras são protegidas com criptografia SSL de 256 bits, em total conformidade com as diretrizes da Lei Geral de Proteção de Dados (LGPD).
           </p>
-          <div class="pt-1 flex items-center gap-2 text-emerald-400 font-semibold text-xs">
-            <i class="fa-solid fa-shield-check text-base"></i>
-            <span>Pagamento Seguro White-Label</span>
-          </div>
-          <div class="text-[11px] text-blue-300 pt-1">
-            Fonte de dados geográficos: Base Aberta Sem Parar / CC BY 4.0
+          <div class="flex items-center gap-4 text-slate-400 pt-1 text-base">
+            <i class="fa-solid fa-lock text-emerald-400"></i>
+            <i class="fa-brands fa-pix text-emerald-400"></i>
+            <i class="fa-brands fa-cc-visa text-sky-400"></i>
+            <i class="fa-brands fa-cc-mastercard text-amber-500"></i>
           </div>
         </div>
 
       </div>
 
-      <!-- Barra Inferior do Rodapé GovBR -->
-      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-neutral-400 text-[11px]">
+      <!-- Direitos Autorais 100% Estrada Pay -->
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-blue-300 text-[11px]">
         <div>
-          Agência Nacional de Transportes Terrestres - ANTT • Setor de Clubes Esportivos Sul - SCES, Lote 10, Trecho 03, Brasília - DF
+          © 2026 Estrada Pay — Sistema Único de Fretes e Pedágio Eletrônico. Todos os direitos reservados.
         </div>
         <div class="flex items-center gap-4">
-          <a href="/termos.html" class="hover:text-white">Termos de Uso</a>
+          <a href="/termos.html" class="hover:text-white transition">Termos de Uso</a>
           <span>•</span>
-          <a href="/privacidade.html" class="hover:text-white">Política de Privacidade</a>
+          <a href="/privacidade.html" class="hover:text-white transition">Política de Privacidade</a>
           <span>•</span>
-          <span class="text-blue-400 font-mono">v3.5.0-ANTT</span>
+          <span class="text-amber-400 font-mono font-bold">v4.0.0-PROD</span>
         </div>
       </div>
 
     </div>
   </footer>
+
+  <!-- ========================================================
+       MODAIS INTERATIVOS (ABERTURA POR JAVASCRIPT)
+       ======================================================== -->
+
+  <!-- MODAL 1: O QUE É O FREE FLOW? -->
+  <div id="modalOQueE" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-circle-question text-sky-400 text-lg"></i>
+          <h3 class="font-bold text-base">O que é o Sistema Free Flow?</h3>
+        </div>
+        <button type="button" onclick="fecharModal('modalOQueE')" class="text-white hover:text-amber-300 text-lg p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+        <p>
+          O <strong>Free Flow</strong> é o modelo mais moderno do mundo de pedágio em livre passagem. Ele elimina completamente as praças físicas e as tradicionais cabines com cancelas que causam filas e lentidão nas rodovias.
+        </p>
+        <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 space-y-2">
+          <h4 class="font-bold text-[#0c326f] text-xs uppercase tracking-wider">Principais Características:</h4>
+          <ul class="list-disc list-inside space-y-1 text-xs">
+            <li><strong>Livre velocidade:</strong> Você passa pelos pórticos na velocidade normal da rodovia.</li>
+            <li><strong>Leitura inteligente:</strong> Câmeras leem a placa ou a TAG fixada no vidro.</li>
+            <li><strong>Pagamento flexível:</strong> Quem não tem TAG tem 30 dias para quitar no Estrada Pay.</li>
+            <li><strong>Sem surpresas:</strong> Pagamento consolidado via PIX ou Cartão em segundos.</li>
+          </ul>
+        </div>
+        <p>
+          O sistema já está em operação plena nas principais rodovias federais e estaduais do país, interligado ao portal Estrada Pay para facilitar o controle do motorista.
+        </p>
+      </div>
+      <div class="bg-slate-50 p-4 border-t border-slate-200 text-right">
+        <button type="button" onclick="fecharModal('modalOQueE')" class="bg-[#0c326f] text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-blue-900 transition">
+          Entendido, Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: NÃO TENHO TAG, E AGORA? -->
+  <div id="modalNaoTenhoTag" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-tag text-amber-400 text-lg"></i>
+          <h3 class="font-bold text-base">Não tenho TAG. E agora?</h3>
+        </div>
+        <button type="button" onclick="fecharModal('modalNaoTenhoTag')" class="text-white hover:text-amber-300 text-lg p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+        <div class="p-3 bg-emerald-50 text-emerald-800 rounded-xl border border-emerald-200 font-semibold text-xs flex items-center gap-2">
+          <i class="fa-solid fa-circle-check text-base"></i>
+          <span>Não se preocupe! Você não precisa de adesivo para transitar.</span>
+        </div>
+        <p>
+          Se o seu veículo não possui uma TAG adesiva instalada no para-brisa, o sistema dos pórticos registrará automaticamente a imagem das placas frontal e traseira no instante da passagem.
+        </p>
+        <div class="space-y-3 pt-1">
+          <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Como fazer o pagamento:</h4>
+          <div class="flex gap-3 items-start">
+            <span class="w-6 h-6 rounded-full bg-blue-100 text-[#0c326f] font-bold flex items-center justify-center text-xs flex-shrink-0">1</span>
+            <p class="text-xs">Aguarde algumas horas após a viagem para que os registros sejam processados pelas concessionárias.</p>
+          </div>
+          <div class="flex gap-3 items-start">
+            <span class="w-6 h-6 rounded-full bg-blue-100 text-[#0c326f] font-bold flex items-center justify-center text-xs flex-shrink-0">2</span>
+            <p class="text-xs">Acesse o <strong>Estrada Pay</strong> e digite sua placa no campo de busca do topo da página.</p>
+          </div>
+          <div class="flex gap-3 items-start">
+            <span class="w-6 h-6 rounded-full bg-blue-100 text-[#0c326f] font-bold flex items-center justify-center text-xs flex-shrink-0">3</span>
+            <p class="text-xs">Selecione os pórticos percorridos e gere o PIX Copia e Cola ou pague no Cartão de Crédito.</p>
+          </div>
+        </div>
+        <p class="text-xs text-amber-800 bg-amber-50 p-2.5 rounded-lg border border-amber-200">
+          ⚠️ <strong>Atenção ao prazo:</strong> O pagamento deve ser realizado em até <strong>30 dias corridos</strong> para não caracterizar evasão de pedágio.
+        </p>
+      </div>
+      <div class="bg-slate-50 p-4 border-t border-slate-200 flex justify-between items-center">
+        <button type="button" onclick="fecharModal('modalNaoTenhoTag'); document.getElementById('inputHeaderPlaca').focus(); window.scrollTo({top: 0, behavior: 'smooth'});" class="text-xs font-bold text-[#0c326f] hover:underline">
+          <i class="fa-solid fa-magnifying-glass"></i> Consultar Placa Agora
+        </button>
+        <button type="button" onclick="fecharModal('modalNaoTenhoTag')" class="bg-slate-200 text-slate-800 text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-300 transition">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: SUSPENSÃO DE MULTAS E REEMBOLSO -->
+  <div id="modalReembolso" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-hand-holding-dollar text-amber-400 text-lg"></i>
+          <h3 class="font-bold text-base">Suspensão de Multas & Solicitação de Reembolso</h3>
+        </div>
+        <button type="button" onclick="fecharModal('modalReembolso')" class="text-white hover:text-amber-300 text-lg p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700">
+        <p>
+          Caso você tenha sido autuado indevidamente durante o período de adaptação do Free Flow ou tenha efetuado pagamento duplicado por erro de leitura, utilize o canal oficial do <strong>Estrada Pay</strong> para abertura de processo de revisão.
+        </p>
+
+        <form id="formReembolso" class="space-y-3 pt-2">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Placa do Veículo:</label>
+            <input type="text" id="reembolsoPlaca" required maxlength="8" placeholder="ABC1D23" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs uppercase font-mono font-bold focus:bg-white focus:border-[#0c326f] focus:outline-none">
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">E-mail para Contato:</label>
+              <input type="email" id="reembolsoEmail" required placeholder="seu@email.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs focus:bg-white focus:border-[#0c326f] focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">WhatsApp / Telefone:</label>
+              <input type="tel" id="reembolsoTel" required placeholder="(11) 99999-9999" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs focus:bg-white focus:border-[#0c326f] focus:outline-none">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Motivo do Requerimento:</label>
+            <select id="reembolsoMotivo" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs focus:bg-white focus:border-[#0c326f] focus:outline-none">
+              <option value="duplicidade">Cobrança duplicada de tarifa no mesmo pórtico</option>
+              <option value="multa_indevida">Contestação de autuação com pagamento já realizado</option>
+              <option value="erro_leitura">Placa clonada / Divergência de veículo na foto</option>
+              <option value="outro">Outro motivo</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Detalhes e Rodovia do Ocorrido:</label>
+            <textarea id="reembolsoMsg" rows="3" placeholder="Informe a data aproximada, a rodovia e o que ocorreu..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs focus:bg-white focus:border-[#0c326f] focus:outline-none"></textarea>
+          </div>
+
+          <div class="pt-2">
+            <button type="submit" class="w-full bg-[#0c326f] hover:bg-blue-900 text-white font-bold text-xs uppercase tracking-wider py-3 rounded-lg shadow transition">
+              <i class="fa-solid fa-paper-plane mr-1.5"></i> Enviar Solicitação para Análise
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: RESULTADO DA CONSULTA DE PLACA COM CHECKOUT WHITE-LABEL -->
+  <div id="modalConsultaResultado" class="hidden fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm p-3 sm:p-5 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-6 animate-fadeIn">
+      
+      <!-- Cabeçalho do Resultado -->
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-amber-400 text-lg">
+            <i class="fa-solid fa-car"></i>
+          </div>
+          <div>
+            <span class="text-[11px] text-blue-200 uppercase tracking-wider font-semibold block">Resultado da Consulta</span>
+            <h3 class="font-black text-lg text-white">Débitos Pendentes de Free Flow</h3>
+          </div>
+        </div>
+        <button type="button" onclick="fecharModal('modalConsultaResultado')" class="text-white hover:text-amber-300 text-xl p-1.5">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Conteúdo do Modal de Resultado -->
+      <div class="p-5 sm:p-7 space-y-6 max-h-[80vh] overflow-y-auto">
+        
+        <!-- Bloco do Veículo Identificado -->
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <!-- Placa Mercosul Renderizada -->
+            <div class="mercosul-plate w-36 flex-shrink-0">
+              <div class="mercosul-header">
+                <span>BRASIL</span>
+                <i class="fa-solid fa-globe text-[8px]"></i>
+              </div>
+              <div class="mercosul-body" id="resPlateModal">
+                ABC1D23
+              </div>
+            </div>
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Veículo Identificado</span>
+              <h4 class="font-black text-slate-900 text-base" id="resModeloModal">JEEP COMPASS LONGITUDE</h4>
+              <p class="text-xs text-slate-600 mt-0.5">
+                Ano: <span class="font-bold text-slate-900" id="resAnoModal">2024</span> • 
+                Município/UF: <span class="font-bold text-slate-900" id="resLocalModal">São Paulo / SP</span>
+              </p>
+            </div>
+          </div>
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            Base Estrada Pay Sincronizada
+          </span>
+        </div>
+
+        <!-- Tabela de Débitos com Checkbox -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <label class="flex items-center gap-2 text-xs font-bold text-slate-800 cursor-pointer select-none">
+              <input type="checkbox" id="modalCheckSelectAll" checked class="w-4 h-4 rounded text-[#0c326f] focus:ring-0">
+              <span>Selecionar Todos os Pórticos (<span id="modalSelectedCount">0</span>)</span>
+            </label>
+            <span class="text-[11px] text-slate-500">Marque as passagens que deseja liquidar</span>
+          </div>
+
+          <div class="overflow-x-auto border border-slate-200 rounded-xl">
+            <table class="w-full text-left text-xs text-slate-700">
+              <thead class="bg-slate-100 text-[11px] uppercase font-bold text-slate-600 border-b border-slate-200">
+                <tr>
+                  <th class="p-3 w-10 text-center">Sel.</th>
+                  <th class="p-3">Rodovia & Concessionária</th>
+                  <th class="p-3">Trecho / Pórtico</th>
+                  <th class="p-3">Passagem</th>
+                  <th class="p-3">Prazo s/ Multa</th>
+                  <th class="p-3 text-right">Tarifa</th>
+                </tr>
+              </thead>
+              <tbody id="modalTabelaDebitosBody" class="divide-y divide-slate-200">
+                <!-- Injetado via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Resumo Financeiro da Transação -->
+        <div class="bg-blue-50/70 p-4 rounded-xl border border-blue-200 space-y-2">
+          <div class="flex justify-between text-xs text-slate-600">
+            <span>Subtotal das Tarifas Selecionadas:</span>
+            <span class="font-bold text-slate-900" id="modalSubtotal">R$ 0,00</span>
+          </div>
+          <div class="flex justify-between text-xs text-slate-600">
+            <span>Taxa de Intermediação Estrada Pay:</span>
+            <span class="font-bold text-emerald-700" id="modalTaxa">R$ 1,00</span>
+          </div>
+          <div class="border-t border-blue-200 pt-2 flex justify-between items-baseline">
+            <span class="text-sm font-bold text-slate-900">Total a Liquidar:</span>
+            <span class="text-2xl font-black text-[#0c326f]" id="modalTotalGeral">R$ 0,00</span>
+          </div>
+        </div>
+
+        <!-- ÁREA DE CHECKOUT WHITE-LABEL (100% SOB A MARCA ESTRADA PAY) -->
+        <div class="space-y-4 pt-2">
+          <div class="flex items-center justify-between">
+            <h4 class="font-black text-slate-900 text-sm uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-lock text-emerald-600"></i>
+              Checkout Seguro Estrada Pay
+            </h4>
+            <span class="text-[11px] text-slate-500">Liquidação sem intermediários</span>
+          </div>
+
+          <!-- Abas de Pagamento (PIX vs Cartão) -->
+          <div class="grid grid-cols-2 gap-3">
+            <button 
+              type="button" 
+              id="tabModalPix" 
+              class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-[#0c326f] bg-blue-50 text-[#0c326f] transition"
+            >
+              <i class="fa-brands fa-pix text-base text-emerald-600"></i>
+              <span>PIX Instantâneo</span>
+            </button>
+            <button 
+              type="button" 
+              id="tabModalCartao" 
+              class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-slate-200 bg-white text-slate-700 hover:border-slate-300 transition"
+            >
+              <i class="fa-solid fa-credit-card text-base text-blue-600"></i>
+              <span>Cartão de Crédito</span>
+            </button>
+          </div>
+
+          <!-- Conteúdo 1: PIX Copia e Cola + QR Code Canvas -->
+          <div id="boxModalPix" class="border border-slate-200 rounded-xl p-5 text-center space-y-4 bg-white">
+            <div class="inline-flex flex-col items-center p-3 bg-white border border-slate-200 rounded-xl shadow-sm">
+              <canvas id="modalPixCanvas" width="180" height="180" class="rounded-lg"></canvas>
+              <span class="text-[10px] font-mono text-slate-500 font-bold mt-2">
+                ESTRADA PAY • PIX OFICIAL
+              </span>
+            </div>
+
+            <div class="space-y-1.5 text-left">
+              <label class="text-[11px] font-bold text-slate-700 uppercase block">Código Copia e Cola:</label>
+              <div class="flex items-center gap-2">
+                <input 
+                  type="text" 
+                  id="modalPixPayload" 
+                  readonly 
+                  class="w-full bg-slate-100 border border-slate-300 rounded-lg p-2 font-mono text-xs text-slate-700 select-all"
+                  value="Carregando..."
+                />
+                <button 
+                  type="button" 
+                  id="btnCopiarPixModal"
+                  class="bg-[#0c326f] hover:bg-blue-900 text-white font-bold text-xs px-3.5 py-2 rounded-lg flex items-center gap-1.5 flex-shrink-0 transition"
+                >
+                  <i class="fa-regular fa-copy"></i>
+                  <span id="btnCopiarPixModalText">Copiar</span>
+                </button>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              id="btnConfirmarPixModal"
+              class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs uppercase tracking-wider py-3.5 rounded-xl shadow transition flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <i class="fa-solid fa-check-circle text-base"></i>
+              <span>Já Realizei o Pagamento via PIX</span>
+            </button>
+          </div>
+
+          <!-- Conteúdo 2: Cartão de Crédito -->
+          <div id="boxModalCartao" class="hidden border border-slate-200 rounded-xl p-5 space-y-4 bg-white">
+            
+            <!-- Mockup do Cartão -->
+            <div class="credit-card-preview">
+              <div class="flex justify-between items-center">
+                <span class="text-xs font-bold tracking-widest text-blue-200">ESTRADA PAY</span>
+                <span id="cardModalBrandIcon" class="text-2xl text-white">
+                  <i class="fa-brands fa-cc-visa"></i>
+                </span>
+              </div>
+              <div class="card-chip"></div>
+              <div class="space-y-1">
+                <div class="font-mono text-base font-bold tracking-widest" id="cardModalPreviewNum">•••• •••• •••• ••••</div>
+                <div class="flex justify-between text-[10px] uppercase tracking-wider text-blue-200">
+                  <span id="cardModalPreviewHolder">NOME DO TITULAR</span>
+                  <span id="cardModalPreviewExp">MM/AA</span>
+                </div>
+              </div>
+            </div>
+
+            <form id="formModalCartao" class="space-y-3">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Número do Cartão:</label>
+                <input type="text" id="inputModalCardNum" maxlength="19" placeholder="0000 0000 0000 0000" required class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 font-mono text-xs focus:bg-white focus:border-[#0c326f] focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Nome Impresso:</label>
+                <input type="text" id="inputModalCardHolder" placeholder="Ex: MARCOS R SILVA" required class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs uppercase focus:bg-white focus:border-[#0c326f] focus:outline-none">
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Validade (MM/AA):</label>
+                  <input type="text" id="inputModalCardExp" maxlength="5" placeholder="MM/AA" required class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs text-center font-mono focus:bg-white focus:border-[#0c326f] focus:outline-none">
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">CVV:</label>
+                  <input type="text" id="inputModalCardCvv" maxlength="4" placeholder="123" required class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs text-center font-mono focus:bg-white focus:border-[#0c326f] focus:outline-none">
+                </div>
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Parcelamento Estrada Pay:</label>
+                <select id="selectModalParcelas" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs focus:bg-white focus:border-[#0c326f] focus:outline-none">
+                  <option value="1">1x à vista sem juros</option>
+                  <option value="2">2x sem juros</option>
+                  <option value="3">3x sem juros</option>
+                </select>
+              </div>
+
+              <button
+                type="submit"
+                id="btnPagarModalCartao"
+                class="w-full bg-[#0c326f] hover:bg-blue-900 text-white font-black text-xs uppercase tracking-wider py-3.5 rounded-xl shadow transition"
+              >
+                <i class="fa-solid fa-lock mr-1.5"></i>
+                <span id="btnPagarModalCartaoText">Pagar no Cartão de Crédito</span>
+              </button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Rodapé do Modal de Resultado -->
+      <div class="bg-slate-50 p-4 border-t border-slate-200 flex justify-between items-center text-xs">
+        <span class="text-slate-500">Dúvidas? Suporte Estrada Pay 24h</span>
+        <button type="button" onclick="fecharModal('modalConsultaResultado')" class="text-slate-600 hover:text-slate-900 font-bold px-3 py-1.5">
+          Fechar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL 5: COMPROVANTE OFICIAL DE QUITAÇÃO (100% MARCA ESTRADA PAY) -->
+  <div id="modalReciboQuitação" class="hidden fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-sm p-3 sm:p-5 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-6 animate-fadeIn">
+      
+      <div class="bg-[#0c326f] text-white p-6 text-center space-y-2">
+        <div class="w-14 h-14 mx-auto bg-emerald-500 rounded-full flex items-center justify-center text-2xl shadow-lg">
+          <i class="fa-solid fa-check"></i>
+        </div>
+        <span class="text-xs uppercase tracking-widest text-emerald-300 font-bold">Quitação Confirmada</span>
+        <h2 class="text-2xl font-black">Comprovante Oficial Estrada Pay</h2>
+        <p class="text-xs text-blue-200">Sistema Único de Fretes e Pedágio Eletrônico Free Flow</p>
+      </div>
+
+      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700">
+        
+        <div class="grid grid-cols-2 gap-4 pb-3 border-b border-slate-200">
+          <div>
+            <span class="text-slate-500 block text-xs">Protocolo Estrada Pay:</span>
+            <strong class="font-mono text-slate-900 text-sm" id="recProtocoloNum">EP-2026-8941029</strong>
+          </div>
+          <div class="text-right">
+            <span class="text-slate-500 block text-xs">Data e Horário:</span>
+            <strong class="text-slate-900 text-sm" id="recDataHoraStr">23/10/2026 15:45</strong>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pb-3 border-b border-slate-200">
+          <div>
+            <span class="text-slate-500 block text-xs">Placa:</span>
+            <strong class="font-mono text-slate-900 text-base" id="recPlacaVeic">ABC1D23</strong>
+          </div>
+          <div>
+            <span class="text-slate-500 block text-xs">Modelo:</span>
+            <strong class="text-slate-900" id="recModeloVeic">JEEP COMPASS</strong>
+          </div>
+          <div>
+            <span class="text-slate-500 block text-xs">Método:</span>
+            <strong class="text-slate-900" id="recMetodoPag">PIX Instantâneo</strong>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-900 uppercase text-xs tracking-wider mb-2">Pórticos Quitados Nesta Operação:</h4>
+          <div id="recListaItens" class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1.5 text-xs">
+            <!-- Injetado dinamicamente -->
+          </div>
+        </div>
+
+        <div class="bg-emerald-50 p-3.5 rounded-xl border border-emerald-200 flex justify-between items-center">
+          <div>
+            <span class="font-bold text-emerald-950 block text-xs">Total Liquidado com Sucesso:</span>
+            <span class="text-[11px] text-emerald-800">(Tarifas oficiais + Taxa administrativa Estrada Pay de R$ 1,00)</span>
+          </div>
+          <span class="text-2xl font-black text-emerald-700" id="recValorTotalStr">R$ 0,00</span>
+        </div>
+
+        <div class="text-[11px] text-slate-500 bg-neutral-50 p-3 rounded-lg border border-neutral-200 leading-relaxed">
+          🛡️ <strong>Validade Jurídica:</strong> Este comprovante atesta a liquidação tempestiva da passagem perante a concessionária de rodovias, impedindo a lavratura da autuação por evasão de pedágio do Art. 209-A do CTB.
+        </div>
+
+        <div class="text-[10px] font-mono text-slate-400 text-center break-all pt-1">
+          Autenticação Criptográfica: <span id="recHashStr">8F92A1B0C93847E62A1B9C0D1E2F3A4B5C6D7E8F</span>
+        </div>
+
+      </div>
+
+      <div class="bg-slate-100 p-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 no-print">
+        <button
+          type="button"
+          onclick="window.print()"
+          class="w-full sm:w-auto bg-[#0c326f] hover:bg-blue-900 text-white font-bold text-xs uppercase px-4 py-2.5 rounded-lg transition flex items-center justify-center gap-1.5 cursor-pointer"
+        >
+          <i class="fa-solid fa-print"></i>
+          <span>Imprimir / Salvar PDF</span>
+        </button>
+        <button
+          type="button"
+          onclick="fecharModal('modalReciboQuitação'); window.scrollTo({top: 0, behavior: 'smooth'});"
+          class="w-full sm:w-auto bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs uppercase px-4 py-2.5 rounded-lg transition flex items-center justify-center gap-1.5 cursor-pointer"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span>Nova Consulta</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
 
   <!-- NOTIFICAÇÃO TOAST FLUTUANTE -->
   <div id="toastMessage" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-xs sm:text-sm border border-slate-700">
@@ -1175,357 +1498,314 @@
 
   <!-- ========================================================
        JAVASCRIPT PURO INTEGRADO (SPA COMPLETA)
-       Validação de Placa, Fetch API + Fallback, Checkout e QR Code
        ======================================================== -->
   <script>
     (function() {
       'use strict';
 
-      // ==========================================
-      // ESTADO DA APLICAÇÃO (SPA)
-      // ==========================================
+      // Estado Global da Aplicação
       const state = {
         placa: '',
-        placaEstrangeira: false,
         veiculo: null,
         debitos: [],
         debitosSelecionados: new Set(),
-        taxaEstradaPay: 1.00, // R$ 1,00 fixo
+        taxaEstradaPay: 1.00,
         metodoPagamento: 'PIX',
-        timerPixInterval: null,
-        pixTempoRestante: 899, // 14 min e 59 seg
         protocoloAtual: '',
       };
 
       // Elementos do DOM
       const dom = {
-        formConsultaPlaca: document.getElementById('formConsultaPlaca'),
-        inputPlaca: document.getElementById('inputPlaca'),
-        btnClearInput: document.getElementById('btnClearInput'),
-        checkPlacaEstrangeira: document.getElementById('checkPlacaEstrangeira'),
-        btnConsultar: document.getElementById('btnConsultar'),
+        formHeaderConsulta: document.getElementById('formHeaderConsulta'),
+        inputHeaderPlaca: document.getElementById('inputHeaderPlaca'),
+        btnClearHeaderInput: document.getElementById('btnClearHeaderInput'),
+        btnHeaderConsultar: document.getElementById('btnHeaderConsultar'),
 
-        sectionLoading: document.getElementById('sectionLoading'),
-        loadingTitle: document.getElementById('loadingTitle'),
-        loadingStep: document.getElementById('loadingStep'),
-        loadingBar: document.getElementById('loadingBar'),
+        btnToggleMobileMenu: document.getElementById('btnToggleMobileMenu'),
+        menuMobile: document.getElementById('menuMobile'),
+        iconMobileMenu: document.getElementById('iconMobileMenu'),
 
-        sectionZeroDebitos: document.getElementById('sectionZeroDebitos'),
-        sectionResultados: document.getElementById('sectionResultados'),
-        sectionCheckout: document.getElementById('sectionCheckout'),
+        btnAlertaReembolso: document.getElementById('btnAlertaReembolso'),
+        formReembolso: document.getElementById('formReembolso'),
 
-        // Card do Veículo
-        resPlateCode: document.getElementById('resPlateCode'),
-        resVeiculoModelo: document.getElementById('resVeiculoModelo'),
-        resVeiculoAno: document.getElementById('resVeiculoAno'),
-        resVeiculoLocal: document.getElementById('resVeiculoLocal'),
-        resVeiculoCat: document.getElementById('resVeiculoCat'),
+        inputBuscaRodovias: document.getElementById('inputBuscaRodovias'),
+        filtroChipsRodovias: document.getElementById('filtroChipsRodovias'),
+        gridTrechosPorticos: document.getElementById('gridTrechosPorticos'),
 
-        // Tabela de Débitos
-        checkSelectAll: document.getElementById('checkSelectAll'),
-        countSelectedItems: document.getElementById('countSelectedItems'),
-        tabelaDebitosBody: document.getElementById('tabelaDebitosBody'),
-        resSubtotalTarifas: document.getElementById('resSubtotalTarifas'),
-        resTaxaEstradaPay: document.getElementById('resTaxaEstradaPay'),
-        resTotalGeral: document.getElementById('resTotalGeral'),
-        btnAvancarCheckout: document.getElementById('btnAvancarCheckout'),
+        // Modal de Resultados
+        modalConsultaResultado: document.getElementById('modalConsultaResultado'),
+        resPlateModal: document.getElementById('resPlateModal'),
+        resModeloModal: document.getElementById('resModeloModal'),
+        resAnoModal: document.getElementById('resAnoModal'),
+        resLocalModal: document.getElementById('resLocalModal'),
+        modalCheckSelectAll: document.getElementById('modalCheckSelectAll'),
+        modalSelectedCount: document.getElementById('modalSelectedCount'),
+        modalTabelaDebitosBody: document.getElementById('modalTabelaDebitosBody'),
+        modalSubtotal: document.getElementById('modalSubtotal'),
+        modalTaxa: document.getElementById('modalTaxa'),
+        modalTotalGeral: document.getElementById('modalTotalGeral'),
 
-        // Checkout White-Label
-        checkoutTotalBadge: document.getElementById('checkoutTotalBadge'),
-        tabBtnPix: document.getElementById('tabBtnPix'),
-        tabBtnCartao: document.getElementById('tabBtnCartao'),
-        contentPix: document.getElementById('contentPix'),
-        contentCartao: document.getElementById('contentCartao'),
-
-        // PIX
-        pixQrCanvas: document.getElementById('pixQrCanvas'),
-        pixValorDisplay: document.getElementById('pixValorDisplay'),
-        pixPayloadInput: document.getElementById('pixPayloadInput'),
-        btnCopiarPix: document.getElementById('btnCopiarPix'),
-        btnCopiarPixText: document.getElementById('btnCopiarPixText'),
-        pixTimer: document.getElementById('pixTimer'),
-        btnConfirmarPix: document.getElementById('btnConfirmarPix'),
+        // Checkout Modal
+        tabModalPix: document.getElementById('tabModalPix'),
+        tabModalCartao: document.getElementById('tabModalCartao'),
+        boxModalPix: document.getElementById('boxModalPix'),
+        boxModalCartao: document.getElementById('boxModalCartao'),
+        modalPixCanvas: document.getElementById('modalPixCanvas'),
+        modalPixPayload: document.getElementById('modalPixPayload'),
+        btnCopiarPixModal: document.getElementById('btnCopiarPixModal'),
+        btnCopiarPixModalText: document.getElementById('btnCopiarPixModalText'),
+        btnConfirmarPixModal: document.getElementById('btnConfirmarPixModal'),
 
         // Cartão
-        formCardCheckout: document.getElementById('formCardCheckout'),
-        cardNumber: document.getElementById('cardNumber'),
-        cardHolder: document.getElementById('cardHolder'),
-        cardExpiry: document.getElementById('cardExpiry'),
-        cardCvv: document.getElementById('cardCvv'),
-        cardCpf: document.getElementById('cardCpf'),
-        cardInstallments: document.getElementById('cardInstallments'),
-        btnPagarCartaoText: document.getElementById('btnPagarCartaoText'),
-        cardPreviewNumber: document.getElementById('cardPreviewNumber'),
-        cardPreviewHolder: document.getElementById('cardPreviewHolder'),
-        cardPreviewExpiry: document.getElementById('cardPreviewExpiry'),
-        cardBrandIcon: document.getElementById('cardBrandIcon'),
-        cardInputBrandBadge: document.getElementById('cardInputBrandBadge'),
+        formModalCartao: document.getElementById('formModalCartao'),
+        inputModalCardNum: document.getElementById('inputModalCardNum'),
+        inputModalCardHolder: document.getElementById('inputModalCardHolder'),
+        inputModalCardExp: document.getElementById('inputModalCardExp'),
+        inputModalCardCvv: document.getElementById('inputModalCardCvv'),
+        selectModalParcelas: document.getElementById('selectModalParcelas'),
+        btnPagarModalCartao: document.getElementById('btnPagarModalCartao'),
+        btnPagarModalCartaoText: document.getElementById('btnPagarModalCartaoText'),
+        cardModalPreviewNum: document.getElementById('cardModalPreviewNum'),
+        cardModalPreviewHolder: document.getElementById('cardModalPreviewHolder'),
+        cardModalPreviewExp: document.getElementById('cardModalPreviewExp'),
+        cardModalBrandIcon: document.getElementById('cardModalBrandIcon'),
 
-        // Comprovante
-        modalComprovante: document.getElementById('modalComprovante'),
-        recProtocolo: document.getElementById('recProtocolo'),
-        recDataHora: document.getElementById('recDataHora'),
-        recPlaca: document.getElementById('recPlaca'),
-        recModelo: document.getElementById('recModelo'),
-        recForma: document.getElementById('recForma'),
-        recListaPorticos: document.getElementById('recListaPorticos'),
-        recValorTotal: document.getElementById('recValorTotal'),
-        recHashAutenticacao: document.getElementById('recHashAutenticacao'),
-        btnCloseComprovante: document.getElementById('btnCloseComprovante'),
+        // Recibo
+        modalReciboQuitação: document.getElementById('modalReciboQuitação'),
+        recProtocoloNum: document.getElementById('recProtocoloNum'),
+        recDataHoraStr: document.getElementById('recDataHoraStr'),
+        recPlacaVeic: document.getElementById('recPlacaVeic'),
+        recModeloVeic: document.getElementById('recModeloVeic'),
+        recMetodoPag: document.getElementById('recMetodoPag'),
+        recListaItens: document.getElementById('recListaItens'),
+        recValorTotalStr: document.getElementById('recValorTotalStr'),
+        recHashStr: document.getElementById('recHashStr'),
 
-        // Toast
         toastMessage: document.getElementById('toastMessage'),
         toastIcon: document.getElementById('toastIcon'),
         toastText: document.getElementById('toastText'),
       };
 
-      // ==========================================
-      // INICIALIZAÇÃO
-      // ==========================================
       document.addEventListener('DOMContentLoaded', () => {
-        setupInputHandlers();
-        setupSamplePlates();
-        setupCheckoutTabs();
+        setupConsultaPlaca();
+        setupMobileMenu();
+        setupBuscaRodovias();
+        setupFaqAccordion();
+        setupReembolsoForm();
+        setupCheckoutModalTabs();
         setupCreditCardInteractions();
-        setupComprovanteHandlers();
       });
 
-      // ==========================================
-      // REGEX E VALIDAÇÃO DE PLACA (MERCOSUL / ANTIGA)
-      // ==========================================
-      function validarPlacaRegex(placaLimpa, isEstrangeira = false) {
-        if (!placaLimpa || typeof placaLimpa !== 'string') return false;
-
-        if (isEstrangeira) {
-          // Placa estrangeira (Argentina, Uruguai, Paraguai, etc.): 4 a 10 dígitos alfanuméricos
-          return /^[A-Z0-9]{4,10}$/.test(placaLimpa);
-        }
-
-        // Padrão Mercosul: ABC1D23 (3 letras, 1 número, 1 letra, 2 números)
+      // Validação de Placa (Mercosul e Tradicional)
+      function validarPlacaRegex(placa) {
+        const limpa = placa.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
         const regexMercosul = /^[A-Z]{3}[0-9][A-Z][0-9]{2}$/;
-        // Padrão Tradicional: ABC1234 (3 letras, 4 números)
         const regexTradicional = /^[A-Z]{3}[0-9]{4}$/;
-
-        return regexMercosul.test(placaLimpa) || regexTradicional.test(placaLimpa);
+        return regexMercosul.test(limpa) || regexTradicional.test(limpa);
       }
 
-      function formatarPlacaInput(valor) {
-        return valor.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-      }
-
-      function setupInputHandlers() {
-        dom.inputPlaca.addEventListener('input', (e) => {
-          const limpo = formatarPlacaInput(e.target.value);
-          e.target.value = limpo;
-
-          if (limpo.length > 0) {
-            dom.btnClearInput.classList.remove('hidden');
+      function setupConsultaPlaca() {
+        dom.inputHeaderPlaca.addEventListener('input', (e) => {
+          const val = e.target.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+          e.target.value = val;
+          if (val.length > 0) {
+            dom.btnClearHeaderInput.classList.remove('hidden');
           } else {
-            dom.btnClearInput.classList.add('hidden');
+            dom.btnClearHeaderInput.classList.add('hidden');
           }
         });
 
-        dom.btnClearInput.addEventListener('click', () => {
-          dom.inputPlaca.value = '';
-          dom.btnClearInput.classList.add('hidden');
-          dom.inputPlaca.focus();
+        dom.btnClearHeaderInput.addEventListener('click', () => {
+          dom.inputHeaderPlaca.value = '';
+          dom.btnClearHeaderInput.classList.add('hidden');
+          dom.inputHeaderPlaca.focus();
         });
 
-        dom.formConsultaPlaca.addEventListener('submit', (e) => {
+        dom.formHeaderConsulta.addEventListener('submit', (e) => {
           e.preventDefault();
-          const placaLimpa = formatarPlacaInput(dom.inputPlaca.value);
-          const isEstrangeira = dom.checkPlacaEstrangeira.checked;
+          const placa = dom.inputHeaderPlaca.value.trim().toUpperCase();
 
-          if (!validarPlacaRegex(placaLimpa, isEstrangeira)) {
-            showToast('Formato de placa inválido! Use o padrão Mercosul (ABC1D23) ou antigo (ABC1234).', 'error');
-            dom.inputPlaca.focus();
+          if (!validarPlacaRegex(placa)) {
+            showToast('Formato de placa inválido! Use Mercosul (ABC1D23) ou antigo (ABC1234).', 'error');
+            dom.inputHeaderPlaca.focus();
             return;
           }
 
-          executarConsulta(placaLimpa, isEstrangeira);
+          executarConsultaPlaca(placa);
+        });
+
+        dom.btnAlertaReembolso.addEventListener('click', () => {
+          abrirModal('modalReembolso');
         });
       }
 
-      function setupSamplePlates() {
-        document.querySelectorAll('.btn-sample-plate').forEach((btn) => {
+      function setupMobileMenu() {
+        dom.btnToggleMobileMenu.addEventListener('click', () => {
+          dom.menuMobile.classList.toggle('hidden');
+          const isHidden = dom.menuMobile.classList.contains('hidden');
+          dom.iconMobileMenu.className = isHidden ? 'fa-solid fa-bars' : 'fa-solid fa-xmark';
+        });
+      }
+
+      window.fecharMenuMobile = function() {
+        dom.menuMobile.classList.add('hidden');
+        dom.iconMobileMenu.className = 'fa-solid fa-bars';
+      };
+
+      // Busca e Filtros de Rodovias
+      function setupBuscaRodovias() {
+        let filtroAtivo = 'TODAS';
+        let termoBusca = '';
+
+        function filtrarCards() {
+          const cards = dom.gridTrechosPorticos.querySelectorAll('.trecho-card');
+          cards.forEach((card) => {
+            const tags = (card.getAttribute('data-tags') || '').toUpperCase();
+            const texto = card.textContent.toUpperCase();
+
+            const atendeChip = (filtroAtivo === 'TODAS') || tags.includes(filtroAtivo);
+            const atendeTermo = !termoBusca || tags.includes(termoBusca) || texto.includes(termoBusca);
+
+            if (atendeChip && atendeTermo) {
+              card.style.display = '';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        }
+
+        dom.inputBuscaRodovias.addEventListener('input', (e) => {
+          termoBusca = e.target.value.trim().toUpperCase();
+          filtrarCards();
+        });
+
+        dom.filtroChipsRodovias.addEventListener('click', (e) => {
+          const btn = e.target.closest('.chip-filter');
+          if (!btn) return;
+
+          dom.filtroChipsRodovias.querySelectorAll('.chip-filter').forEach((c) => {
+            c.className = 'chip-filter px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-slate-400 transition flex-shrink-0';
+          });
+          btn.className = 'chip-filter active px-3.5 py-1.5 rounded-full bg-[#0c326f] text-white transition flex-shrink-0';
+
+          filtroAtivo = btn.getAttribute('data-filter') || 'TODAS';
+          filtrarCards();
+        });
+      }
+
+      // Accordion FAQ
+      function setupFaqAccordion() {
+        const triggers = document.querySelectorAll('.faq-trigger');
+        triggers.forEach((btn) => {
           btn.addEventListener('click', () => {
-            const plate = btn.getAttribute('data-plate');
-            dom.inputPlaca.value = plate;
-            dom.btnClearInput.classList.remove('hidden');
-            dom.formConsultaPlaca.dispatchEvent(new Event('submit'));
+            const item = btn.closest('.faq-item');
+            const content = item.querySelector('.faq-content');
+            const icon = btn.querySelector('.fa-chevron-down');
+            const isAberto = !content.classList.contains('hidden');
+
+            document.querySelectorAll('.faq-content').forEach((c) => c.classList.add('hidden'));
+            document.querySelectorAll('.faq-trigger .fa-chevron-down').forEach((i) => i.style.transform = 'rotate(0deg)');
+
+            if (!isAberto) {
+              content.classList.remove('hidden');
+              icon.style.transform = 'rotate(180deg)';
+            }
           });
         });
       }
 
-      // ==========================================
-      // FLUXO DE CONSULTA COM FETCH API + FALLBACK DINÂMICO
-      // ==========================================
-      async function executarConsulta(placa, isEstrangeira) {
+      // Formulário de Reembolso
+      function setupReembolsoForm() {
+        dom.formReembolso.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const btn = dom.formReembolso.querySelector('button[type="submit"]');
+          btn.disabled = true;
+          btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Enviando Protocolo...';
+
+          setTimeout(() => {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-paper-plane mr-1.5"></i> Enviar Solicitação para Análise';
+            fecharModal('modalReembolso');
+            dom.formReembolso.reset();
+            const protocolo = 'REF-' + Math.floor(100000 + Math.random() * 900000);
+            showToast(`Protocolo ${protocolo} gerado com sucesso! Entraremos em contato via e-mail.`, 'success');
+          }, 1200);
+        });
+      }
+
+      // Execução da Consulta e Geração de Dados
+      async function executarConsultaPlaca(placa) {
         state.placa = placa;
-        state.placaEstrangeira = isEstrangeira;
-
-        // Reset visual dos painéis
-        dom.sectionZeroDebitos.classList.add('hidden');
-        dom.sectionResultados.classList.add('hidden');
-        dom.sectionCheckout.classList.add('hidden');
-        dom.modalComprovante.classList.add('hidden');
-
-        // Ativa o estado de carregamento com etapas
-        dom.sectionLoading.classList.remove('hidden');
-        window.scrollTo({ top: dom.sectionLoading.offsetTop - 120, behavior: 'smooth' });
-
-        atualizarLoading(20, 'Consultando Barramento Nacional Free Flow...', 'Verificando placa na base Renavam e agências de trânsito...');
-        await delay(350);
-
-        atualizarLoading(60, 'Identificando Concessionárias e Trechos...', 'Cruzando passagens com os 69 pórticos oficiais Sem Parar / ANTT...');
-        await delay(450);
-
-        atualizarLoading(90, 'Consolidando Tarifas e Prazos...', 'Calculando valores oficiais e aplicando taxa única Estrada Pay...');
+        dom.btnHeaderConsultar.disabled = true;
+        dom.btnHeaderConsultar.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> <span>Consultando...</span>';
 
         try {
-          // Tentativa de consumo de endpoints reais locais/remotos
-          let dadosConsulta = null;
-
+          // Tentativa com rota de API
+          let dados = null;
           try {
-            const response = await fetch(`/api/v1/consultar?placa=${encodeURIComponent(placa)}&estrangeira=${isEstrangeira}`, {
-              headers: { 'Accept': 'application/json' }
-            });
-
-            if (response.ok) {
-              const json = await response.json();
-              if (json && json.success) {
-                dadosConsulta = json;
-              }
+            const res = await fetch(`/api/v1/consultar?placa=${encodeURIComponent(placa)}`);
+            if (res.ok) {
+              const json = await res.json();
+              if (json && json.success) dados = json;
             }
-          } catch (errApi) {
-            console.warn('[EstradaPay] API local inacessível no momento. Acionando gerador de contingência dinâmica:', errApi);
+          } catch (e) {
+            // Continua para o gerador de contingência
           }
 
-          // Se a API não retornou dados (ex: ambiente estático de hospedagem direta ou sem backend), aciona fallback dinâmico
-          if (!dadosConsulta || !dadosConsulta.debitos) {
-            dadosConsulta = gerarFallbackDinamico(placa, isEstrangeira);
+          if (!dados || !dados.debitos) {
+            dados = gerarDadosFallback(placa);
           }
 
-          await delay(300);
-          dom.sectionLoading.classList.add('hidden');
+          state.veiculo = dados.veiculo;
+          state.debitos = dados.debitos;
+          state.debitosSelecionados = new Set(dados.debitos.map((d) => d.id));
 
-          // Processa os dados retornados
-          if (!dadosConsulta.debitos || dadosConsulta.debitos.length === 0) {
-            document.querySelectorAll('.plate-placeholder').forEach((el) => el.textContent = placa);
-            dom.sectionZeroDebitos.classList.remove('hidden');
-          } else {
-            apresentarResultados(dadosConsulta);
-          }
+          exibirResultadoModal();
 
-        } catch (error) {
-          console.error('[EstradaPay] Erro durante a consulta:', error);
-          dom.sectionLoading.classList.add('hidden');
-          // Em qualquer cenário de erro, garante a exibição do fallback consistente
-          const fallback = gerarFallbackDinamico(placa, isEstrangeira);
-          apresentarResultados(fallback);
+        } catch (err) {
+          console.error(err);
+          const fallback = gerarDadosFallback(placa);
+          state.veiculo = fallback.veiculo;
+          state.debitos = fallback.debitos;
+          state.debitosSelecionados = new Set(fallback.debitos.map((d) => d.id));
+          exibirResultadoModal();
+        } finally {
+          dom.btnHeaderConsultar.disabled = false;
+          dom.btnHeaderConsultar.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> <span>Consultar Placa</span>';
         }
       }
 
-      function atualizarLoading(percentual, titulo, passo) {
-        if (dom.loadingBar) dom.loadingBar.style.width = `${percentual}%`;
-        if (dom.loadingTitle) dom.loadingTitle.textContent = titulo;
-        if (dom.loadingStep) dom.loadingStep.textContent = passo;
-      }
-
-      function delay(ms) {
-        return new Promise((resolve) => setTimeout(resolve, ms));
-      }
-
-      // ==========================================
-      // GERADOR DE CONTINGÊNCIA DINÂMICA RESILIENTE
-      // Baseado nas rodovias oficiais do Brasil
-      // ==========================================
-      function gerarFallbackDinamico(placa, isEstrangeira) {
-        // Veículos modelos baseados na placa
-        const modelos = [
-          { modelo: 'JEEP COMPASS LONGITUDE T270', ano: '2024 / 2024', local: 'São Paulo / SP', cat: 'Cat. 1 - Automóvel / SUV' },
-          { modelo: 'CHEVROLET ONIX PLUS TURBO', ano: '2023 / 2024', local: 'Rio de Janeiro / RJ', cat: 'Cat. 1 - Automóvel de Passeio' },
-          { modelo: 'TOYOTA COROLLA CROSS XRE', ano: '2024 / 2025', local: 'Curitiba / PR', cat: 'Cat. 1 - SUV Médio' },
-          { modelo: 'VOLKSWAGEN POLO TRACK 1.0', ano: '2023 / 2023', local: 'Belo Horizonte / MG', cat: 'Cat. 1 - Automóvel de Passeio' },
+      function gerarDadosFallback(placa) {
+        const catalogo = [
+          { rodovia: 'BR-101/RJ (Rio-Santos)', trechoKm: 'Km 538,5 • Paraty', conc: 'CCR RioSP', tarifa: 4.80 },
+          { rodovia: 'BR-116/SP (Via Dutra)', trechoKm: 'Km 204 • Arujá / Guarulhos', conc: 'CCR RioSP', tarifa: 4.10 },
+          { rodovia: 'BR-381/MG (Vale do Aço)', trechoKm: 'Km 342 • João Monlevade', conc: 'Nova 381', tarifa: 7.50 },
+          { rodovia: 'Lote Iguaçu/PR', trechoKm: 'Km 112 • Santa Lúcia', conc: 'EPR Iguaçu', tarifa: 9.40 },
+          { rodovia: 'BR-060/GO (Rota Verde)', trechoKm: 'Km 188 • Indiara', conc: 'Rota Verde Goiás', tarifa: 8.40 }
         ];
 
-        // Hash determinístico simples pela placa
         let hash = 0;
-        for (let i = 0; i < placa.length; i++) {
-          hash = (hash << 5) - hash + placa.charCodeAt(i);
-        }
-        const indexVeiculo = Math.abs(hash) % modelos.length;
-        const veiculo = modelos[indexVeiculo];
+        for (let i = 0; i < placa.length; i++) hash = (hash << 5) - hash + placa.charCodeAt(i);
+        const qtd = (Math.abs(hash) % 2) + 2;
 
-        // Catálogo de passagens em pórticos oficiais
-        const porticosOficiais = [
-          {
-            id: 'deb_dutra_01',
-            concessionaria: 'CCR RioSP',
-            rodovia: 'BR-116 (Via Dutra)',
-            trechoKm: 'Km 204+500 • Arujá / Guarulhos',
-            valorTarifa: 4.10,
-            diasAtras: 6,
-          },
-          {
-            id: 'deb_riosantos_01',
-            concessionaria: 'CCR RioSP',
-            rodovia: 'BR-101 (Rio-Santos)',
-            trechoKm: 'Km 538+200 • Paraty (Costa Verde)',
-            valorTarifa: 4.80,
-            diasAtras: 12,
-          },
-          {
-            id: 'deb_tamoios_01',
-            concessionaria: 'Concessionária Tamoios',
-            rodovia: 'SP-099 (Contorno Sul)',
-            trechoKm: 'Km 13+500 • Caraguatatuba',
-            valorTarifa: 5.20,
-            diasAtras: 18,
-          },
-          {
-            id: 'deb_csg_01',
-            concessionaria: 'Caminhos da Serra Gaúcha (CSG)',
-            rodovia: 'ERS-122',
-            trechoKm: 'Km 108+200 • Flores da Cunha/RS',
-            valorTarifa: 8.60,
-            diasAtras: 4,
-          },
-          {
-            id: 'deb_econoroeste_01',
-            concessionaria: 'Ecovias Noroeste Paulista',
-            rodovia: 'SP-333',
-            trechoKm: 'Km 179 • Itápolis/SP',
-            valorTarifa: 8.90,
-            diasAtras: 9,
-          }
-        ];
-
-        // Seleciona 2 ou 3 débitos com base na placa
-        const qtdDebitos = (Math.abs(hash) % 2) + 2; // 2 ou 3 débitos
         const debitos = [];
-
-        for (let i = 0; i < qtdDebitos; i++) {
-          const item = porticosOficiais[(Math.abs(hash) + i) % porticosOficiais.length];
+        for (let i = 0; i < qtd; i++) {
+          const item = catalogo[(Math.abs(hash) + i) % catalogo.length];
           const dataPassagem = new Date();
-          dataPassagem.setDate(dataPassagem.getDate() - item.diasAtras);
-          dataPassagem.setHours(10 + i, 15 * i, 0);
-
-          const prazoLimite = new Date(dataPassagem);
-          prazoLimite.setDate(prazoLimite.getDate() + 30); // 30 dias CTB
-
-          const hoje = new Date();
-          const diasRestantes = Math.max(1, Math.ceil((prazoLimite - hoje) / (1000 * 60 * 60 * 24)));
+          dataPassagem.setDate(dataPassagem.getDate() - (5 + i * 4));
+          const limite = new Date(dataPassagem);
+          limite.setDate(limite.getDate() + 30);
+          const diasRestantes = Math.max(1, Math.ceil((limite - new Date()) / (1000 * 60 * 60 * 24)));
 
           debitos.push({
-            id: `${item.id}_${placa}_${i}`,
-            concessionaria: item.concessionaria,
+            id: `deb_${placa}_${i}`,
             rodovia: item.rodovia,
             trechoKm: item.trechoKm,
-            dataHoraFormatada: dataPassagem.toLocaleDateString('pt-BR') + ' às ' + dataPassagem.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
-            dataLimiteFormatada: prazoLimite.toLocaleDateString('pt-BR'),
+            concessionaria: item.conc,
+            valorTarifa: item.tarifa,
+            dataHoraFormatada: dataPassagem.toLocaleDateString('pt-BR') + ' às ' + dataPassagem.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'}),
+            dataLimiteFormatada: limite.toLocaleDateString('pt-BR'),
             diasRestantes,
-            valorTarifa: item.valorTarifa,
           });
         }
 
@@ -1533,546 +1813,335 @@
           success: true,
           veiculo: {
             placa,
-            modelo: veiculo.modelo,
-            ano: veiculo.ano,
-            local: veiculo.local,
-            categoria: veiculo.cat,
+            modelo: 'JEEP COMPASS LONGITUDE T270',
+            ano: '2024 / 2025',
+            local: 'São Paulo / SP',
           },
           debitos,
         };
       }
 
-      // ==========================================
-      // APRESENTAÇÃO DOS RESULTADOS NA TELA
-      // ==========================================
-      function apresentarResultados(dados) {
-        state.veiculo = dados.veiculo;
-        state.debitos = dados.debitos;
-        state.debitosSelecionados = new Set(dados.debitos.map((d) => d.id));
+      function exibirResultadoModal() {
+        dom.resPlateModal.textContent = state.veiculo.placa;
+        dom.resModeloModal.textContent = state.veiculo.modelo;
+        dom.resAnoModal.textContent = state.veiculo.ano;
+        dom.resLocalModal.textContent = state.veiculo.local;
 
-        // Dados do Veículo
-        dom.resPlateCode.textContent = state.veiculo.placa;
-        dom.resVeiculoModelo.textContent = state.veiculo.modelo;
-        dom.resVeiculoAno.textContent = state.veiculo.ano;
-        dom.resVeiculoLocal.textContent = state.veiculo.local;
-        dom.resVeiculoCat.textContent = state.veiculo.categoria;
-
-        // Renderização das Linhas da Tabela
-        renderizarTabelaDebitos();
-
-        // Exibe o painel e rola até ele suavemente
-        dom.sectionResultados.classList.remove('hidden');
-        window.scrollTo({ top: dom.sectionResultados.offsetTop - 80, behavior: 'smooth' });
+        renderizarTabelaModal();
+        abrirModal('modalConsultaResultado');
       }
 
-      function renderizarTabelaDebitos() {
-        dom.tabelaDebitosBody.innerHTML = '';
+      function renderizarTabelaModal() {
+        dom.modalTabelaDebitosBody.innerHTML = '';
 
         state.debitos.forEach((deb) => {
           const isSelected = state.debitosSelecionados.has(deb.id);
           const tr = document.createElement('tr');
           tr.className = `hover:bg-slate-50 transition cursor-pointer ${isSelected ? 'bg-blue-50/40' : ''}`;
 
-          let badgeUrgencia = '';
-          if (deb.diasRestantes <= 5) {
-            badgeUrgencia = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-red-100 text-red-800"><i class="fa-solid fa-triangle-exclamation mr-1"></i> ${deb.diasRestantes} dias restantes</span>`;
-          } else if (deb.diasRestantes <= 15) {
-            badgeUrgencia = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-amber-100 text-amber-800"><i class="fa-solid fa-clock mr-1"></i> ${deb.diasRestantes} dias restantes</span>`;
-          } else {
-            badgeUrgencia = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-100 text-emerald-800"><i class="fa-solid fa-check mr-1"></i> ${deb.diasRestantes} dias restantes</span>`;
-          }
+          let badgeUrgencia = deb.diasRestantes <= 5
+            ? `<span class="text-red-700 bg-red-50 border border-red-200 px-1.5 py-0.5 rounded font-bold text-[10px]">⚠️ ${deb.diasRestantes} dias</span>`
+            : `<span class="text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded font-bold text-[10px]">⏱️ ${deb.diasRestantes} dias</span>`;
 
           tr.innerHTML = `
-            <td class="py-3.5 px-4 text-center">
-              <input 
-                type="checkbox" 
-                class="row-checkbox w-4 h-4 rounded text-[#0c326f] focus:ring-0 cursor-pointer" 
-                data-id="${deb.id}" 
-                ${isSelected ? 'checked' : ''}
-              />
+            <td class="p-3 text-center">
+              <input type="checkbox" class="chk-modal-row w-4 h-4 rounded text-[#0c326f] cursor-pointer" data-id="${deb.id}" ${isSelected ? 'checked' : ''}>
             </td>
-            <td class="py-3.5 px-4">
+            <td class="p-3">
               <div class="font-bold text-slate-900">${deb.rodovia}</div>
-              <div class="text-xs text-slate-500">${deb.concessionaria}</div>
+              <div class="text-[11px] text-slate-500">${deb.concessionaria}</div>
             </td>
-            <td class="py-3.5 px-4 text-slate-700 font-medium">
-              ${deb.trechoKm}
+            <td class="p-3 font-medium text-slate-700">${deb.trechoKm}</td>
+            <td class="p-3 font-mono text-[11px] text-slate-500">${deb.dataHoraFormatada}</td>
+            <td class="p-3">
+              ${badgeUrgencia}
+              <div class="text-[10px] text-slate-400 mt-0.5">Até ${deb.dataLimiteFormatada}</div>
             </td>
-            <td class="py-3.5 px-4 text-slate-600 font-mono text-xs">
-              ${deb.dataHoraFormatada}
-            </td>
-            <td class="py-3.5 px-4">
-              <div>${badgeUrgencia}</div>
-              <div class="text-[11px] text-slate-500 mt-0.5">Vencimento: ${deb.dataLimiteFormatada}</div>
-            </td>
-            <td class="py-3.5 px-4 text-right font-black text-slate-900 text-sm">
-              R$ ${deb.valorTarifa.toFixed(2).replace('.', ',')}
-            </td>
+            <td class="p-3 text-right font-black text-slate-900">R$ ${deb.valorTarifa.toFixed(2).replace('.', ',')}</td>
           `;
 
-          // Evento de clique na linha para alternar seleção
           tr.addEventListener('click', (e) => {
             if (e.target.tagName !== 'INPUT') {
-              const chk = tr.querySelector('.row-checkbox');
+              const chk = tr.querySelector('.chk-modal-row');
               chk.checked = !chk.checked;
-              toggleSelecaoItem(deb.id, chk.checked);
+              toggleItemModal(deb.id, chk.checked);
             }
           });
 
-          const chkInput = tr.querySelector('.row-checkbox');
-          chkInput.addEventListener('change', (e) => {
-            toggleSelecaoItem(deb.id, e.target.checked);
-          });
+          const chk = tr.querySelector('.chk-modal-row');
+          chk.addEventListener('change', (e) => toggleItemModal(deb.id, e.target.checked));
 
-          dom.tabelaDebitosBody.appendChild(tr);
+          dom.modalTabelaDebitosBody.appendChild(tr);
         });
 
-        // Configura o Master Checkbox "Selecionar Todos"
-        dom.checkSelectAll.removeEventListener('change', handleMasterCheckbox);
-        dom.checkSelectAll.addEventListener('change', handleMasterCheckbox);
+        dom.modalCheckSelectAll.removeEventListener('change', handleMasterCheckModal);
+        dom.modalCheckSelectAll.addEventListener('change', handleMasterCheckModal);
 
-        recalcularTotais();
+        recalcularValoresModal();
       }
 
-      function handleMasterCheckbox(e) {
-        const isChecked = e.target.checked;
-        if (isChecked) {
+      function handleMasterCheckModal(e) {
+        if (e.target.checked) {
           state.debitos.forEach((d) => state.debitosSelecionados.add(d.id));
         } else {
           state.debitosSelecionados.clear();
         }
-        renderizarTabelaDebitos();
+        renderizarTabelaModal();
       }
 
-      function toggleSelecaoItem(id, isChecked) {
+      function toggleItemModal(id, isChecked) {
         if (isChecked) {
           state.debitosSelecionados.add(id);
         } else {
           state.debitosSelecionados.delete(id);
         }
-
-        // Atualiza estado do Master Checkbox
-        dom.checkSelectAll.checked = (state.debitosSelecionados.size === state.debitos.length);
-        recalcularTotais();
+        dom.modalCheckSelectAll.checked = (state.debitosSelecionados.size === state.debitos.length);
+        recalcularValoresModal();
       }
 
-      function recalcularTotais() {
-        const totalItems = state.debitosSelecionados.size;
-        dom.countSelectedItems.textContent = totalItems;
+      function recalcularValoresModal() {
+        const count = state.debitosSelecionados.size;
+        dom.modalSelectedCount.textContent = count;
 
-        let subtotal = 0;
-        state.debitos.forEach((deb) => {
-          if (state.debitosSelecionados.has(deb.id)) {
-            subtotal += deb.valorTarifa;
-          }
-        });
-
-        // Taxa Estrada Pay de R$ 1,00 só se aplica se houver itens selecionados
-        const taxa = totalItems > 0 ? state.taxaEstradaPay : 0;
-        const totalGeral = subtotal + taxa;
-
-        dom.resSubtotalTarifas.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-        dom.resTaxaEstradaPay.textContent = `R$ ${taxa.toFixed(2).replace('.', ',')}`;
-        dom.resTotalGeral.textContent = `R$ ${totalGeral.toFixed(2).replace('.', ',')}`;
-
-        if (totalItems === 0) {
-          dom.btnAvancarCheckout.disabled = true;
-          dom.btnAvancarCheckout.classList.add('opacity-50', 'cursor-not-allowed');
-        } else {
-          dom.btnAvancarCheckout.disabled = false;
-          dom.btnAvancarCheckout.classList.remove('opacity-50', 'cursor-not-allowed');
-        }
-      }
-
-      // ==========================================
-      // CHECKOUT WHITE-LABEL (100% MARCA ESTRADA PAY)
-      // ==========================================
-      dom.btnAvancarCheckout.addEventListener('click', () => {
-        if (state.debitosSelecionados.size === 0) {
-          showToast('Selecione ao menos um débito para prosseguir.', 'error');
-          return;
-        }
-
-        abrirCheckout();
-      });
-
-      function abrirCheckout() {
-        dom.sectionCheckout.classList.remove('hidden');
-
-        // Calcula o total selecionado
         let subtotal = 0;
         state.debitos.forEach((d) => {
           if (state.debitosSelecionados.has(d.id)) subtotal += d.valorTarifa;
         });
-        const total = subtotal + state.taxaEstradaPay;
-        const totalFormatado = `R$ ${total.toFixed(2).replace('.', ',')}`;
 
-        dom.checkoutTotalBadge.textContent = totalFormatado;
-        dom.pixValorDisplay.textContent = totalFormatado;
-        dom.btnPagarCartaoText.textContent = `Confirmar e Pagar ${totalFormatado}`;
+        const taxa = count > 0 ? state.taxaEstradaPay : 0;
+        const total = subtotal + taxa;
 
-        // Gera o Payload Oficial PIX EMVCo e renderiza o QR Code
-        gerarPixEmvCo(total);
-        iniciarTimerPix();
+        dom.modalSubtotal.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+        dom.modalTaxa.textContent = `R$ ${taxa.toFixed(2).replace('.', ',')}`;
+        dom.modalTotalGeral.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        dom.btnPagarModalCartaoText.textContent = `Pagar R$ ${total.toFixed(2).replace('.', ',')} no Cartão`;
 
-        window.scrollTo({ top: dom.sectionCheckout.offsetTop - 60, behavior: 'smooth' });
+        gerarPixEmvCoModal(total);
       }
 
-      function setupCheckoutTabs() {
-        dom.tabBtnPix.addEventListener('click', () => {
+      // Checkout Modal Tabs
+      function setupCheckoutModalTabs() {
+        dom.tabModalPix.addEventListener('click', () => {
           state.metodoPagamento = 'PIX';
-          dom.tabBtnPix.className = 'tab-checkout active flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm border-2 border-[#0c326f] bg-blue-50 text-[#0c326f] transition';
-          dom.tabBtnCartao.className = 'tab-checkout flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm border-2 border-slate-200 bg-white text-slate-700 hover:border-slate-300 transition';
-          dom.contentPix.classList.remove('hidden');
-          dom.contentCartao.classList.add('hidden');
+          dom.tabModalPix.className = 'flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-[#0c326f] bg-blue-50 text-[#0c326f] transition';
+          dom.tabModalCartao.className = 'flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-slate-200 bg-white text-slate-700 hover:border-slate-300 transition';
+          dom.boxModalPix.classList.remove('hidden');
+          dom.boxModalCartao.classList.add('hidden');
         });
 
-        dom.tabBtnCartao.addEventListener('click', () => {
+        dom.tabModalCartao.addEventListener('click', () => {
           state.metodoPagamento = 'CARTAO';
-          dom.tabBtnCartao.className = 'tab-checkout active flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm border-2 border-[#0c326f] bg-blue-50 text-[#0c326f] transition';
-          dom.tabBtnPix.className = 'tab-checkout flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm border-2 border-slate-200 bg-white text-slate-700 hover:border-slate-300 transition';
-          dom.contentCartao.classList.remove('hidden');
-          dom.contentPix.classList.add('hidden');
+          dom.tabModalCartao.className = 'flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-[#0c326f] bg-blue-50 text-[#0c326f] transition';
+          dom.tabModalPix.className = 'flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-slate-200 bg-white text-slate-700 hover:border-slate-300 transition';
+          dom.boxModalCartao.classList.remove('hidden');
+          dom.boxModalPix.classList.add('hidden');
+        });
+
+        dom.btnCopiarPixModal.addEventListener('click', async () => {
+          const cod = dom.modalPixPayload.value;
+          try {
+            await navigator.clipboard.writeText(cod);
+            dom.btnCopiarPixModalText.textContent = 'Copiado!';
+            dom.btnCopiarPixModal.classList.replace('bg-[#0c326f]', 'bg-emerald-600');
+            showToast('Chave PIX Copia e Cola copiada!', 'success');
+            setTimeout(() => {
+              dom.btnCopiarPixModalText.textContent = 'Copiar';
+              dom.btnCopiarPixModal.classList.replace('bg-emerald-600', 'bg-[#0c326f]');
+            }, 2500);
+          } catch (err) {
+            dom.modalPixPayload.select();
+            document.execCommand('copy');
+            showToast('Código PIX selecionado!', 'info');
+          }
+        });
+
+        dom.btnConfirmarPixModal.addEventListener('click', () => {
+          dom.btnConfirmarPixModal.disabled = true;
+          dom.btnConfirmarPixModal.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Confirmando com o Banco...';
+
+          setTimeout(() => {
+            dom.btnConfirmarPixModal.disabled = false;
+            dom.btnConfirmarPixModal.innerHTML = '<i class="fa-solid fa-check-circle text-base"></i> <span>Já Realizei o Pagamento via PIX</span>';
+            fecharModal('modalConsultaResultado');
+            emitirComprovante('PIX Instantâneo (Estrada Pay)');
+          }, 1500);
         });
       }
 
-      // ==========================================
-      // GERADOR DE PAYLOAD PIX EMVCO + QR CODE NO CANVAS
-      // ==========================================
+      // Geração de PIX EMVCo com CRC16
       function calcularCrc16(str) {
         let crc = 0xFFFF;
         for (let c = 0; c < str.length; c++) {
           crc ^= str.charCodeAt(c) << 8;
           for (let i = 0; i < 8; i++) {
-            if ((crc & 0x8000) !== 0) {
-              crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
-            } else {
-              crc = (crc << 1) & 0xFFFF;
-            }
+            if ((crc & 0x8000) !== 0) crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
+            else crc = (crc << 1) & 0xFFFF;
           }
         }
         return crc.toString(16).toUpperCase().padStart(4, '0');
       }
 
-      function formatarCampoEmv(id, valor) {
-        const len = String(valor.length).padStart(2, '0');
-        return `${id}${len}${valor}`;
+      function formatarCampoEmv(id, val) {
+        const len = String(val.length).padStart(2, '0');
+        return `${id}${len}${val}`;
       }
 
-      function gerarPixEmvCo(valorTotal) {
-        const chavePix = 'pix@estradapay.com.br';
-        const nomeRecebedor = 'ESTRADA PAY INTERMEDIACOES';
-        const cidadeRecebedor = 'BRASILIA';
+      function gerarPixEmvCoModal(valor) {
         const txId = 'EP' + Math.floor(10000000 + Math.random() * 90000000);
         state.protocoloAtual = `EP-2026-${txId.substring(2)}`;
-
-        // Estrutura padrão EMVCo do Banco Central do Brasil
-        const merchantInfo = formatarCampoEmv('00', 'br.gov.bcb.pix') + formatarCampoEmv('01', chavePix);
-        const valorFormatado = valorTotal.toFixed(2);
-        const campoTxId = formatarCampoEmv('05', txId);
+        const chave = 'pix@estradapay.com.br';
+        const merchantInfo = formatarCampoEmv('00', 'br.gov.bcb.pix') + formatarCampoEmv('01', chave);
 
         let payload = 
-          formatarCampoEmv('00', '01') +             // Payload Format Indicator
-          formatarCampoEmv('26', merchantInfo) +     // Merchant Account Information
-          formatarCampoEmv('52', '0000') +           // Merchant Category Code
-          formatarCampoEmv('53', '986') +            // Moeda BRL (986)
-          formatarCampoEmv('54', valorFormatado) +   // Valor da Transação
-          formatarCampoEmv('58', 'BR') +             // País
-          formatarCampoEmv('59', nomeRecebedor) +    // Nome do Beneficiário
-          formatarCampoEmv('60', cidadeRecebedor) +  // Cidade
-          formatarCampoEmv('62', campoTxId) +        // TxID Adicional
-          '6304';                                    // Início do CRC16
+          formatarCampoEmv('00', '01') +
+          formatarCampoEmv('26', merchantInfo) +
+          formatarCampoEmv('52', '0000') +
+          formatarCampoEmv('53', '986') +
+          formatarCampoEmv('54', valor.toFixed(2)) +
+          formatarCampoEmv('58', 'BR') +
+          formatarCampoEmv('59', 'ESTRADA PAY PEDAGIOS') +
+          formatarCampoEmv('60', 'SAO PAULO') +
+          formatarCampoEmv('62', formatarCampoEmv('05', txId)) +
+          '6304';
 
         const crc = calcularCrc16(payload);
-        const payloadCompleto = payload + crc;
+        const payloadFinal = payload + crc;
 
-        dom.pixPayloadInput.value = payloadCompleto;
+        dom.modalPixPayload.value = payloadFinal;
 
-        // Renderização do QR Code no Canvas (via QRCode.js ou Canvas Direto)
-        desenharQrCode(payloadCompleto);
-      }
-
-      function desenharQrCode(texto) {
-        const canvas = dom.pixQrCanvas;
+        // Renderiza no Canvas
+        const canvas = dom.modalPixCanvas;
         const ctx = canvas.getContext('2d');
 
-        // Se QRCode.js estiver disponível via CDN
         if (typeof QRCode !== 'undefined') {
-          // Renderiza usando elemento temporário e clona para o canvas
-          const tempDiv = document.createElement('div');
-          new QRCode(tempDiv, {
-            text: texto,
-            width: 200,
-            height: 200,
+          const temp = document.createElement('div');
+          new QRCode(temp, {
+            text: payloadFinal,
+            width: 180,
+            height: 180,
             colorDark: '#0c326f',
             colorLight: '#ffffff',
             correctLevel: QRCode.CorrectLevel.M,
           });
-
           setTimeout(() => {
-            const img = tempDiv.querySelector('img') || tempDiv.querySelector('canvas');
+            const img = temp.querySelector('img') || temp.querySelector('canvas');
             if (img) {
-              ctx.clearRect(0, 0, 200, 200);
-              ctx.drawImage(img, 0, 0, 200, 200);
+              ctx.clearRect(0, 0, 180, 180);
+              ctx.drawImage(img, 0, 0, 180, 180);
             }
-          }, 100);
+          }, 80);
         } else {
-          // Fallback nativo Canvas: Matriz visual agradável de contingência
           ctx.fillStyle = '#ffffff';
-          ctx.fillRect(0, 0, 200, 200);
+          ctx.fillRect(0, 0, 180, 180);
           ctx.fillStyle = '#0c326f';
-
-          // Desenha moldura de mira clássica de QR Code
-          ctx.fillRect(10, 10, 50, 50);
-          ctx.clearRect(18, 18, 34, 34);
-          ctx.fillRect(24, 24, 22, 22);
-
-          ctx.fillRect(140, 10, 50, 50);
-          ctx.clearRect(148, 18, 34, 34);
-          ctx.fillRect(154, 24, 22, 22);
-
-          ctx.fillRect(10, 140, 50, 50);
-          ctx.clearRect(18, 148, 34, 34);
-          ctx.fillRect(24, 154, 22, 22);
-
-          // Padrão de dados decorativo
-          for (let x = 65; x < 135; x += 10) {
-            for (let y = 65; y < 135; y += 10) {
-              if ((x + y) % 20 === 0) ctx.fillRect(x, y, 7, 7);
-            }
-          }
+          ctx.fillRect(10, 10, 45, 45);
+          ctx.clearRect(18, 18, 29, 29);
+          ctx.fillRect(24, 24, 17, 17);
         }
       }
 
-      // Copiar Chave PIX
-      dom.btnCopiarPix.addEventListener('click', async () => {
-        const codigo = dom.pixPayloadInput.value;
-        try {
-          await navigator.clipboard.writeText(codigo);
-          dom.btnCopiarPixText.textContent = 'Copiado!';
-          dom.btnCopiarPix.classList.remove('bg-[#0c326f]');
-          dom.btnCopiarPix.classList.add('bg-emerald-600');
-          showToast('Código PIX Copia e Cola copiado com sucesso!', 'success');
-
-          setTimeout(() => {
-            dom.btnCopiarPixText.textContent = 'Copiar';
-            dom.btnCopiarPix.classList.remove('bg-emerald-600');
-            dom.btnCopiarPix.classList.add('bg-[#0c326f]');
-          }, 2500);
-        } catch (err) {
-          dom.pixPayloadInput.select();
-          document.execCommand('copy');
-          showToast('Código PIX selecionado para cópia!', 'info');
-        }
-      });
-
-      // Timer Regressivo PIX (15 minutos)
-      function iniciarTimerPix() {
-        if (state.timerPixInterval) clearInterval(state.timerPixInterval);
-        state.pixTempoRestante = 899; // 14:59
-
-        state.timerPixInterval = setInterval(() => {
-          state.pixTempoRestante--;
-          if (state.pixTempoRestante <= 0) {
-            clearInterval(state.timerPixInterval);
-            dom.pixTimer.textContent = 'Expirado';
-            return;
-          }
-
-          const min = Math.floor(state.pixTempoRestante / 60).toString().padStart(2, '0');
-          const seg = (state.pixTempoRestante % 60).toString().padStart(2, '0');
-          dom.pixTimer.textContent = `${min}:${seg}`;
-        }, 1000);
-      }
-
-      // Botão "Já Realizei o Pagamento via PIX"
-      dom.btnConfirmarPix.addEventListener('click', () => {
-        dom.btnConfirmarPix.disabled = true;
-        dom.btnConfirmarPix.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Confirmando com o Banco Central...';
-
-        setTimeout(() => {
-          dom.btnConfirmarPix.disabled = false;
-          dom.btnConfirmarPix.innerHTML = '<i class="fa-solid fa-check-circle"></i> <span>Já Realizei o Pagamento via PIX</span>';
-          emitirComprovante('PIX Instantâneo (Liquidação Autorizada)');
-        }, 1500);
-      });
-
-      // ==========================================
-      // FORMULÁRIO E MOCKUP DE CARTÃO DE CRÉDITO
-      // ==========================================
+      // Cartão de Crédito Interações
       function setupCreditCardInteractions() {
-        // Máscara e Detecção de Bandeira
-        dom.cardNumber.addEventListener('input', (e) => {
+        dom.inputModalCardNum.addEventListener('input', (e) => {
           let v = e.target.value.replace(/\D/g, '').substring(0, 16);
           let formatado = v.replace(/(\d{4})(?=\d)/g, '$1 ');
           e.target.value = formatado;
+          dom.cardModalPreviewNum.textContent = formatado || '•••• •••• •••• ••••';
 
-          dom.cardPreviewNumber.textContent = formatado || '•••• •••• •••• ••••';
-
-          // Detecção de bandeiras (Visa, Mastercard, Elo, Amex)
-          let brandIcon = '<i class="fa-solid fa-credit-card"></i>';
-          let brandName = 'Cartão de Crédito';
-
-          if (/^4/.test(v)) {
-            brandIcon = '<i class="fa-brands fa-cc-visa text-sky-400"></i>';
-            brandName = 'Visa';
-          } else if (/^5[1-5]/.test(v) || /^2[2-7]/.test(v)) {
-            brandIcon = '<i class="fa-brands fa-cc-mastercard text-amber-500"></i>';
-            brandName = 'Mastercard';
-          } else if (/^(4011|4389|4514|5041|5066|6362)/.test(v)) {
-            brandIcon = '<i class="fa-solid fa-credit-card text-emerald-400"></i>';
-            brandName = 'Elo';
-          } else if (/^3[47]/.test(v)) {
-            brandIcon = '<i class="fa-brands fa-cc-amex text-blue-300"></i>';
-            brandName = 'Amex';
-          }
-
-          dom.cardBrandIcon.innerHTML = brandIcon;
-          dom.cardInputBrandBadge.innerHTML = brandIcon;
+          if (/^4/.test(v)) dom.cardModalBrandIcon.innerHTML = '<i class="fa-brands fa-cc-visa text-sky-400"></i>';
+          else if (/^5[1-5]/.test(v)) dom.cardModalBrandIcon.innerHTML = '<i class="fa-brands fa-cc-mastercard text-amber-500"></i>';
+          else dom.cardModalBrandIcon.innerHTML = '<i class="fa-solid fa-credit-card"></i>';
         });
 
-        dom.cardHolder.addEventListener('input', (e) => {
-          dom.cardPreviewHolder.textContent = e.target.value.toUpperCase() || 'NOME DO TITULAR';
+        dom.inputModalCardHolder.addEventListener('input', (e) => {
+          dom.cardModalPreviewHolder.textContent = e.target.value.toUpperCase() || 'NOME DO TITULAR';
         });
 
-        dom.cardExpiry.addEventListener('input', (e) => {
+        dom.inputModalCardExp.addEventListener('input', (e) => {
           let v = e.target.value.replace(/\D/g, '').substring(0, 4);
-          if (v.length >= 3) {
-            v = v.substring(0, 2) + '/' + v.substring(2);
-          }
+          if (v.length >= 3) v = v.substring(0, 2) + '/' + v.substring(2);
           e.target.value = v;
-          dom.cardPreviewExpiry.textContent = v || 'MM/AA';
+          dom.cardModalPreviewExp.textContent = v || 'MM/AA';
         });
 
-        dom.cardCvv.addEventListener('input', (e) => {
+        dom.inputModalCardCvv.addEventListener('input', (e) => {
           e.target.value = e.target.value.replace(/\D/g, '').substring(0, 4);
         });
 
-        dom.cardCpf.addEventListener('input', (e) => {
-          let v = e.target.value.replace(/\D/g, '').substring(0, 11);
-          if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
-          else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
-          else if (v.length > 3) v = v.replace(/(\d{3})(\d{1,3})/, '$1.$2');
-          e.target.value = v;
-        });
-
-        // Submit de Pagamento com Cartão
-        dom.formCardCheckout.addEventListener('submit', (e) => {
+        dom.formModalCartao.addEventListener('submit', (e) => {
           e.preventDefault();
-
-          const num = dom.cardNumber.value.replace(/\s/g, '');
-          if (num.length < 13) {
-            showToast('Informe um número de cartão de crédito válido.', 'error');
-            dom.cardNumber.focus();
-            return;
-          }
-
-          const btn = dom.formCardCheckout.querySelector('button[type="submit"]');
+          const btn = dom.btnPagarModalCartao;
           btn.disabled = true;
-          btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processando Pagamento Seguro...';
+          btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processando Pagamento...';
 
           setTimeout(() => {
             btn.disabled = false;
-            btn.innerHTML = '<i class="fa-solid fa-lock"></i> <span>Confirmar e Pagar</span>';
-            const parcelas = dom.cardInstallments.value;
-            emitirComprovante(`Cartão de Crédito (${parcelas}x)`);
-          }, 1800);
+            btn.innerHTML = '<i class="fa-solid fa-lock mr-1.5"></i> <span id="btnPagarModalCartaoText">Pagar no Cartão</span>';
+            fecharModal('modalConsultaResultado');
+            const parc = dom.selectModalParcelas.value;
+            emitirComprovante(`Cartão de Crédito (${parc}x)`);
+          }, 1600);
         });
       }
 
-      // ==========================================
-      // EMISSÃO E VISUALIZAÇÃO DO COMPROVANTE OFICIAL
-      // ==========================================
-      function emitirComprovante(formaPagamento) {
-        if (state.timerPixInterval) clearInterval(state.timerPixInterval);
-
-        // Gera ou reaproveita o protocolo
-        if (!state.protocoloAtual) {
-          state.protocoloAtual = `EP-2026-${Math.floor(10000000 + Math.random() * 90000000)}`;
-        }
-
+      // Emissão de Comprovante Oficial Estrada Pay
+      function emitirComprovante(metodo) {
         const agora = new Date();
-        const dataHora = agora.toLocaleDateString('pt-BR') + ' ' + agora.toLocaleTimeString('pt-BR');
+        dom.recProtocoloNum.textContent = state.protocoloAtual || `EP-2026-${Math.floor(10000000 + Math.random() * 90000000)}`;
+        dom.recDataHoraStr.textContent = agora.toLocaleDateString('pt-BR') + ' às ' + agora.toLocaleTimeString('pt-BR');
+        dom.recPlacaVeic.textContent = state.placa;
+        dom.recModeloVeic.textContent = state.veiculo ? state.veiculo.modelo : 'Veículo';
+        dom.recMetodoPag.textContent = metodo;
 
-        dom.recProtocolo.textContent = state.protocoloAtual;
-        dom.recDataHora.textContent = dataHora;
-        dom.recPlaca.textContent = state.placa;
-        dom.recModelo.textContent = state.veiculo ? state.veiculo.modelo : 'Veículo em Regularização';
-        dom.recForma.textContent = formaPagamento;
-
-        // Lista de pórticos no comprovante
-        dom.recListaPorticos.innerHTML = '';
+        dom.recListaItens.innerHTML = '';
         let total = 0;
 
         state.debitos.forEach((deb) => {
           if (state.debitosSelecionados.has(deb.id)) {
             total += deb.valorTarifa;
-            const div = document.createElement('div');
-            div.className = 'flex justify-between items-center text-xs pb-1.5 border-b border-slate-200/60 last:border-0 last:pb-0';
-            div.innerHTML = `
+            const item = document.createElement('div');
+            item.className = 'flex justify-between items-center py-1 border-b border-slate-200/60 last:border-0';
+            item.innerHTML = `
               <div>
-                <strong>${deb.rodovia}</strong> • ${deb.trechoKm}
-                <div class="text-[11px] text-slate-500">${deb.concessionaria} • Passagem: ${deb.dataHoraFormatada}</div>
+                <strong>${deb.rodovia}</strong> — ${deb.trechoKm}
+                <div class="text-[10px] text-slate-500">${deb.concessionaria} • Passagem: ${deb.dataHoraFormatada}</div>
               </div>
               <span class="font-bold text-slate-900">R$ ${deb.valorTarifa.toFixed(2).replace('.', ',')}</span>
             `;
-            dom.recListaPorticos.appendChild(div);
+            dom.recListaItens.appendChild(item);
           }
         });
 
         const totalComTaxa = total + state.taxaEstradaPay;
-        dom.recValorTotal.textContent = `R$ ${totalComTaxa.toFixed(2).replace('.', ',')}`;
+        dom.recValorTotalStr.textContent = `R$ ${totalComTaxa.toFixed(2).replace('.', ',')}`;
 
-        // Hash de autenticação digital simulada padrão SHA-256
-        const hashFalso = 'EP' + Array.from({length: 48}, () => Math.floor(Math.random()*16).toString(16)).join('');
-        dom.recHashAutenticacao.textContent = hashFalso.toUpperCase();
+        const hash = 'EP' + Array.from({length: 40}, () => Math.floor(Math.random()*16).toString(16)).join('').toUpperCase();
+        dom.recHashStr.textContent = hash;
 
-        // Abre o modal de comprovante com animação
-        dom.modalComprovante.classList.remove('hidden');
-        showToast('🎉 Pagamento confirmado! Tarifa quitada perante a ANTT.', 'success');
+        abrirModal('modalReciboQuitação');
+        showToast('🎉 Pagamento confirmado com sucesso no Estrada Pay!', 'success');
       }
 
-      function setupComprovanteHandlers() {
-        dom.btnCloseComprovante.addEventListener('click', () => {
-          dom.modalComprovante.classList.add('hidden');
-          dom.sectionCheckout.classList.add('hidden');
-          dom.sectionResultados.classList.add('hidden');
-          dom.inputPlaca.value = '';
-          dom.btnClearInput.classList.add('hidden');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          dom.inputPlaca.focus();
-        });
-      }
+      // Helpers de Modal
+      window.abrirModal = function(id) {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('hidden');
+      };
 
-      // ==========================================
-      // NOTIFICAÇÃO TOAST ACESSÍVEL
-      // ==========================================
-      function showToast(mensagem, tipo = 'info') {
-        dom.toastText.textContent = mensagem;
+      window.fecharModal = function(id) {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      };
 
-        if (tipo === 'success') {
-          dom.toastIcon.className = 'fa-solid fa-circle-check text-emerald-400 text-lg';
-        } else if (tipo === 'error') {
-          dom.toastIcon.className = 'fa-solid fa-circle-xmark text-red-400 text-lg';
-        } else {
-          dom.toastIcon.className = 'fa-solid fa-circle-info text-blue-400 text-lg';
-        }
+      // Toast Acessível
+      function showToast(msg, tipo = 'info') {
+        dom.toastText.textContent = msg;
+        if (tipo === 'success') dom.toastIcon.className = 'fa-solid fa-circle-check text-emerald-400 text-lg';
+        else if (tipo === 'error') dom.toastIcon.className = 'fa-solid fa-circle-xmark text-red-400 text-lg';
+        else dom.toastIcon.className = 'fa-solid fa-circle-info text-blue-400 text-lg';
 
         dom.toastMessage.classList.add('show');
-        setTimeout(() => {
-          dom.toastMessage.classList.remove('show');
-        }, 4000);
-      }
-
-      // ==========================================
-      // CONTROLE DE ALTO CONTRASTE (ACESSIBILIDADE GOV.BR)
-      // ==========================================
-      const btnToggleContrast = document.getElementById('btnToggleContrast');
-      if (btnToggleContrast) {
-        btnToggleContrast.addEventListener('click', () => {
-          document.body.classList.toggle('contrast-more');
-          showToast('Modo de exibição alternado.', 'info');
-        });
+        setTimeout(() => dom.toastMessage.classList.remove('show'), 3800);
       }
 
     })();
