@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portal Estrada Pay • Free Flow — Pedágio Eletrônico em Livre Passagem. Informações oficiais, consulta e quitação de tarifas sem cancelas.">
+  <meta name="description" content="Estrada Pay PWA • Sistema Oficial de Pedágio Eletrônico Free Flow. Consulte e pague suas tarifas rodoviárias sem cancelas de forma rápida, segura e sem multas.">
   <meta name="theme-color" content="#0c326f">
-  <title>Free Flow — Pedágio Eletrônico | Estrada Pay</title>
+  <title>Estrada Pay • Livre Passagem | PWA Oficial</title>
 
   <!-- Favicons e Ícones Oficiais Estrada Pay -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -132,7 +132,7 @@
       border-radius: 3px;
     }
 
-    /* Drawer Menu Lateral */
+    /* Drawer Menu Lateral PWA */
     #drawerMenu {
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -211,18 +211,18 @@
   </div>
 
   <!-- ========================================================
-       CABEÇALHO PRINCIPAL ESTRADA PAY (#0c326f)
-       COM LOGO OFICIAL, FORMULÁRIO DE PLACA E MENU HAMBURGER
+       1. CABEÇALHO SUPERIOR E BARRA DE BUSCA
+       Topo escuro/azul institucional (#0c326f) com logo Estrada Pay,
+       formulário com botão amarelo "CONSULTAR MINHA PLACA" e menu hambúrguer
        ======================================================== -->
   <header class="bg-[#0c326f] text-white shadow-xl relative z-40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       
-      <!-- Linha Principal: Logo + Consulta de Placa + Botão Menu Hamburger -->
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         
-        <!-- Logo Oficial do Estrada Pay + Hamburger Mobile -->
+        <!-- Logo Oficial Estrada Pay + Botões Mobile -->
         <div class="flex items-center justify-between">
-          <a href="/" class="flex items-center gap-3.5 group" title="Estrada Pay - Free Flow Pedágio Eletrônico">
+          <a href="/" class="flex items-center gap-3.5 group" title="Estrada Pay - Livre Passagem">
             <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white p-1 shadow-md border-2 border-white/20 flex items-center justify-center overflow-hidden flex-shrink-0 group-hover:scale-105 transition duration-300">
               <img 
                 src="/logo.jpg" 
@@ -239,24 +239,37 @@
                 <span class="text-2xl sm:text-3xl font-black text-[#38bdf8] bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-400/30">Pay</span>
               </div>
               <p class="text-[11px] sm:text-xs text-blue-200 font-medium tracking-normal">
-                Free Flow — Pedágio Eletrônico
+                Livre Passagem • Pedágio Eletrônico
               </p>
             </div>
           </a>
 
-          <!-- BOTÃO MENU HAMBURGER (Sempre Acessível) -->
-          <button 
-            type="button" 
-            id="btnHamburgerMenu" 
-            class="flex items-center justify-center w-11 h-11 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/30 text-white transition focus:outline-none border border-white/20 shadow-sm"
-            aria-label="Abrir Menu de Navegação"
-            title="Abrir Menu Principal"
-          >
-            <i class="fa-solid fa-bars text-xl"></i>
-          </button>
+          <!-- Botão Menu Hambúrguer -->
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              onclick="abrirDrawer('painel')"
+              class="hidden sm:flex items-center gap-1.5 bg-blue-900/80 hover:bg-blue-800 text-xs px-3 py-2 rounded-xl border border-blue-700/80 text-blue-100 font-medium transition"
+              title="Acessar Garagem e Comprovantes"
+            >
+              <i class="fa-solid fa-warehouse text-amber-400"></i>
+              <span>Minha Garagem</span>
+              <span id="badgeGaragemTopo" class="bg-amber-400 text-slate-950 font-black text-[10px] px-1.5 py-0.2 rounded-full">0</span>
+            </button>
+
+            <button 
+              type="button" 
+              id="btnHamburgerMenu" 
+              class="flex items-center justify-center w-11 h-11 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/30 text-white transition focus:outline-none border border-white/20 shadow-sm cursor-pointer"
+              aria-label="Abrir Menu de Navegação"
+              title="Abrir Menu Principal"
+            >
+              <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+          </div>
         </div>
 
-        <!-- FORMULÁRIO DE CONSULTA DE PLACA NO TOPO DENTRO DO CABEÇALHO -->
+        <!-- FORMULÁRIO DESTACADO NO TOPO / CABEÇALHO -->
         <div class="w-full lg:max-w-xl">
           <form id="formHeaderConsulta" class="flex flex-col sm:flex-row gap-2 bg-white/10 p-2 sm:p-2.5 rounded-xl border border-white/20 shadow-inner backdrop-blur-sm">
             <div class="relative flex-1">
@@ -268,7 +281,7 @@
                 id="inputHeaderPlaca"
                 name="placa"
                 maxlength="8"
-                placeholder="CONSULTAR PLACA (Ex: ABC1D23)"
+                placeholder="DIGITE SUA PLACA (Ex: ABC1D23)"
                 autocomplete="off"
                 autocapitalize="characters"
                 spellcheck="false"
@@ -285,13 +298,14 @@
               </button>
             </div>
 
+            <!-- Botão Amarelo de Alta Visibilidade "CONSULTAR MINHA PLACA" -->
             <button
               type="submit"
               id="btnHeaderConsultar"
               class="bg-amber-400 hover:bg-amber-500 active:bg-amber-600 text-slate-950 font-black text-xs uppercase tracking-wider px-5 py-2.5 rounded-lg shadow-md hover:shadow-amber-400/30 transition flex items-center justify-center gap-2 flex-shrink-0 cursor-pointer"
             >
               <i class="fa-solid fa-magnifying-glass"></i>
-              <span>Consultar Placa</span>
+              <span>CONSULTAR MINHA PLACA</span>
             </button>
           </form>
         </div>
@@ -332,13 +346,16 @@
   </header>
 
   <!-- ========================================================
-       MENU HAMBURGER LATERAL (DRAWER OFF-CANVAS)
+       2. MENU LATERAL / MODAL DE NAVEGAÇÃO PWA (MENU PRINCIPAL)
+       + 3. ÁREA DE MODO VISITANTE E RECURSOS DO USUÁRIO
+       Estilo gaveta lateral (Drawer) em tom azul escuro com backdrop
        ======================================================== -->
   <div id="drawerOverlay" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm transition-opacity"></div>
-  <aside id="drawerMenu" class="closed fixed top-0 right-0 z-50 h-full w-80 max-w-[85vw] bg-[#0c326f] text-white shadow-2xl flex flex-col justify-between overflow-y-auto">
+  <aside id="drawerMenu" class="closed fixed top-0 right-0 z-50 h-full w-84 max-w-[88vw] bg-[#0c326f] text-white shadow-2xl flex flex-col justify-between overflow-y-auto border-l border-blue-800/80">
+    
     <div>
-      <!-- Topo do Drawer -->
-      <div class="p-5 border-b border-blue-800/80 flex items-center justify-between">
+      <!-- Cabeçalho do Menu Lateral: Logo + Título + Fechar (X) -->
+      <div class="p-4 sm:p-5 border-b border-blue-800/80 flex items-center justify-between bg-[#08244f]">
         <div class="flex items-center gap-2.5">
           <div class="w-9 h-9 rounded-lg bg-white p-0.5 flex items-center justify-center">
             <img src="/logo.jpg" alt="Logo" class="w-full h-full object-cover rounded" onerror="this.src='/estrada-pay-logo.jpg';">
@@ -348,76 +365,221 @@
             <div class="text-[10px] text-blue-200">Menu Principal</div>
           </div>
         </div>
-        <button type="button" id="btnCloseDrawer" class="text-white hover:text-amber-300 text-xl p-1">
+        <button type="button" id="btnCloseDrawer" class="text-white hover:text-amber-300 text-xl p-1.5 transition cursor-pointer">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
 
-      <!-- Links de Navegação do Drawer -->
-      <nav class="p-4 space-y-1.5 text-sm font-semibold">
-        <a href="#heroSecao" onclick="fecharDrawer()" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-white/10 transition">
-          <i class="fa-solid fa-house w-5 text-amber-400"></i> Home
-        </a>
-        <button type="button" onclick="fecharDrawer(); abrirModal('modalOQueE');" class="w-full text-left flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-white/10 transition">
-          <i class="fa-solid fa-circle-question w-5 text-sky-400"></i> O que é o Free Flow?
+      <!-- Abas Internas do Drawer: Menu Principal vs Painel do Motorista -->
+      <div class="grid grid-cols-2 p-2 gap-1.5 bg-[#061b3d] border-b border-blue-900/60 text-xs font-bold">
+        <button 
+          type="button" 
+          id="tabDrawerMenu" 
+          onclick="alternarAbaDrawer('menu')"
+          class="py-2 rounded-lg text-center bg-blue-900/80 text-white border border-blue-600 transition"
+        >
+          <i class="fa-solid fa-compass mr-1 text-sky-400"></i> Navegação
         </button>
-        <a href="#beneficiosSecao" onclick="fecharDrawer()" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-white/10 transition">
-          <i class="fa-solid fa-star w-5 text-amber-400"></i> Benefícios
+        <button 
+          type="button" 
+          id="tabDrawerPainel" 
+          onclick="alternarAbaDrawer('painel')"
+          class="py-2 rounded-lg text-center bg-transparent text-blue-200 hover:text-white transition"
+        >
+          <i class="fa-solid fa-user-shield mr-1 text-amber-400"></i> Painel Visitante
+        </button>
+      </div>
+
+      <!-- CONTEÚDO 1: MENU PRINCIPAL (Lista com Ícones Visíveis) -->
+      <div id="drawerContentMenu" class="p-4 space-y-1 text-xs sm:text-sm font-semibold">
+        <a href="#heroSecao" onclick="fecharDrawer()" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+          <i class="fa-solid fa-house w-5 text-center text-amber-400 text-base"></i>
+          <span>Home</span>
         </a>
-        <a href="#comoFuncionaSecao" onclick="fecharDrawer()" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-white/10 transition">
-          <i class="fa-solid fa-gears w-5 text-emerald-400"></i> Como funciona?
+        <button type="button" onclick="fecharDrawer(); abrirModal('modalOQueE');" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+          <i class="fa-solid fa-circle-question w-5 text-center text-sky-400 text-base"></i>
+          <span>O que é o Free Flow?</span>
+        </button>
+        <a href="#beneficiosSecao" onclick="fecharDrawer()" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+          <i class="fa-solid fa-star w-5 text-center text-amber-400 text-base"></i>
+          <span>Benefícios</span>
         </a>
-        <button type="button" onclick="fecharDrawer(); abrirModal('modalNaoTenhoTag');" class="w-full text-left flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-white/10 transition">
-          <i class="fa-solid fa-tag w-5 text-amber-300"></i> Não tenho tag. E agora?
+        <a href="#comoFuncionaSecao" onclick="fecharDrawer()" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+          <i class="fa-solid fa-gears w-5 text-center text-emerald-400 text-base"></i>
+          <span>Como funciona?</span>
         </a>
-        <a href="#faqSecao" onclick="fecharDrawer()" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-white/10 transition">
-          <i class="fa-solid fa-comments w-5 text-blue-300"></i> Dúvidas frequentes
+        <button type="button" onclick="fecharDrawer(); abrirModal('modalNaoTenhoTag');" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+          <i class="fa-solid fa-tag w-5 text-center text-amber-300 text-base"></i>
+          <span>Não tenho tag. E agora?</span>
+        </button>
+        <a href="#faqSecao" onclick="fecharDrawer()" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+          <i class="fa-solid fa-comments w-5 text-center text-blue-300 text-base"></i>
+          <span>Dúvidas frequentes</span>
         </a>
-        <a href="#porticosSecao" onclick="fecharDrawer()" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-white/10 transition">
-          <i class="fa-solid fa-map-location-dot w-5 text-emerald-400"></i> Onde já foi implementado
+        <a href="#porticosSecao" onclick="fecharDrawer()" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+          <i class="fa-solid fa-map-location-dot w-5 text-center text-emerald-400 text-base"></i>
+          <span>Onde já foi implementado</span>
         </a>
-        <a href="#noticiasSecao" onclick="fecharDrawer()" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-white/10 transition">
-          <i class="fa-solid fa-newspaper w-5 text-blue-300"></i> Notícias Free Flow
+        <a href="#noticiasSecao" onclick="fecharDrawer()" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+          <i class="fa-solid fa-newspaper w-5 text-center text-blue-300 text-base"></i>
+          <span>Notícias Free Flow</span>
         </a>
 
-        <div class="pt-3 border-t border-blue-800/80">
+        <!-- Destaque em card escuro: Atenção: Suspensão & Reembolso -->
+        <div class="pt-2">
           <button 
             type="button" 
             onclick="fecharDrawer(); abrirModal('modalReembolso');" 
-            class="w-full text-left flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-400/40 font-bold transition"
+            class="w-full text-left p-3 rounded-xl bg-[#061b3d] border border-amber-400/40 hover:border-amber-400 transition text-amber-300 space-y-1 block shadow"
           >
-            <i class="fa-solid fa-triangle-exclamation w-5 text-amber-400"></i> Suspensão & Reembolso
+            <div class="flex items-center gap-2 font-bold text-xs">
+              <i class="fa-solid fa-triangle-exclamation text-amber-400"></i>
+              <span>Atenção: Suspensão & Reembolso</span>
+            </div>
+            <p class="text-[11px] text-amber-100/80 font-normal">
+              Conteste autuações ou solicite restituição de cobranças em duplicidade.
+            </p>
           </button>
         </div>
-      </nav>
+      </div>
+
+      <!-- CONTEÚDO 2: MODO VISITANTE E RECURSOS DO USUÁRIO (Painel do Motorista) -->
+      <div id="drawerContentPainel" class="hidden p-4 space-y-3 text-xs sm:text-sm">
+        
+        <!-- Card Top: Modo Visitante -->
+        <div class="bg-[#061b3d] p-3.5 rounded-xl border border-blue-700/60 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded border border-emerald-400/30">
+              Modo Visitante
+            </span>
+            <span class="text-[10px] text-blue-300">Sem burocracia</span>
+          </div>
+          <p class="text-xs text-white font-medium">
+            Consulta &amp; Pix liberados sem login. Pague com 1 clique usando apenas a placa.
+          </p>
+          <button 
+            type="button" 
+            onclick="showToast('Sessão visitante ativa com acesso total!', 'info');"
+            class="w-full bg-blue-600/50 hover:bg-blue-600 text-white font-bold py-1.5 rounded-lg text-xs transition border border-blue-400/30"
+          >
+            Entrar ou Criar Conta Grátis
+          </button>
+        </div>
+
+        <!-- Lista de Serviços do Motorista -->
+        <div class="space-y-1 font-semibold text-slate-100">
+          
+          <button type="button" onclick="fecharDrawer(); document.getElementById('inputHeaderPlaca').focus(); window.scrollTo({top:0, behavior:'smooth'});" class="w-full text-left flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+            <span class="flex items-center gap-3">
+              <i class="fa-solid fa-magnifying-glass w-5 text-center text-amber-400"></i>
+              <span>Consultar Placa</span>
+            </span>
+            <span class="text-[10px] text-blue-300">Busca Rápida</span>
+          </button>
+
+          <button type="button" onclick="fecharDrawer(); abrirModal('modalGaragem');" class="w-full text-left flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+            <span class="flex items-center gap-3">
+              <i class="fa-solid fa-warehouse w-5 text-center text-sky-400"></i>
+              <span>Minha Garagem</span>
+            </span>
+            <span id="badgeGaragemDrawer" class="bg-amber-400 text-slate-950 font-black text-[10px] px-1.5 py-0.2 rounded-full">0</span>
+          </button>
+
+          <button type="button" onclick="fecharDrawer(); abrirModal('modalHistorico');" class="w-full text-left flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+            <span class="flex items-center gap-3">
+              <i class="fa-solid fa-clock-rotate-left w-5 text-center text-emerald-400"></i>
+              <span>Histórico de Comprovantes</span>
+            </span>
+            <span id="badgeHistoricoDrawer" class="text-[10px] text-blue-300">Recibos</span>
+          </button>
+
+          <button type="button" onclick="fecharDrawer(); abrirModal('modalAlertas');" class="w-full text-left flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+            <span class="flex items-center gap-3">
+              <i class="fa-solid fa-bell w-5 text-center text-amber-400"></i>
+              <span>Alertas de Pedágio</span>
+            </span>
+            <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded">WhatsApp</span>
+          </button>
+
+          <a href="#porticosSecao" onclick="fecharDrawer();" class="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+            <span class="flex items-center gap-3">
+              <i class="fa-solid fa-map-marked-alt w-5 text-center text-blue-300"></i>
+              <span>Onde tem Free Flow?</span>
+            </span>
+            <span class="text-[10px] text-blue-300">52 Pórticos</span>
+          </a>
+
+          <button type="button" onclick="fecharDrawer(); abrirModal('modalTermos');" class="w-full text-left flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+            <span class="flex items-center gap-3">
+              <i class="fa-solid fa-shield-halved w-5 text-center text-slate-300"></i>
+              <span>Termos de Uso e LGPD</span>
+            </span>
+            <span class="text-[10px] text-blue-300">Segurança</span>
+          </button>
+
+          <button type="button" onclick="verificarAtualizacaoPwa();" class="w-full text-left flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+            <span class="flex items-center gap-3">
+              <i class="fa-solid fa-arrows-rotate w-5 text-center text-emerald-400"></i>
+              <span>Verificar Atualizações</span>
+            </span>
+            <span class="text-[10px] text-emerald-300">Auto-Update</span>
+          </button>
+
+          <a href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20com%20o%20Estrada%20Pay" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/10 transition text-emerald-300">
+            <span class="flex items-center gap-3">
+              <i class="fa-brands fa-whatsapp w-5 text-center text-emerald-400 text-base"></i>
+              <span>Suporte WhatsApp</span>
+            </span>
+            <span class="text-[10px] text-emerald-300 font-bold">Online</span>
+          </a>
+
+        </div>
+
+      </div>
+
     </div>
 
-    <!-- Rodapé do Drawer -->
-    <div class="p-4 border-t border-blue-800/80 bg-[#061b3d] text-xs text-blue-200">
+    <!-- Rodapé Fixo do Menu Drawer -->
+    <div class="p-4 border-t border-blue-800/80 bg-[#061b3d] space-y-3">
+      
+      <!-- Botão Fixo Amarelo "CONSULTAR MINHA PLACA" -->
       <button 
         type="button" 
         onclick="fecharDrawer(); document.getElementById('inputHeaderPlaca').focus(); window.scrollTo({top: 0, behavior: 'smooth'});"
-        class="w-full bg-amber-400 hover:bg-amber-500 text-slate-950 font-black text-xs uppercase py-3 rounded-xl transition flex items-center justify-center gap-2 shadow"
+        class="w-full bg-amber-400 hover:bg-amber-500 text-slate-950 font-black text-xs uppercase tracking-wider py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-lg cursor-pointer"
       >
-        <i class="fa-solid fa-magnifying-glass"></i> Consultar Minha Placa
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span>CONSULTAR MINHA PLACA</span>
       </button>
-      <div class="text-[10px] text-center text-blue-300 mt-3">
+
+      <!-- Badge Inferior Verde -->
+      <div class="bg-emerald-950/60 border border-emerald-500/40 rounded-xl p-2.5 text-center space-y-1">
+        <div class="text-[11px] font-bold text-emerald-400 flex items-center justify-center gap-1.5">
+          <i class="fa-solid fa-bolt"></i>
+          <span>100% PIX Instantâneo • Taxa Fixa: R$ 1,00</span>
+        </div>
+        <div class="text-[10px] text-blue-200">
+          Estradapay PWA v3.0 • Auto-Update Ativo
+        </div>
+      </div>
+
+      <!-- Copyright Exclusivo Estrada Pay -->
+      <div class="text-[10px] text-center text-blue-300 pt-1">
         © 2026 Estrada Pay • Livre Passagem
       </div>
     </div>
   </aside>
 
   <!-- ========================================================
-       CONTEÚDO PRINCIPAL (SPA)
+       4. CORPO DA PÁGINA (CONTEÚDO EXPLICATIVO DO FREE FLOW)
        ======================================================== -->
   <main class="flex-1 space-y-12 pb-16">
 
-    <!-- 1. HERO BANNER: Cobrança de pedágio eletrônico em livre passagem -->
+    <!-- HERO BANNER: Free Flow — Cobrança de pedágio eletrônico em livre passagem -->
     <section id="heroSecao" class="bg-gradient-to-b from-[#0c326f] via-[#08244f] to-slate-900 text-white pt-10 pb-14 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       
       <div class="max-w-7xl mx-auto space-y-8 relative z-10">
         
-        <!-- Apresentação Principal -->
         <div class="max-w-3xl space-y-4">
           <div class="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/30 px-3.5 py-1.5 rounded-full text-xs font-semibold text-sky-200">
             <i class="fa-solid fa-road text-emerald-400"></i>
@@ -434,12 +596,12 @@
               O Free Flow — ou “pedágio eletrônico em livre passagem” — é o modelo de cobrança de tarifa que elimina praças físicas e cancelas: veículos passam por pórticos que identificam automaticamente TAGs ou placas e a cobrança é feita de forma eletrônica no uso da via. O modelo busca mais fluidez, segurança viária, redução de emissões e modernização do sistema de concessões.
             </p>
             <p>
-              Nesse modelo, não existem cancelas que obriguem a reduzir velocidade ou parar nas rodovias federais concedidas. Em pontos estratégicos da rodovia são instalados pórticos com sensores, leitores de TAGs (transponders) e câmeras que leem placas (ANPR) automaticamente. Sempre que um veículo cruza um pórtico a passagem é registrada eletronicamente e a identificação pode ocorrer por etiqueta eletrônica (TAG) ou leitura da placa.
+              Nesse modelo, não existem cancelas que obriguem a reduzir velocidade ou parar nas rodovias concedidas. Em pontos estratégicos são instalados pórticos com sensores, leitores de TAGs (transponders) e câmeras que leem placas (ANPR) automaticamente. Sempre que um veículo cruza um pórtico a passagem é registrada eletronicamente e a identificação pode ocorrer por etiqueta eletrônica (TAG) ou leitura da placa.
             </p>
           </div>
         </div>
 
-        <!-- BANNER DE ALERTA DE SEGURANÇA: Atenção: alerta de golpes -->
+        <!-- ALERTA EM DESTAQUE CONTRA GOLPES -->
         <div class="bg-amber-950/85 border-2 border-amber-500/70 rounded-2xl p-5 sm:p-6 shadow-xl backdrop-blur-md">
           <div class="flex flex-col sm:flex-row items-start gap-4">
             <div class="w-12 h-12 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center text-2xl flex-shrink-0 font-bold shadow-md">
@@ -453,14 +615,14 @@
                 Atenção: alerta de golpes
               </h3>
               <p class="text-xs sm:text-sm text-amber-100/90 leading-relaxed">
-                Nem a ANTT nem as concessionárias enviam cobranças de pedágio por WhatsApp, e-mail, SMS ou anúncios na internet.
+                Nem as concessionárias nem entidades rodoviárias enviam cobranças de pedágio por WhatsApp, e-mail, SMS ou anúncios na internet ameaçando bloqueio de CNH.
               </p>
               <div class="text-xs text-amber-100 space-y-1 pt-1">
                 <p>O pagamento do pedágio Free Flow deve ser feito apenas pelos canais oficiais:</p>
                 <ul class="list-disc list-inside space-y-0.5 font-medium pl-1">
-                  <li>Sites oficiais das concessionárias</li>
-                  <li>Aplicativos oficiais</li>
-                  <li>Tótens de autoatendimento</li>
+                  <li>Portal oficial Estrada Pay (Livre Passagem)</li>
+                  <li>Sites oficiais das concessionárias parceiras</li>
+                  <li>Tótens de autoatendimento das rodovias</li>
                 </ul>
               </div>
               <p class="text-xs font-bold text-amber-300 pt-1">
@@ -473,19 +635,18 @@
       </div>
     </section>
 
-    <!-- 2. 🔎 CONSULTA DE FREE FLOW NAS RODOVIAS FEDERAIS CONCEDIDAS -->
+    <!-- CONSULTA DE RODOVIAS CONCEDIDAS -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
       <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-5">
         <div>
           <h2 class="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2">
-            <span>🔎</span> Consulta de Free Flow nas Rodovias Federais Concedidas
+            <span>🔎</span> Consulta de Free Flow nas Rodovias Concedidas
           </h2>
           <p class="text-xs sm:text-sm text-slate-600 mt-1">
             Digite o número da rodovia, o nome completo ou a concessionária:
           </p>
         </div>
 
-        <!-- Barra de Busca -->
         <div class="flex flex-col sm:flex-row gap-2.5">
           <div class="relative flex-1">
             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 text-sm">
@@ -511,7 +672,7 @@
           Busque por rodovia (381), trecho (Via Dutra), concessionária (Way 262) ou município (Guarulhos).
         </p>
 
-        <!-- Botões / Chips Rápidos Exatos -->
+        <!-- Chips Rápidos -->
         <div class="flex items-center gap-2 flex-wrap pt-1" id="chipsAtalhosRodovias">
           <button type="button" class="btn-chip-rodovia bg-slate-100 hover:bg-[#0c326f] hover:text-white px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 transition" data-tag="BR-101">BR-101</button>
           <button type="button" class="btn-chip-rodovia bg-slate-100 hover:bg-[#0c326f] hover:text-white px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 transition" data-tag="VIA DUTRA">Via Dutra</button>
@@ -528,30 +689,7 @@
       </div>
     </section>
 
-    <!-- 3. FREE FLOW: UMA MUDANÇA QUE ACONTECE POR ETAPAS -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-4">
-        <h2 class="text-xl sm:text-2xl font-black text-slate-900">
-          Free Flow: uma mudança que acontece por etapas
-        </h2>
-        <div class="space-y-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
-          <p>
-            A implantação do sistema free flow nas rodovias federais concedidas representa uma mudança importante na forma de cobrança do pedágio no Brasil. O modelo elimina as tradicionais praças com cancelas e permite que o motorista siga viagem sem precisar parar.
-          </p>
-          <p>
-            Neste primeiro momento, o sistema está sendo implementado de forma gradual. Isso significa que os pórticos eletrônicos substituem as praças de pedágio, mas não alteram o valor total que já estava previsto nos contratos de concessão das rodovias.
-          </p>
-          <p>
-            Essa etapa inicial é fundamental para consolidar o funcionamento do sistema, permitindo que usuários, concessionárias e órgãos de fiscalização se adaptem ao novo modelo.
-          </p>
-          <p class="font-semibold text-slate-800">
-            A evolução do free flow permitirá, no futuro, avançar para um sistema de cobrança proporcional, em que o usuário paga de acordo com a distância efetivamente percorrida na rodovia.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. COMO FUNCIONA A TECNOLOGIA (01, 02, 03) -->
+    <!-- COMO FUNCIONA A TECNOLOGIA -->
     <section id="comoFuncionaSecao" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
       <div class="text-center max-w-2xl mx-auto space-y-1">
         <span class="text-xs font-bold uppercase tracking-wider text-[#0c326f] bg-blue-50 px-3 py-1 rounded-full">Operação Tecnológica</span>
@@ -559,8 +697,6 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        <!-- 01 -->
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
           <div class="text-3xl font-black text-[#0c326f]">01</div>
           <h3 class="text-lg font-bold text-slate-900">Pórtico e sensores</h3>
@@ -573,12 +709,11 @@
           </div>
         </div>
 
-        <!-- 02 -->
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
           <div class="text-3xl font-black text-[#0c326f]">02</div>
           <h3 class="text-lg font-bold text-slate-900">Identificação</h3>
           <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-            Primeira tentativa via TAG. Se não houver, o sistema realiza leitura da placa.
+            Primeira tentativa via TAG. Se não houver, o sistema realiza leitura da placa ANPR.
           </p>
           <div class="flex items-center gap-2 pt-2 text-xs">
             <span class="bg-emerald-50 text-emerald-800 font-semibold px-2.5 py-1 rounded-md border border-emerald-200">TAG</span>
@@ -586,64 +721,21 @@
           </div>
         </div>
 
-        <!-- 03 -->
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
           <div class="text-3xl font-black text-[#0c326f]">03</div>
           <h3 class="text-lg font-bold text-slate-900">Registros e fiscalização</h3>
           <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-            A ANTT acompanha indicadores e recebe contribuições durante a regulamentação.
+            Acompanhamento de indicadores contratuais e consolidação de quitação tempestiva.
           </p>
           <div class="flex items-center gap-2 pt-2 text-xs">
             <span class="bg-amber-50 text-amber-800 font-semibold px-2.5 py-1 rounded-md border border-amber-200">Indicadores</span>
             <span class="bg-amber-50 text-amber-800 font-semibold px-2.5 py-1 rounded-md border border-amber-200">Regulamentação</span>
           </div>
         </div>
-
       </div>
     </section>
 
-    <!-- 5. ORIGEM E MARCO REGULATÓRIO NO BRASIL & PRÓXIMOS CONTRATOS -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-      
-      <!-- Origem e Marco Regulatório -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-7 shadow-sm space-y-3">
-        <h3 class="text-lg font-black text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-landmark text-[#0c326f]"></i>
-          Origem e marco regulatório no Brasil
-        </h3>
-        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          No Brasil, o Free Flow começou como projeto experimental em ambiente de Sandbox regulatório da ANTT — primeiro teste destacado no trecho da BR-101/Rio-Santos (administração Motiva, antiga CCR RioSP).
-        </p>
-        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          Desde então a ANTT conduziu relatórios técnicos, tomadas de subsídios, portarias e comissões para avaliar operação, impactos e ajustes contratuais.
-        </p>
-        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          Em 2025 a ANTT reabriu consulta pública para harmonizar a regulamentação e ampliar o modelo às rodovias federais. Todos os marcos técnicos e relatórios do Sandbox estão disponíveis nos documentos da Agência.
-        </p>
-      </div>
-
-      <!-- Próximos Contratos -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-7 shadow-sm space-y-3">
-        <h3 class="text-lg font-black text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-file-contract text-emerald-600"></i>
-          Próximos contratos com previsão de adoção do Free Flow
-        </h3>
-        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          Estão previstos novos Termos Aditivos contratuais para implantação do sistema de pedágio eletrônico em livre passagem (Free Flow) nas concessões <strong>Nova Rota do Oeste</strong>, <strong>PR Vias</strong> e <strong>Rota Verde Litoral Pioneiro</strong>, ampliando gradualmente o modelo nas rodovias federais concedidas.
-        </p>
-        <div class="bg-blue-50 p-3.5 rounded-xl border border-blue-200 space-y-1.5 text-xs text-slate-700">
-          <span class="font-bold text-[#0c326f] block uppercase text-[11px]">Concessões Previstas:</span>
-          <div class="flex items-center gap-2 flex-wrap">
-            <span class="bg-white px-2 py-0.5 rounded border border-blue-300 font-semibold">Nova Rota do Oeste</span>
-            <span class="bg-white px-2 py-0.5 rounded border border-blue-300 font-semibold">PR Vias</span>
-            <span class="bg-white px-2 py-0.5 rounded border border-blue-300 font-semibold">Rota Verde Litoral Pioneiro</span>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- 6. ONDE JÁ FOI IMPLEMENTADO (52 pórticos / 9 trechos / 8 concessionárias / 6 estados) -->
+    <!-- ONDE JÁ FOI IMPLEMENTADO (52 PÓRTICOS / 9 TRECHOS) -->
     <section id="porticosSecao" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
       
       <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
@@ -653,14 +745,13 @@
             Onde já foi implementado
           </h2>
           <h3 class="text-base font-bold text-slate-700 mt-1">
-            Free Flow nas rodovias federais concedidas
+            Free Flow nas rodovias concedidas
           </h3>
           <p class="text-xs sm:text-sm text-slate-600 mt-1">
-            Trechos com pedágio eletrônico em livre passagem autorizado pela ANTT. Toque em um trecho para ver a base normativa e o km de cada pórtico.
+            Trechos com pedágio eletrônico em livre passagem autorizado. Toque em um trecho para ver os pórticos e km.
           </p>
         </div>
 
-        <!-- Métricas / Contadores em Destaque -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
             <div class="text-2xl sm:text-3xl font-black text-[#0c326f]">52</div>
@@ -680,10 +771,9 @@
           </div>
         </div>
 
-        <!-- LISTA INTERATIVA DOS 9 TRECHOS OFICIAIS (Clique abre modal com base normativa e km) -->
+        <!-- 9 Trechos Oficiais -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="listaNoveTrechos">
           
-          <!-- 01 -->
           <div class="item-trecho-card border border-slate-200 rounded-xl p-4 hover:border-[#0c326f] hover:shadow-md transition cursor-pointer bg-slate-50/50" data-trecho="01" data-tags="BR-101 101 RIO-SANTOS RIOSP MOTIVA ITAGUAÍ MANGARATIBA PARATY">
             <div class="text-xs font-black text-[#0c326f] mb-1">01</div>
             <h4 class="font-bold text-slate-900 text-sm">BR-101/RJ — Rio-Santos</h4>
@@ -693,7 +783,6 @@
             </div>
           </div>
 
-          <!-- 02 -->
           <div class="item-trecho-card border border-slate-200 rounded-xl p-4 hover:border-[#0c326f] hover:shadow-md transition cursor-pointer bg-slate-50/50" data-trecho="02" data-tags="BR-116 116 PRESIDENTE DUTRA VIA DUTRA RIOSP GUARULHOS SÃO PAULO">
             <div class="text-xs font-black text-[#0c326f] mb-1">02</div>
             <h4 class="font-bold text-slate-900 text-sm">BR-116/SP — Presidente Dutra</h4>
@@ -703,7 +792,6 @@
             </div>
           </div>
 
-          <!-- 03 -->
           <div class="item-trecho-card border border-slate-200 rounded-xl p-4 hover:border-[#0c326f] hover:shadow-md transition cursor-pointer bg-slate-50/50" data-trecho="03" data-tags="BR-381 381 VALE DO AÇO NOVA 381 GOV VALADARES JAGUARAÇU JOÃO MONLEVADE CAETÉ">
             <div class="text-xs font-black text-[#0c326f] mb-1">03</div>
             <h4 class="font-bold text-slate-900 text-sm">BR-381/MG — Vale do Aço</h4>
@@ -713,7 +801,6 @@
             </div>
           </div>
 
-          <!-- 04 -->
           <div class="item-trecho-card border border-slate-200 rounded-xl p-4 hover:border-[#0c326f] hover:shadow-md transition cursor-pointer bg-slate-50/50" data-trecho="04" data-tags="BR-262 262 WAY-262 WAY 262 NOVA SERRANA IBIÁ">
             <div class="text-xs font-black text-[#0c326f] mb-1">04</div>
             <h4 class="font-bold text-slate-900 text-sm">BR-262/MG</h4>
@@ -723,7 +810,6 @@
             </div>
           </div>
 
-          <!-- 05 -->
           <div class="item-trecho-card border border-slate-200 rounded-xl p-4 hover:border-[#0c326f] hover:shadow-md transition cursor-pointer bg-slate-50/50" data-trecho="05" data-tags="BR-364 364 NOVA 364 PIMENTA BUENO CACOAL OURO PRETO ALTO PARAÍSO">
             <div class="text-xs font-black text-[#0c326f] mb-1">05</div>
             <h4 class="font-bold text-slate-900 text-sm">BR-364/RO</h4>
@@ -733,7 +819,6 @@
             </div>
           </div>
 
-          <!-- 06 -->
           <div class="item-trecho-card border border-slate-200 rounded-xl p-4 hover:border-[#0c326f] hover:shadow-md transition cursor-pointer bg-slate-50/50" data-trecho="06" data-tags="LOTE IGUAÇU IGUAÇU PR EPR IGUAÇU SANTA LÚCIA VITORINO AMPÉRE">
             <div class="text-xs font-black text-[#0c326f] mb-1">06</div>
             <h4 class="font-bold text-slate-900 text-sm">Lote Iguaçu/PR</h4>
@@ -743,7 +828,6 @@
             </div>
           </div>
 
-          <!-- 07 -->
           <div class="item-trecho-card border border-slate-200 rounded-xl p-4 hover:border-[#0c326f] hover:shadow-md transition cursor-pointer bg-slate-50/50" data-trecho="07" data-tags="BR-369 369 BR-376 376 PR EPR PARANÁ JATAIZINHO ROLÂNDIA MARIALVA">
             <div class="text-xs font-black text-[#0c326f] mb-1">07</div>
             <h4 class="font-bold text-slate-900 text-sm">BR-369/PR e BR-376/PR</h4>
@@ -753,7 +837,6 @@
             </div>
           </div>
 
-          <!-- 08 -->
           <div class="item-trecho-card border border-slate-200 rounded-xl p-4 hover:border-[#0c326f] hover:shadow-md transition cursor-pointer bg-slate-50/50" data-trecho="08" data-tags="BR-376 376 PR-445 445 PR MOTIVA PARANÁ">
             <div class="text-xs font-black text-[#0c326f] mb-1">08</div>
             <h4 class="font-bold text-slate-900 text-sm">BR-376/PR e PR-445/PR</h4>
@@ -763,7 +846,6 @@
             </div>
           </div>
 
-          <!-- 09 -->
           <div class="item-trecho-card border border-slate-200 rounded-xl p-4 hover:border-[#0c326f] hover:shadow-md transition cursor-pointer bg-slate-50/50" data-trecho="09" data-tags="BR-060 060 BR-452 452 GO ROTA VERDE GOIÁS ABADIA DE GOIÁS INDIARA ACREÚNA">
             <div class="text-xs font-black text-[#0c326f] mb-1">09</div>
             <h4 class="font-bold text-slate-900 text-sm">BR-060/GO e BR-452/GO</h4>
@@ -775,66 +857,65 @@
 
         </div>
 
-        <p class="text-[11px] text-slate-500 italic pt-2">
-          Fonte: cadastro de praças e pórticos das concessões federais (ANTT, 2026). Atos e valores podem mudar — confirme na ANTT ou na concessionária.
-        </p>
-
       </div>
 
     </section>
 
-    <!-- 7. PASSOS PARA IMPLEMENTAÇÃO E REGULAMENTAÇÃO -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-      <div class="text-center max-w-2xl mx-auto space-y-1">
-        <span class="text-xs font-bold uppercase tracking-wider text-[#0c326f] bg-blue-50 px-3 py-1 rounded-full">Cronograma</span>
-        <h2 class="text-2xl sm:text-3xl font-black text-slate-900">Passos para implementação e regulamentação</h2>
+    <!-- NOTÍCIAS FREE FLOW -->
+    <section id="noticiasSecao" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-[#0c326f]">Atualizações Oficiais</span>
+          <h2 class="text-2xl font-black text-slate-900">Notícias sobre o Free Flow</h2>
+        </div>
+        <span class="text-xs text-slate-500 hidden sm:inline">Comunicação e Transparência</span>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         
-        <!-- Fase 01 -->
-        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
-          <span class="text-xs font-bold uppercase tracking-wider text-[#0c326f] bg-blue-50 px-2 py-0.5 rounded">Fase 01</span>
-          <h3 class="text-lg font-bold text-slate-900">Consultas públicas</h3>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-            A ANTT realiza consultas públicas para ouvir contribuições técnicas e do setor, garantindo transparência no processo de expansão do Free Flow.
-          </p>
-          <div class="flex items-center gap-2 pt-2 text-xs">
-            <span class="bg-slate-100 text-slate-800 font-semibold px-2.5 py-1 rounded-md">Contribuições técnicas</span>
-            <span class="bg-slate-100 text-slate-800 font-semibold px-2.5 py-1 rounded-md">Transparência</span>
+        <article class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between hover:shadow-md transition space-y-3">
+          <div class="space-y-2">
+            <span class="text-[10px] font-bold text-blue-800 bg-blue-50 px-2 py-0.5 rounded uppercase">TRANSPARÊNCIA</span>
+            <h3 class="font-bold text-sm text-slate-900 leading-snug">
+              Tarifas do Free Flow na Via Dutra entre São Paulo e Arujá
+            </h3>
+            <p class="text-xs text-slate-600 line-clamp-3">
+              Atualização considera inflação, distância percorrida e critérios de gerenciamento; pistas marginais continuam sem cobrança.
+            </p>
           </div>
-        </div>
+          <div class="text-[11px] text-slate-400 font-medium pt-2 border-t border-slate-100">22/10/2026 11h47</div>
+        </article>
 
-        <!-- Fase 02 -->
-        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
-          <span class="text-xs font-bold uppercase tracking-wider text-[#0c326f] bg-blue-50 px-2 py-0.5 rounded">Fase 02</span>
-          <h3 class="text-lg font-bold text-slate-900">Reuniões colegiadas</h3>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-            Reuniões com órgãos reguladores e concessionárias harmonizam regras com o marco contratual, preparando a operação para rodovias federais.
-          </p>
-          <div class="flex items-center gap-2 pt-2 text-xs">
-            <span class="bg-slate-100 text-slate-800 font-semibold px-2.5 py-1 rounded-md">Órgãos reguladores</span>
-            <span class="bg-slate-100 text-slate-800 font-semibold px-2.5 py-1 rounded-md">Concessionárias</span>
+        <article class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between hover:shadow-md transition space-y-3">
+          <div class="space-y-2">
+            <span class="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded uppercase">CONCESSÕES RODOVIÁRIAS</span>
+            <h3 class="font-bold text-sm text-slate-900 leading-snug">
+              Vai pegar estrada? Novo mapa interativo coloca os serviços da rodovia na palma da sua mão
+            </h3>
+            <p class="text-xs text-slate-600 line-clamp-3">
+              Saiba quem administra cada trecho, onde estão pedágios, pórticos de Free Flow e bases de atendimento.
+            </p>
           </div>
-        </div>
+          <div class="text-[11px] text-slate-400 font-medium pt-2 border-t border-slate-100">21/10/2026 12h20</div>
+        </article>
 
-        <!-- Fase final -->
-        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
-          <span class="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">Fase final</span>
-          <h3 class="text-lg font-bold text-slate-900">Consolidação normativa 2025</h3>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-            A reabertura de audiência pública em 2025 sinaliza a fase final de consolidação normativa, permitindo ajustes finais antes da expansão em larga escala.
-          </p>
-          <div class="flex items-center gap-2 pt-2 text-xs">
-            <span class="bg-emerald-50 text-emerald-800 font-semibold px-2.5 py-1 rounded-md">Audiência pública</span>
-            <span class="bg-emerald-50 text-emerald-800 font-semibold px-2.5 py-1 rounded-md">Ajustes finais</span>
+        <article class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between hover:shadow-md transition space-y-3">
+          <div class="space-y-2">
+            <span class="text-[10px] font-bold text-purple-800 bg-purple-50 px-2 py-0.5 rounded uppercase">PEDÁGIO ELETRÔNICO</span>
+            <h3 class="font-bold text-sm text-slate-900 leading-snug">
+              Free-Flow: o que fazer depois de passar pelo pórtico?
+            </h3>
+            <p class="text-xs text-slate-600 line-clamp-3">
+              Sem cancela ou parada para pagamento, entenda como consultar a passagem e encontrar o canal correto para pagar.
+            </p>
           </div>
-        </div>
+          <div class="text-[11px] text-slate-400 font-medium pt-2 border-t border-slate-100">06/10/2026 10h26</div>
+        </article>
 
       </div>
     </section>
 
-    <!-- 8. BENEFÍCIOS DO FREE FLOW -->
+    <!-- BENEFÍCIOS -->
     <section id="beneficiosSecao" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
       <div class="text-center max-w-2xl mx-auto space-y-1">
         <span class="text-xs font-bold uppercase tracking-wider text-[#0c326f] bg-blue-50 px-3 py-1 rounded-full">Vantagens</span>
@@ -868,108 +949,7 @@
       </div>
     </section>
 
-    <!-- 9. NOTÍCIAS SOBRE O FREE FLOW -->
-    <section id="noticiasSecao" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
-        <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-[#0c326f]">Atualizações Oficiais</span>
-          <h2 class="text-2xl font-black text-slate-900">Notícias sobre o Free Flow</h2>
-        </div>
-        <span class="text-xs text-slate-500 hidden sm:inline">Comunicação e Transparência</span>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        
-        <!-- Notícia 1 -->
-        <article class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between hover:shadow-md transition space-y-3">
-          <div class="space-y-2">
-            <span class="text-[10px] font-bold text-blue-800 bg-blue-50 px-2 py-0.5 rounded uppercase">TRANSPARÊNCIA</span>
-            <h3 class="font-bold text-sm text-slate-900 leading-snug">
-              ANTT aprova novas tarifas do Free Flow na Via Dutra entre São Paulo e Arujá
-            </h3>
-            <p class="text-xs text-slate-600 line-clamp-3">
-              Atualização entra em vigor nesta sexta-feira (23/10) e considera inflação, distância percorrida e critérios de gerenciamento do tráfego; pistas marginais continuam sem cobrança
-            </p>
-          </div>
-          <div class="text-[11px] text-slate-400 font-medium pt-2 border-t border-slate-100">
-            22/10/2026 11h47
-          </div>
-        </article>
-
-        <!-- Notícia 2 -->
-        <article class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between hover:shadow-md transition space-y-3">
-          <div class="space-y-2">
-            <span class="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded uppercase">CONCESSÕES RODOVIÁRIAS</span>
-            <h3 class="font-bold text-sm text-slate-900 leading-snug">
-              Vai pegar estrada? Novo mapa interativo da ANTT coloca os serviços da rodovia na palma da sua mão
-            </h3>
-            <p class="text-xs text-slate-600 line-clamp-3">
-              Saiba quem administra cada trecho, onde estão pedágios, pórticos de Free Flow e bases de atendimento — e qual telefone ligar se precisar de ajuda. Com consulta pelo celular e recurso de localização, ferramenta inaugura uma nova etapa de transparência e relacionamento com quem usa as rodovias federais concedidas
-            </p>
-          </div>
-          <div class="text-[11px] text-slate-400 font-medium pt-2 border-t border-slate-100">
-            21/10/2026 12h20
-          </div>
-        </article>
-
-        <!-- Notícia 3 -->
-        <article class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between hover:shadow-md transition space-y-3">
-          <div class="space-y-2">
-            <span class="text-[10px] font-bold text-purple-800 bg-purple-50 px-2 py-0.5 rounded uppercase">PARTICIPAÇÃO SOCIAL</span>
-            <h3 class="font-bold text-sm text-slate-900 leading-snug">
-              ANTT realiza audiência pública sobre Sandbox Regulatório para interoperabilidade do Sistema Livre de Passagem
-            </h3>
-            <p class="text-xs text-slate-600 line-clamp-3">
-              Audiência Pública nº 14/2026 apresentou proposta de edital para desenvolvimento de solução tecnológica voltada à interoperabilidade do sistema
-            </p>
-          </div>
-          <div class="text-[11px] text-slate-400 font-medium pt-2 border-t border-slate-100">
-            08/10/2026 17h02
-          </div>
-        </article>
-
-        <!-- Notícia 4 -->
-        <article class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between hover:shadow-md transition space-y-3">
-          <div class="space-y-2">
-            <span class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded uppercase">DESENVOLVIMENTO TECNOLÓGICO</span>
-            <h3 class="font-bold text-sm text-slate-900 leading-snug">
-              ANTT realiza XVI Workshop RDT e destaca avanço da pesquisa e da inovação nas concessões rodoviárias
-            </h3>
-            <p class="text-xs text-slate-600 line-clamp-3">
-              Evento reuniu Agência, concessionárias e instituições de ensino e pesquisa para apresentar projetos desenvolvidos com recursos do RDT
-            </p>
-          </div>
-          <div class="text-[11px] text-slate-400 font-medium pt-2 border-t border-slate-100">
-            06/10/2026 16h44
-          </div>
-        </article>
-
-        <!-- Notícia 5 -->
-        <article class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between hover:shadow-md transition space-y-3">
-          <div class="space-y-2">
-            <span class="text-[10px] font-bold text-sky-800 bg-sky-50 px-2 py-0.5 rounded uppercase">PEDÁGIO ELETRÔNICO</span>
-            <h3 class="font-bold text-sm text-slate-900 leading-snug">
-              Free-Flow: o que fazer depois de passar pelo pórtico?
-            </h3>
-            <p class="text-xs text-slate-600 line-clamp-3">
-              Sem cancela, cabine ou parada para pagamento, o pedágio eletrônico muda a experiência na rodovia. Entenda como consultar a passagem, acompanhar a cobrança e encontrar o canal correto para pagar
-            </p>
-          </div>
-          <div class="text-[11px] text-slate-400 font-medium pt-2 border-t border-slate-100">
-            06/10/2026 10h26
-          </div>
-        </article>
-
-      </div>
-
-      <div class="pt-3 text-right">
-        <a href="#heroSecao" class="inline-flex items-center gap-1.5 font-bold text-sm text-[#0c326f] hover:text-blue-800">
-          <span>Leia todas as notícias sobre o Free Flow &gt;&gt;&gt;</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- 10. DÚVIDAS FREQUENTES (FAQ) -->
+    <!-- FAQ -->
     <section id="faqSecao" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
       <div class="text-center space-y-1">
         <span class="text-xs font-bold uppercase tracking-wider text-[#0c326f] bg-blue-50 px-3 py-1 rounded-full">Esclarecimentos</span>
@@ -977,40 +957,25 @@
       </div>
 
       <div class="space-y-3" id="accordionFaq">
-        
-        <!-- FAQ 1 -->
         <div class="faq-item bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
           <button type="button" class="faq-trigger w-full text-left p-4 sm:p-5 font-bold text-sm text-slate-900 flex justify-between items-center gap-4 hover:bg-slate-50 transition">
-            <span>O que é o Free Flow e como ele difere do pedágio tradicional?</span>
+            <span>O que acontece se eu não pagar a tarifa do pedágio Free Flow?</span>
             <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition duration-200"></i>
           </button>
           <div class="faq-content hidden p-5 pt-0 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
-            O Free Flow elimina cabines e cancelas físicas. Veículos passam na velocidade da rodovia sob pórticos equipados com sensores a laser e câmeras OCR que leem placas ou TAGs. Não há necessidade de parar.
+            Conforme o Art. 209-A do CTB, o não pagamento em até 30 dias após a passagem configura infração grave de trânsito (multa de R$ 195,23 e 5 pontos na CNH), além da continuidade da cobrança.
           </div>
         </div>
 
-        <!-- FAQ 2 -->
         <div class="faq-item bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
           <button type="button" class="faq-trigger w-full text-left p-4 sm:p-5 font-bold text-sm text-slate-900 flex justify-between items-center gap-4 hover:bg-slate-50 transition">
-            <span>Não tenho tag instalada no carro. Posso passar pelo pórtico?</span>
+            <span>Preciso ter uma TAG instalada no para-brisa para passar no Free Flow?</span>
             <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition duration-200"></i>
           </button>
           <div class="faq-content hidden p-5 pt-0 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
-            Sim! O sistema lê a placa do veículo automaticamente. Você dispõe de 30 dias corridos para consultar a placa no portal Estrada Pay e efetuar a quitação via PIX ou Cartão de Crédito.
+            Não é obrigatório ter TAG. Caso você não possua o adesivo, o pórtico fará a leitura da placa do veículo. Basta acessar o portal Estrada Pay em até 30 dias, digitar a placa e realizar o pagamento via PIX ou Cartão.
           </div>
         </div>
-
-        <!-- FAQ 3 -->
-        <div class="faq-item bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-          <button type="button" class="faq-trigger w-full text-left p-4 sm:p-5 font-bold text-sm text-slate-900 flex justify-between items-center gap-4 hover:bg-slate-50 transition">
-            <span>Qual é a consequência do não pagamento no prazo legal de 30 dias?</span>
-            <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition duration-200"></i>
-          </button>
-          <div class="faq-content hidden p-5 pt-0 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
-            O não pagamento em até 30 dias após a passagem configura infração grave de trânsito (Art. 209-A do CTB), gerando multa de R$ 195,23 e 5 pontos na CNH, além da continuidade da cobrança da tarifa.
-          </div>
-        </div>
-
       </div>
     </section>
 
@@ -1025,22 +990,20 @@
       
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-blue-900/60">
         
-        <!-- Coluna 1 -->
         <div class="space-y-3">
           <div class="flex items-center gap-2">
             <span class="text-xl font-black text-white">Estrada</span>
             <span class="text-xl font-black text-[#38bdf8] bg-blue-950 px-1 py-0.5 rounded border border-blue-400/30">Pay</span>
           </div>
           <p class="text-blue-200 text-xs leading-relaxed">
-            Estrada Pay — Sistema Único de Fretes e Pedágio Eletrônico. Plataforma de consulta e quitação simplificada de tarifas em rodovias operantes sem cancelas.
+            Estrada Pay — Sistema Único de Fretes e Pedágio Eletrônico. Plataforma de consulta e quitação simplificada de tarifas rodoviárias sem cancelas em todo o território nacional.
           </p>
           <div class="text-[11px] text-emerald-400 font-semibold flex items-center gap-1.5">
             <i class="fa-solid fa-shield-check"></i>
-            <span>Ambiente Protegido e Homologado</span>
+            <span>Ambiente 100% Auditado e Seguro</span>
           </div>
         </div>
 
-        <!-- Coluna 2 -->
         <div class="space-y-2">
           <h4 class="font-bold text-white uppercase tracking-wider text-xs">Navegação</h4>
           <ul class="space-y-1.5 text-blue-200">
@@ -1051,7 +1014,6 @@
           </ul>
         </div>
 
-        <!-- Coluna 3 -->
         <div class="space-y-2">
           <h4 class="font-bold text-white uppercase tracking-wider text-xs">Suporte ao Motorista</h4>
           <ul class="space-y-1.5 text-blue-200">
@@ -1062,11 +1024,10 @@
           </ul>
         </div>
 
-        <!-- Coluna 4 -->
         <div class="space-y-2">
           <h4 class="font-bold text-white uppercase tracking-wider text-xs">Segurança Digital</h4>
           <p class="text-blue-200 text-xs leading-relaxed">
-            Transações protegidas por criptografia SSL de 256 bits em conformidade com as normas da LGPD.
+            Transações protegidas por criptografia SSL de 256 bits em conformidade com as diretrizes da LGPD.
           </p>
           <div class="flex items-center gap-4 text-slate-400 pt-1 text-base">
             <i class="fa-solid fa-lock text-emerald-400"></i>
@@ -1078,17 +1039,14 @@
 
       </div>
 
-      <!-- Direitos Autorais -->
       <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-blue-300 text-[11px]">
         <div>
-          © 2026 Estrada Pay — Sistema Único de Fretes e Pedágio Eletrônico. Todos os direitos reservados.
+          © 2026 Estrada Pay • Livre Passagem. Todos os direitos reservados.
         </div>
         <div class="flex items-center gap-4">
-          <a href="/termos.html" class="hover:text-white transition">Termos de Uso</a>
+          <button type="button" onclick="abrirModal('modalTermos')" class="hover:text-white transition">Termos de Uso e LGPD</button>
           <span>•</span>
-          <a href="/privacidade.html" class="hover:text-white transition">Política de Privacidade</a>
-          <span>•</span>
-          <span class="text-amber-400 font-mono font-bold">v4.5.0-PROD</span>
+          <span class="text-amber-400 font-mono font-bold">PWA v3.0 • Auto-Update</span>
         </div>
       </div>
 
@@ -1096,195 +1054,11 @@
   </footer>
 
   <!-- ========================================================
-       MODAIS INTERATIVOS
+       5. SISTEMA DE CONSULTA E CHECKOUT (MODAL DE RESULTADOS)
        ======================================================== -->
-
-  <!-- MODAL: DETALHES DO TRECHO SELECIONADO (Base Normativa e KM dos Pórticos) -->
-  <div id="modalTrechoDetalhes" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
-    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
-      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-map-pin text-amber-400 text-lg"></i>
-          <h3 class="font-bold text-base" id="modalTrechoTitulo">Detalhes do Trecho</h3>
-        </div>
-        <button type="button" onclick="fecharModal('modalTrechoDetalhes')" class="text-white hover:text-amber-300 text-lg p-1">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed" id="modalTrechoConteudo">
-        <!-- Injetado dinamicamente via JS -->
-      </div>
-      <div class="bg-slate-50 p-4 border-t border-slate-200 flex justify-between items-center">
-        <button type="button" onclick="fecharModal('modalTrechoDetalhes'); document.getElementById('inputHeaderPlaca').focus(); window.scrollTo({top:0, behavior:'smooth'});" class="text-xs font-bold text-[#0c326f] hover:underline">
-          <i class="fa-solid fa-magnifying-glass"></i> Consultar Placa Neste Trecho
-        </button>
-        <button type="button" onclick="fecharModal('modalTrechoDetalhes')" class="bg-slate-200 text-slate-800 text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-300 transition">
-          Fechar
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: ORIENTAÇÕES SOBRE SUSPENSÃO DE MULTAS -->
-  <div id="modalSuspensaoOrientacoes" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
-    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
-      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-circle-exclamation text-amber-400 text-lg"></i>
-          <h3 class="font-bold text-base">Orientações Oficiais • Suspensão de Multas</h3>
-        </div>
-        <button type="button" onclick="fecharModal('modalSuspensaoOrientacoes')" class="text-white hover:text-amber-300 text-lg p-1">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
-        <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 space-y-2">
-          <h4 class="font-bold text-[#0c326f] text-xs uppercase tracking-wider">Como ficam as cobranças e regularizações:</h4>
-          <ul class="list-disc list-inside space-y-1.5 text-xs text-slate-700">
-            <li><strong>Prazo de 30 dias:</strong> O prazo para quitação de passagens no Free Flow foi estendido para até 30 dias corridos sem incidência de multa de evasão.</li>
-            <li><strong>Suspensão temporária de autuações:</strong> Notificações emitidas durante o período inicial de testes e adaptação técnica dos pórticos foram suspensas para revisão administrativa.</li>
-            <li><strong>Regularização simplificada:</strong> Condutores podem quitar passagens pendentes diretamente pelo Estrada Pay com cancelamento automático de eventuais processos de infração decorrentes.</li>
-          </ul>
-        </div>
-        <p>
-          Caso você tenha pago em duplicidade ou necessite de declaração de quitação tempestiva, solicite seu reembolso diretamente no canal abaixo.
-        </p>
-      </div>
-      <div class="bg-slate-50 p-4 border-t border-slate-200 flex justify-between items-center">
-        <button type="button" onclick="fecharModal('modalSuspensaoOrientacoes'); abrirModal('modalReembolso');" class="bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2 rounded-lg transition">
-          <i class="fa-solid fa-hand-holding-dollar mr-1"></i> Solicitar Reembolso
-        </button>
-        <button type="button" onclick="fecharModal('modalSuspensaoOrientacoes')" class="bg-slate-200 text-slate-800 text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-300 transition">
-          Fechar
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: O QUE É O FREE FLOW? -->
-  <div id="modalOQueE" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
-    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
-      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-circle-question text-sky-400 text-lg"></i>
-          <h3 class="font-bold text-base">O que é o Free Flow?</h3>
-        </div>
-        <button type="button" onclick="fecharModal('modalOQueE')" class="text-white hover:text-amber-300 text-lg p-1">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
-        <p>
-          O Free Flow — ou “pedágio eletrônico em livre passagem” — é o modelo de cobrança de tarifa que elimina praças físicas e cancelas: veículos passam por pórticos que identificam automaticamente TAGs ou placas e a cobrança é feita de forma eletrônica no uso da via.
-        </p>
-        <p>
-          Nesse modelo, não existem cancelas que obriguem a reduzir velocidade ou parar nas rodovias federais concedidas. Em pontos estratégicos da rodovia são instalados pórticos com sensores, leitores de TAGs (transponders) e câmeras que leem placas (ANPR) automaticamente.
-        </p>
-      </div>
-      <div class="bg-slate-50 p-4 border-t border-slate-200 text-right">
-        <button type="button" onclick="fecharModal('modalOQueE')" class="bg-[#0c326f] text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-blue-900 transition">
-          Entendido, Fechar
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: NÃO TENHO TAG. E AGORA? -->
-  <div id="modalNaoTenhoTag" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
-    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
-      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-tag text-amber-400 text-lg"></i>
-          <h3 class="font-bold text-base">Não tenho tag. E agora?</h3>
-        </div>
-        <button type="button" onclick="fecharModal('modalNaoTenhoTag')" class="text-white hover:text-amber-300 text-lg p-1">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
-        <div class="p-3 bg-emerald-50 text-emerald-800 rounded-xl border border-emerald-200 font-semibold text-xs flex items-center gap-2">
-          <i class="fa-solid fa-circle-check text-base"></i>
-          <span>Não se preocupe! Você não precisa de TAG para trafegar.</span>
-        </div>
-        <p>
-          Se o seu veículo não possui uma TAG adesiva, os pórticos inteligentes fotografam a placa dianteira e traseira. A passagem é armazenada no sistema para que você realize a quitação tempestiva.
-        </p>
-        <p>
-          Basta acessar o portal Estrada Pay em até 30 dias após o deslocamento, digitar a placa e pagar via PIX ou Cartão de Crédito.
-        </p>
-      </div>
-      <div class="bg-slate-50 p-4 border-t border-slate-200 flex justify-between items-center">
-        <button type="button" onclick="fecharModal('modalNaoTenhoTag'); document.getElementById('inputHeaderPlaca').focus(); window.scrollTo({top: 0, behavior: 'smooth'});" class="text-xs font-bold text-[#0c326f] hover:underline">
-          <i class="fa-solid fa-magnifying-glass"></i> Consultar Minha Placa
-        </button>
-        <button type="button" onclick="fecharModal('modalNaoTenhoTag')" class="bg-slate-200 text-slate-800 text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-300 transition">
-          Fechar
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: SUSPENSÃO DE MULTAS & REEMBOLSO -->
-  <div id="modalReembolso" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
-    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
-      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-hand-holding-dollar text-amber-400 text-lg"></i>
-          <h3 class="font-bold text-base">Solicite seu Reembolso ou Revisão</h3>
-        </div>
-        <button type="button" onclick="fecharModal('modalReembolso')" class="text-white hover:text-amber-300 text-lg p-1">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700">
-        <p>
-          Preencha o formulário para abertura de processo de revisão de autuação indevida ou reembolso de cobrança duplicada:
-        </p>
-
-        <form id="formReembolso" class="space-y-3 pt-2">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Placa do Veículo:</label>
-            <input type="text" id="reembolsoPlaca" required maxlength="8" placeholder="ABC1D23" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs uppercase font-mono font-bold focus:bg-white focus:border-[#0c326f] focus:outline-none">
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">E-mail para Contato:</label>
-              <input type="email" id="reembolsoEmail" required placeholder="seu@email.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs focus:bg-white focus:border-[#0c326f] focus:outline-none">
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">WhatsApp / Telefone:</label>
-              <input type="tel" id="reembolsoTel" required placeholder="(11) 99999-9999" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs focus:bg-white focus:border-[#0c326f] focus:outline-none">
-            </div>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Motivo:</label>
-            <select id="reembolsoMotivo" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs focus:bg-white focus:border-[#0c326f] focus:outline-none">
-              <option value="duplicidade">Cobrança duplicada no mesmo pórtico</option>
-              <option value="multa_indevida">Contestação de autuação com quitação já realizada</option>
-              <option value="erro_leitura">Placa clonada / Divergência de veículo na foto</option>
-              <option value="outro">Outro motivo</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Detalhes e Rodovia:</label>
-            <textarea id="reembolsoMsg" rows="3" placeholder="Informe a data aproximada, a rodovia e o ocorrido..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs focus:bg-white focus:border-[#0c326f] focus:outline-none"></textarea>
-          </div>
-
-          <div class="pt-2">
-            <button type="submit" class="w-full bg-[#0c326f] hover:bg-blue-900 text-white font-bold text-xs uppercase tracking-wider py-3 rounded-lg shadow transition">
-              <i class="fa-solid fa-paper-plane mr-1.5"></i> Enviar Solicitação para Análise
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: RESULTADO DA CONSULTA DE PLACA COM CHECKOUT WHITE-LABEL -->
   <div id="modalConsultaResultado" class="hidden fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm p-3 sm:p-5 overflow-y-auto flex items-center justify-center">
     <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-6 animate-fadeIn">
       
-      <!-- Topo Modal -->
       <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-amber-400 text-lg">
@@ -1300,7 +1074,6 @@
         </button>
       </div>
 
-      <!-- Conteúdo do Modal -->
       <div class="p-5 sm:p-7 space-y-6 max-h-[80vh] overflow-y-auto">
         
         <!-- Veículo Identificado -->
@@ -1322,10 +1095,14 @@
               </p>
             </div>
           </div>
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            Base Estrada Pay Sincronizada
-          </span>
+          <button 
+            type="button" 
+            id="btnSalvarNaGaragem" 
+            onclick="salvarVeiculoAtualGaragem();"
+            class="text-xs font-bold text-[#0c326f] bg-blue-50 hover:bg-blue-100 border border-blue-200 px-3 py-1.5 rounded-lg transition flex items-center gap-1.5"
+          >
+            <i class="fa-solid fa-bookmark text-amber-500"></i> Salvar na Minha Garagem
+          </button>
         </div>
 
         <!-- Tabela de Débitos com Checkbox -->
@@ -1604,6 +1381,333 @@
     </div>
   </div>
 
+  <!-- MODAL: MINHA GARAGEM -->
+  <div id="modalGaragem" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-warehouse text-amber-400 text-lg"></i>
+          <h3 class="font-bold text-base">Minha Garagem • Estrada Pay</h3>
+        </div>
+        <button type="button" onclick="fecharModal('modalGaragem')" class="text-white hover:text-amber-300 text-lg p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700">
+        <p>
+          Salve suas placas frequentes para consultar tarifas pendentes com apenas 1 toque, sem precisar redigitar.
+        </p>
+
+        <!-- Formulário de Adição Rápida -->
+        <form id="formAdicionarGaragem" class="flex gap-2">
+          <input 
+            type="text" 
+            id="inputGaragemNovaPlaca" 
+            maxlength="8" 
+            placeholder="NOVA PLACA (Ex: ABC1D23)" 
+            required 
+            class="flex-1 bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs font-mono font-bold uppercase focus:bg-white focus:border-[#0c326f] focus:outline-none"
+          />
+          <button 
+            type="submit" 
+            class="bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-lg transition"
+          >
+            Adicionar
+          </button>
+        </form>
+
+        <!-- Lista de Veículos Salvos -->
+        <div class="space-y-2 pt-2">
+          <span class="text-xs font-bold text-slate-800 uppercase block">Placas Salvas na Garagem:</span>
+          <div id="listaGaragemVeiculos" class="space-y-2 max-h-60 overflow-y-auto">
+            <!-- Injetado via JS -->
+          </div>
+        </div>
+      </div>
+      <div class="bg-slate-50 p-4 border-t border-slate-200 text-right">
+        <button type="button" onclick="fecharModal('modalGaragem')" class="bg-slate-200 text-slate-800 text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-300 transition">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: HISTÓRICO DE COMPROVANTES -->
+  <div id="modalHistorico" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-clock-rotate-left text-emerald-400 text-lg"></i>
+          <h3 class="font-bold text-base">Histórico de Quitações • Estrada Pay</h3>
+        </div>
+        <button type="button" onclick="fecharModal('modalHistorico')" class="text-white hover:text-amber-300 text-lg p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700">
+        <p>
+          Consulte todos os seus recibos e protocolos de liquidação emitidos neste dispositivo.
+        </p>
+
+        <div id="listaHistoricoRecibos" class="space-y-2 max-h-72 overflow-y-auto">
+          <!-- Injetado via JS -->
+        </div>
+      </div>
+      <div class="bg-slate-50 p-4 border-t border-slate-200 text-right">
+        <button type="button" onclick="fecharModal('modalHistorico')" class="bg-slate-200 text-slate-800 text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-300 transition">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ALERTAS DE PEDÁGIO -->
+  <div id="modalAlertas" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-bell text-amber-400 text-lg"></i>
+          <h3 class="font-bold text-base">Alertas de Pedágio no WhatsApp</h3>
+        </div>
+        <button type="button" onclick="fecharModal('modalAlertas')" class="text-white hover:text-amber-300 text-lg p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700">
+        <p>
+          Ative avisos automáticos e receba uma notificação no WhatsApp 5 dias antes do vencimento de qualquer tarifa Free Flow.
+        </p>
+
+        <form id="formConfigAlertas" class="space-y-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Número de WhatsApp:</label>
+            <input type="tel" id="inputAlertaWhatsApp" placeholder="(11) 99999-9999" required class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs focus:bg-white focus:border-[#0c326f] focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">E-mail de Backup (Opcional):</label>
+            <input type="email" id="inputAlertaEmail" placeholder="seu@email.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs focus:bg-white focus:border-[#0c326f] focus:outline-none">
+          </div>
+
+          <div class="pt-2">
+            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase py-3 rounded-lg shadow transition">
+              <i class="fa-solid fa-check mr-1.5"></i> Salvar Preferências de Notificação
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="bg-slate-50 p-4 border-t border-slate-200 text-right">
+        <button type="button" onclick="fecharModal('modalAlertas')" class="bg-slate-200 text-slate-800 text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-300 transition">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: TERMOS DE USO E LGPD -->
+  <div id="modalTermos" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-shield-halved text-sky-400 text-lg"></i>
+          <h3 class="font-bold text-base">Termos de Uso e LGPD • Estrada Pay</h3>
+        </div>
+        <button type="button" onclick="fecharModal('modalTermos')" class="text-white hover:text-amber-300 text-lg p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-6 space-y-3 text-xs text-slate-600 leading-relaxed max-h-80 overflow-y-auto">
+        <h4 class="font-bold text-slate-900 text-sm">1. Intermediação de Pagamentos</h4>
+        <p>O Estrada Pay atua como plataforma independente de facilitação e consolidação financeira para a liquidação tempestiva de tarifas de pedágio em livre passagem (Free Flow).</p>
+        
+        <h4 class="font-bold text-slate-900 text-sm">2. Prazos e Responsabilidades</h4>
+        <p>Conforme o Art. 209-A do CTB, o condutor dispõe de até 30 dias corridos a partir da passagem para realizar a quitação sem incorrer em infração de trânsito.</p>
+
+        <h4 class="font-bold text-slate-900 text-sm">3. Privacidade e Proteção de Dados (LGPD)</h4>
+        <p>Os dados veiculares e de transações são tratados exclusivamente para o propósito de emissão de cobranças e comprovantes de liquidação, com criptografia de ponta a ponta.</p>
+      </div>
+      <div class="bg-slate-50 p-4 border-t border-slate-200 text-right">
+        <button type="button" onclick="fecharModal('modalTermos')" class="bg-[#0c326f] text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-blue-900 transition">
+          Entendido, Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DETALHES DO TRECHO SELECIONADO -->
+  <div id="modalTrechoDetalhes" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-map-pin text-amber-400 text-lg"></i>
+          <h3 class="font-bold text-base" id="modalTrechoTitulo">Detalhes do Trecho</h3>
+        </div>
+        <button type="button" onclick="fecharModal('modalTrechoDetalhes')" class="text-white hover:text-amber-300 text-lg p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed" id="modalTrechoConteudo"></div>
+      <div class="bg-slate-50 p-4 border-t border-slate-200 flex justify-between items-center">
+        <button type="button" onclick="fecharModal('modalTrechoDetalhes'); document.getElementById('inputHeaderPlaca').focus(); window.scrollTo({top:0, behavior:'smooth'});" class="text-xs font-bold text-[#0c326f] hover:underline">
+          <i class="fa-solid fa-magnifying-glass"></i> Consultar Placa Neste Trecho
+        </button>
+        <button type="button" onclick="fecharModal('modalTrechoDetalhes')" class="bg-slate-200 text-slate-800 text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-300 transition">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ORIENTAÇÕES SOBRE SUSPENSÃO DE MULTAS -->
+  <div id="modalSuspensaoOrientacoes" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-circle-exclamation text-amber-400 text-lg"></i>
+          <h3 class="font-bold text-base">Orientações Oficiais • Suspensão de Multas</h3>
+        </div>
+        <button type="button" onclick="fecharModal('modalSuspensaoOrientacoes')" class="text-white hover:text-amber-300 text-lg p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+        <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 space-y-2">
+          <h4 class="font-bold text-[#0c326f] text-xs uppercase tracking-wider">Como ficam as cobranças e regularizações:</h4>
+          <ul class="list-disc list-inside space-y-1.5 text-xs text-slate-700">
+            <li><strong>Prazo de 30 dias:</strong> O prazo para quitação de passagens no Free Flow foi estendido para até 30 dias corridos sem incidência de multa de evasão.</li>
+            <li><strong>Suspensão temporária de autuações:</strong> Notificações emitidas durante o período inicial de testes foram suspensas para revisão administrativa.</li>
+            <li><strong>Regularização simplificada:</strong> Condutores podem quitar passagens pendentes diretamente pelo Estrada Pay com cancelamento automático de eventuais processos de infração.</li>
+          </ul>
+        </div>
+        <p>
+          Caso você tenha pago em duplicidade ou necessite de declaração de quitação tempestiva, solicite seu reembolso diretamente no canal abaixo.
+        </p>
+      </div>
+      <div class="bg-slate-50 p-4 border-t border-slate-200 flex justify-between items-center">
+        <button type="button" onclick="fecharModal('modalSuspensaoOrientacoes'); abrirModal('modalReembolso');" class="bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2 rounded-lg transition">
+          <i class="fa-solid fa-hand-holding-dollar mr-1"></i> Solicitar Reembolso
+        </button>
+        <button type="button" onclick="fecharModal('modalSuspensaoOrientacoes')" class="bg-slate-200 text-slate-800 text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-300 transition">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: O QUE É O FREE FLOW? -->
+  <div id="modalOQueE" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-circle-question text-sky-400 text-lg"></i>
+          <h3 class="font-bold text-base">O que é o Free Flow?</h3>
+        </div>
+        <button type="button" onclick="fecharModal('modalOQueE')" class="text-white hover:text-amber-300 text-lg p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+        <p>
+          O Free Flow — ou “pedágio eletrônico em livre passagem” — é o modelo de cobrança de tarifa que elimina praças físicas e cancelas: veículos passam por pórticos que identificam automaticamente TAGs ou placas e a cobrança é feita de forma eletrônica no uso da via.
+        </p>
+        <p>
+          Nesse modelo, não existem cancelas que obriguem a reduzir velocidade ou parar nas rodovias concedidas. Em pontos estratégicos são instalados pórticos com sensores, leitores de TAGs e câmeras que leem placas (ANPR) automaticamente.
+        </p>
+      </div>
+      <div class="bg-slate-50 p-4 border-t border-slate-200 text-right">
+        <button type="button" onclick="fecharModal('modalOQueE')" class="bg-[#0c326f] text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-blue-900 transition">
+          Entendido, Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: NÃO TENHO TAG. E AGORA? -->
+  <div id="modalNaoTenhoTag" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-tag text-amber-400 text-lg"></i>
+          <h3 class="font-bold text-base">Não tenho tag. E agora?</h3>
+        </div>
+        <button type="button" onclick="fecharModal('modalNaoTenhoTag')" class="text-white hover:text-amber-300 text-lg p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+        <div class="p-3 bg-emerald-50 text-emerald-800 rounded-xl border border-emerald-200 font-semibold text-xs flex items-center gap-2">
+          <i class="fa-solid fa-circle-check text-base"></i>
+          <span>Não se preocupe! Você não precisa de TAG para trafegar.</span>
+        </div>
+        <p>
+          Se o seu veículo não possui uma TAG adesiva, os pórticos inteligentes fotografam a placa dianteira e traseira. A passagem é armazenada no sistema para que você realize a quitação tempestiva.
+        </p>
+        <p>
+          Basta acessar o portal Estrada Pay em até 30 dias após o deslocamento, digitar a placa e pagar via PIX ou Cartão de Crédito.
+        </p>
+      </div>
+      <div class="bg-slate-50 p-4 border-t border-slate-200 flex justify-between items-center">
+        <button type="button" onclick="fecharModal('modalNaoTenhoTag'); document.getElementById('inputHeaderPlaca').focus(); window.scrollTo({top: 0, behavior: 'smooth'});" class="text-xs font-bold text-[#0c326f] hover:underline">
+          <i class="fa-solid fa-magnifying-glass"></i> Consultar Minha Placa
+        </button>
+        <button type="button" onclick="fecharModal('modalNaoTenhoTag')" class="bg-slate-200 text-slate-800 text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-300 transition">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: REEMBOLSO -->
+  <div id="modalReembolso" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-hand-holding-dollar text-amber-400 text-lg"></i>
+          <h3 class="font-bold text-base">Solicite seu Reembolso ou Revisão</h3>
+        </div>
+        <button type="button" onclick="fecharModal('modalReembolso')" class="text-white hover:text-amber-300 text-lg p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700">
+        <p>Preencha o formulário para abertura de processo de revisão de autuação indevida ou reembolso:</p>
+        <form id="formReembolso" class="space-y-3 pt-2">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Placa do Veículo:</label>
+            <input type="text" id="reembolsoPlaca" required maxlength="8" placeholder="ABC1D23" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs uppercase font-mono font-bold focus:bg-white focus:border-[#0c326f] focus:outline-none">
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">E-mail para Contato:</label>
+              <input type="email" id="reembolsoEmail" required placeholder="seu@email.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs focus:bg-white focus:border-[#0c326f] focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">WhatsApp / Telefone:</label>
+              <input type="tel" id="reembolsoTel" required placeholder="(11) 99999-9999" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs focus:bg-white focus:border-[#0c326f] focus:outline-none">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Motivo:</label>
+            <select id="reembolsoMotivo" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs focus:bg-white focus:border-[#0c326f] focus:outline-none">
+              <option value="duplicidade">Cobrança duplicada no mesmo pórtico</option>
+              <option value="multa_indevida">Contestação de autuação com quitação já realizada</option>
+              <option value="erro_leitura">Placa clonada / Divergência de veículo na foto</option>
+              <option value="outro">Outro motivo</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Detalhes e Rodovia:</label>
+            <textarea id="reembolsoMsg" rows="3" placeholder="Informe a data aproximada, a rodovia e o ocorrido..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs focus:bg-white focus:border-[#0c326f] focus:outline-none"></textarea>
+          </div>
+          <div class="pt-2">
+            <button type="submit" class="w-full bg-[#0c326f] hover:bg-blue-900 text-white font-bold text-xs uppercase tracking-wider py-3 rounded-lg shadow transition">
+              <i class="fa-solid fa-paper-plane mr-1.5"></i> Enviar Solicitação para Análise
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- NOTIFICAÇÃO TOAST FLUTUANTE -->
   <div id="toastMessage" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-xs sm:text-sm border border-slate-700">
     <i class="fa-solid fa-circle-check text-emerald-400 text-lg" id="toastIcon"></i>
@@ -1611,112 +1715,93 @@
   </div>
 
   <!-- ========================================================
-       JAVASCRIPT PURO INTEGRADO (SPA COMPLETA)
+       JAVASCRIPT PURO INTEGRADO (SPA + PWA)
        ======================================================== -->
   <script>
     (function() {
       'use strict';
 
-      // Dados Detalhados dos 9 Trechos (Base Normativa e KM dos Pórticos)
+      // Dados dos 9 Trechos
       const DADOS_NOVE_TRECHOS = {
         '01': {
           titulo: '01 • BR-101/RJ — Rio-Santos',
           status: 'Em operação · RioSP / Motiva · 3 pórticos',
-          normativa: 'Deliberação ANTT nº 74/2023 (Contrato de Concessão Edital nº 01/2021).',
           porticos: [
-            { km: 'Km 414,9', local: 'Itaguaí (Sentido Sul e Norte)', tarifa: 'R$ 4,80' },
-            { km: 'Km 447,3', local: 'Mangaratiba (Sentido Sul e Norte)', tarifa: 'R$ 4,80' },
-            { km: 'Km 538,5', local: 'Paraty (Acesso Histórico)', tarifa: 'R$ 4,80' }
-          ],
-          obs: 'Motos e triciclos são isentos de tarifa neste trecho.'
+            { km: 'Km 414,9', local: 'Itaguaí', tarifa: 'R$ 4,80' },
+            { km: 'Km 447,3', local: 'Mangaratiba', tarifa: 'R$ 4,80' },
+            { km: 'Km 538,5', local: 'Paraty', tarifa: 'R$ 4,80' }
+          ]
         },
         '02': {
           titulo: '02 • BR-116/SP — Presidente Dutra',
           status: 'Em operação · RioSP · 10 pórticos',
-          normativa: 'Resolução ANTT nº 6.032/2023 e Deliberação nº 341/2026.',
           porticos: [
-            { km: 'Km 204 ao 218', local: 'Arujá / Bonsucesso', tarifa: 'R$ 4,10 (Metropolitano)' },
-            { km: 'Km 219 ao 226', local: 'Guarulhos (Pistas Expressas)', tarifa: 'R$ 4,10' },
-            { km: 'Km 227 ao 231', local: 'Entrada São Paulo / Marginal Tietê', tarifa: 'R$ 4,10' }
-          ],
-          obs: 'Pistas marginais sem cobrança de pedágio. Motocicletas isentas.'
+            { km: 'Km 204 ao 218', local: 'Arujá / Bonsucesso', tarifa: 'R$ 4,10' },
+            { km: 'Km 219 ao 226', local: 'Guarulhos (Expressas)', tarifa: 'R$ 4,10' },
+            { km: 'Km 227 ao 231', local: 'Entrada SP / Marginal Tietê', tarifa: 'R$ 4,10' }
+          ]
         },
         '03': {
           titulo: '03 • BR-381/MG — Vale do Aço',
           status: 'Autorizado · Nova 381 · 5 pórticos',
-          normativa: 'Edital ANTT nº 01/2024 • Portaria SUROD nº 182/2025.',
           porticos: [
             { km: 'Km 156', local: 'Governador Valadares', tarifa: 'R$ 7,50' },
-            { km: 'Km 238', local: 'Jaguaraçu / Timóteo', tarifa: 'R$ 7,50' },
-            { km: 'Km 342,27', local: 'João Monlevade', tarifa: 'R$ 7,50' },
-            { km: 'Km 411', local: 'Caeté / Nova União', tarifa: 'R$ 7,50' }
-          ],
-          obs: 'Substituição integral das praças com cabines físicas por pórticos.'
+            { km: 'Km 238', local: 'Jaguaraçu', tarifa: 'R$ 7,50' },
+            { km: 'Km 342', local: 'João Monlevade', tarifa: 'R$ 7,50' },
+            { km: 'Km 411', local: 'Caeté', tarifa: 'R$ 7,50' }
+          ]
         },
         '04': {
           titulo: '04 • BR-262/MG',
           status: 'Em implantação · Way-262 · 2 pórticos',
-          normativa: 'Contrato de Concessão ANTT Lote Centro-Oeste Mineiro.',
           porticos: [
             { km: 'Km 448', local: 'Nova Serrana', tarifa: 'R$ 6,80' },
-            { km: 'Km 582', local: 'Ibiá / Campos Altos', tarifa: 'R$ 6,80' }
-          ],
-          obs: 'Pórticos em fase final de testes de calibração eletrônica.'
+            { km: 'Km 582', local: 'Ibiá', tarifa: 'R$ 6,80' }
+          ]
         },
         '05': {
           titulo: '05 • BR-364/RO',
           status: 'Autorizado · Nova 364 · 7 pórticos',
-          normativa: 'Resolução ANTT nº 5.980/2024 (Eixo Norte Rondoniense).',
           porticos: [
             { km: 'Km 198', local: 'Pimenta Bueno', tarifa: 'R$ 8,20' },
             { km: 'Km 242', local: 'Cacoal', tarifa: 'R$ 8,20' },
-            { km: 'Km 334', local: 'Ouro Preto do Oeste', tarifa: 'R$ 8,20' },
+            { km: 'Km 334', local: 'Ouro Preto', tarifa: 'R$ 8,20' },
             { km: 'Km 412', local: 'Alto Paraíso', tarifa: 'R$ 8,20' }
-          ],
-          obs: 'Classificação volumétrica a laser para veículos de carga e carretas.'
+          ]
         },
         '06': {
           titulo: '06 • Lote Iguaçu/PR',
           status: 'Autorizado · EPR Iguaçu · 4 pórticos',
-          normativa: 'Lote 2 das Novas Concessões do Paraná • Deliberação ANTT nº 89/2024.',
           porticos: [
             { km: 'Km 112', local: 'Santa Lúcia', tarifa: 'R$ 9,40' },
-            { km: 'Km 165', local: 'Vitorino / Pato Branco', tarifa: 'R$ 9,40' },
+            { km: 'Km 165', local: 'Vitorino', tarifa: 'R$ 9,40' },
             { km: 'Km 204', local: 'Ampére', tarifa: 'R$ 9,40' }
-          ],
-          obs: 'Trecho com livre passagem implementado nas rodovias de ligação sul.'
+          ]
         },
         '07': {
           titulo: '07 • BR-369/PR e BR-376/PR',
           status: 'Autorizado · EPR Paraná · 8 pórticos',
-          normativa: 'Edital de Concessão ANTT Lote 1/PR • Resolução nº 6.012.',
           porticos: [
             { km: 'Km 132', local: 'Jataizinho', tarifa: 'R$ 8,80' },
             { km: 'Km 184', local: 'Rolândia', tarifa: 'R$ 8,80' },
-            { km: 'Km 216', local: 'Marialva / Maringá', tarifa: 'R$ 8,80' }
-          ],
-          obs: 'Substituição das antigas praças físicas do Anel de Integração.'
+            { km: 'Km 216', local: 'Marialva', tarifa: 'R$ 8,80' }
+          ]
         },
         '08': {
           titulo: '08 • BR-376/PR e PR-445/PR',
           status: 'Autorizado · Motiva Paraná · 2 pórticos',
-          normativa: 'Termo de Interoperabilidade e Integração Logística Paranaense.',
           porticos: [
-            { km: 'Km 288', local: 'Intersecção BR-376 / PR-445', tarifa: 'R$ 7,90' },
-            { km: 'Km 312', local: 'Ponto Regulatório Sul', tarifa: 'R$ 7,90' }
-          ],
-          obs: 'Pórticos bidirecionais com leitura simultânea multifaixa.'
+            { km: 'Km 288', local: 'Intersecção BR-376 / PR-445', tarifa: 'R$ 7,90' }
+          ]
         },
         '09': {
           titulo: '09 • BR-060/GO e BR-452/GO',
           status: 'Autorizado · Rota Verde Goiás · 11 pórticos',
-          normativa: 'Portaria de Outorga ANTT nº 412/2025 • Concessão Rota Verde.',
           porticos: [
             { km: 'Km 17', local: 'Abadia de Goiás', tarifa: 'R$ 8,40' },
             { km: 'Km 82', local: 'Indiara', tarifa: 'R$ 8,40' },
             { km: 'Km 144', local: 'Acreúna', tarifa: 'R$ 8,40' }
-          ],
-          obs: 'Eixo rodoviário vital para o transporte de grãos e turismo goiano.'
+          ]
         }
       };
 
@@ -1729,9 +1814,12 @@
         taxaEstradaPay: 1.00,
         metodoPagamento: 'PIX',
         protocoloAtual: '',
+        garagem: JSON.parse(localStorage.getItem('estradapay_garagem') || '[]'),
+        historico: JSON.parse(localStorage.getItem('estradapay_historico') || '[]'),
+        alertas: JSON.parse(localStorage.getItem('estradapay_alertas') || '{}'),
       };
 
-      // Elementos do DOM
+      // Elementos DOM
       const dom = {
         formHeaderConsulta: document.getElementById('formHeaderConsulta'),
         inputHeaderPlaca: document.getElementById('inputHeaderPlaca'),
@@ -1742,6 +1830,21 @@
         drawerOverlay: document.getElementById('drawerOverlay'),
         drawerMenu: document.getElementById('drawerMenu'),
         btnCloseDrawer: document.getElementById('btnCloseDrawer'),
+        tabDrawerMenu: document.getElementById('tabDrawerMenu'),
+        tabDrawerPainel: document.getElementById('tabDrawerPainel'),
+        drawerContentMenu: document.getElementById('drawerContentMenu'),
+        drawerContentPainel: document.getElementById('drawerContentPainel'),
+
+        badgeGaragemTopo: document.getElementById('badgeGaragemTopo'),
+        badgeGaragemDrawer: document.getElementById('badgeGaragemDrawer'),
+        badgeHistoricoDrawer: document.getElementById('badgeHistoricoDrawer'),
+        listaGaragemVeiculos: document.getElementById('listaGaragemVeiculos'),
+        listaHistoricoRecibos: document.getElementById('listaHistoricoRecibos'),
+        formAdicionarGaragem: document.getElementById('formAdicionarGaragem'),
+        inputGaragemNovaPlaca: document.getElementById('inputGaragemNovaPlaca'),
+        formConfigAlertas: document.getElementById('formConfigAlertas'),
+        inputAlertaWhatsApp: document.getElementById('inputAlertaWhatsApp'),
+        inputAlertaEmail: document.getElementById('inputAlertaEmail'),
 
         inputBuscaRodoviaTexto: document.getElementById('inputBuscaRodoviaTexto'),
         btnPesquisarRodovia: document.getElementById('btnPesquisarRodovia'),
@@ -1752,7 +1855,6 @@
         modalTrechoTitulo: document.getElementById('modalTrechoTitulo'),
         modalTrechoConteudo: document.getElementById('modalTrechoConteudo'),
 
-        // Modal de Resultados
         modalConsultaResultado: document.getElementById('modalConsultaResultado'),
         resPlateModal: document.getElementById('resPlateModal'),
         resModeloModal: document.getElementById('resModeloModal'),
@@ -1765,7 +1867,6 @@
         modalTaxa: document.getElementById('modalTaxa'),
         modalTotalGeral: document.getElementById('modalTotalGeral'),
 
-        // Checkout Modal
         tabModalPix: document.getElementById('tabModalPix'),
         tabModalCartao: document.getElementById('tabModalCartao'),
         boxModalPix: document.getElementById('boxModalPix'),
@@ -1776,7 +1877,6 @@
         btnCopiarPixModalText: document.getElementById('btnCopiarPixModalText'),
         btnConfirmarPixModal: document.getElementById('btnConfirmarPixModal'),
 
-        // Cartão
         formModalCartao: document.getElementById('formModalCartao'),
         inputModalCardNum: document.getElementById('inputModalCardNum'),
         inputModalCardHolder: document.getElementById('inputModalCardHolder'),
@@ -1790,7 +1890,6 @@
         cardModalPreviewExp: document.getElementById('cardModalPreviewExp'),
         cardModalBrandIcon: document.getElementById('cardModalBrandIcon'),
 
-        // Recibo
         modalReciboQuitação: document.getElementById('modalReciboQuitação'),
         recProtocoloNum: document.getElementById('recProtocoloNum'),
         recDataHoraStr: document.getElementById('recDataHoraStr'),
@@ -1815,6 +1914,8 @@
         setupReembolsoForm();
         setupCheckoutModalTabs();
         setupCreditCardInteractions();
+        atualizarGaragemUI();
+        atualizarHistoricoUI();
       });
 
       // Validação de Placa (Mercosul e Tradicional)
@@ -1829,11 +1930,8 @@
         dom.inputHeaderPlaca.addEventListener('input', (e) => {
           const val = e.target.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
           e.target.value = val;
-          if (val.length > 0) {
-            dom.btnClearHeaderInput.classList.remove('hidden');
-          } else {
-            dom.btnClearHeaderInput.classList.add('hidden');
-          }
+          if (val.length > 0) dom.btnClearHeaderInput.classList.remove('hidden');
+          else dom.btnClearHeaderInput.classList.add('hidden');
         });
 
         dom.btnClearHeaderInput.addEventListener('click', () => {
@@ -1847,7 +1945,7 @@
           const placa = dom.inputHeaderPlaca.value.trim().toUpperCase();
 
           if (!validarPlacaRegex(placa)) {
-            showToast('Formato de placa inválido! Use Mercosul (ABC1D23) ou tradicional (ABC1234).', 'error');
+            showToast('Formato de placa inválido! Use Mercosul (ABC1D23) ou antigo (ABC1234).', 'error');
             dom.inputHeaderPlaca.focus();
             return;
           }
@@ -1858,11 +1956,12 @@
 
       // Drawer Hamburger
       function setupHamburgerDrawer() {
-        function abrirDrawer() {
+        window.abrirDrawer = function(aba = 'menu') {
           dom.drawerOverlay.classList.remove('hidden');
           dom.drawerMenu.classList.remove('closed');
           document.body.style.overflow = 'hidden';
-        }
+          alternarAbaDrawer(aba);
+        };
 
         window.fecharDrawer = function() {
           dom.drawerOverlay.classList.add('hidden');
@@ -1870,12 +1969,156 @@
           document.body.style.overflow = '';
         };
 
-        dom.btnHamburgerMenu.addEventListener('click', abrirDrawer);
+        window.alternarAbaDrawer = function(aba) {
+          if (aba === 'painel') {
+            dom.tabDrawerPainel.className = 'py-2 rounded-lg text-center bg-blue-900/80 text-white border border-blue-600 transition';
+            dom.tabDrawerMenu.className = 'py-2 rounded-lg text-center bg-transparent text-blue-200 hover:text-white transition';
+            dom.drawerContentPainel.classList.remove('hidden');
+            dom.drawerContentMenu.classList.add('hidden');
+          } else {
+            dom.tabDrawerMenu.className = 'py-2 rounded-lg text-center bg-blue-900/80 text-white border border-blue-600 transition';
+            dom.tabDrawerPainel.className = 'py-2 rounded-lg text-center bg-transparent text-blue-200 hover:text-white transition';
+            dom.drawerContentMenu.classList.remove('hidden');
+            dom.drawerContentPainel.classList.add('hidden');
+          }
+        };
+
+        dom.btnHamburgerMenu.addEventListener('click', () => abrirDrawer('menu'));
         dom.btnCloseDrawer.addEventListener('click', fecharDrawer);
         dom.drawerOverlay.addEventListener('click', fecharDrawer);
       }
 
-      // Busca e Filtros Rápidos de Trechos
+      // Gerenciamento de Garagem
+      function atualizarGaragemUI() {
+        const count = state.garagem.length;
+        if (dom.badgeGaragemTopo) dom.badgeGaragemTopo.textContent = count;
+        if (dom.badgeGaragemDrawer) dom.badgeGaragemDrawer.textContent = count;
+
+        if (dom.listaGaragemVeiculos) {
+          if (count === 0) {
+            dom.listaGaragemVeiculos.innerHTML = `
+              <div class="text-center p-4 bg-slate-50 border border-slate-200 rounded-xl text-slate-500 text-xs">
+                Nenhum veículo salvo ainda. Adicione uma placa acima!
+              </div>
+            `;
+          } else {
+            dom.listaGaragemVeiculos.innerHTML = state.garagem.map((v, i) => `
+              <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono font-black text-slate-900 text-xs bg-white px-2 py-0.5 rounded border border-slate-300">${v.placa}</span>
+                  <span class="text-[11px] text-slate-600 font-medium">${v.modelo || 'Automóvel'}</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <button type="button" onclick="fecharModal('modalGaragem'); executarConsultaPlaca('${v.placa}');" class="bg-[#0c326f] text-white text-[10px] font-bold px-2 py-1 rounded hover:bg-blue-900 transition">
+                    Consultar
+                  </button>
+                  <button type="button" onclick="removerVeiculoGaragem(${i});" class="text-red-500 hover:text-red-700 text-xs p-1" title="Remover">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </div>
+              </div>
+            `).join('');
+          }
+        }
+      }
+
+      window.salvarVeiculoAtualGaragem = function() {
+        if (!state.placa) return;
+        const jaExiste = state.garagem.some(v => v.placa === state.placa);
+        if (jaExiste) {
+          showToast(`Placa ${state.placa} já está salva na sua garagem!`, 'info');
+          return;
+        }
+
+        state.garagem.push({
+          placa: state.placa,
+          modelo: state.veiculo ? state.veiculo.modelo : 'Veículo'
+        });
+        localStorage.setItem('estradapay_garagem', JSON.stringify(state.garagem));
+        atualizarGaragemUI();
+        showToast(`Placa ${state.placa} salva na Minha Garagem!`, 'success');
+      };
+
+      window.removerVeiculoGaragem = function(index) {
+        state.garagem.splice(index, 1);
+        localStorage.setItem('estradapay_garagem', JSON.stringify(state.garagem));
+        atualizarGaragemUI();
+        showToast('Veículo removido da garagem.', 'info');
+      };
+
+      dom.formAdicionarGaragem.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const placa = dom.inputGaragemNovaPlaca.value.trim().toUpperCase();
+        if (!validarPlacaRegex(placa)) {
+          showToast('Formato de placa inválido!', 'error');
+          return;
+        }
+
+        const jaExiste = state.garagem.some(v => v.placa === placa);
+        if (jaExiste) {
+          showToast('Esta placa já está cadastrada.', 'info');
+          return;
+        }
+
+        state.garagem.push({ placa, modelo: 'Veículo Salvo' });
+        localStorage.setItem('estradapay_garagem', JSON.stringify(state.garagem));
+        dom.inputGaragemNovaPlaca.value = '';
+        atualizarGaragemUI();
+        showToast(`Placa ${placa} adicionada com sucesso!`, 'success');
+      });
+
+      // Histórico de Quitações
+      function atualizarHistoricoUI() {
+        const count = state.historico.length;
+        if (dom.badgeHistoricoDrawer) dom.badgeHistoricoDrawer.textContent = `${count} Recibo(s)`;
+
+        if (dom.listaHistoricoRecibos) {
+          if (count === 0) {
+            dom.listaHistoricoRecibos.innerHTML = `
+              <div class="text-center p-4 bg-slate-50 border border-slate-200 rounded-xl text-slate-500 text-xs">
+                Nenhum comprovante salvo neste dispositivo.
+              </div>
+            `;
+          } else {
+            dom.listaHistoricoRecibos.innerHTML = state.historico.map(h => `
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                <div class="flex justify-between items-center text-xs">
+                  <span class="font-bold text-[#0c326f] font-mono">${h.protocolo}</span>
+                  <span class="text-emerald-700 font-bold">${h.valor}</span>
+                </div>
+                <div class="text-[11px] text-slate-600 flex justify-between">
+                  <span>Placa: <strong>${h.placa}</strong></span>
+                  <span>${h.data}</span>
+                </div>
+              </div>
+            `).join('');
+          }
+        }
+      }
+
+      // Alertas WhatsApp
+      dom.formConfigAlertas.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const zap = dom.inputAlertaWhatsApp.value.trim();
+        const mail = dom.inputAlertaEmail.value.trim();
+        state.alertas = { zap, mail, ativo: true };
+        localStorage.setItem('estradapay_alertas', JSON.stringify(state.alertas));
+        fecharModal('modalAlertas');
+        showToast('Alertas ativados com sucesso! Você será avisado com 5 dias de antecedência.', 'success');
+      });
+
+      // Auto-update PWA
+      window.verificarAtualizacaoPwa = function() {
+        showToast('Verificando atualizações e limpando cache...', 'info');
+        if ('caches' in window) {
+          caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))));
+        }
+        setTimeout(() => {
+          showToast('Estrada Pay PWA atualizado para a versão mais recente!', 'success');
+        }, 1200);
+      };
+
+      // Busca de Trechos
       function setupBuscaTrechos() {
         function filtrarLista(termo) {
           const limpo = termo.trim().toUpperCase();
@@ -1909,7 +2152,6 @@
           filtrarLista(tag);
         });
 
-        // Clique no Card do Trecho para Exibir Modal com Normativa e KM
         dom.listaNoveTrechos.addEventListener('click', (e) => {
           const card = e.target.closest('.item-trecho-card');
           if (!card) return;
@@ -1918,35 +2160,17 @@
           if (!dados) return;
 
           dom.modalTrechoTitulo.textContent = dados.titulo;
-
           let htmlPorticos = dados.porticos.map(p => `
             <div class="flex justify-between items-center bg-white p-2.5 rounded-lg border border-slate-200">
-              <div>
-                <strong class="text-slate-900">${p.km}</strong> • <span class="text-slate-600">${p.local}</span>
-              </div>
+              <div><strong class="text-slate-900">${p.km}</strong> • <span class="text-slate-600">${p.local}</span></div>
               <span class="font-bold text-[#0c326f]">${p.tarifa}</span>
             </div>
           `).join('');
 
           dom.modalTrechoConteudo.innerHTML = `
-            <div class="p-3 bg-blue-50 text-[#0c326f] rounded-xl border border-blue-200 font-bold text-xs">
-              ${dados.status}
-            </div>
-            <div class="space-y-1">
-              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Base Normativa Oficial:</span>
-              <p class="text-xs text-slate-800 font-medium">${dados.normativa}</p>
-            </div>
-            <div class="space-y-2 pt-1">
-              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Pórticos e Pontos de Leitura:</span>
-              <div class="space-y-1.5 text-xs">
-                ${htmlPorticos}
-              </div>
-            </div>
-            <div class="text-[11px] text-slate-500 bg-slate-50 p-2.5 rounded-lg border border-slate-200">
-              ℹ️ <strong>Observação:</strong> ${dados.obs}
-            </div>
+            <div class="p-3 bg-blue-50 text-[#0c326f] rounded-xl border border-blue-200 font-bold text-xs">${dados.status}</div>
+            <div class="space-y-1.5 text-xs pt-1">${htmlPorticos}</div>
           `;
-
           abrirModal('modalTrechoDetalhes');
         });
       }
@@ -1972,7 +2196,7 @@
         });
       }
 
-      // Formulário de Reembolso
+      // Reembolso Form
       function setupReembolsoForm() {
         dom.formReembolso.addEventListener('submit', (e) => {
           e.preventDefault();
@@ -1986,7 +2210,7 @@
             fecharModal('modalReembolso');
             dom.formReembolso.reset();
             const protocolo = 'REF-' + Math.floor(100000 + Math.random() * 900000);
-            showToast(`Protocolo ${protocolo} gerado com sucesso! Entraremos em contato via e-mail em até 48h.`, 'success');
+            showToast(`Protocolo ${protocolo} gerado! Entraremos em contato via WhatsApp/e-mail.`, 'success');
           }, 1200);
         });
       }
@@ -2025,7 +2249,7 @@
           exibirResultadoModal();
         } finally {
           dom.btnHeaderConsultar.disabled = false;
-          dom.btnHeaderConsultar.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> <span>Consultar Placa</span>';
+          dom.btnHeaderConsultar.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> <span>CONSULTAR MINHA PLACA</span>';
         }
       }
 
@@ -2135,11 +2359,8 @@
       }
 
       function handleMasterCheckModal(e) {
-        if (e.target.checked) {
-          state.debitos.forEach((d) => state.debitosSelecionados.add(d.id));
-        } else {
-          state.debitosSelecionados.clear();
-        }
+        if (e.target.checked) state.debitos.forEach((d) => state.debitosSelecionados.add(d.id));
+        else state.debitosSelecionados.clear();
         renderizarTabelaModal();
       }
 
@@ -2170,7 +2391,6 @@
         gerarPixEmvCoModal(total);
       }
 
-      // Checkout Modal Tabs
       function setupCheckoutModalTabs() {
         dom.tabModalPix.addEventListener('click', () => {
           state.metodoPagamento = 'PIX';
@@ -2333,8 +2553,11 @@
 
       function emitirComprovante(metodo) {
         const agora = new Date();
-        dom.recProtocoloNum.textContent = state.protocoloAtual || `EP-2026-${Math.floor(10000000 + Math.random() * 90000000)}`;
-        dom.recDataHoraStr.textContent = agora.toLocaleDateString('pt-BR') + ' às ' + agora.toLocaleTimeString('pt-BR');
+        const protocolo = state.protocoloAtual || `EP-2026-${Math.floor(10000000 + Math.random() * 90000000)}`;
+        const dataStr = agora.toLocaleDateString('pt-BR') + ' às ' + agora.toLocaleTimeString('pt-BR');
+
+        dom.recProtocoloNum.textContent = protocolo;
+        dom.recDataHoraStr.textContent = dataStr;
         dom.recPlacaVeic.textContent = state.placa;
         dom.recModeloVeic.textContent = state.veiculo ? state.veiculo.modelo : 'Veículo';
         dom.recMetodoPag.textContent = metodo;
@@ -2359,10 +2582,21 @@
         });
 
         const totalComTaxa = total + state.taxaEstradaPay;
-        dom.recValorTotalStr.textContent = `R$ ${totalComTaxa.toFixed(2).replace('.', ',')}`;
+        const totalStr = `R$ ${totalComTaxa.toFixed(2).replace('.', ',')}`;
+        dom.recValorTotalStr.textContent = totalStr;
 
         const hash = 'EP' + Array.from({length: 40}, () => Math.floor(Math.random()*16).toString(16)).join('').toUpperCase();
         dom.recHashStr.textContent = hash;
+
+        // Salvar no Histórico Local
+        state.historico.unshift({
+          protocolo,
+          placa: state.placa,
+          data: dataStr,
+          valor: totalStr,
+        });
+        localStorage.setItem('estradapay_historico', JSON.stringify(state.historico.slice(0, 20)));
+        atualizarHistoricoUI();
 
         abrirModal('modalReciboQuitação');
         showToast('🎉 Pagamento confirmado com sucesso no Estrada Pay!', 'success');
