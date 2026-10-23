@@ -220,8 +220,20 @@
       
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         
-        <!-- Logo Oficial Estrada Pay + Botões Mobile -->
-        <div class="flex items-center justify-between">
+        <!-- Logo Oficial Estrada Pay + Menu Hambúrguer no Canto Esquerdo Superior -->
+        <div class="flex items-center justify-between sm:justify-start gap-3 sm:gap-4">
+          
+          <!-- Botão Menu Hambúrguer no Canto Esquerdo Superior (Mobile e Desktop) -->
+          <button 
+            type="button" 
+            id="btnHamburgerMenu" 
+            class="flex items-center justify-center w-11 h-11 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/30 text-white transition focus:outline-none border border-white/20 shadow-sm cursor-pointer flex-shrink-0"
+            aria-label="Abrir Menu de Navegação"
+            title="Abrir Menu Principal"
+          >
+            <i class="fa-solid fa-bars text-xl"></i>
+          </button>
+
           <a href="/" class="flex items-center gap-3.5 group" title="Estrada Pay - Livre Passagem">
             <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white p-1 shadow-md border-2 border-white/20 flex items-center justify-center overflow-hidden flex-shrink-0 group-hover:scale-105 transition duration-300">
               <img 
@@ -244,8 +256,8 @@
             </div>
           </a>
 
-          <!-- Botão Menu Hambúrguer -->
-          <div class="flex items-center gap-2">
+          <!-- Botão Minha Garagem (Desktop/Tablet) -->
+          <div class="flex items-center gap-2 ml-auto sm:ml-2">
             <button 
               type="button" 
               onclick="abrirDrawer('painel')"
@@ -255,16 +267,6 @@
               <i class="fa-solid fa-warehouse text-amber-400"></i>
               <span>Minha Garagem</span>
               <span id="badgeGaragemTopo" class="bg-amber-400 text-slate-950 font-black text-[10px] px-1.5 py-0.2 rounded-full">0</span>
-            </button>
-
-            <button 
-              type="button" 
-              id="btnHamburgerMenu" 
-              class="flex items-center justify-center w-11 h-11 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/30 text-white transition focus:outline-none border border-white/20 shadow-sm cursor-pointer"
-              aria-label="Abrir Menu de Navegação"
-              title="Abrir Menu Principal"
-            >
-              <i class="fa-solid fa-bars text-xl"></i>
             </button>
           </div>
         </div>
