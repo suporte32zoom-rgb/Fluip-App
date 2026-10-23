@@ -1318,6 +1318,49 @@
           >
             <i class="fa-solid fa-bookmark text-amber-500"></i> Salvar na Minha Garagem
           </button>
+        <!-- Card de Validação ANTT / RNTRC (Transportadores e Frotas) -->
+        <div class="bg-gradient-to-r from-blue-50/70 to-slate-50 p-4 rounded-xl border border-blue-100 text-xs">
+          <div class="flex items-center justify-between cursor-pointer select-none" onclick="toggleSecaoAntt();">
+            <div class="flex items-center gap-2.5">
+              <span class="w-7 h-7 rounded-lg bg-[#0c326f] text-white flex items-center justify-center text-xs shadow-sm">
+                <i class="fa-solid fa-truck-front"></i>
+              </span>
+              <div>
+                <span class="font-bold text-slate-800 block text-xs">Validação Cadastral ANTT / RNTRC (Frotas e Carga)</span>
+                <span class="text-[11px] text-slate-500">Consulta oficial do Registro Nacional de Transportadores Rodoviários de Cargas</span>
+              </div>
+            </div>
+            <span id="iconeToggleAntt" class="text-slate-400 hover:text-slate-600 transition px-1">
+              <i class="fa-solid fa-chevron-down text-xs"></i>
+            </span>
+          </div>
+
+          <div id="painelAnttForm" class="hidden mt-3 pt-3 border-t border-blue-100 space-y-3">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div>
+                <label class="block text-[10px] font-bold uppercase text-slate-600 mb-1">Tipo de Parâmetro</label>
+                <select id="anttTipoDoc" onchange="atualizarLabelDocAntt();" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs font-medium focus:ring-1 focus:ring-[#0c326f]">
+                  <option value="cpf">CPF do Transportador</option>
+                  <option value="cnpj">CNPJ da Empresa / Frota</option>
+                  <option value="rntrc">Número do RNTRC</option>
+                </select>
+              </div>
+              <div class="sm:col-span-2 flex gap-2 items-end">
+                <div class="flex-1">
+                  <label id="anttLabelDoc" class="block text-[10px] font-bold uppercase text-slate-600 mb-1">Informe o CPF</label>
+                  <input type="text" id="anttInputDoc" placeholder="000.000.000-00" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs font-medium focus:ring-1 focus:ring-[#0c326f]" />
+                </div>
+                <button type="button" id="btnConsultarAnttOficial" onclick="executarConsultaAnttModal();" class="bg-[#0c326f] hover:bg-blue-900 text-white font-bold px-3.5 py-2 rounded-lg text-xs transition flex items-center gap-1.5 whitespace-nowrap shadow-sm">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <span>Validar na ANTT</span>
+                </button>
+              </div>
+            </div>
+
+            <div id="anttResultadoBox" class="hidden p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
+              <!-- Preenchido via JavaScript -->
+            </div>
+          </div>
         </div>
 
         <!-- Tabela de Débitos com Checkbox -->
@@ -2978,20 +3021,58 @@
       async function executarConsultaPlaca(placa) {
         state.placa = placa;
         dom.btnHeaderConsultar.disabled = true;
-        dom.btnHeaderConsultar.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> <span>Consultando...</span>';
+        dom.btnHeaderConsultar.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> <span>Consultando Base...</span>';
 
         try {
           let dados = null;
-          try {
-            const res = await fetch(`/api/v1/consultar?placa=${encodeURIComponent(placa)}`);
-            if (res.ok) {
-              const json = await res.json();
-              if (json && json.success) dados = json;
-            }
-          } catch (e) {}
+          let veiculoInfosimples = null;
 
-          if (!dados || !dados.debitos) {
-            dados = gerarDadosFallback(placa);
+          // 1. Tentar consulta em tempo real na rota oficial Infosimples (/api/consultar-placa/:placa)
+          try {
+            const resInfo = await fetch(`/api/consultar-placa/${encodeURIComponent(placa)}`);
+            if (resInfo.ok) {
+              const jsonInfo = await resInfo.json();
+              if (jsonInfo && jsonInfo.sucesso) {
+                if (jsonInfo.veiculo && (jsonInfo.veiculo.modelo || jsonInfo.veiculo.marca || jsonInfo.veiculo.marca_modelo)) {
+                  veiculoInfosimples = {
+                    placa,
+                    modelo: jsonInfo.veiculo.modelo || jsonInfo.veiculo.marca_modelo || `${jsonInfo.veiculo.marca || ''} ${jsonInfo.veiculo.modelo || ''}`.trim() || 'Veículo Identificado',
+                    ano: jsonInfo.veiculo.ano_fabricacao ? `${jsonInfo.veiculo.ano_fabricacao} / ${jsonInfo.veiculo.ano_modelo || jsonInfo.veiculo.ano_fabricacao}` : (jsonInfo.veiculo.ano || '2024 / 2025'),
+                    local: jsonInfo.veiculo.municipio ? `${jsonInfo.veiculo.municipio} / ${jsonInfo.veiculo.uf || 'SP'}` : 'São Paulo / SP'
+                  };
+                }
+                if (Array.isArray(jsonInfo.debitos) && jsonInfo.debitos.length > 0) {
+                  dados = {
+                    success: true,
+                    veiculo: veiculoInfosimples || { placa, modelo: 'Veículo Identificado', ano: '2024 / 2025', local: 'São Paulo / SP' },
+                    debitos: jsonInfo.debitos
+                  };
+                }
+              }
+            }
+          } catch (eInfo) {
+            console.warn('[Infosimples Frontend Info]:', eInfo.message);
+          }
+
+          // 2. Consulta Free Flow cruzada com a malha rodoviária oficial
+          if (!dados || !dados.debitos || dados.debitos.length === 0) {
+            try {
+              const res = await fetch(`/api/v1/consultar?placa=${encodeURIComponent(placa)}`);
+              if (res.ok) {
+                const json = await res.json();
+                if (json && json.success) {
+                  dados = {
+                    success: true,
+                    veiculo: veiculoInfosimples || json.veiculo,
+                    debitos: json.debitos
+                  };
+                }
+              }
+            } catch (e) {}
+          }
+
+          if (!dados || !dados.debitos || dados.debitos.length === 0) {
+            dados = gerarDadosFallback(placa, veiculoInfosimples);
           }
 
           state.veiculo = dados.veiculo;
@@ -3012,7 +3093,7 @@
         }
       }
 
-      function gerarDadosFallback(placa) {
+      function gerarDadosFallback(placa, veiculoPersonalizado = null) {
         const catalogo = [
           { rodovia: 'BR-101/RJ (Rio-Santos)', trechoKm: 'Km 538,5 • Paraty', conc: 'CCR RioSP / Motiva', tarifa: 4.80 },
           { rodovia: 'BR-116/SP (Via Dutra)', trechoKm: 'Km 204 • Arujá / Guarulhos', conc: 'CCR RioSP', tarifa: 4.10 },
@@ -3048,7 +3129,7 @@
 
         return {
           success: true,
-          veiculo: {
+          veiculo: veiculoPersonalizado || {
             placa,
             modelo: 'JEEP COMPASS LONGITUDE T270',
             ano: '2024 / 2025',
