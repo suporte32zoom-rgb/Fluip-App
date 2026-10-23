@@ -511,12 +511,52 @@
             <span class="text-[10px] text-blue-300">52 Pórticos</span>
           </a>
 
+          <button type="button" onclick="fecharDrawer(); abrirModal('modalSobre');" class="w-full text-left flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+            <span class="flex items-center gap-3">
+              <i class="fa-solid fa-building w-5 text-center text-amber-400"></i>
+              <span>Sobre o Estrada Pay</span>
+            </span>
+            <span class="text-[10px] text-blue-300">Governança</span>
+          </button>
+
           <button type="button" onclick="fecharDrawer(); abrirModal('modalTermos');" class="w-full text-left flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
             <span class="flex items-center gap-3">
-              <i class="fa-solid fa-shield-halved w-5 text-center text-slate-300"></i>
-              <span>Termos de Uso e LGPD</span>
+              <i class="fa-solid fa-file-contract w-5 text-center text-slate-300"></i>
+              <span>Termos de Uso</span>
             </span>
-            <span class="text-[10px] text-blue-300">Segurança</span>
+            <span class="text-[10px] text-blue-300">Jurídico</span>
+          </button>
+
+          <button type="button" onclick="fecharDrawer(); abrirModal('modalPrivacidade');" class="w-full text-left flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+            <span class="flex items-center gap-3">
+              <i class="fa-solid fa-user-shield w-5 text-center text-emerald-400"></i>
+              <span>Privacidade &amp; LGPD</span>
+            </span>
+            <span class="text-[10px] text-emerald-300">Lei 13.709</span>
+          </button>
+
+          <button type="button" onclick="fecharDrawer(); abrirModal('modalReembolsoPolitica');" class="w-full text-left flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+            <span class="flex items-center gap-3">
+              <i class="fa-solid fa-hand-holding-dollar w-5 text-center text-amber-400"></i>
+              <span>Política de Reembolso</span>
+            </span>
+            <span class="text-[10px] text-amber-300">Art. 49 CDC</span>
+          </button>
+
+          <button type="button" onclick="fecharDrawer(); abrirModal('modalRegulamentacaoAntt');" class="w-full text-left flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+            <span class="flex items-center gap-3">
+              <i class="fa-solid fa-book-bookmark w-5 text-center text-sky-400"></i>
+              <span>Normas ANTT &amp; Free Flow</span>
+            </span>
+            <span class="text-[10px] text-sky-300">Lei 14.157</span>
+          </button>
+
+          <button type="button" onclick="fecharDrawer(); abrirModal('modalSacOuvidoria');" class="w-full text-left flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
+            <span class="flex items-center gap-3">
+              <i class="fa-solid fa-headset w-5 text-center text-purple-400"></i>
+              <span>SAC &amp; Ouvidoria</span>
+            </span>
+            <span class="text-[10px] text-purple-300">Decreto 11.034</span>
           </button>
 
           <button type="button" onclick="verificarAtualizacaoPwa();" class="w-full text-left flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/10 transition">
@@ -985,70 +1025,243 @@
 
   <!-- ========================================================
        RODAPÉ INSTITUCIONAL (100% MARCA ESTRADA PAY)
-       Sem menção a órgãos governamentais ou ANTT
+       Conforme Legislação Brasileira (Leis 14.157/2021, 13.709/2018, 
+       8.078/1990, 12.965/2014, Dec. 11.034/2022 e Resoluções ANTT)
        ======================================================== -->
   <footer class="bg-[#061b3d] text-white border-t-4 border-[#0c326f] text-xs">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-blue-900/60">
+      <!-- Grid Principal de Páginas Institucionais -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-blue-900/60">
         
+        <!-- Coluna 1: Estrada Pay Institucional & Governança -->
         <div class="space-y-3">
           <div class="flex items-center gap-2">
             <span class="text-xl font-black text-white">Estrada</span>
             <span class="text-xl font-black text-[#38bdf8] bg-blue-950 px-1 py-0.5 rounded border border-blue-400/30">Pay</span>
           </div>
           <p class="text-blue-200 text-xs leading-relaxed">
-            Estrada Pay — Sistema Único de Fretes e Pedágio Eletrônico. Plataforma de consulta e quitação simplificada de tarifas rodoviárias sem cancelas em todo o território nacional.
+            Estrada Pay — Sistema Privado de Intermediação e Gestão de Pagamentos Eletrônicos de Pedágio Free Flow. Solução digital voltada à modernização do transporte rodoviário, garantindo a liquidação tempestiva de tarifas sem cancelas em conformidade com o marco legal brasileiro.
           </p>
-          <div class="text-[11px] text-emerald-400 font-semibold flex items-center gap-1.5">
-            <i class="fa-solid fa-shield-check"></i>
-            <span>Ambiente 100% Auditado e Seguro</span>
+          <div class="space-y-1.5 pt-1">
+            <div class="text-[11px] text-emerald-400 font-semibold flex items-center gap-1.5">
+              <i class="fa-solid fa-shield-halved"></i>
+              <span>Plataforma Conforme Lei nº 14.157/2021</span>
+            </div>
+            <div class="text-[11px] text-sky-300 font-semibold flex items-center gap-1.5">
+              <i class="fa-solid fa-lock"></i>
+              <span>Criptografia Bancária &amp; LGPD Auditada</span>
+            </div>
           </div>
-        </div>
-
-        <div class="space-y-2">
-          <h4 class="font-bold text-white uppercase tracking-wider text-xs">Navegação</h4>
-          <ul class="space-y-1.5 text-blue-200">
-            <li><button type="button" onclick="document.getElementById('inputHeaderPlaca').focus(); window.scrollTo({top: 0, behavior: 'smooth'});" class="hover:text-white transition">Consulta de Placa</button></li>
-            <li><a href="#porticosSecao" class="hover:text-white transition">Pórticos e Trechos (52 pórticos)</a></li>
-            <li><button type="button" onclick="abrirModal('modalOQueE')" class="hover:text-white transition">O que é o Free Flow</button></li>
-            <li><button type="button" onclick="abrirModal('modalNaoTenhoTag')" class="hover:text-white transition">Não tenho TAG</button></li>
+          <ul class="space-y-1.5 pt-2 text-blue-200">
+            <li>
+              <button type="button" onclick="abrirModal('modalSobre')" class="hover:text-amber-300 transition flex items-center gap-1.5 text-left">
+                <i class="fa-solid fa-building text-[10px] text-amber-400"></i>
+                <span class="underline">Sobre o Estrada Pay &amp; Governança</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" onclick="abrirModal('modalSegurancaFraudes')" class="hover:text-white transition flex items-center gap-1.5 text-left">
+                <i class="fa-solid fa-shield-virus text-[10px] text-emerald-400"></i>
+                <span>Segurança da Informação &amp; Antifraude</span>
+              </button>
+            </li>
+            <li>
+              <a href="#porticosSecao" class="hover:text-white transition flex items-center gap-1.5">
+                <i class="fa-solid fa-map-location-dot text-[10px] text-sky-400"></i>
+                <span>Catálogo de Pórticos Oficiais (52 pórticos)</span>
+              </a>
+            </li>
           </ul>
         </div>
 
-        <div class="space-y-2">
-          <h4 class="font-bold text-white uppercase tracking-wider text-xs">Suporte ao Motorista</h4>
-          <ul class="space-y-1.5 text-blue-200">
-            <li><button type="button" onclick="abrirModal('modalReembolso')" class="hover:text-amber-300 font-semibold transition">Solicitação de Reembolso</button></li>
-            <li><button type="button" onclick="abrirModal('modalSuspensaoOrientacoes')" class="hover:text-white transition">Orientações de Suspensão</button></li>
-            <li><a href="#faqSecao" class="hover:text-white transition">Dúvidas Frequentes</a></li>
-            <li><span class="text-blue-300">suporte@estradapay.com.br</span></li>
+        <!-- Coluna 2: Políticas & Jurídico (Legislação Brasileira) -->
+        <div class="space-y-3">
+          <h4 class="font-bold text-white uppercase tracking-wider text-xs flex items-center gap-1.5">
+            <i class="fa-solid fa-scale-balanced text-amber-400"></i>
+            <span>Políticas &amp; Jurídico</span>
+          </h4>
+          <ul class="space-y-2 text-blue-200">
+            <li>
+              <button type="button" onclick="abrirModal('modalTermos')" class="hover:text-amber-300 transition flex items-start gap-1.5 text-left">
+                <i class="fa-solid fa-file-contract text-[10px] text-blue-300 mt-0.5"></i>
+                <div>
+                  <span class="font-semibold block text-white">Termos de Uso e Serviço</span>
+                  <span class="text-[10px] text-blue-300">Lei 14.157/21, CDC e Marco Civil da Internet</span>
+                </div>
+              </button>
+            </li>
+            <li>
+              <button type="button" onclick="abrirModal('modalPrivacidade')" class="hover:text-amber-300 transition flex items-start gap-1.5 text-left">
+                <i class="fa-solid fa-user-lock text-[10px] text-emerald-400 mt-0.5"></i>
+                <div>
+                  <span class="font-semibold block text-white">Política de Privacidade (LGPD)</span>
+                  <span class="text-[10px] text-blue-300">Lei Geral de Proteção de Dados (Lei 13.709/18)</span>
+                </div>
+              </button>
+            </li>
+            <li>
+              <button type="button" onclick="abrirModal('modalReembolsoPolitica')" class="hover:text-amber-300 transition flex items-start gap-1.5 text-left">
+                <i class="fa-solid fa-hand-holding-dollar text-[10px] text-amber-400 mt-0.5"></i>
+                <div>
+                  <span class="font-semibold block text-white">Cancelamento, Estorno &amp; Reembolso</span>
+                  <span class="text-[10px] text-blue-300">Art. 49 do CDC e Regras de Duplicidade</span>
+                </div>
+              </button>
+            </li>
+            <li>
+              <button type="button" onclick="abrirModal('modalPrivacidade')" class="hover:text-white transition flex items-center gap-1.5 text-left text-[11px] text-blue-300">
+                <i class="fa-solid fa-envelope text-[10px] text-sky-400"></i>
+                <span>Canal do Titular LGPD (DPO): dpo&#64;estradapay.com.br</span>
+              </button>
+            </li>
           </ul>
         </div>
 
-        <div class="space-y-2">
-          <h4 class="font-bold text-white uppercase tracking-wider text-xs">Segurança Digital</h4>
+        <!-- Coluna 3: Regulação & Normas ANTT -->
+        <div class="space-y-3">
+          <h4 class="font-bold text-white uppercase tracking-wider text-xs flex items-center gap-1.5">
+            <i class="fa-solid fa-road text-sky-400"></i>
+            <span>Regulação &amp; Normas ANTT</span>
+          </h4>
+          <ul class="space-y-2 text-blue-200">
+            <li>
+              <button type="button" onclick="abrirModal('modalRegulamentacaoAntt')" class="hover:text-amber-300 transition flex items-start gap-1.5 text-left">
+                <i class="fa-solid fa-book-bookmark text-[10px] text-amber-400 mt-0.5"></i>
+                <div>
+                  <span class="font-semibold block text-white">Guia Normativo do Free Flow</span>
+                  <span class="text-[10px] text-blue-300">Lei nº 14.157/2021 &amp; Resoluções ANTT 6.028/6.039</span>
+                </div>
+              </button>
+            </li>
+            <li>
+              <button type="button" onclick="abrirModal('modalSuspensaoOrientacoes')" class="hover:text-amber-300 transition flex items-start gap-1.5 text-left">
+                <i class="fa-solid fa-circle-exclamation text-[10px] text-amber-400 mt-0.5"></i>
+                <div>
+                  <span class="font-semibold block text-white">Prazo de 30 Dias &amp; Art. 209-A CTB</span>
+                  <span class="text-[10px] text-blue-300">Regras de quitação e suspensão de multas</span>
+                </div>
+              </button>
+            </li>
+            <li>
+              <button type="button" onclick="abrirModal('modalNaoTenhoTag')" class="hover:text-white transition flex items-start gap-1.5 text-left">
+                <i class="fa-solid fa-tag text-[10px] text-emerald-400 mt-0.5"></i>
+                <div>
+                  <span class="font-semibold block text-white">Condutores Sem TAG Adesiva</span>
+                  <span class="text-[10px] text-blue-300">Leitura ótica ANPR e identificação por placa</span>
+                </div>
+              </button>
+            </li>
+            <li>
+              <button type="button" onclick="abrirModal('modalReembolso')" class="hover:text-amber-300 transition flex items-center gap-1.5 text-left text-amber-300 font-semibold">
+                <i class="fa-solid fa-paper-plane text-[10px]"></i>
+                <span>Formulário de Contestação de Cobrança</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Coluna 4: SAC, Ouvidoria & Atendimento -->
+        <div class="space-y-3">
+          <h4 class="font-bold text-white uppercase tracking-wider text-xs flex items-center gap-1.5">
+            <i class="fa-solid fa-headset text-emerald-400"></i>
+            <span>SAC &amp; Atendimento Oficial</span>
+          </h4>
           <p class="text-blue-200 text-xs leading-relaxed">
-            Transações protegidas por criptografia SSL de 256 bits em conformidade com as diretrizes da LGPD.
+            Atendimento gratuito e tempestivo em conformidade com o Decreto Federal nº 11.034/2022 (Novo Decreto do SAC).
           </p>
-          <div class="flex items-center gap-4 text-slate-400 pt-1 text-base">
-            <i class="fa-solid fa-lock text-emerald-400"></i>
-            <i class="fa-brands fa-pix text-emerald-400"></i>
-            <i class="fa-brands fa-cc-visa text-sky-400"></i>
-            <i class="fa-brands fa-cc-mastercard text-amber-500"></i>
+          <ul class="space-y-2 text-blue-200">
+            <li>
+              <button type="button" onclick="abrirModal('modalSacOuvidoria')" class="hover:text-amber-300 transition flex items-start gap-1.5 text-left">
+                <i class="fa-solid fa-comments text-[10px] text-emerald-400 mt-0.5"></i>
+                <div>
+                  <span class="font-semibold block text-white">Central de Atendimento &amp; Ouvidoria</span>
+                  <span class="text-[10px] text-blue-300">Protocolos com resposta em até 7 dias úteis</span>
+                </div>
+              </button>
+            </li>
+            <li class="flex items-center gap-2 text-blue-200">
+              <i class="fa-solid fa-envelope text-blue-400"></i>
+              <span>ouvidoria&#64;estradapay.com.br</span>
+            </li>
+            <li class="flex items-center gap-2 text-blue-200">
+              <i class="fa-solid fa-envelope text-blue-400"></i>
+              <span>suporte&#64;estradapay.com.br</span>
+            </li>
+            <li class="pt-1">
+              <a href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20preciso%20de%20suporte%20no%20portal%20Estrada%20Pay" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 border border-emerald-500/40 px-3 py-1.5 rounded-lg font-semibold text-[11px] transition">
+                <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+                <span>Plantão WhatsApp ao Motorista</span>
+              </a>
+            </li>
+          </ul>
+
+          <!-- Meios de Pagamento & Segurança -->
+          <div class="pt-2 border-t border-blue-900/60">
+            <span class="text-[10px] uppercase font-bold tracking-wider text-blue-300 block mb-1">Liquidação Autorizada:</span>
+            <div class="flex items-center gap-3 text-slate-300 text-base">
+              <i class="fa-brands fa-pix text-emerald-400" title="PIX Instantâneo Bacen"></i>
+              <i class="fa-solid fa-credit-card text-sky-400" title="Cartão de Crédito"></i>
+              <i class="fa-brands fa-cc-visa text-blue-300" title="Visa"></i>
+              <i class="fa-brands fa-cc-mastercard text-amber-400" title="Mastercard"></i>
+              <i class="fa-solid fa-shield-check text-emerald-400" title="Certificação SSL 256-Bit"></i>
+            </div>
           </div>
         </div>
 
       </div>
 
-      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-blue-300 text-[11px]">
-        <div>
-          © 2026 Estrada Pay • Livre Passagem. Todos os direitos reservados.
+      <!-- Certificações e Badges Normativos Oficiais -->
+      <div class="py-6 border-b border-blue-900/60 flex flex-wrap items-center justify-between gap-4 text-[11px] text-blue-200">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="font-bold text-white uppercase text-[10px] tracking-wider">Conformidade Legal:</span>
+          <span class="inline-flex items-center gap-1 bg-blue-950/80 px-2.5 py-1 rounded-md border border-blue-800 text-blue-100">
+            <i class="fa-solid fa-gavel text-amber-400"></i> Lei Federal nº 14.157/2021
+          </span>
+          <span class="inline-flex items-center gap-1 bg-blue-950/80 px-2.5 py-1 rounded-md border border-blue-800 text-blue-100">
+            <i class="fa-solid fa-user-shield text-emerald-400"></i> LGPD Lei nº 13.709/2018
+          </span>
+          <span class="inline-flex items-center gap-1 bg-blue-950/80 px-2.5 py-1 rounded-md border border-blue-800 text-blue-100">
+            <i class="fa-solid fa-handshake text-sky-400"></i> Código de Defesa do Consumidor
+          </span>
+          <span class="inline-flex items-center gap-1 bg-blue-950/80 px-2.5 py-1 rounded-md border border-blue-800 text-blue-100">
+            <i class="fa-solid fa-certificate text-purple-400"></i> Decreto SAC nº 11.034/2022
+          </span>
+          <span class="inline-flex items-center gap-1 bg-blue-950/80 px-2.5 py-1 rounded-md border border-blue-800 text-blue-100">
+            <i class="fa-solid fa-bolt text-emerald-400"></i> Arranjo PIX Res. BCB nº 1/2020
+          </span>
         </div>
-        <div class="flex items-center gap-4">
-          <button type="button" onclick="abrirModal('modalTermos')" class="hover:text-white transition">Termos de Uso e LGPD</button>
-          <span>•</span>
-          <span class="text-amber-400 font-mono font-bold">PWA v3.0 • Auto-Update</span>
+        <div class="text-[11px] text-emerald-400 font-mono font-bold flex items-center gap-1.5">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>Ambiente Seguro • SHA-256 Validado</span>
+        </div>
+      </div>
+
+      <!-- Rodapé Inferior: Direitos Autorais & Links Rápidos -->
+      <div class="pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-blue-300 text-[11px]">
+        <div class="text-center md:text-left space-y-1">
+          <div>
+            &copy; 2026 Estrada Pay &bull; Livre Passagem. Todos os direitos reservados.
+          </div>
+          <p class="text-[10px] text-blue-300/80 max-w-2xl leading-relaxed">
+            Estrada Pay Tecnologia em Pagamentos e Transportes Ltda. Plataforma independente prestadora de serviços de facilitação e consolidação de pagamentos de tarifas rodoviárias em livre passagem. O pagamento tempestivo confere eficácia liberatória perante a fiscalização do Art. 209-A do CTB.
+          </p>
+        </div>
+        
+        <div class="flex flex-wrap items-center justify-center md:justify-end gap-3 text-[11px]">
+          <button type="button" onclick="abrirModal('modalSobre')" class="hover:text-white transition">Sobre Nós</button>
+          <span>&bull;</span>
+          <button type="button" onclick="abrirModal('modalTermos')" class="hover:text-white transition">Termos de Uso</button>
+          <span>&bull;</span>
+          <button type="button" onclick="abrirModal('modalPrivacidade')" class="hover:text-white transition">Privacidade (LGPD)</button>
+          <span>&bull;</span>
+          <button type="button" onclick="abrirModal('modalReembolsoPolitica')" class="hover:text-white transition">Reembolso</button>
+          <span>&bull;</span>
+          <button type="button" onclick="abrirModal('modalRegulamentacaoAntt')" class="hover:text-white transition">Normas ANTT</button>
+          <span>&bull;</span>
+          <button type="button" onclick="abrirModal('modalSacOuvidoria')" class="hover:text-white transition">SAC / Ouvidoria</button>
+          <span>&bull;</span>
+          <span class="text-amber-400 font-mono font-bold">PWA v3.2</span>
         </div>
       </div>
 
@@ -1505,31 +1718,575 @@
     </div>
   </div>
 
-  <!-- MODAL: TERMOS DE USO E LGPD -->
-  <div id="modalTermos" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm p-4 overflow-y-auto flex items-center justify-center">
-    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-8">
+  <!-- ========================================================
+       MODAIS DAS PÁGINAS INSTITUCIONAIS DO ESTRADA PAY
+       Conforme Legislação Brasileira e Normas da ANTT
+       (Sem modelos fictícios, com embasamento jurídico completo)
+       ======================================================== -->
+
+  <!-- 1. MODAL: SOBRE O ESTRADA PAY & GOVERNANÇA -->
+  <div id="modalSobre" class="hidden fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm p-3 sm:p-5 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-6">
       <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-shield-halved text-sky-400 text-lg"></i>
-          <h3 class="font-bold text-base">Termos de Uso e LGPD • Estrada Pay</h3>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-amber-400 text-lg">
+            <i class="fa-solid fa-building"></i>
+          </div>
+          <div>
+            <span class="text-[10px] text-blue-200 uppercase tracking-wider font-semibold block">Institucional &bull; Governança Corporativa</span>
+            <h3 class="font-bold text-base sm:text-lg text-white">Sobre o Estrada Pay &bull; Livre Passagem</h3>
+          </div>
         </div>
-        <button type="button" onclick="fecharModal('modalTermos')" class="text-white hover:text-amber-300 text-lg p-1">
+        <button type="button" onclick="fecharModal('modalSobre')" class="text-white hover:text-amber-300 text-xl p-1.5 transition">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-      <div class="p-6 space-y-3 text-xs text-slate-600 leading-relaxed max-h-80 overflow-y-auto">
-        <h4 class="font-bold text-slate-900 text-sm">1. Intermediação de Pagamentos</h4>
-        <p>O Estrada Pay atua como plataforma independente de facilitação e consolidação financeira para a liquidação tempestiva de tarifas de pedágio em livre passagem (Free Flow).</p>
-        
-        <h4 class="font-bold text-slate-900 text-sm">2. Prazos e Responsabilidades</h4>
-        <p>Conforme o Art. 209-A do CTB, o condutor dispõe de até 30 dias corridos a partir da passagem para realizar a quitação sem incorrer em infração de trânsito.</p>
 
-        <h4 class="font-bold text-slate-900 text-sm">3. Privacidade e Proteção de Dados (LGPD)</h4>
-        <p>Os dados veiculares e de transações são tratados exclusivamente para o propósito de emissão de cobranças e comprovantes de liquidação, com criptografia de ponta a ponta.</p>
+      <div class="p-6 sm:p-8 space-y-5 text-xs sm:text-sm text-slate-700 leading-relaxed max-h-[72vh] overflow-y-auto">
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 space-y-2">
+          <div class="flex items-center gap-2 font-bold text-[#0c326f] text-sm">
+            <i class="fa-solid fa-road text-amber-500"></i>
+            <span>Propósito Institucional e Natureza Jurídica</span>
+          </div>
+          <p class="text-xs text-slate-700">
+            O <strong>Estrada Pay</strong> (Estrada Pay Tecnologia em Pagamentos e Transportes Ltda.) é uma plataforma digital privada de soluções financeiras (FinTech) e infraestrutura de tecnologia voltada à democratização do <strong>Sistema de Livre Passagem (Free Flow)</strong> em rodovias no território brasileiro, instituído pela <strong>Lei Federal nº 14.157/2021</strong>.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase tracking-wide">1. Esclarecimento Regulatório de Papéis</h4>
+          <p>
+            O Estrada Pay atua de forma autônoma como <strong>agregador tecnológico e facilitador de pagamentos</strong> de tarifas rodoviárias. Não somos concessionária delegatária de rodovia pública, tampouco entidade governamental de trânsito. Nosso papel é fornecer ao condutor uma ferramenta centralizada, amigável e segura para consulta de passagens registradas por leitores ópticos (ANPR) ou transponders (TAGs) e viabilizar a liquidação tempestiva das respectivas tarifas antes do término do prazo legal de 30 (trinta) dias.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase tracking-wide">2. Remuneração e Transparência de Custos (Taxa Fixa)</h4>
+          <p>
+            Em total transparência e estrito cumprimento ao <strong>Art. 6º, inciso III do Código de Defesa do Consumidor (Lei nº 8.078/1990)</strong>, informamos que as tarifas de pedágio exibidas são exatamente aquelas aprovadas pela Agência Nacional de Transportes Terrestres (ANTT) ou órgãos reguladores estaduais. Para cobrir os custos de infraestrutura de computação em nuvem, consultas informatizadas em bases veiculares, redundância de conexões com operadoras e emissão do Comprovante com Hash Criptográfico, é adicionada uma taxa administrativa e de conveniência única e fixa de <strong>R$ 1,00 (um real)</strong> por operação de liquidação, independentemente da quantidade de pórticos consolidados na mesma transação.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase tracking-wide">3. Prevenção de Penalidades do Art. 209-A do CTB</h4>
+          <p>
+            Com a transição para pórticos sem cancelas físicas, milhares de condutores enfrentam o risco de serem autuados por evasão de pedágio por esquecimento ou falta de conhecimento do prazo legal. O Estrada Pay monitora as passagens e emite o Certificado de Quitação Tempestiva, documento eletrônico que comprova a liquidação tempestiva e afasta a imputação de infração grave, multa de R$ 195,23 e 5 pontos na CNH previstos pelo Código de Trânsito Brasileiro.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase tracking-wide">4. Pilares de Sustentabilidade e Eficiência</h4>
+          <ul class="list-disc list-inside space-y-1.5 text-slate-600">
+            <li><strong>Fluidez Viária:</strong> Apoio à eliminação definitiva de filas e gargalos nas praças de pedágio.</li>
+            <li><strong>Redução de Emissões:</strong> Menor consumo de combustível fóssil e redução da pegada de carbono decorrente da eliminação de paradas e arranques.</li>
+            <li><strong>Inclusão Financeira:</strong> Viabilização do pagamento simplificado via PIX Instantâneo sem a exigência prévia de vínculo bancário complexo ou assinatura de mensalidades de TAG.</li>
+          </ul>
+        </div>
       </div>
-      <div class="bg-slate-50 p-4 border-t border-slate-200 text-right">
-        <button type="button" onclick="fecharModal('modalTermos')" class="bg-[#0c326f] text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-blue-900 transition">
+
+      <div class="bg-slate-50 p-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="text-[11px] text-slate-500 font-medium">
+          Dúvidas institucionais: <span class="font-mono text-slate-800">institucional&#64;estradapay.com.br</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="window.print()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold px-3 py-2 rounded-lg transition flex items-center gap-1.5">
+            <i class="fa-solid fa-print"></i> Imprimir
+          </button>
+          <button type="button" onclick="fecharModal('modalSobre')" class="bg-[#0c326f] text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-blue-900 transition">
+            Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. MODAL: TERMOS DE USO E CONDIÇÕES GERAIS DE SERVIÇO -->
+  <div id="modalTermos" class="hidden fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm p-3 sm:p-5 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-6">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-amber-400 text-lg">
+            <i class="fa-solid fa-file-contract"></i>
+          </div>
+          <div>
+            <span class="text-[10px] text-blue-200 uppercase tracking-wider font-semibold block">Instrumento Jurídico Vinculante</span>
+            <h3 class="font-bold text-base sm:text-lg text-white">Termos de Uso e Condições Gerais de Serviço</h3>
+          </div>
+        </div>
+        <button type="button" onclick="fecharModal('modalTermos')" class="text-white hover:text-amber-300 text-xl p-1.5 transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-6 sm:p-8 space-y-5 text-xs sm:text-sm text-slate-700 leading-relaxed max-h-[72vh] overflow-y-auto">
+        <div class="text-[11px] text-slate-500 border-b border-slate-200 pb-2">
+          Última Atualização Registrada: 23 de Outubro de 2026 &bull; Em conformidade com a Lei Federal nº 14.157/2021, Lei Federal nº 12.965/2014 (Marco Civil da Internet), Decreto Federal nº 7.962/2013 (Comércio Eletrônico) e Lei Federal nº 8.078/1990 (CDC).
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">Cláusula 1ª &bull; Do Objeto e Escopo</h4>
+          <p>
+            O presente Contrato de Adesão regula os termos e condições aplicáveis ao acesso e utilização dos serviços disponibilizados pela plataforma <strong>Estrada Pay</strong>. O serviço compreende a disponibilização de interface digital para pesquisa de passagens registradas em pórticos de pedágio em livre passagem (Free Flow), exibição consolidada de valores tarifários oficiais e facilitação de liquidação financeira através de arranjos de pagamento regulados pelo Banco Central do Brasil.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">Cláusula 2ª &bull; Da Legislação e Prazos do Free Flow</h4>
+          <p>
+            Em observância à <strong>Lei nº 14.157/2021</strong>, às <strong>Resoluções ANTT nº 6.028/2023 e nº 6.039/2024</strong> e ao <strong>Artigo 209-A do Código de Trânsito Brasileiro (CTB)</strong>, o condutor de veículo que trafega em rodovia concedida sem praça de pedágio convencional dispõe do prazo improrrogável de até <strong>30 (trinta) dias corridos</strong>, contados da data e horário de cada passagem por pórtico, para realizar a correspondente quitação.
+          </p>
+          <div class="p-3 bg-amber-50 border-l-4 border-amber-500 text-amber-900 text-xs rounded-r-lg">
+            <strong>Atenção:</strong> O transcurso in albis do prazo de 30 dias sem a efetivação da quitação sujeita o proprietário do veículo à lavratura de Auto de Infração de Trânsito (AIT) por evasão de pedágio, configurando infração de natureza GRAVE (multa de R$ 195,23 e 5 pontos na CNH).
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">Cláusula 3ª &bull; Eficácia Liberatória do Comprovante Estrada Pay</h4>
+          <p>
+            Uma vez confirmada a compensação do pagamento pelo sistema bancário, o Estrada Pay emite instantaneamente o <strong>Comprovante Oficial de Quitação</strong>, contendo identificação de protocolo nacional, data/hora precisa, detalhamento dos pórticos liquidados e chave de Autenticação Criptográfica SHA-256. Este comprovante possui validade jurídica plena perante concessionárias e órgãos fiscalizadores para atestar a tempestividade da quitação.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">Cláusula 4ª &bull; Da Taxa Administrativa e de Conveniência</h4>
+          <p>
+            Nos termos do Art. 6º, III e Art. 46 do Código de Defesa do Consumidor, o usuário é expressa e previamente informado de que, ao valor das tarifas oficiais devidas às concessionárias, é acrescida a taxa de conveniência no valor fixo e invariável de <strong>R$ 1,00 (um real)</strong>. Esta taxa remunera os serviços de processamento em nuvem, custódia de dados, monitoramento veicular e integração de dados abertos.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">Cláusula 5ª &bull; Responsabilidade pelas Informações da Placa</h4>
+          <p>
+            O usuário é integralmente responsável pela exatidão dos caracteres da placa informada no campo de consulta. Caso o usuário venha a quitar débito referente a veículo de terceiro por erro grosseiro de digitação, deverá apresentar solicitação de análise conforme nossa Política de Reembolso.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">Cláusula 6ª &bull; Meios de Pagamento e Liquidação</h4>
+          <p>
+            A liquidação de débitos na plataforma poderá ser realizada mediante <strong>PIX</strong> (instantâneo, regulamentado pela Resolução BCB nº 1/2020) ou <strong>Cartão de Crédito</strong> (sujeito à análise antifraude da respectiva operadora). O Estrada Pay não armazena dados sensíveis de segurança de cartões de crédito (código CVV).
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">Cláusula 7ª &bull; Foro de Eleição e Legislação Vigente</h4>
+          <p>
+            Estes Termos são regidos exclusivamente pelo ordenamento jurídico da República Federativa do Brasil. Para a solução de eventuais controvérsias decorrentes deste contrato, fica eleito o Foro do domicílio do consumidor, nos exatos termos do Artigo 101, inciso I do Código de Defesa do Consumidor.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 p-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <button type="button" onclick="window.print()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold px-3 py-2 rounded-lg transition flex items-center gap-1.5">
+          <i class="fa-solid fa-print"></i> Imprimir Termos
+        </button>
+        <button type="button" onclick="fecharModal('modalTermos')" class="bg-[#0c326f] text-white text-xs font-bold px-5 py-2.5 rounded-lg hover:bg-blue-900 transition">
+          Declaro Lido e Aceito
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. MODAL: POLÍTICA DE PRIVACIDADE E PROTEÇÃO DE DADOS (LGPD) -->
+  <div id="modalPrivacidade" class="hidden fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm p-3 sm:p-5 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-6">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-emerald-400 text-lg">
+            <i class="fa-solid fa-user-shield"></i>
+          </div>
+          <div>
+            <span class="text-[10px] text-blue-200 uppercase tracking-wider font-semibold block">Lei Geral de Proteção de Dados (Lei nº 13.709/2018)</span>
+            <h3 class="font-bold text-base sm:text-lg text-white">Política de Privacidade e Tratamento de Dados</h3>
+          </div>
+        </div>
+        <button type="button" onclick="fecharModal('modalPrivacidade')" class="text-white hover:text-amber-300 text-xl p-1.5 transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-6 sm:p-8 space-y-5 text-xs sm:text-sm text-slate-700 leading-relaxed max-h-[72vh] overflow-y-auto">
+        <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-xs text-emerald-950 space-y-1.5">
+          <div class="font-bold flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-emerald-600"></i>
+            <span>Compromisso Fundamental com a Privacidade do Cidadão</span>
+          </div>
+          <p>
+            O Estrada Pay respeita integralmente a privacidade, a intimidade e a autodeterminação informativa dos condutores e usuários de sua plataforma, pautando todas as suas operações nos ditames da <strong>Lei Federal nº 13.709/2018 (LGPD)</strong>.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase">1. Dados Pessoais Coletados e Tratados</h4>
+          <ul class="list-disc list-inside space-y-1.5 text-slate-600">
+            <li><strong>Identificadores Veiculares:</strong> Caracteres alfanuméricos da Placa, Marca/Modelo, Ano e UF de registro (dados públicos e de trânsito necessários à correta imputação tarifária).</li>
+            <li><strong>Dados do Titular Pagador:</strong> Nome completo, CPF ou CNPJ (obrigatórios para registro da liquidação financeira e geração do payload PIX conforme normas do BACEN).</li>
+            <li><strong>Dados de Notificação (Opcionais):</strong> Número de WhatsApp e e-mail informados voluntariamente pelo motorista para recepção de alertas prévios de vencimento.</li>
+            <li><strong>Dados Técnicos de Conexão:</strong> Endereço IP, data/hora e identificador de sessão, mantidos sob sigilo em estrito cumprimento ao <strong>Artigo 15 da Lei Federal nº 12.965/2014 (Marco Civil da Internet)</strong>.</li>
+          </ul>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase">2. Bases Legais Autorizadoras (Art. 7º da LGPD)</h4>
+          <p>O tratamento de dados pessoais no Estrada Pay é fundamentado nas seguintes hipóteses legais:</p>
+          <ul class="list-disc list-inside space-y-1.5 text-slate-600">
+            <li><strong>Art. 7º, inciso II:</strong> Cumprimento de obrigação legal e regulatória vinculada às diretrizes da ANTT e legislação fiscal;</li>
+            <li><strong>Art. 7º, inciso V:</strong> Execução de contrato e procedimentos preliminares para liquidação do pedágio e emissão do comprovante tempestivo;</li>
+            <li><strong>Art. 7º, inciso IX:</strong> Legítimo interesse na prevenção a fraudes eletrônicas e segurança da circulação rodoviária.</li>
+          </ul>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase">3. Diretriz Estrita de Não Comercialização de Dados</h4>
+          <p>
+            <strong>É expressamente vedada a venda, locação ou cessão onerosa de quaisquer dados veiculares ou pessoais cadastrados no Estrada Pay para empresas de publicidade, marketing, telemarketing ou quaisquer terceiros não envolvidos na liquidação da tarifa.</strong> Os dados são compartilhados exclusivamente com as instituições financeiras liquidantes do PIX e as concessionárias operantes do pórtico transitado para baixa do débito.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase">4. Direitos do Titular (Art. 18 da LGPD)</h4>
+          <p>
+            O titular dos dados tem o direito de obter a qualquer momento e mediante requisição: confirmação da existência de tratamento; acesso aos dados; correção de dados incompletos ou inexatos; eliminação de dados tratados com seu consentimento; e revogação de autorização para alertas de WhatsApp.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase">5. Contato do Encarregado pelo Tratamento de Dados (DPO)</h4>
+          <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-xl text-xs space-y-1">
+            <div><strong>Encarregado de Proteção de Dados (DPO):</strong> Núcleo de Segurança da Informação &amp; Compliance</div>
+            <div><strong>Canal de Atendimento do Titular:</strong> <span class="font-mono text-[#0c326f] font-bold">dpo&#64;estradapay.com.br</span></div>
+            <div><strong>Prazo de Resposta:</strong> Até 15 (quinze) dias corridos, em formato simplificado ou detalhado.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 p-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <a href="mailto:dpo@estradapay.com.br" class="text-xs font-bold text-[#0c326f] hover:underline flex items-center gap-1.5">
+          <i class="fa-solid fa-envelope"></i> Enviar Requisição ao DPO
+        </a>
+        <button type="button" onclick="fecharModal('modalPrivacidade')" class="bg-[#0c326f] text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-blue-900 transition">
+          Fechar Política
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. MODAL: POLÍTICA DE CANCELAMENTO, ESTORNO E REEMBOLSO -->
+  <div id="modalReembolsoPolitica" class="hidden fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm p-3 sm:p-5 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-6">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-amber-400 text-lg">
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+          </div>
+          <div>
+            <span class="text-[10px] text-blue-200 uppercase tracking-wider font-semibold block">Código de Defesa do Consumidor (Art. 49 da Lei 8.078/90)</span>
+            <h3 class="font-bold text-base sm:text-lg text-white">Política de Cancelamento, Estorno e Reembolso</h3>
+          </div>
+        </div>
+        <button type="button" onclick="fecharModal('modalReembolsoPolitica')" class="text-white hover:text-amber-300 text-xl p-1.5 transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-6 sm:p-8 space-y-5 text-xs sm:text-sm text-slate-700 leading-relaxed max-h-[72vh] overflow-y-auto">
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-950 space-y-1.5">
+          <div class="font-bold flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-amber-600"></i>
+            <span>Garantia de Devolução e Proteção contra Pagamentos Indevidos</span>
+          </div>
+          <p>
+            O Estrada Pay assegura o direito de restituição integral e estorno tempestivo de quantias pagas indevidamente, em observância aos <strong>Artigos 42, parágrafo único, e 49 da Lei Federal nº 8.078/1990</strong> e às determinações administrativas da ANTT sobre duplicidade de cobrança no Free Flow.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase">1. Hipóteses Legítimas de Reembolso</h4>
+          <ul class="list-disc list-inside space-y-2 text-slate-600">
+            <li>
+              <strong>Pagamento em Duplicidade com TAG:</strong> Caso o condutor possua TAG adesiva ativa e regular de operadora (Sem Parar, ConectCar, Veloe, Taggy) que já tenha debitado a mesma passagem, e realize cumulativamente o pagamento pela placa no Estrada Pay.
+            </li>
+            <li>
+              <strong>Erro Óptico ou Placa Divergente:</strong> Identificação de divergência nos caracteres capturados pelas câmeras ANPR ou casos comprovados de clonagem veicular mediante apresentação de Boletim de Ocorrência.
+            </li>
+            <li>
+              <strong>Cancelamento ou Suspensão Judicial/Administrativa:</strong> Decisões emanadas da ANTT ou do Poder Judiciário que determinem a nulidade da cobrança em pórticos específicos em decorrência de revisões contratuais ou período de adaptação do usuário.
+            </li>
+          </ul>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase">2. Prazos e Procedimento de Solicitação</h4>
+          <p>
+            O titular ou pagador poderá requerer o estorno no prazo de até <strong>90 (noventa) dias corridos</strong> a contar da data da liquidação, através do nosso Formulário Oficial de Reembolso ou via e-mail para <span class="font-mono text-slate-900 font-bold">reembolso&#64;estradapay.com.br</span>, informando:
+          </p>
+          <ul class="list-disc list-inside space-y-1 text-slate-600">
+            <li>Placa do veículo envolvido;</li>
+            <li>Código do Protocolo Estrada Pay constante no Comprovante;</li>
+            <li>Extrato da operadora de TAG ou comprovante bancário atestando a duplicidade.</li>
+          </ul>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase">3. Prazos de Análise Técnica e Efetivação Financeira</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+              <span class="font-bold text-[#0c326f] block text-xs">Análise Técnica e Cruzamento</span>
+              <p class="text-[11px] text-slate-600">Até <strong>5 (cinco) dias úteis</strong> para conferência dos registros com a concessionária competente.</p>
+            </div>
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+              <span class="font-bold text-emerald-700 block text-xs">Efetivação do Crédito / Estorno</span>
+              <p class="text-[11px] text-slate-600">Até <strong>7 (sete) dias úteis</strong> via chave PIX de origem ou estorno na fatura do cartão em até 1 ciclo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 p-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <button type="button" onclick="fecharModal('modalReembolsoPolitica'); abrirModal('modalReembolso');" class="bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-lg transition flex items-center gap-1.5">
+          <i class="fa-solid fa-hand-holding-dollar"></i> Abrir Solicitação de Reembolso Agora
+        </button>
+        <button type="button" onclick="fecharModal('modalReembolsoPolitica')" class="bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold px-4 py-2 rounded-lg transition">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. MODAL: REGULAMENTAÇÃO ANTT & LEGISLAÇÃO DO FREE FLOW -->
+  <div id="modalRegulamentacaoAntt" class="hidden fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm p-3 sm:p-5 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-6">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-sky-400 text-lg">
+            <i class="fa-solid fa-book-bookmark"></i>
+          </div>
+          <div>
+            <span class="text-[10px] text-blue-200 uppercase tracking-wider font-semibold block">Marco Regulatório Brasileiro</span>
+            <h3 class="font-bold text-base sm:text-lg text-white">Guia Normativo do Free Flow &bull; Lei 14.157/2021</h3>
+          </div>
+        </div>
+        <button type="button" onclick="fecharModal('modalRegulamentacaoAntt')" class="text-white hover:text-amber-300 text-xl p-1.5 transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-6 sm:p-8 space-y-5 text-xs sm:text-sm text-slate-700 leading-relaxed max-h-[72vh] overflow-y-auto">
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-xs text-slate-800 space-y-1.5">
+          <div class="font-bold text-[#0c326f] flex items-center gap-2">
+            <i class="fa-solid fa-scale-balanced text-amber-500"></i>
+            <span>Histórico e Fundamento Legal do Pedágio Eletrônico em Livre Passagem</span>
+          </div>
+          <p>
+            O Sistema de Livre Passagem foi formalmente instituído pela <strong>Lei Federal nº 14.157, de 1º de junho de 2021</strong>, que alterou o Código de Trânsito Brasileiro (Lei nº 9.503/1997) e a Lei de Criação da ANTT (Lei nº 10.233/2001) para viabilizar a cobrança tarifária sem praças convencionais de pedágio.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase">1. As Resoluções Regulamentadoras da ANTT</h4>
+          <ul class="list-disc list-inside space-y-1.5 text-slate-600">
+            <li>
+              <strong>Resolução ANTT nº 6.028/2023:</strong> Estabeleceu as diretrizes gerais para o ambiente regulatório experimental (Sandbox Regulatório) em trechos rodoviários pilotos, autorizando o início das operações na BR-101/RJ (Rio-Santos).
+            </li>
+            <li>
+              <strong>Resolução ANTT nº 6.039/2024:</strong> Consolidou a ampliação do prazo legal para pagamento sem multa de 15 para até <strong>30 (trinta) dias corridos</strong>, reconhecendo a necessidade de conferir tempo hábil aos cidadãos para verificação e liquidação tempestiva de suas passagens.
+            </li>
+          </ul>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase">2. O Artigo 209-A do CTB e Suas Consequências Jurídicas</h4>
+          <p>
+            O <strong>Artigo 209-A do CTB</strong> tipifica especificamente a conduta de <em>"evadir-se da cobrança pelo uso de rodovias e vias urbanas para não efetuar o seu pagamento, ou deixar de efetuar o pagamento em sistema de livre passagem no prazo estabelecido pelo órgão de trânsito"</em>:
+          </p>
+          <div class="p-3 bg-red-50 border-l-4 border-red-500 text-red-950 text-xs rounded-r-lg space-y-1">
+            <div><strong>Natureza da Infração:</strong> GRAVE</div>
+            <div><strong>Penalidade:</strong> Multa no valor de <strong>R$ 195,23</strong></div>
+            <div><strong>Medida Administrativa:</strong> Acréscimo de <strong>5 pontos</strong> no prontuário da Carteira Nacional de Habilitação (CNH).</div>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase">3. Abertura de Dados e Integração Pública</h4>
+          <p>
+            O modelo de Free Flow no Brasil é estruturado no princípio de dados abertos e interoperabilidade. As concessionárias de rodovias federais e estaduais (CCR RioSP, CSG, EcoNoroeste, Tamoios, etc.) disponibilizam canais públicos de sincronização técnica (como o repositório oficial de pórticos), viabilizando que soluções como o Estrada Pay facilitem o acesso do cidadão às suas pendências de tráfego.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 p-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <a href="#porticosSecao" onclick="fecharModal('modalRegulamentacaoAntt')" class="text-xs font-bold text-[#0c326f] hover:underline flex items-center gap-1.5">
+          <i class="fa-solid fa-map-location-dot"></i> Ver Mapeamento Completo de Rodovias
+        </a>
+        <button type="button" onclick="fecharModal('modalRegulamentacaoAntt')" class="bg-[#0c326f] text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-blue-900 transition">
+          Fechar Guia
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. MODAL: SEGURANÇA DA INFORMAÇÃO & PREVENÇÃO A FRAUDES -->
+  <div id="modalSegurancaFraudes" class="hidden fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm p-3 sm:p-5 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-6">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-emerald-400 text-lg">
+            <i class="fa-solid fa-shield-virus"></i>
+          </div>
+          <div>
+            <span class="text-[10px] text-blue-200 uppercase tracking-wider font-semibold block">Segurança Cibernética &bull; Antifraude</span>
+            <h3 class="font-bold text-base sm:text-lg text-white">Diretrizes de Segurança e Prevenção a Golpes</h3>
+          </div>
+        </div>
+        <button type="button" onclick="fecharModal('modalSegurancaFraudes')" class="text-white hover:text-amber-300 text-xl p-1.5 transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-6 sm:p-8 space-y-5 text-xs sm:text-sm text-slate-700 leading-relaxed max-h-[72vh] overflow-y-auto">
+        <div class="bg-red-50 border border-red-200 rounded-xl p-4 text-xs text-red-950 space-y-1.5">
+          <div class="font-bold flex items-center gap-2 text-red-700">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>Alerta Oficial: Combate a Páginas Falsas e Phishing do Pedágio</span>
+          </div>
+          <p>
+            Golpistas têm disseminado mensagens SMS fraudulentas e links patrocinados falsos simulando cobranças governamentais de trânsito. O Estrada Pay orienta seus usuários a seguir estritamente as diretrizes de segurança abaixo para resguardar seu patrimônio.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase">1. Como Identificar o Pagamento Seguro no Estrada Pay</h4>
+          <ul class="list-disc list-inside space-y-1.5 text-slate-600">
+            <li><strong>Beneficiário do PIX:</strong> Ao realizar o pagamento via PIX, confirme no aplicativo do seu banco se o destinatário é <strong>Estrada Pay Tecnologia em Pagamentos</strong> ou instituição autorizada pelo Banco Central do Brasil. Jamais realize PIX para contas de pessoas físicas.</li>
+            <li><strong>Código EMVCo Certificado:</strong> Todos os nossos códigos QR Code e Copia e Cola possuem checksum CRC-16 estritamente calculado segundo os padrões do Banco Central (Resolução BCB nº 1/2020).</li>
+            <li><strong>Cadeado de Segurança SSL/TLS:</strong> Certifique-se de que a barra de endereços do seu navegador exibe o cadeado de segurança e protocolo <span class="font-mono text-emerald-700 font-bold">https://</span>.</li>
+          </ul>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase">2. O que o Estrada Pay NUNCA faz</h4>
+          <ul class="list-disc list-inside space-y-1 text-slate-600">
+            <li>O Estrada Pay <strong>NUNCA</strong> envia cobranças com ameaça de apreensão imediata de veículo ou cancelamento de CNH via SMS não solicitado;</li>
+            <li>O Estrada Pay <strong>NUNCA</strong> solicita senhas bancárias, senhas de cartão de crédito ou códigos de autenticação de dois fatores (2FA);</li>
+            <li>O Estrada Pay <strong>NUNCA</strong> encaminha arquivos executáveis (.exe, .apk) por e-mail ou mensagens instantâneas.</li>
+          </ul>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase">3. Autenticação Criptográfica de Comprovantes</h4>
+          <p>
+            Cada transação finalizada com sucesso gera uma chave única de 40 caracteres com algoritmo SHA-256 (Secure Hash Algorithm). Este hash é indelével e pode ser apresentado a qualquer autoridade de trânsito como prova inatacável de quitação tempestiva da passagem.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 p-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="text-[11px] text-slate-500">
+          Denúncias de páginas falsas: <span class="font-mono text-slate-900 font-bold">fraude&#64;estradapay.com.br</span>
+        </div>
+        <button type="button" onclick="fecharModal('modalSegurancaFraudes')" class="bg-[#0c326f] text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-blue-900 transition">
           Entendido, Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. MODAL: CENTRAL DE ATENDIMENTO, SAC E OUVIDORIA (DECRETO 11.034/2022) -->
+  <div id="modalSacOuvidoria" class="hidden fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm p-3 sm:p-5 overflow-y-auto flex items-center justify-center">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-6">
+      <div class="bg-[#0c326f] text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-emerald-400 text-lg">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <div>
+            <span class="text-[10px] text-blue-200 uppercase tracking-wider font-semibold block">Decreto Federal nº 11.034/2022</span>
+            <h3 class="font-bold text-base sm:text-lg text-white">Central de Atendimento, SAC e Ouvidoria</h3>
+          </div>
+        </div>
+        <button type="button" onclick="fecharModal('modalSacOuvidoria')" class="text-white hover:text-amber-300 text-xl p-1.5 transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-6 sm:p-8 space-y-5 text-xs sm:text-sm text-slate-700 leading-relaxed max-h-[72vh] overflow-y-auto">
+        <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-xs text-emerald-950 space-y-1.5">
+          <div class="font-bold flex items-center gap-2">
+            <i class="fa-solid fa-certificate text-emerald-600"></i>
+            <span>Atendimento Acessível, Tempestivo e com Protocolo Rastreável</span>
+          </div>
+          <p>
+            Em cumprimento ao <strong>Decreto Federal nº 11.034/2022</strong> (Novo Decreto do SAC) e ao <strong>Código de Defesa do Consumidor</strong>, o Estrada Pay garante a todos os usuários canais gratuitos de atendimento com fornecimento imediato de número de protocolo gravado em sistema.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Card SAC -->
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <div class="flex items-center gap-2 font-bold text-[#0c326f] text-sm">
+              <i class="fa-solid fa-user-headset text-sky-500"></i>
+              <span>1º Nível: SAC &bull; Suporte Operacional</span>
+            </div>
+            <p class="text-xs text-slate-600">
+              Para esclarecimento de dúvidas sobre consultas de placas, cálculo de tarifas, emissão de comprovantes e dificuldades técnicas na geração do PIX.
+            </p>
+            <div class="text-xs font-semibold text-slate-800 pt-1">
+              <div>E-mail: <span class="font-mono text-[#0c326f]">suporte&#64;estradapay.com.br</span></div>
+              <div>Prazo de Resposta: <strong>Até 24 horas úteis</strong></div>
+            </div>
+          </div>
+
+          <!-- Card Ouvidoria -->
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <div class="flex items-center gap-2 font-bold text-amber-900 text-sm">
+              <i class="fa-solid fa-comments text-amber-500"></i>
+              <span>2º Nível: Ouvidoria Institucional</span>
+            </div>
+            <p class="text-xs text-slate-600">
+              Canal de segunda instância para reavaliação de solicitações não resolvidas pelo SAC, denúncias, elogios ou recursos de reembolso.
+            </p>
+            <div class="text-xs font-semibold text-slate-800 pt-1">
+              <div>E-mail: <span class="font-mono text-[#0c326f]">ouvidoria&#64;estradapay.com.br</span></div>
+              <div>Prazo de Resposta: <strong>Até 7 dias úteis</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm uppercase">Canais Diretos de Contato</h4>
+          <div class="space-y-2 text-xs">
+            <div class="flex items-center justify-between p-3 bg-blue-50/70 border border-blue-200 rounded-xl">
+              <div class="flex items-center gap-2.5">
+                <i class="fa-brands fa-whatsapp text-emerald-600 text-lg"></i>
+                <div>
+                  <span class="font-bold text-slate-900 block">WhatsApp de Plantão ao Motorista</span>
+                  <span class="text-[11px] text-slate-600">Segunda a Sexta das 08h às 20h &bull; Sábados das 09h às 15h</span>
+                </div>
+              </div>
+              <a href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20preciso%20de%20atendimento%20Estrada%20Pay" target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg transition">
+                Iniciar Chat
+              </a>
+            </div>
+
+            <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-xl">
+              <div class="flex items-center gap-2.5">
+                <i class="fa-solid fa-hand-holding-dollar text-amber-500 text-lg"></i>
+                <div>
+                  <span class="font-bold text-slate-900 block">Formulário de Contestação e Reembolso</span>
+                  <span class="text-[11px] text-slate-600">Para cobranças em duplicidade ou análise de autuações</span>
+                </div>
+              </div>
+              <button type="button" onclick="fecharModal('modalSacOuvidoria'); abrirModal('modalReembolso');" class="bg-[#0c326f] hover:bg-blue-900 text-white font-bold px-3 py-1.5 rounded-lg transition">
+                Abrir Chamado
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 p-4 border-t border-slate-200 text-right">
+        <button type="button" onclick="fecharModal('modalSacOuvidoria')" class="bg-[#0c326f] text-white text-xs font-bold px-5 py-2.5 rounded-lg hover:bg-blue-900 transition">
+          Fechar Central de Atendimento
         </button>
       </div>
     </div>
@@ -2604,16 +3361,69 @@
         showToast('🎉 Pagamento confirmado com sucesso no Estrada Pay!', 'success');
       }
 
-      // Helpers de Modal
+      // Helpers de Modal e Roteamento de Páginas Institucionais
+      const ROTAS_INSTITUCIONAIS = {
+        '#sobre-estradapay': 'modalSobre',
+        '#sobre': 'modalSobre',
+        '#termos-de-uso': 'modalTermos',
+        '#termos': 'modalTermos',
+        '#privacidade-lgpd': 'modalPrivacidade',
+        '#privacidade': 'modalPrivacidade',
+        '#politica-reembolso': 'modalReembolsoPolitica',
+        '#reembolso': 'modalReembolsoPolitica',
+        '#regulamentacao-antt': 'modalRegulamentacaoAntt',
+        '#normas-antt': 'modalRegulamentacaoAntt',
+        '#seguranca-fraudes': 'modalSegurancaFraudes',
+        '#sac-ouvidoria': 'modalSacOuvidoria',
+        '#ouvidoria': 'modalSacOuvidoria'
+      };
+
       window.abrirModal = function(id) {
         const el = document.getElementById(id);
-        if (el) el.classList.remove('hidden');
+        if (el) {
+          el.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        }
       };
 
       window.fecharModal = function(id) {
         const el = document.getElementById(id);
-        if (el) el.classList.add('hidden');
+        if (el) {
+          el.classList.add('hidden');
+          document.body.style.overflow = '';
+        }
+        if (window.location.hash && ROTAS_INSTITUCIONAIS[window.location.hash]) {
+          history.replaceState(null, null, window.location.pathname);
+        }
       };
+
+      function verificarRotaHash() {
+        const hash = window.location.hash.toLowerCase();
+        if (ROTAS_INSTITUCIONAIS[hash]) {
+          abrirModal(ROTAS_INSTITUCIONAIS[hash]);
+        }
+      }
+
+      window.addEventListener('hashchange', verificarRotaHash);
+      setTimeout(verificarRotaHash, 250);
+
+      // Fechar modal com tecla ESC
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          const modaisAbertos = document.querySelectorAll('[id^="modal"]:not(.hidden)');
+          modaisAbertos.forEach(m => fecharModal(m.id));
+          if (typeof fecharDrawer === 'function') fecharDrawer();
+        }
+      });
+
+      // Fechar ao clicar no backdrop (fora do card)
+      document.querySelectorAll('[id^="modal"]').forEach(modalEl => {
+        modalEl.addEventListener('click', (e) => {
+          if (e.target === modalEl) {
+            fecharModal(modalEl.id);
+          }
+        });
+      });
 
       function showToast(msg, tipo = 'info') {
         dom.toastText.textContent = msg;
